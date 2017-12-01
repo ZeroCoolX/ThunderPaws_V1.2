@@ -21,7 +21,7 @@ public class Player : Lifeform {
     /// </summary>
     void Start() {
         //Set all physics values 
-        InitializePhysicsValues(8f, 4f, 1f, 0.4f, 0.2f, 0.1f);
+        InitializePhysicsValues(8f, 3f, 1f, 0.3f, 0.2f, 0.1f);
     }
 
     /// <summary>
@@ -49,7 +49,7 @@ public class Player : Lifeform {
     /// </summary>
     private void CalculateVelocityOffInput() {
         //check if user - or NPC - is trying to jump and is standing on the ground
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.W)) && Controller.Collisions.FromBelow) {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && Controller.Collisions.FromBelow) {
             Velocity.y = MaxJumpVelocity;
         }
         float targetVelocityX = DirectionalInput.x * MoveSpeed;
