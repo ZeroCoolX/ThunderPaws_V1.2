@@ -69,12 +69,11 @@ public class Player : Lifeform {
     /// Mirror the player graphics by inverting the .x local scale value
     /// </summary>
     private void CalcualteFacingDirection() {
+        if(DirectionalInput.x == 0 || Mathf.Sign(transform.localScale.x) == Mathf.Sign(DirectionalInput.x)) {return;}
 
-        if(DirectionalInput.x == 0 || Mathf.Sign(transform.localScale.x) == Mathf.Sign(DirectionalInput.x)) {
-            return;
-        }
         // Switch the way the player is labelled as facing.
         FacingRight = Mathf.Sign(DirectionalInput.x) > 0;
+
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
