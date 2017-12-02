@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Fire
   - Projectile
+  - OBSTACLE-THROUGH
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - OBSTACLE
   - PROJECTILE
   - PLAYER_PROJECTILE
-  - 
+  - OBSTACLE_THROUGH
   - 
   - 
   - 

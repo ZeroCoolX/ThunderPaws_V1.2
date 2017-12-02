@@ -12,18 +12,13 @@ public class BulletProjectile : AbstractProjectile {
 
     private void Update() {
         //Raycast to check if we could potentially the target
-        RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, TargetPos - transform.position);
+        RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, TargetDirection);
         if (possibleHit.collider != null) {
             //Mini raycast to check handle ellusive targets
-            RaycastHit2D distCheck = Physics2D.Raycast(transform.position, TargetPos - transform.position, 0.2f, WhatToHit);
+            RaycastHit2D distCheck = Physics2D.Raycast(transform.position, TargetDirection, 0.2f, WhatToHit);
             //We want to allow bullets to pass throught obstacles that the player can pass through
             if (distCheck.collider != null && distCheck.collider.gameObject.tag != "OBSTACLE-THROUGH") {
                 HitTarget(transform.position, distCheck.collider);
-                //We don't want to stop the bullet trajectory if we're hitting the trigger.
-                //If we're on the ground - which is the only time the rocket jump boost can be applied, the bullet should hit the ground instead of the trigger
-                if (distCheck.collider.gameObject.tag != "ROCKETJUMPTRIGGER") {
-                    return;
-                }
             }
 
             //Last check is simplest check
@@ -32,15 +27,10 @@ public class BulletProjectile : AbstractProjectile {
             //Length of dir is distance to target. if thats less than distancethisframe we've already hit the target
             if (dir.magnitude <= distanceThisFrame) {
                 //Make sure the player didn't dodge out of the way
-                distCheck = Physics2D.Raycast(transform.position, TargetPos - transform.position, 0.2f, WhatToHit);
+                distCheck = Physics2D.Raycast(transform.position, TargetDirection, 0.2f, WhatToHit);
                 //We want to allow bullets to pass throught obstacles that the player can pass through
                 if (distCheck.collider != null && distCheck.collider.gameObject.tag != "OBSTACLE-THROUGH") {
                     HitTarget(transform.position, distCheck.collider);
-                    //We don't want to stop the bullet trajectory if we're hitting the trigger.
-                    //If we're on the ground - which is the only time the rocket jump boost can be applied, the bullet should hit the ground instead of the trigger
-                    if (distCheck.collider.gameObject.tag != "ROCKETJUMPTRIGGER") {
-                        return;
-                    }
                 }
             }
         }
