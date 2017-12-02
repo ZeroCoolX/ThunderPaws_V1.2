@@ -21,7 +21,7 @@ public class Player : Lifeform {
     /// </summary>
     void Start() {
         //Set all physics values 
-        InitializePhysicsValues(8f, 3f, 1f, 0.3f, 0.2f, 0.1f);
+        InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
     }
 
     /// <summary>

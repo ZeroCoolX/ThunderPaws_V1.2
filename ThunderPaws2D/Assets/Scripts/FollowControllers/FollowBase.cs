@@ -11,15 +11,15 @@ public class FollowBase : MonoBehaviour {
     /// <summary>
     /// Buffer for position dampeneing so movment is not sudden and jerky
     /// </summary>
-    protected float Dampening = 0.5f;
+    protected float Dampening = 0.25f;
     /// <summary>
     /// How far to look ahead from our current position
     /// </summary>
-    protected float LookAheadFactor = 1.5f;
+    protected float LookAheadFactor = 1.25f;
     /// <summary>
     /// How fast we get to the desired position
     /// </summary>
-    protected float LookAheadReturnSpeed = 0.75f;
+    protected float LookAheadReturnSpeed = 0.80f;
     /// <summary>
     /// Determines if we should be looking for the target or wheather we're in a close enough range
     /// </summary>
