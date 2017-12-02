@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : Lifeform {
+public class Player : AbstractLifeform {
 
     /// <summary>
     /// Reference to user input either from a keyboard or controller
@@ -30,6 +30,10 @@ public class Player : Lifeform {
     /// <param name="input"></param>
     public void SetDirectionalInput(Vector2 input) {
         DirectionalInput = input;
+    }
+
+    public Vector2 GetDirectionalInput() {
+        return DirectionalInput;
     }
 
     void Update() {

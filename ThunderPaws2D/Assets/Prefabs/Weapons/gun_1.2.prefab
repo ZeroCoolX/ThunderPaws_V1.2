@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4865189514546078}
   - component: {fileID: 212012036976965316}
+  - component: {fileID: 114803471707012902}
   m_Layer: 0
   m_Name: gun_1.2
   m_TagString: Untagged
@@ -40,6 +41,33 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114803471707012902
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1242068012318110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b0314ceacc24014380416e6ff31aba6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireRate: 0
+  FireDelay: 1
+  Damage: 10
+  BulletSpeed: 45
+  BulletPrefab: {fileID: 4659474290433748, guid: fdaf1f54a63498f4cb2c2f62e1ffe102,
+    type: 2}
+  FirePoint: {fileID: 0}
+  TimeToSpawnEffect: 0
+  EffectSpawnRate: 10
+  _timeToFire: 0
+  IsBurst: 0
+  CamShakeAmount: 0.025
+  CamShakeLength: 0.1
+  WhatToHit:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!212 &212012036976965316
 SpriteRenderer:
   m_ObjectHideFlags: 1

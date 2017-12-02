@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Lifeform : MonoBehaviour {
+public abstract class AbstractLifeform : MonoBehaviour {
     /// <summary>
     /// How fast the Lifeform moves
     /// </summary>
