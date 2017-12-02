@@ -73,8 +73,9 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <param name="whatToHit"></param>
     public virtual void GenerateEffect(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
-        //TODO: pass in the rotation of the bullet
-        Transform bulletInstance = Instantiate(BulletPrefab, FirePoint.position, FirePoint.rotation) as Transform;
+        var projRotation = PositizeQuaternion(FirePoint.rotation);
+        print(projRotation);
+        Transform bulletInstance = Instantiate(BulletPrefab, FirePoint.position, projRotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
         //TODO will have to be changed when diagonal directional shooting comes into play - take out when we pass in the rotation of the bullet
@@ -104,6 +105,10 @@ public abstract class AbstractWeapon : MonoBehaviour {
         //Destroy(muzzleFlash.gameObject, 0.035f);
         //Generate shot sound
 //        _audioManager.playSound(WeaponShootSound);
+    }
+
+    private Quaternion PositizeQuaternion(Quaternion rot) {
+        return new Quaternion(Mathf.Abs(rot.x), Mathf.Abs(rot.y), Mathf.Abs(rot.z), rot.w);
     }
 
 }

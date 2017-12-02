@@ -102,9 +102,8 @@ public class PlayerWeapon : AbstractWeapon {
             }else {
                 directionInput = _player.FacingRight ? Vector2.right : Vector2.left;
             }
-            print("direction = " + directionInput);
             //Actually instantiate the effect
-            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE");//PBP = PlayerBulletProjectile
+            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE");
             GenerateCamShake();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
         }
