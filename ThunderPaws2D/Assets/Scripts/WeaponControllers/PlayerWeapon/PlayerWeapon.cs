@@ -111,6 +111,7 @@ public class PlayerWeapon : AbstractWeapon {
             //Actually instantiate the effect
             GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE");
             GenerateCamShake();
+            ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
         }
     }
@@ -123,4 +124,8 @@ public class PlayerWeapon : AbstractWeapon {
         _camShake.Shake(CamShakeAmount, CamShakeLength);
     }
 
+    protected override void ApplyRecoil() {
+        WeaponAnimator.SetBool("ApplyRecoil", true);
+        StartCoroutine(ResetWeaponPosition());
+    }
 }

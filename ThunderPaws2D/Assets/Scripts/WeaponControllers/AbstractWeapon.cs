@@ -6,6 +6,10 @@ using UnityEngine;
 /// Abstract class that has functionality all weapons share
 /// </summary>
 public abstract class AbstractWeapon : MonoBehaviour {
+    /// <summary>
+    /// Animator for the weaapon
+    /// </summary>
+    protected Animator WeaponAnimator;
 
     /// <summary>
     /// How fast the weapon can shoot per second in addition to the first click
@@ -63,6 +67,10 @@ public abstract class AbstractWeapon : MonoBehaviour {
             Debug.LogError("AbstractWeapon.cs: No firePoint found");
             throw new UnassignedReferenceException();
         }
+        WeaponAnimator = transform.GetComponent<Animator>();
+        if(WeaponAnimator == null) {
+            throw new MissingComponentException("No Weaapon animator was found on the weapon");
+        }
     }
 
     protected abstract void HandleShootingInput();
@@ -76,7 +84,6 @@ public abstract class AbstractWeapon : MonoBehaviour {
     public virtual void GenerateEffect(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
-        print(projRotation);
         Transform bulletInstance = Instantiate(BulletPrefab, FirePoint.position, projRotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
@@ -92,8 +99,6 @@ public abstract class AbstractWeapon : MonoBehaviour {
         projectile.gameObject.layer = LayerMask.NameToLayer(layer);
         projectile.Damage = Damage;
         projectile.MoveSpeed = BulletSpeed;
-        print(projectile.MoveSpeed);
-        //Fire at the point clicked
         projectile.Fire(shotPos, shotNormal);
 
         //Generate muzzleFlash
@@ -107,6 +112,13 @@ public abstract class AbstractWeapon : MonoBehaviour {
         //Destroy(muzzleFlash.gameObject, 0.035f);
         //Generate shot sound
 //        _audioManager.playSound(WeaponShootSound);
+    }
+
+    protected abstract void ApplyRecoil();
+
+    protected IEnumerator ResetWeaponPosition() {
+        yield return new WaitForSeconds(0f);
+        WeaponAnimator.SetBool("ApplyRecoil", false);
     }
 
     private Quaternion CompensateQuaternion(Quaternion rot) {
