@@ -45,6 +45,7 @@ public class BulletProjectile : AbstractProjectile {
             }
         }
         //Move as a constant speed
+        print("Target dir  = " + TargetDirection);
         transform.Translate(TargetDirection.normalized * MoveSpeed * Time.deltaTime, Space.World);
     }
 

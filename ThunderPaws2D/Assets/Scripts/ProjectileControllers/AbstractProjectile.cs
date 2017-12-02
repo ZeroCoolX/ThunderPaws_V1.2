@@ -81,7 +81,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
     public void Fire(Vector3 targetPos, Vector3 targetNormal) {
         TargetPos = targetPos;
         TargetNormal = targetNormal;
-        TargetDirection = TargetPos - transform.position;
+        TargetDirection = TargetPos;// - transform.position;
     }
 
     protected abstract void HitTarget(Vector3 hitPos, Collider2D hitObject);

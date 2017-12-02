@@ -41,7 +41,8 @@ public class PlayerWeapon : AbstractWeapon {
 
     private void Update() {
         if (FireRate == 0) {//Single fire
-            if (Input.GetButtonDown("Fire1")) {
+            var triggerInput = Input.GetAxis("X360_Triggers");
+            if (Input.GetButtonDown("Fire1") || triggerInput > 0.1) {
                 Shoot();
             }
         } 
@@ -66,32 +67,34 @@ public class PlayerWeapon : AbstractWeapon {
     /// Fire projectile from origin to mouse position
     /// </summary>
     private void Shoot() {
+
+
         Vector2 directionInput = _player.GetDirectionalInput() * 20;
         //Store bullet origin spawn popint (A)
         Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
         //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, (Mathf.Sign(directionInput.x) * Vector2.right * 50), 100, WhatToHit);
+        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, _player.FacingRight ? Vector2.right : Vector2.left, 100, WhatToHit);
 
         //Generate bullet effect
-        if (/*IsBurst || */Time.time >= TimeToSpawnEffect) {
+        if (Time.time >= TimeToSpawnEffect) {
             //Bullet effect position data
             Vector3 hitPosition;
             Vector3 hitNormal;
 
             //Precalculate so if we aren't shooting at anything at least the normal is correct
             //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = (Mathf.Sign(directionInput.x) * Vector2.right) * 100;
+            hitPosition = (_player.FacingRight ? Vector2.right : Vector2.left) * 50f;
             if (shot.collider != null) {
                 //If we most likely hit something store the normal so the particles make sense when they shoot out
                 hitNormal = shot.normal;
-                hitPosition = shot.point;
+                //hitPosition = shot.point;
             } else {
                 //Rediculously huge so we can use it as a sanity check for the effect
                 hitNormal = new Vector3(999, 999, 999);
             }
-
+            print("hit pos = " + hitPosition);
             //Actually instantiate the effect
-            GenerateEffect(hitPosition, hitNormal, WhatToHit, "PLAYER_PROJECTILE");//PBP = PlayerBulletProjectile
+            GenerateEffect(_player.FacingRight ? Vector2.right : Vector2.left, hitNormal, WhatToHit, "PLAYER_PROJECTILE");//PBP = PlayerBulletProjectile
             GenerateCamShake();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
         }
