@@ -19,7 +19,6 @@ public class PlayerInputController : MonoBehaviour {
     void Update() {
         
         Vector2 directionalInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        print("directional = " + directionalInput);
         Player.SetDirectionalInput(directionalInput);
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Joystick1Button0)) {
             Player.OnJumpInputUp();

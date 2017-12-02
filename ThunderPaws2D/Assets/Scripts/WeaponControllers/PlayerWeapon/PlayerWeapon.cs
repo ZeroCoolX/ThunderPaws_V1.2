@@ -69,12 +69,12 @@ public class PlayerWeapon : AbstractWeapon {
     private void Shoot() {
 
 
-        Vector2 directionInput = _player.GetDirectionalInput() * 20;
+        Vector2 directionInput = _player.GetDirectionalInput();
+
         //Store bullet origin spawn popint (A)
         Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
         //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, _player.FacingRight ? Vector2.right : Vector2.left, 100, WhatToHit);
-
+        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
         //Generate bullet effect
         if (Time.time >= TimeToSpawnEffect) {
             //Bullet effect position data
@@ -83,7 +83,7 @@ public class PlayerWeapon : AbstractWeapon {
 
             //Precalculate so if we aren't shooting at anything at least the normal is correct
             //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = (_player.FacingRight ? Vector2.right : Vector2.left) * 50f;
+            hitPosition = directionInput * 50f;
             if (shot.collider != null) {
                 //If we most likely hit something store the normal so the particles make sense when they shoot out
                 hitNormal = shot.normal;
@@ -92,9 +92,19 @@ public class PlayerWeapon : AbstractWeapon {
                 //Rediculously huge so we can use it as a sanity check for the effect
                 hitNormal = new Vector3(999, 999, 999);
             }
-            print("hit pos = " + hitPosition);
+
+            var yAxis = directionInput.y;
+            float rotation = 0f;
+            if (((yAxis > 0.3 && yAxis < 0.8))) {
+                directionInput = (Vector2.up + (_player.FacingRight ? Vector2.right : Vector2.left)).normalized;
+            } else if (yAxis > 0.8) {
+                directionInput = Vector2.up;
+            }else {
+                directionInput = _player.FacingRight ? Vector2.right : Vector2.left;
+            }
+            print("direction = " + directionInput);
             //Actually instantiate the effect
-            GenerateEffect(_player.FacingRight ? Vector2.right : Vector2.left, hitNormal, WhatToHit, "PLAYER_PROJECTILE");//PBP = PlayerBulletProjectile
+            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE");//PBP = PlayerBulletProjectile
             GenerateCamShake();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
         }
