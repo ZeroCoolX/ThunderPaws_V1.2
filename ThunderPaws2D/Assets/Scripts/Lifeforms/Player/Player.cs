@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : AbstractLifeform {
 
+    private Transform _currentWeapon;
+
     /// <summary>
     /// Reference to user input either from a keyboard or controller
     /// </summary>
@@ -22,6 +24,11 @@ public class Player : AbstractLifeform {
     void Start() {
         //Set all physics values 
         InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
+
+        _currentWeapon = transform.Find("WeaponAnchor").Find("gun_1.2");//Name will not be harded in the future
+        if(_currentWeapon == null) {
+            throw new MissingComponentException("There was no weapon attached to the Player");
+        }
     }
 
     /// <summary>
@@ -46,6 +53,7 @@ public class Player : AbstractLifeform {
         //Animator.SetFloat("vSpeed", Velocity.y);
         Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
         CalcualteFacingDirection();
+        CalculateWeaponRotation();
     }
 
     /// <summary>
@@ -81,6 +89,17 @@ public class Player : AbstractLifeform {
         Vector3 theScale = transform.localScale;
         theScale.x *= -1;
         transform.localScale = theScale;
+    }
+
+    private void CalculateWeaponRotation() {
+        var yAxis = DirectionalInput.y;
+        float rotation = 0f;
+        if( ((yAxis > 0.3 && yAxis < 0.8))) {
+            rotation = 45 * (FacingRight ? 1 : -1);
+        }else if (yAxis > 0.8) {
+            rotation = 90 * (FacingRight ? 1 : -1);
+        }
+        _currentWeapon.rotation = Quaternion.Euler(0f, 0f, rotation);
     }
 
     /// <summary>
