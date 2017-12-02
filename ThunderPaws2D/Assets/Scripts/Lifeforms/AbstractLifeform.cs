@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Anything that "lives" and can "die" is consisdered a Lifeform
+/// </summary>
 public abstract class AbstractLifeform : MonoBehaviour {
     /// <summary>
     /// How fast the Lifeform moves
@@ -89,10 +92,6 @@ public abstract class AbstractLifeform : MonoBehaviour {
         MinJumpVelocity = (maxJumpHeight == minJumpHeight ? MaxJumpVelocity : Mathf.Sqrt(2 * Mathf.Abs(Gravity) * minJumpHeight));
         print("Gravity: " + Gravity + "\n Jump Velocity: " + MaxJumpVelocity);
     }
-
-    //public LayerMask GetControllerLayerMask() {
-    //    return Controller.CollisionMask;
-    //}
 
     /// <summary>
     /// Add the gravity constant to .y component of velocity

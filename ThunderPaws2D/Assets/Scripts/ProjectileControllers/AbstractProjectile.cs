@@ -51,7 +51,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
     }
 
     /// <summary>
-    /// Bullets have a killswitch where they get destroyed no maatter what after 3 seconds.
+    /// Bullets have a killswitch where they get destroyed no maatter what after x seconds.
     /// This helps cleanup any "stuck" bullets for whatever reason - I've seen a bullet here or there and not sure why at the moment
     /// </summary>
     protected void MaxLifeExceededDestroy() {
@@ -81,8 +81,10 @@ public abstract class AbstractProjectile : MonoBehaviour {
     public void Fire(Vector3 targetPos, Vector3 targetNormal) {
         TargetPos = targetPos;
         TargetNormal = targetNormal;
-        TargetDirection = TargetPos;// - transform.position;
+        TargetDirection = TargetPos;
     }
+
+    protected abstract void Move();
 
     protected abstract void HitTarget(Vector3 hitPos, Collider2D hitObject);
 }

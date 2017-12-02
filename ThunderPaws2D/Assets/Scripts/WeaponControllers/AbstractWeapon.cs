@@ -65,6 +65,8 @@ public abstract class AbstractWeapon : MonoBehaviour {
         }
     }
 
+    protected abstract void HandleShootingInput();
+
     /// <summary>
     /// Generate particle effect, spawn bullet, then destroy after allotted time
     /// </summary>

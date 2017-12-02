@@ -10,7 +10,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// Reference to user input either from a keyboard or controller
     /// </summary>
-    public Vector2 DirectionalInput;
+    public Vector2 DirectionalInput { get; set; }
 
     /// <summary>
     /// Indicates player is facing right
@@ -29,18 +29,6 @@ public class Player : AbstractLifeform {
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
-    }
-
-    /// <summary>
-    /// Store the player input 
-    /// </summary>
-    /// <param name="input"></param>
-    public void SetDirectionalInput(Vector2 input) {
-        DirectionalInput = input;
-    }
-
-    public Vector2 GetDirectionalInput() {
-        return DirectionalInput;
     }
 
     void Update() {
@@ -91,6 +79,9 @@ public class Player : AbstractLifeform {
         transform.localScale = theScale;
     }
 
+    /// <summary>
+    /// Rotates the weapon based off how the player is pushing the joystick
+    /// </summary>
     private void CalculateWeaponRotation() {
         var yAxis = DirectionalInput.y;
         float rotation = 0f;
@@ -105,6 +96,10 @@ public class Player : AbstractLifeform {
         DisplayCorrectSprite(degree);
     }
 
+    /// <summary>
+    /// This sets the sprite to one of 3 representing shooting in various degrees: (0deg, 45deg, 90deg)
+    /// </summary>
+    /// <param name="degree"></param>
     private void DisplayCorrectSprite(int degree) {
         transform.GetComponent<SpriteRenderer>().sprite = GameMaster.Instance.GetSpriteFromMap(degree);
     }

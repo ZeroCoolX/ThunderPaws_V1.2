@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class hanadles projectile movement for "bullet" based projectiles.
+/// </summary>
 public class BulletProjectile : AbstractProjectile {
 
     private void Start() {
@@ -11,6 +14,14 @@ public class BulletProjectile : AbstractProjectile {
     }
 
     private void Update() {
+        CheckForCollisions();
+        Move();
+    }
+
+    /// <summary>
+    /// Check for collisions
+    /// </summary>
+    private void CheckForCollisions() {
         //Raycast to check if we could potentially the target
         RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, TargetDirection);
         if (possibleHit.collider != null) {
@@ -34,6 +45,9 @@ public class BulletProjectile : AbstractProjectile {
                 }
             }
         }
+    }
+
+    protected override void Move() {
         //Move as a constant speed
         transform.Translate(TargetDirection.normalized * MoveSpeed * Time.deltaTime, Space.World);
     }

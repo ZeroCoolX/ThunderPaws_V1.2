@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -40,12 +41,20 @@ public class PlayerWeapon : AbstractWeapon {
     }
 
     private void Update() {
+        HandleShootingInput();
+    }
+
+    /// <summary>
+    /// Used to determine if the player is holding the trigger down so we shuold shoot at some fixed interval, or whether they're
+    /// pressing the trigger rapid fire like and so we should fire every shot.
+    /// </summary>
+    protected override void HandleShootingInput() {
         if (FireRate == 0) {//Single fire
             var triggerInput = Input.GetAxis("X360_Triggers");
             if (Input.GetButtonDown("Fire1") || triggerInput > 0.1) {
                 Shoot();
             }
-        } 
+        }
         //else if (IsBurst) {
         //    if (Input.GetButtonDown("Fire1") && Time.time > _timeToFire) {
         //        //Update time to fire
@@ -67,9 +76,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// Fire projectile from origin to mouse position
     /// </summary>
     private void Shoot() {
-
-
-        Vector2 directionInput = _player.GetDirectionalInput();
+        Vector2 directionInput = _player.DirectionalInput;
 
         //Store bullet origin spawn popint (A)
         Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
@@ -94,7 +101,6 @@ public class PlayerWeapon : AbstractWeapon {
             }
 
             var yAxis = directionInput.y;
-            float rotation = 0f;
             if (((yAxis > 0.3 && yAxis < 0.8))) {
                 directionInput = (Vector2.up + (_player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (yAxis > 0.8) {
