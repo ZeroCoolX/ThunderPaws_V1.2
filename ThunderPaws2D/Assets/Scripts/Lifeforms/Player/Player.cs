@@ -100,6 +100,13 @@ public class Player : AbstractLifeform {
             rotation = 90 * (FacingRight ? 1 : -1);
         }
         _currentWeapon.rotation = Quaternion.Euler(0f, 0f, rotation);
+
+        int degree = (int)Mathf.Abs(rotation);
+        DisplayCorrectSprite(degree);
+    }
+
+    private void DisplayCorrectSprite(int degree) {
+        transform.GetComponent<SpriteRenderer>().sprite = GameMaster.Instance.GetSpriteFromMap(degree);
     }
 
     /// <summary>

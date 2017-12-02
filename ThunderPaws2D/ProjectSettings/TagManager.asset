@@ -7,6 +7,7 @@ TagManager:
   - Fire
   - Projectile
   - OBSTACLE-THROUGH
+  - GAMEMASTER
   layers:
   - Default
   - TransparentFX
