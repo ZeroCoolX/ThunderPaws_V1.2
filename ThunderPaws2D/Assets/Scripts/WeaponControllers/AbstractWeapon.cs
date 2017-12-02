@@ -37,7 +37,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <summary>
     /// Position where the bullet will spawn
     /// </summary>
-    public Transform FirePoint;
+    protected Transform FirePoint { get; private set; }
 
     /// <summary>
     /// Graphics spawning: delay from spawning

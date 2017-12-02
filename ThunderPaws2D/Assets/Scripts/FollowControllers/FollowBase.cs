@@ -7,7 +7,7 @@ public class FollowBase : MonoBehaviour {
     /// <summary>
     /// What to follows
     /// </summary>
-    public Transform Target;
+    protected Transform Target { get; private set; }
     /// <summary>
     /// Buffer for position dampeneing so movment is not sudden and jerky
     /// </summary>

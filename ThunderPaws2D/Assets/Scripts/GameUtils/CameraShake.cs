@@ -6,7 +6,7 @@ public class CameraShake : MonoBehaviour {
     /// <summary>
     /// Main camera referece
     /// </summary>
-    public Camera MainCam;
+    private Camera _mainCam;
     /// <summary>
     /// how much to shake the camera by
     /// </summary>
@@ -16,8 +16,8 @@ public class CameraShake : MonoBehaviour {
     /// Cache Main Camera reference
     /// </summary>
     private void Awake() {
-        if (MainCam == null) {
-            MainCam = Camera.main;
+        if (_mainCam == null) {
+            _mainCam = Camera.main;
         }
     }
 
@@ -38,7 +38,7 @@ public class CameraShake : MonoBehaviour {
     /// </summary>
     private void DoShake() {
         if (_shakeAmount > 0f) {
-            Vector3 camPos = MainCam.transform.position;
+            Vector3 camPos = _mainCam.transform.position;
 
             //Get shake values
             float offsetX = Random.value * _shakeAmount * 2 - _shakeAmount;
@@ -48,7 +48,7 @@ public class CameraShake : MonoBehaviour {
             camPos.x += offsetX;
             camPos.y += offsetY;
             //Move the main camera
-            MainCam.transform.position = camPos;
+            _mainCam.transform.position = camPos;
         }
     }
 
@@ -58,6 +58,6 @@ public class CameraShake : MonoBehaviour {
     private void StopShake() {
         CancelInvoke("DoShake");
         //Zero out the main camera objects transform which will just set it to where the parent is - which is following the player like always
-        MainCam.transform.localPosition = new Vector3(0f, 0f, 0f);
+        _mainCam.transform.localPosition = new Vector3(0f, 0f, 0f);
     }
 }

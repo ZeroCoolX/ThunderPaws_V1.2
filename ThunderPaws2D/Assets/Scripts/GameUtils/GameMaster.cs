@@ -24,7 +24,7 @@ public class GameMaster : MonoBehaviour {
     /// <summary>
     /// CameraShake instance so we know we can shake the screen
     /// </summary>
-    public CameraShake CamShake;
+    public CameraShake CamShake { get; private set; }
 
 	// Use this for initialization
 	void Awake () {

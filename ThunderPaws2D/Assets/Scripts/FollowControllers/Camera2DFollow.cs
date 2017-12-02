@@ -13,6 +13,7 @@ namespace UnityStandardAssets._2D {
         private void Start() {
             _currentXOffset = OffsetX;
             InitializeSearchName("Player");
+            FindPlayer();
             base.Start();
         }
 
