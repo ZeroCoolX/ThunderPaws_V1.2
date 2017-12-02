@@ -75,7 +75,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <param name="whatToHit"></param>
     public virtual void GenerateEffect(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
-        var projRotation = PositizeQuaternion(FirePoint.rotation);
+        var projRotation = CompensateQuaternion(FirePoint.rotation);
         print(projRotation);
         Transform bulletInstance = Instantiate(BulletPrefab, FirePoint.position, projRotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
@@ -109,7 +109,11 @@ public abstract class AbstractWeapon : MonoBehaviour {
 //        _audioManager.playSound(WeaponShootSound);
     }
 
-    private Quaternion PositizeQuaternion(Quaternion rot) {
+    private Quaternion CompensateQuaternion(Quaternion rot) {
+        //Special case handling for negative rotataion neeeded. Only time its needed is for the -45degree shot
+        if((int)(rot.z * 10) == -3) {
+            return rot;
+        }
         return new Quaternion(Mathf.Abs(rot.x), Mathf.Abs(rot.y), Mathf.Abs(rot.z), rot.w);
     }
 

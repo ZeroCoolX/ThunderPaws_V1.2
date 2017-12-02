@@ -16,7 +16,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// <summary>
     /// Camera shake reference
     /// </summary>
-    //private CameraShake _camShake;
+    private CameraShake _camShake;
     /// <summary>
     /// LayuerMask indicating what to hit
     /// </summary>
@@ -33,11 +33,11 @@ public class PlayerWeapon : AbstractWeapon {
         if(_player == null) {
             throw new MissingComponentException("This is massively bad... No Player.cs found on the Player");
         }
-        //_camShake = GameMaster.Instance.GetComponent<CameraShake>();
-        //if (_camShake == null) {
-        //    Debug.LogError("Weapon.cs: No CameraShake found on game master");
-        //    throw new MissingComponentException();
-        //}
+        _camShake = GameMaster.Instance.GetComponent<CameraShake>();
+        if (_camShake == null) {
+            Debug.LogError("Weapon.cs: No CameraShake found on game master");
+            throw new MissingComponentException();
+        }
     }
 
     private void Update() {
@@ -120,8 +120,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// </summary>
     private void GenerateCamShake() {
         //Generate camera shake
-        //_camShake.Shake(CamShakeAmount, CamShakeLength);
-        //TODO: generate audio
+        _camShake.Shake(CamShakeAmount, CamShakeLength);
     }
 
 }

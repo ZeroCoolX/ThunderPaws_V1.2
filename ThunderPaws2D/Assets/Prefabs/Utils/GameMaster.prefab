@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4196983251197358}
   - component: {fileID: 114671961715356918}
+  - component: {fileID: 114422201740174836}
   m_Layer: 0
   m_Name: GameMaster
   m_TagString: GAMEMASTER
@@ -40,6 +41,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114422201740174836
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1041977996899374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13344509154c0054dbe5a1c80a1609f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCam: {fileID: 0}
 --- !u!114 &114671961715356918
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -55,3 +68,4 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ef49da5a525873046bdf8188d38d00c1, type: 3}
   - {fileID: 21300000, guid: cc470222d0601ba4380f1ee12d083721, type: 3}
   - {fileID: 21300000, guid: ea6f42a05dd1f7446b72f8b7f2ce4fc4, type: 3}
+  CamShake: {fileID: 0}

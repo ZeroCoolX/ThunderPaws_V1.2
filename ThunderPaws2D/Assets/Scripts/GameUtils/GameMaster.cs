@@ -11,6 +11,7 @@ public class GameMaster : MonoBehaviour {
     /// Static reference for anyone who needs it
     /// </summary>
     public static GameMaster Instance;
+
     /// <summary>
     /// Compile time sollection of any sprites that need to be swapped out during the course of the game
     /// </summary>
@@ -19,6 +20,11 @@ public class GameMaster : MonoBehaviour {
     /// Mapping from angle of rotation to sprite
     /// </summary>
     private Dictionary<int, Sprite> _playerSpiteMap = new Dictionary<int, Sprite>();
+
+    /// <summary>
+    /// CameraShake instance so we know we can shake the screen
+    /// </summary>
+    public CameraShake CamShake;
 
 	// Use this for initialization
 	void Awake () {
@@ -30,6 +36,14 @@ public class GameMaster : MonoBehaviour {
         _playerSpiteMap.Add(0, PlayerSprites[0]);
         _playerSpiteMap.Add(45, PlayerSprites[1]);
         _playerSpiteMap.Add(90, PlayerSprites[2]);
+    }
+
+    private void Start() {
+        CamShake = transform.GetComponent<CameraShake>();
+        if (CamShake == null) {
+            throw new MissingReferenceException("No CameraShake found on gamemaster");
+        }
+        
     }
 
     // Update is called once per frame
