@@ -13,7 +13,7 @@ public class Player : AbstractLifeform {
     /// List of weapons currently owned by the player.
     /// There will always be either 1 or 2. No more, no less
     /// </summary>
-    private Dictionary<string, Transform> _ownedWeapons = new Dictionary<string, Transform>();
+    private List<Transform> _ownedWeapons = new List<Transform>();
 
     /// <summary>
     /// This is where we create our weapons
@@ -41,11 +41,14 @@ public class Player : AbstractLifeform {
         InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
 
         _weaponAnchor = transform.Find("WeaponAnchor");
-        CreateAndEquipWeapon("DEFAULT");
+        CreateAndEquipWeapon("default_weapon");
 
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
+
+        //Add the weapon switch method onto the weaponSwitch delegate
+        GameMaster.Instance.OnWeaponSwitch += _switchWeapon;
     }
 
     void Update() {
@@ -62,7 +65,7 @@ public class Player : AbstractLifeform {
 
         //Just used for testing:
         if (Input.GetKeyUp(KeyCode.I)) {
-            CreateAndEquipWeapon("GUN");
+            CreateAndEquipWeapon("gun_1");
         }
     }
 
@@ -132,12 +135,12 @@ public class Player : AbstractLifeform {
     }
 
     public void CreateAndEquipWeapon(string weaponKey) {
-        if(weaponKey != "DEFAULT") {
+        if(weaponKey != "default_weapon") {
             _currentWeapon.gameObject.SetActive(false);
         }
         _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
         _currentWeapon.gameObject.SetActive(true);
-        _ownedWeapons.Add(weaponKey, _currentWeapon);
+        _ownedWeapons.Add(_currentWeapon);
         print("Created weapon: " + _currentWeapon.gameObject.name);
     }
 
@@ -145,14 +148,25 @@ public class Player : AbstractLifeform {
     /// Indicates that the currently equipped weapon is out of ammo, should be removed from the players weapon list, and the defaault weapon ceaated if it doesn't exist and equipped
     /// </summary>
     /// <param name="weapon"></param>
-    public void HandleWeaponNoAmmo(string weapon) {
+    public void HandleWeaponNoAmmo(Transform weapon) {
         _ownedWeapons.Remove(weapon);
         Destroy(_currentWeapon.gameObject);
-        _ownedWeapons.TryGetValue("DEFAULT", out _currentWeapon);
+        _currentWeapon = _ownedWeapons[0];
         _currentWeapon.gameObject.SetActive(true);
 
         if (_currentWeapon == null) {
             throw new KeyNotFoundException("ERROR: Default weapon was not found in weapon map");
+        }
+    }
+
+    private void _switchWeapon() {
+        if(_ownedWeapons.Count > 1) {
+            _currentWeapon.gameObject.SetActive(false);
+            //0 is default, 1 is other weapon
+            var index = _ownedWeapons.IndexOf(_currentWeapon);
+            print("grabbing index: " + Mathf.Abs(-1 + index));
+            _currentWeapon = _ownedWeapons[Mathf.Abs(-1 + index)];
+            _currentWeapon.gameObject.SetActive(true);
         }
     }
 

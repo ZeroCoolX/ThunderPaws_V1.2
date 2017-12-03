@@ -56,7 +56,7 @@ public class PlayerWeapon : AbstractWeapon {
     private void AmmoCheck() {
         //TODO: Create weapon name so we know what to pass in
         if (Ammo == 0) {
-            _player.HandleWeaponNoAmmo("GUN");
+            _player.HandleWeaponNoAmmo(transform);
         }
     }
 

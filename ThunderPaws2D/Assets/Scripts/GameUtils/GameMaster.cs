@@ -23,6 +23,12 @@ public class GameMaster : MonoBehaviour {
 
     public Transform[] WeaponList = new Transform[2];
     private Dictionary<string, Transform> _weaponMap = new Dictionary<string, Transform>();
+    /// <summary>
+    /// Delegate for switching weapons
+    /// </summary>
+    /// <param name="choice"></param>
+    public delegate void WeaponSwitchCallback();
+    public WeaponSwitchCallback OnWeaponSwitch;
 
     /// <summary>
     /// CameraShake instance so we know we can shake the screen
@@ -41,16 +47,21 @@ public class GameMaster : MonoBehaviour {
         _playerSpiteMap.Add(90, PlayerSprites[2]);
 
         //Load weapon map
-        _weaponMap.Add("DEFAULT", WeaponList[0]);
-        _weaponMap.Add("GUN", WeaponList[1]);
+        _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
+        _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);
     }
 
     private void Start() {
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
             throw new MissingReferenceException("No CameraShake found on gamemaster");
+        }   
+    }
+
+    private void Update() {
+        if (Input.GetButtonDown("X360_LBumper")) {
+            OnWeaponSwitch.Invoke();
         }
-        
     }
 
     public Transform GetWeaponFromMap(string weaponKey) {
