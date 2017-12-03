@@ -52,7 +52,11 @@ public class Player : AbstractLifeform {
         if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && Controller.Collisions.FromBelow) {
             Velocity.y = MaxJumpVelocity;
         }
-        float targetVelocityX = DirectionalInput.x * MoveSpeed;
+        var yAxis = DirectionalInput.y;
+        float targetVelocityX = 0f;
+         if (yAxis <= 0.8) {
+            targetVelocityX = DirectionalInput.x * MoveSpeed;
+        }
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
     }
 
