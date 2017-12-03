@@ -23,6 +23,11 @@ public class PlayerWeapon : AbstractWeapon {
     public LayerMask WhatToHit;
 
     /// <summary>
+    /// Every weapon aside from the default one has ammo that runs out eventually
+    /// </summary>
+    public int Ammo;
+
+    /// <summary>
     /// Need a reference to the player this weapon is aattached to so we can get the direction input
     /// </summary>
     private Player _player;
@@ -42,6 +47,17 @@ public class PlayerWeapon : AbstractWeapon {
 
     private void Update() {
         HandleShootingInput();
+        if (Ammo != -117) {
+            AmmoCheck();
+        }
+        print("Ammo: " + Ammo);
+    }
+
+    private void AmmoCheck() {
+        //TODO: Create weapon name so we know what to pass in
+        if (Ammo == 0) {
+            _player.HandleWeaponNoAmmo("GUN");
+        }
     }
 
     /// <summary>
@@ -113,6 +129,7 @@ public class PlayerWeapon : AbstractWeapon {
             GenerateCamShake();
             ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
+            Ammo -= 1;
         }
     }
 

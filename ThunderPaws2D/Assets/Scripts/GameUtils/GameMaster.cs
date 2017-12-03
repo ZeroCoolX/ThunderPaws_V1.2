@@ -13,13 +13,16 @@ public class GameMaster : MonoBehaviour {
     public static GameMaster Instance;
 
     /// <summary>
-    /// Compile time sollection of any sprites that need to be swapped out during the course of the game
+    /// Compile time collection of any sprites that need to be swapped out during the course of the game
     /// </summary>
     public Sprite[] PlayerSprites = new Sprite[3];
     /// <summary>
     /// Mapping from angle of rotation to sprite
     /// </summary>
     private Dictionary<int, Sprite> _playerSpiteMap = new Dictionary<int, Sprite>();
+
+    public Transform[] WeaponList = new Transform[2];
+    private Dictionary<string, Transform> _weaponMap = new Dictionary<string, Transform>();
 
     /// <summary>
     /// CameraShake instance so we know we can shake the screen
@@ -36,6 +39,10 @@ public class GameMaster : MonoBehaviour {
         _playerSpiteMap.Add(0, PlayerSprites[0]);
         _playerSpiteMap.Add(45, PlayerSprites[1]);
         _playerSpiteMap.Add(90, PlayerSprites[2]);
+
+        //Load weapon map
+        _weaponMap.Add("DEFAULT", WeaponList[0]);
+        _weaponMap.Add("GUN", WeaponList[1]);
     }
 
     private void Start() {
@@ -46,10 +53,14 @@ public class GameMaster : MonoBehaviour {
         
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    public Transform GetWeaponFromMap(string weaponKey) {
+        Transform weapon;
+        _weaponMap.TryGetValue(weaponKey, out weapon);
+        if(weapon == null) {
+            weapon = WeaponList[0];
+        }
+        return weapon;
+    }
 
     /// <summary>
     /// Based off a positive angle value, get the corresponding sprite from the map

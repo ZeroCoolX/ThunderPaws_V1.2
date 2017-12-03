@@ -4,8 +4,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : AbstractLifeform {
-
+    /// <summary>
+    /// Currently equipped weapon
+    /// </summary>
     private Transform _currentWeapon;
+
+    /// <summary>
+    /// List of weapons currently owned by the player.
+    /// There will always be either 1 or 2. No more, no less
+    /// </summary>
+    private Dictionary<string, Transform> _ownedWeapons = new Dictionary<string, Transform>();
+
+    /// <summary>
+    /// This is where we create our weapons
+    /// </summary>
+    private Transform _weaponAnchor;
 
     /// <summary>
     /// Reference to user input either from a keyboard or controller
@@ -17,6 +30,8 @@ public class Player : AbstractLifeform {
     /// </summary>
     public bool FacingRight = true;
 
+
+
     /// <summary>
     /// Setup Player object.
     /// Initialize physics values
@@ -25,7 +40,9 @@ public class Player : AbstractLifeform {
         //Set all physics values 
         InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
 
-        _currentWeapon = transform.Find("WeaponAnchor").Find("gun_1.2");//Name will not be harded in the future
+        _weaponAnchor = transform.Find("WeaponAnchor");
+        CreateAndEquipWeapon("DEFAULT");
+
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
@@ -42,6 +59,11 @@ public class Player : AbstractLifeform {
         Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
         CalcualteFacingDirection();
         CalculateWeaponRotation();
+
+        //Just used for testing:
+        if (Input.GetKeyUp(KeyCode.I)) {
+            CreateAndEquipWeapon("GUN");
+        }
     }
 
     /// <summary>
@@ -107,6 +129,31 @@ public class Player : AbstractLifeform {
     /// <param name="degree"></param>
     private void DisplayCorrectSprite(int degree) {
         transform.GetComponent<SpriteRenderer>().sprite = GameMaster.Instance.GetSpriteFromMap(degree);
+    }
+
+    public void CreateAndEquipWeapon(string weaponKey) {
+        if(weaponKey != "DEFAULT") {
+            _currentWeapon.gameObject.SetActive(false);
+        }
+        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
+        _currentWeapon.gameObject.SetActive(true);
+        _ownedWeapons.Add(weaponKey, _currentWeapon);
+        print("Created weapon: " + _currentWeapon.gameObject.name);
+    }
+
+    /// <summary>
+    /// Indicates that the currently equipped weapon is out of ammo, should be removed from the players weapon list, and the defaault weapon ceaated if it doesn't exist and equipped
+    /// </summary>
+    /// <param name="weapon"></param>
+    public void HandleWeaponNoAmmo(string weapon) {
+        _ownedWeapons.Remove(weapon);
+        Destroy(_currentWeapon.gameObject);
+        _ownedWeapons.TryGetValue("DEFAULT", out _currentWeapon);
+        _currentWeapon.gameObject.SetActive(true);
+
+        if (_currentWeapon == null) {
+            throw new KeyNotFoundException("ERROR: Default weapon was not found in weapon map");
+        }
     }
 
     /// <summary>
