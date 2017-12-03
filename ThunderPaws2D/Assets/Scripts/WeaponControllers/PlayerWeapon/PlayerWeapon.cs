@@ -50,8 +50,8 @@ public class PlayerWeapon : AbstractWeapon {
     /// </summary>
     protected override void HandleShootingInput() {
         if (FireRate == 0) {//Single fire
-            var triggerInput = Input.GetAxis("X360_Triggers");
-            if (Input.GetButtonDown("Fire1") || triggerInput > 0.1) {
+            var rightTrigger = Input.GetAxis("X360_Trigger_R");
+            if (Input.GetButtonDown("Fire1") || rightTrigger > 0) {
                 Shoot();
             }
         }

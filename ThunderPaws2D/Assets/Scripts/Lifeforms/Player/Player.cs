@@ -54,7 +54,8 @@ public class Player : AbstractLifeform {
         }
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
-         if (yAxis <= 0.8) {
+        var leftTrigger = Input.GetAxis("X360_Trigger_L");
+        if (leftTrigger < 1 && yAxis <= 0.8) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
         }
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
