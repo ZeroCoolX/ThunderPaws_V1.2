@@ -19,7 +19,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
     /// <summary>
     /// Max time in seconds this object can stay alive
     /// </summary>
-    public float MaxLifetime = 1.5f;
+    public float MaxLifetime = 0.5f;
 
     /// <summary>
     /// Precalculated values necessary for determining how to spray the particles, where we THINK the collision will take place

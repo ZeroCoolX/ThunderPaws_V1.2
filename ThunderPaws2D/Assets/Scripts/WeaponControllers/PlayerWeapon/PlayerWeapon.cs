@@ -55,10 +55,12 @@ public class PlayerWeapon : AbstractWeapon {
         }
     }
 
+    /// <summary>
+    /// Check if this weapon still has ammo
+    /// </summary>
     private void AmmoCheck() {
-        //TODO: Create weapon name so we know what to pass in
         if (Ammo == 0) {
-            _player.HandleWeaponNoAmmo(transform);
+            _player.RemoteOtherWeapon(transform);
         }
     }
 

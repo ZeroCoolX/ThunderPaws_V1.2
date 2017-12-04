@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : AbstractLifeform {
+    /// <summary>
+    /// Constant for the default, always owned weapon
+    /// </summary>
     public readonly string DEFAULT_WEAPON_NAME = "default_weapon";
 
     /// <summary>
@@ -48,7 +51,7 @@ public class Player : AbstractLifeform {
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
-
+        //Add delegate for weapon switch notification from the GameMaster
         GameMaster.Instance.OnWeaponSwitch += _switchWeapon;
     }
 
@@ -137,6 +140,10 @@ public class Player : AbstractLifeform {
         transform.GetComponent<SpriteRenderer>().sprite = GameMaster.Instance.GetSpriteFromMap(degree);
     }
 
+    /// <summary>
+    /// Creates a new instance of the weapon and equips it. This is used for picking up the weapons on map
+    /// </summary>
+    /// <param name="weaponKey"></param>
     public void CreateAndEquipWeapon(string weaponKey) {
         if (weaponKey != DEFAULT_WEAPON_NAME) {
             _currentWeapon.gameObject.SetActive(false);
@@ -151,7 +158,7 @@ public class Player : AbstractLifeform {
     /// Indicates that the currently equipped weapon is out of ammo, should be removed from the players weapon list, and the defaault weapon ceaated if it doesn't exist and equipped
     /// </summary>
     /// <param name="weapon"></param>
-    public void HandleWeaponNoAmmo(Transform weapon) {
+    public void RemoteOtherWeapon(Transform weapon) {
         _ownedWeapons.Remove(weapon);
         Destroy(_currentWeapon.gameObject);
         _currentWeapon = _ownedWeapons[0];
@@ -162,6 +169,10 @@ public class Player : AbstractLifeform {
         }
     }
 
+    /// <summary>
+    /// Switch current weapon to the other one if there is on.
+    /// There is only 1 or 2 weapons so this is an easy calculation
+    /// </summary>
     private void _switchWeapon() {
         if(_ownedWeapons.Count > 1) {
             var rotation = _currentWeapon.rotation;

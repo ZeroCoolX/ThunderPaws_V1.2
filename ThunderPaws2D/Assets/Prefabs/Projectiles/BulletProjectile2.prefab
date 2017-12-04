@@ -70,7 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 30
   Damage: 0
-  MaxLifetime: 1.5
+  MaxLifetime: 0.5
   WhatToHit:
     serializedVersion: 2
     m_Bits: 1024
