@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : AbstractLifeform {
+    public readonly string DEFAULT_WEAPON_NAME = "default_weapon";
+
     /// <summary>
     /// Currently equipped weapon
     /// </summary>
     private Transform _currentWeapon;
-
+    
     /// <summary>
     /// List of weapons currently owned by the player.
     /// There will always be either 1 or 2. No more, no less
@@ -41,13 +43,12 @@ public class Player : AbstractLifeform {
         InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
 
         _weaponAnchor = transform.Find("WeaponAnchor");
-        CreateAndEquipWeapon("default_weapon");
+        CreateAndEquipWeapon(DEFAULT_WEAPON_NAME);
 
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
 
-        //Add the weapon switch method onto the weaponSwitch delegate
         GameMaster.Instance.OnWeaponSwitch += _switchWeapon;
     }
 
@@ -67,6 +68,8 @@ public class Player : AbstractLifeform {
         if (Input.GetKeyUp(KeyCode.I)) {
             CreateAndEquipWeapon("gun_1");
         }
+
+        print("current weapon = " + _currentWeapon.gameObject.name);
     }
 
     /// <summary>
@@ -135,10 +138,10 @@ public class Player : AbstractLifeform {
     }
 
     public void CreateAndEquipWeapon(string weaponKey) {
-        if(weaponKey != "default_weapon") {
+        if (weaponKey != DEFAULT_WEAPON_NAME) {
             _currentWeapon.gameObject.SetActive(false);
         }
-        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
+        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _currentWeapon == null ? _weaponAnchor.rotation : _currentWeapon.rotation, _weaponAnchor);
         _currentWeapon.gameObject.SetActive(true);
         _ownedWeapons.Add(_currentWeapon);
         print("Created weapon: " + _currentWeapon.gameObject.name);
@@ -161,11 +164,13 @@ public class Player : AbstractLifeform {
 
     private void _switchWeapon() {
         if(_ownedWeapons.Count > 1) {
+            var rotation = _currentWeapon.rotation;
             _currentWeapon.gameObject.SetActive(false);
             //0 is default, 1 is other weapon
             var index = _ownedWeapons.IndexOf(_currentWeapon);
-            print("grabbing index: " + Mathf.Abs(-1 + index));
             _currentWeapon = _ownedWeapons[Mathf.Abs(-1 + index)];
+            //Have to set the rotation of what the weapon was like before switching
+            _currentWeapon.rotation = rotation;
             _currentWeapon.gameObject.SetActive(true);
         }
     }

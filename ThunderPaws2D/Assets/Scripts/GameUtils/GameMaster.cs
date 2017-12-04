@@ -59,7 +59,7 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetButtonDown("X360_LBumper")) {
+        if (Input.GetButtonUp("X360_LBumper")) {
             OnWeaponSwitch.Invoke();
         }
     }

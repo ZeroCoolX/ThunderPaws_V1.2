@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeapon : AbstractWeapon {
+    private bool _hasAmmo = true;
+
     /// <summary>
     /// Amount to shake camera by
     /// </summary>
@@ -43,14 +45,14 @@ public class PlayerWeapon : AbstractWeapon {
             Debug.LogError("Weapon.cs: No CameraShake found on game master");
             throw new MissingComponentException();
         }
+        _hasAmmo = !gameObject.name.Equals(_player.DEFAULT_WEAPON_NAME);
     }
 
     private void Update() {
         HandleShootingInput();
-        if (Ammo != -117) {
+        if (_hasAmmo) {
             AmmoCheck();
         }
-        print("Ammo: " + Ammo);
     }
 
     private void AmmoCheck() {
@@ -129,7 +131,9 @@ public class PlayerWeapon : AbstractWeapon {
             GenerateCamShake();
             ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            Ammo -= 1;
+            if (_hasAmmo) {
+                Ammo -= 1;
+            }
         }
     }
 
