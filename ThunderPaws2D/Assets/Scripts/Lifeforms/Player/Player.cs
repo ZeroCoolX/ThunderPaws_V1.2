@@ -123,7 +123,7 @@ public class Player : AbstractLifeform {
         }else if (yAxis > 0.8) {
             rotation = 90 * (FacingRight ? 1 : -1);
         }
-        _currentWeapon.rotation = Quaternion.Euler(0f, 0f, rotation);
+        _weaponAnchor.rotation = Quaternion.Euler(0f, 0f, rotation);
 
         int degree = (int)Mathf.Abs(rotation);
         DisplayCorrectSprite(degree);
@@ -141,7 +141,7 @@ public class Player : AbstractLifeform {
         if (weaponKey != DEFAULT_WEAPON_NAME) {
             _currentWeapon.gameObject.SetActive(false);
         }
-        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _currentWeapon == null ? _weaponAnchor.rotation : _currentWeapon.rotation, _weaponAnchor);
+        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
         _currentWeapon.gameObject.SetActive(true);
         _ownedWeapons.Add(_currentWeapon);
         print("Created weapon: " + _currentWeapon.gameObject.name);
@@ -170,7 +170,6 @@ public class Player : AbstractLifeform {
             var index = _ownedWeapons.IndexOf(_currentWeapon);
             _currentWeapon = _ownedWeapons[Mathf.Abs(-1 + index)];
             //Have to set the rotation of what the weapon was like before switching
-            _currentWeapon.rotation = rotation;
             _currentWeapon.gameObject.SetActive(true);
         }
     }
