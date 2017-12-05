@@ -86,6 +86,13 @@ public class BulletProjectile : AbstractProjectile {
             //    break;
         }
         print("Hit object: " + hitObject.gameObject.tag);
+        GenerateEffect();
         Destroy(gameObject);
+    }
+
+    private void GenerateEffect() {
+        var clone = Instantiate(ImpactEffect, transform.position, transform.rotation);
+        clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
+        clone.GetComponent<Animator>().SetBool("Invoke", true);
     }
 }

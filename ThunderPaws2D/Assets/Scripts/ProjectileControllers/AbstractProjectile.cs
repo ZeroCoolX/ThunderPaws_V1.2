@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractProjectile : MonoBehaviour {
+    /// <summary>
+    /// Sprite animatio to play when the bullet impacts
+    /// </summary>
+    public Transform ImpactEffect;
 
     /// <summary>
     /// How fast the bullet travels
@@ -25,6 +29,9 @@ public abstract class AbstractProjectile : MonoBehaviour {
     /// Precalculated values necessary for determining how to spray the particles, where we THINK the collision will take place
     /// </summary>
     protected Vector3 TargetPos;
+    /// <summary>
+    /// POSSIBLY DEPRECATED
+    /// </summary>
     protected Vector3 TargetNormal;
     /// <summary>
     /// Specifies what direction the bullet should move
