@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class SimpleCollider : MonoBehaviour {
     /// <summary>
+    /// Indicates if we use base raycasts or Circle colliders
+    /// </summary>
+    private bool _useCircleCollider = false;
+    /// <summary>
+    /// If a circle collider is used, we want to raycast a circle the bounds of our circle plus a alittle more
+    /// </summary>
+    private float _radius;
+
+    /// <summary>
     /// Optional list of object NOT to collide with even if they're apart of the WhatToHit Layermask
     /// </summary>
     private List<string> _expemptFromCollision = new List<string>();
     /// <summary>
-    /// Indicates what to collide with
+    /// Indicates what to collide with.
+    /// Defaults to the Player layer
     /// </summary>
     private LayerMask _whatToHit;
     /// <summary>
@@ -31,6 +41,12 @@ public class SimpleCollider : MonoBehaviour {
     public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
     public InvokeCollisionDelegate InvokeCollision;
 
+    public void Initialize(LayerMask whatToHit) {
+        _useCircleCollider = true;
+        _radius = GetComponent<SpriteRenderer>().bounds.size.x;
+        _whatToHit = whatToHit;
+    }
+
     public void Initialize(LayerMask whatToHit, Vector2 targetDirection, Vector3 targetPos, float moveSpeed, string exemptions) {
         _whatToHit = whatToHit;
         _targetDirection = targetDirection;
@@ -52,14 +68,30 @@ public class SimpleCollider : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (!_hit) {
-            CheckForCollisions();
+            if (_useCircleCollider) {
+                print("using circle colliders");
+                CheckForCircleCollisions();
+            } else {
+                CheckForRaycastCollisions();
+            }
+        }
+    }
+
+    private void CheckForCircleCollisions() {
+        print("_radius = " + _radius);
+        Collider2D collider = Physics2D.OverlapCircle(transform.position, _radius, _whatToHit);
+        print("collider = " + collider);
+        if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
+            print("collision with : " + collider.gameObject.tag);
+            InvokeCollision.Invoke(transform.position, collider);
+            _hit = true;
         }
     }
 
     /// <summary>
     /// Check for collisions
     /// </summary>
-    private void CheckForCollisions() {
+    private void CheckForRaycastCollisions() {
         //Raycast to check if we could potentially the target
         RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, _targetDirection);
         if (possibleHit.collider != null) {

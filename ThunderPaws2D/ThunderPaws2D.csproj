@@ -223,6 +223,7 @@
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
