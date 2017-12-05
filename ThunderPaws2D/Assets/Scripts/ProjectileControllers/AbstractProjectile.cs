@@ -47,14 +47,27 @@ public abstract class AbstractProjectile : MonoBehaviour {
     [SerializeField]
     public LayerMask WhatToHit;
 
+    protected SimpleCollider Collider;
+
     // Use this for initialization
     protected void Start() {
-        //Validate the hit prefab is set
-        //if (HitPrefab == null) {
-        //    Debug.LogError("No HitPrefab was found on bullet");
-        //    throw new UnassignedReferenceException();
-        //}
+        SetupSimpleCollider();
+
+        //Begin lifetime countdown
         Invoke("MaxLifeExceededDestroy", MaxLifetime);
+    }
+
+    /// <summary>
+    /// Setup the SimpleCollider with the data it needs
+    /// </summary>
+    private void SetupSimpleCollider() {
+        //Add delegate for collision detection
+        Collider = GetComponent<SimpleCollider>();
+        if (Collider == null) {
+            throw new MissingComponentException("No collider for this object");
+        }
+        Collider.InvokeCollision += HitTarget;
+        Collider.Initialize(WhatToHit, TargetDirection, TargetPos, MoveSpeed, "OBSTACLE-THROUGH");
     }
 
     /// <summary>

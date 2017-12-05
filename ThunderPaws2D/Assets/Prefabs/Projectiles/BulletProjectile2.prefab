@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212743690460785814}
   - component: {fileID: 58961569553397222}
   - component: {fileID: 114154277176023208}
+  - component: {fileID: 114831084202600936}
   m_Layer: 11
   m_Name: BulletProjectile2
   m_TagString: Projectile
@@ -76,6 +77,17 @@ MonoBehaviour:
   WhatToHit:
     serializedVersion: 2
     m_Bits: 1024
+--- !u!114 &114831084202600936
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1969540282852820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212743690460785814
 SpriteRenderer:
   m_ObjectHideFlags: 1

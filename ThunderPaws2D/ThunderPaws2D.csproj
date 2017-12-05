@@ -226,6 +226,7 @@
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\AbstractLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Player\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerInput\PlayerInputController.cs" />
