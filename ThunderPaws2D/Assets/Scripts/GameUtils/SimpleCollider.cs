@@ -69,7 +69,6 @@ public class SimpleCollider : MonoBehaviour {
 	void Update () {
         if (!_hit) {
             if (_useCircleCollider) {
-                print("using circle colliders");
                 CheckForCircleCollisions();
             } else {
                 CheckForRaycastCollisions();
@@ -78,11 +77,8 @@ public class SimpleCollider : MonoBehaviour {
     }
 
     private void CheckForCircleCollisions() {
-        print("_radius = " + _radius);
         Collider2D collider = Physics2D.OverlapCircle(transform.position, _radius, _whatToHit);
-        print("collider = " + collider);
         if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
-            print("collision with : " + collider.gameObject.tag);
             InvokeCollision.Invoke(transform.position, collider);
             _hit = true;
         }

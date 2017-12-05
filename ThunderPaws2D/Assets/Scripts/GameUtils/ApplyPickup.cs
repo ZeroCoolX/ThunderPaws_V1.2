@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ApplyPickup : MonoBehaviour {
+    /// <summary>
+    /// This is what get spawned when the pickup collides with the player
+    /// </summary>
+    public Transform PickupReward;
 
+    /// <summary>
+    /// Necessary for collisions
+    /// </summary>
     private SimpleCollider Collider;
 
 	// Use this for initialization
@@ -13,11 +20,13 @@ public class ApplyPickup : MonoBehaviour {
         if (Collider == null) {
             throw new MissingComponentException("No collider for this object");
         }
-        Collider.InvokeCollision += WeHitShit;
+        Collider.InvokeCollision += Apply;
         Collider.Initialize(1 << 8);
     }
 	
-	private void WeHitShit(Vector3 v, Collider2D c) {
-        print("OMG ITS WORKING");
+	private void Apply(Vector3 v, Collider2D c) {
+        var player = c.transform.GetComponent<Player>();
+        player.CreateAndEquipWeapon(PickupReward.gameObject.name);
+        Destroy(gameObject);
     }
 }
