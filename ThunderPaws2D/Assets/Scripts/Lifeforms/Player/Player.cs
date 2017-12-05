@@ -71,8 +71,6 @@ public class Player : AbstractLifeform {
         if (Input.GetKeyUp(KeyCode.I)) {
             CreateAndEquipWeapon("gun_1");
         }
-
-        print("current weapon = " + _currentWeapon.gameObject.name);
     }
 
     /// <summary>
