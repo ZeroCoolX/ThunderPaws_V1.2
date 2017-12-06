@@ -52,7 +52,7 @@ public class Player : AbstractLifeform {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
         //Add delegate for weapon switch notification from the GameMaster
-        GameMaster.Instance.OnWeaponSwitch += _switchWeapon;
+        GameMaster.Instance.OnWeaponSwitch += SwitchWeapon;
     }
 
     void Update() {
@@ -66,11 +66,6 @@ public class Player : AbstractLifeform {
         Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
         CalcualteFacingDirection();
         CalculateWeaponRotation();
-
-        //Just used for testing:
-        if (Input.GetKeyUp(KeyCode.I)) {
-            CreateAndEquipWeapon("gun_1");
-        }
     }
 
     /// <summary>
@@ -171,7 +166,7 @@ public class Player : AbstractLifeform {
     /// Switch current weapon to the other one if there is on.
     /// There is only 1 or 2 weapons so this is an easy calculation
     /// </summary>
-    private void _switchWeapon() {
+    private void SwitchWeapon() {
         if(_ownedWeapons.Count > 1) {
             var rotation = _currentWeapon.rotation;
             _currentWeapon.gameObject.SetActive(false);
@@ -181,6 +176,10 @@ public class Player : AbstractLifeform {
             //Have to set the rotation of what the weapon was like before switching
             _currentWeapon.gameObject.SetActive(true);
         }
+    }
+
+    public void PickupCoin() {
+        print("Coin collected!");
     }
 
     /// <summary>

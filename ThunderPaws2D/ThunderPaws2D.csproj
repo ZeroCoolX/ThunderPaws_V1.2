@@ -225,6 +225,7 @@
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\CoinController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />

@@ -11,6 +11,11 @@ public class SimpleCollider : MonoBehaviour {
     /// If a circle collider is used, we want to raycast a circle the bounds of our circle plus a alittle more
     /// </summary>
     private float _radius;
+    /// <summary>
+    /// Use to indicate if we want to be notified once and only once for a collision or everytime there is a collision
+    /// </summary>
+    /// <returns></returns>
+    private bool _continuousCollision;
 
     /// <summary>
     /// Optional list of object NOT to collide with even if they're apart of the WhatToHit Layermask
@@ -34,6 +39,10 @@ public class SimpleCollider : MonoBehaviour {
     /// </summary>
     private float _moveSpeed;
     /// <summary>
+    /// If set this is how far our we raycast
+    /// </summary>
+    private float _raycastLength;
+    /// <summary>
     /// Flag so it won't run any Update frames if we hit something because we're about to be destroyed
     /// </summary>
     private bool _hit = false;
@@ -41,21 +50,26 @@ public class SimpleCollider : MonoBehaviour {
     public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
     public InvokeCollisionDelegate InvokeCollision;
 
-    public void Initialize(LayerMask whatToHit) {
+    public void Initialize(LayerMask whatToHit, int radius = 0, bool continuousCollision = false) {
         _useCircleCollider = true;
-        _radius = GetComponent<SpriteRenderer>().bounds.size.x;
+        _radius = radius == 0 ? GetComponent<SpriteRenderer>().bounds.size.x : radius;
         _whatToHit = whatToHit;
+        _continuousCollision = continuousCollision;
     }
 
-    public void Initialize(LayerMask whatToHit, Vector2 targetDirection, Vector3 targetPos, float moveSpeed, string exemptions) {
+    public void Initialize(LayerMask whatToHit, Vector2 targetDirection, Vector3 targetPos, float moveSpeed, string exemptions, float raycastLength = 0.2f) {
         _whatToHit = whatToHit;
         _targetDirection = targetDirection;
         _targetPos = targetPos;
         _moveSpeed = moveSpeed;
+        _raycastLength = raycastLength;
         SetCollisionExemptions(exemptions);
     }
 
     public void SetCollisionExemptions(string exemptions) {
+        if(string.IsNullOrEmpty(exemptions)) {
+            return;
+        }
         if(exemptions.IndexOf('|') < 0) {
             _expemptFromCollision.Add(exemptions);
             return;
@@ -67,12 +81,13 @@ public class SimpleCollider : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (!_hit) {
-            if (_useCircleCollider) {
-                CheckForCircleCollisions();
-            } else {
-                CheckForRaycastCollisions();
-            }
+        if (!_continuousCollision && _hit) {
+            return;
+        }
+        if (_useCircleCollider) {
+            CheckForCircleCollisions();
+        } else {
+            CheckForRaycastCollisions();
         }
     }
 
@@ -92,7 +107,7 @@ public class SimpleCollider : MonoBehaviour {
         RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, _targetDirection);
         if (possibleHit.collider != null) {
             //Mini raycast to check handle ellusive targets
-            RaycastHit2D distCheck = Physics2D.Raycast(transform.position, _targetDirection, 0.2f, _whatToHit);
+            RaycastHit2D distCheck = Physics2D.Raycast(transform.position, _targetDirection, _raycastLength, _whatToHit);
             //We want to allow bullets to pass throught obstacles that the player can pass through
             if (distCheck.collider != null && !_expemptFromCollision.Contains(distCheck.collider.gameObject.tag)) { 
                 InvokeCollision.Invoke(transform.position, distCheck.collider);
@@ -105,7 +120,7 @@ public class SimpleCollider : MonoBehaviour {
             //Length of dir is distance to target. if thats less than distancethisframe we've already hit the target
             if (dir.magnitude <= distanceThisFrame) {
                 //Make sure the player didn't dodge out of the way
-                distCheck = Physics2D.Raycast(transform.position, _targetDirection, 0.2f, _whatToHit);
+                distCheck = Physics2D.Raycast(transform.position, _targetDirection, _raycastLength, _whatToHit);
                 //We want to allow bullets to pass throught obstacles that the player can pass through
                 if (distCheck.collider != null  && !_expemptFromCollision.Contains(distCheck.collider.gameObject.tag)) {
                         InvokeCollision.Invoke(transform.position, distCheck.collider);
