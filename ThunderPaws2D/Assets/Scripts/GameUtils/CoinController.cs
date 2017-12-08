@@ -11,7 +11,7 @@ public class CoinController : MonoBehaviour {
     /// <summary>
     /// Necessary for ground and environment collisions
     /// </summary>
-    private SimpleCollider BaseCollider;
+    private CollisionController2D _controller;
     /// <summary>
     /// How fast we're moving
     /// </summary>
@@ -19,11 +19,11 @@ public class CoinController : MonoBehaviour {
     /// <summary>
     /// Gravity of coin
     /// </summary>
-    private float _coinGravity = -0.1f;
+    private float _coinGravity = -25.08f;
     /// <summary>
     /// Maximum movement speed
     /// </summary>
-    private float _maxMoveSpeed = 2f;
+    private float _maxMoveSpeed = 6f;
     /// <summary>
     /// Indicates we're sitting on the ground
     /// </summary>
@@ -32,7 +32,7 @@ public class CoinController : MonoBehaviour {
     // Use this for initialization
     void Start() {
         SetupCoinCollider();
-        SetupBaseCollider();
+        _controller = GetComponent<CollisionController2D>();
     }
 
     private void SetupCoinCollider() {
@@ -46,28 +46,13 @@ public class CoinController : MonoBehaviour {
         CoinCollider.Initialize(1 << 8);
     }
 
-    private void SetupBaseCollider() {
-        //Add delegate for collision detection
-        BaseCollider = transform.Find("Base").GetComponent<SimpleCollider>();
-        if (CoinCollider == null) {
-            throw new MissingComponentException("No collider for the coin object");
-        }
-        BaseCollider.InvokeCollision += Land;
-        //OBSTACLE
-        BaseCollider.Initialize(1 << 10, Vector2.down, Vector2.down * 20, _maxMoveSpeed ,"");
-    }
-
     void Update() {
-        if (!_landed) {
-            if (_velocity.y <= _maxMoveSpeed) {
-                ApplyGravity();
-            }
-            transform.Translate(_velocity);
+        //Do not accumulate gravity if colliding with anythig vertical
+        if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
+            _velocity.y = 0;
         }
-    }
-
-    private void Land(Vector3 v, Collider2D c) {
-        _landed = true;
+        ApplyGravity();
+        _controller.Move(_velocity * Time.deltaTime, Vector2.zero);
     }
 
     private void Apply(Vector3 v, Collider2D c) {
