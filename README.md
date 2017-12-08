@@ -1,1 +1,1 @@
-# ThunderPaws_V1.2
+# ThunderPaws2D - Arcade style 2D platform shooter
