@@ -40,10 +40,25 @@ public class CoinController : MonoBehaviour {
     /// Either negative or positive offset for the collection point based off which direction the player is moving
     /// </summary>
     private int _coinCollectionOffset = 1;
-
+    /// <summary>
+    /// Min bounce values
+    /// </summary>
     private Vector2 _bounceMin = new Vector2(0.25f, 7f);
+    /// <summary>
+    /// Max bounce values
+    /// </summary>
     private Vector2 _bounceMax = new Vector2(0.6f, 15f);
+    /// <summary>
+    /// Generated randomly for a cool effect
+    /// </summary>
     private Vector2 _totalBounceEffect;
+
+    /// <summary>
+    /// Optional method to pass in a start velocity for the coin
+    /// </summary>
+    public void Initialize(Vector2 initalVelocity) {
+        _velocity = initalVelocity;
+    }
 
     // Use this for initialization
     void Start() {
