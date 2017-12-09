@@ -166,10 +166,11 @@ public class Player : AbstractLifeform {
     /// Indicates that the currently equipped weapon is out of ammo, should be removed from the players weapon list, and the defaault weapon ceaated if it doesn't exist and equipped
     /// </summary>
     /// <param name="weapon"></param>
-    public void RemoteOtherWeapon(Transform weapon) {
+    public void RemoveOtherWeapon(Transform weapon) {
         _ownedWeapons.Remove(weapon);
         Destroy(_currentWeapon.gameObject);
         _currentWeapon = _ownedWeapons[0];
+        _currentWeapon.position = _weaponAnchor.position;
         _currentWeapon.gameObject.SetActive(true);
 
         if (_currentWeapon == null) {

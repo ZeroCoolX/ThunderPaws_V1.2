@@ -60,7 +60,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// </summary>
     private void AmmoCheck() {
         if (Ammo == 0) {
-            _player.RemoteOtherWeapon(transform);
+            _player.RemoveOtherWeapon(transform);
         }
     }
 
