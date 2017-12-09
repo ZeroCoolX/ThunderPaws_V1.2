@@ -13,6 +13,10 @@ public class CoinController : MonoBehaviour {
     /// </summary>
     private CollisionController2D _controller;
     /// <summary>
+    /// Animator reference to play shrinking animation
+    /// </summary>
+    private Animator _shrinkAnimator;
+    /// <summary>
     /// How fast we're moving
     /// </summary>
     private Vector3 _velocity;
@@ -41,6 +45,11 @@ public class CoinController : MonoBehaviour {
     void Start() {
         SetupCoinCollider();
         _controller = GetComponent<CollisionController2D>();
+        _shrinkAnimator = GetComponent<Animator>();
+        //Just a failsafe so the animator is disabled by default
+        if (_shrinkAnimator.enabled) {
+            _shrinkAnimator.enabled = false;
+        }
     }
 
     private void SetupCoinCollider() {
@@ -82,6 +91,7 @@ public class CoinController : MonoBehaviour {
         //Must set the script reference so we can tell where to put the coin collection offset
         _coinCollectionOffset = player.FacingRight ? 3 : -2;
         _collected = true;
+        _shrinkAnimator.enabled = true;
         Invoke("DestroyCoin", 0.75f);
     }
 
