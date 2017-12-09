@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Anything that "lives" and can "die" is consisdered a Lifeform
 /// </summary>
-public abstract class AbstractLifeform : MonoBehaviour {
+public abstract class AbstractLifeform : BaseLifeform {
     /// <summary>
     /// How fast the Lifeform moves
     /// </summary>

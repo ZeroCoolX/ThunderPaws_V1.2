@@ -23,7 +23,7 @@ TagManager:
   - PROJECTILE
   - PLAYER_PROJECTILE
   - OBSTACLE_THROUGH
-  - 
+  - DAMAGABLE
   - 
   - 
   - 

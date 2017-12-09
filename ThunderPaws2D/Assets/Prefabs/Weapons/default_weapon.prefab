@@ -113,7 +113,7 @@ MonoBehaviour:
   CamShakeLength: 0.1
   WhatToHit:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 17408
   Ammo: -117
 --- !u!212 &212479537771549468
 SpriteRenderer:

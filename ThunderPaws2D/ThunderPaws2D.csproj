@@ -229,7 +229,9 @@
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
-    <Compile Include="Assets\Scripts\Lifeforms\AbstractLifeform.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Base\BaseLifeform.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Damagables\EnvironmentLifeform.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Player\AbstractLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Player\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
@@ -238,6 +240,9 @@
     <Compile Include="Assets\Scripts\ProjectileControllers\BulletProjectile.cs" />
     <Compile Include="Assets\Scripts\WeaponControllers\AbstractWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponControllers\PlayerWeapon\PlayerWeapon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\DefaultColorFlash.shader" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

@@ -225,4 +225,8 @@ public class Player : AbstractLifeform {
     protected override void ApplyGravity() {
         Velocity.y += Gravity * Time.deltaTime;
     }
+
+    public override void Damage(float dmg) {
+        throw new NotImplementedException();
+    }
 }
