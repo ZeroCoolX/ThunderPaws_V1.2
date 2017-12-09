@@ -32,6 +32,10 @@ public class CoinController : MonoBehaviour {
     /// Indicates we've turned off physics and collision and instead
     /// </summary>
     private bool _collected = false;
+    /// <summary>
+    /// Either negative or positive offset for the collection point based off which direction the player is moving
+    /// </summary>
+    private int _coinCollectionOffset = 1;
 
     // Use this for initialization
     void Start() {
@@ -67,14 +71,22 @@ public class CoinController : MonoBehaviour {
     }
 
     private void FlyToUltimateMeter() {
-        transform.position = Vector3.Lerp(transform.position, GameMaster.Instance.CoinCollectionOrigin, 3f * Time.deltaTime);
+        var collectionPoint = GameMaster.Instance.CoinCollectionOrigin;
+        collectionPoint.x += _coinCollectionOffset;
+        transform.position = Vector3.Lerp(transform.position, collectionPoint, 3f * Time.deltaTime);
     }
 
     private void Apply(Vector3 v, Collider2D c) {
         var player = c.transform.GetComponent<Player>();
         player.PickupCoin();
+        //Must set the script reference so we can tell where to put the coin collection offset
+        _coinCollectionOffset = player.FacingRight ? 3 : -2;
         _collected = true;
-        //Destroy(gameObject);
+        Invoke("DestroyCoin", 0.75f);
+    }
+
+    private void DestroyCoin() {
+        Destroy(gameObject);
     }
 
     private void ApplyGravity() {

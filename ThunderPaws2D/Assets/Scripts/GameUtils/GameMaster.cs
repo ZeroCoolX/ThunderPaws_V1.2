@@ -52,7 +52,17 @@ public class GameMaster : MonoBehaviour {
     /// <summary>
     /// This is the world to screen point where any collected coin should go
     /// </summary>
-    public Vector3 CoinCollectionOrigin { get; private set; }
+    public Vector3 CoinCollectionOrigin {
+        get {
+            var collectionPoint = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+            //We dont want the exact corner, only relatively
+            //collectionPoint.x += 3;
+            return collectionPoint;
+        }
+        private set {
+            CoinCollectionOrigin = value;
+        }
+    }
 
     // Use this for initialization
     void Awake () {
@@ -85,10 +95,6 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Update() {
-        //I think this needs to be updated every frame
-        //Set the coin collection anchor point
-        CoinCollectionOrigin = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
-
         if (Input.GetButtonUp("X360_LBumper")) {
             OnWeaponSwitch.Invoke();
         }
