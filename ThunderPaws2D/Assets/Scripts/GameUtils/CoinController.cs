@@ -41,6 +41,10 @@ public class CoinController : MonoBehaviour {
     /// </summary>
     private int _coinCollectionOffset = 1;
 
+    private Vector2 _bounceMin = new Vector2(0.25f, 7f);
+    private Vector2 _bounceMax = new Vector2(0.6f, 15f);
+    private Vector2 _totalBounceEffect;
+
     // Use this for initialization
     void Start() {
         SetupCoinCollider();
@@ -50,6 +54,8 @@ public class CoinController : MonoBehaviour {
         if (_shrinkAnimator.enabled) {
             _shrinkAnimator.enabled = false;
         }
+        //Generate how much this particular coin will move around when it contacts surfaces
+        GenerateBounceEffectValues();
     }
 
     private void SetupCoinCollider() {
@@ -73,10 +79,29 @@ public class CoinController : MonoBehaviour {
         }
         //Do not accumulate gravity if colliding with anythig vertical
         if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
-            _velocity.y = 0;
+            CalculateBounce();
         }
         ApplyGravity();
         _controller.Move(_velocity * Time.deltaTime, Vector2.zero);
+    }
+
+    private void CalculateBounce() {
+        if (_totalBounceEffect.y > 0) {
+            _totalBounceEffect.y = _totalBounceEffect.y / 2;
+            _velocity.y = _totalBounceEffect.y;
+            _totalBounceEffect.x = _totalBounceEffect.x / 1.1f;
+            _velocity.x = _totalBounceEffect.x;
+        } else {
+            _velocity.y = 0;
+            _velocity.x = 0;
+        }
+    }
+
+    private void GenerateBounceEffectValues() {
+        var bounceX = UnityEngine.Random.Range(_bounceMin.x, _bounceMax.x);
+        bounceX *= Mathf.Sign(UnityEngine.Random.Range(-1, 2));
+        var bounceY = UnityEngine.Random.Range(_bounceMin.y, _bounceMax.y);
+        _totalBounceEffect = new Vector2(bounceX, bounceY);
     }
 
     private void FlyToUltimateMeter() {
