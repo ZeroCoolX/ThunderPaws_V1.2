@@ -35,6 +35,11 @@ public class Player : AbstractLifeform {
     /// </summary>
     public bool FacingRight = true;
 
+    /// <summary>
+    /// Quantatative data of stats. Visually the GameMaster handles that with the PlayerStatsUIController.
+    /// </summary>
+    private PlayerStats _playerStats;
+
 
 
     /// <summary>
@@ -53,6 +58,16 @@ public class Player : AbstractLifeform {
         }
         //Add delegate for weapon switch notification from the GameMaster
         GameMaster.Instance.OnWeaponSwitch += SwitchWeapon;
+
+        //Setup stats
+        _playerStats = GetComponent<PlayerStats>();
+        if(_playerStats == null) {
+            throw new MissingComponentException("No player stats found on the Player");
+        }
+        _playerStats.CurrentHealth = _playerStats.MaxHealth;
+        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        _playerStats.CurrentUltimate = 0;
+        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
     }
 
     void Update() {
@@ -179,7 +194,8 @@ public class Player : AbstractLifeform {
     }
 
     public void PickupCoin() {
-        print("Coin collected!");
+        _playerStats.CurrentUltimate += 2;
+        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
     }
 
     /// <summary>

@@ -35,8 +35,21 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public CameraShake CamShake { get; private set; }
 
-	// Use this for initialization
-	void Awake () {
+    /// <summary>
+    /// Reference to the UI layer
+    /// </summary>
+    public GameObject UIOverlay;
+    /// <summary>
+    /// Player 1 stats UI
+    /// </summary>
+    private PlayerStatsUIController _player1Stats;
+    /// <summary>
+    /// Player 2 stats UI
+    /// </summary>
+    private PlayerStatsUIController _player2Stats;
+
+    // Use this for initialization
+    void Awake () {
         if (Instance == null) {
             Instance = GameObject.FindGameObjectWithTag("GAMEMASTER").GetComponent<GameMaster>();
         }
@@ -55,12 +68,30 @@ public class GameMaster : MonoBehaviour {
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
             throw new MissingReferenceException("No CameraShake found on gamemaster");
-        }   
+        }
+
+        _player1Stats = GetPlayerStatsUi(1);
     }
 
     private void Update() {
         if (Input.GetButtonUp("X360_LBumper")) {
             OnWeaponSwitch.Invoke();
+        }
+    }
+
+    public void UpdateHealthUI(int player, int current, int max) {
+        if (player == 1) {
+            _player1Stats.SetHealthStatus(current, max);
+        } else {
+            throw new System.Exception("This is bad because there is only one player...");
+        }
+    }
+
+    public void UpdateUltimateUI(int player, int current, int max) {
+        if(player == 1) {
+            _player1Stats.SetUltimateStatus(current, max);
+        }else {
+            throw new System.Exception("This is bad because there is only one player...");
         }
     }
 
@@ -86,6 +117,20 @@ public class GameMaster : MonoBehaviour {
             //throw new KeyNotFoundException("degreeKey: " + degreeKey + " did not exist in the mapping");
         }
         return sprite;
+    }
+
+    /// <summary>
+    /// Helper to extract the player ui objects
+    /// </summary>
+    /// <param name="player"></param>
+    /// <returns></returns>
+    public PlayerStatsUIController GetPlayerStatsUi(int player) {
+        var statsName = "Player" + player + "Stats";
+        var stats = UIOverlay.transform.Find(statsName).GetComponent<PlayerStatsUIController>();
+        if (stats == null) {
+            throw new MissingComponentException("AAttempted to extract " + statsName + " but found none");
+        }
+        return stats;
     }
 
 }
