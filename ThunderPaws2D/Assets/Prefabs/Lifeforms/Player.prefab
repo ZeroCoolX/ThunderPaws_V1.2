@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114018794381874606}
   - component: {fileID: 61566446420051540}
   - component: {fileID: 114118023174978558}
+  - component: {fileID: 114236751249061372}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -130,6 +131,19 @@ MonoBehaviour:
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+--- !u!114 &114236751249061372
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d440d49b415b7d144a1c2e5c9320883e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 100
+  MaxUltimate: 100
 --- !u!114 &114337617909033218
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -230,8 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90ec1c80cb2c891419b15ebded60877f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBarRect: {fileID: 1619226701}
-  ultimateBarRect: {fileID: 1496187644}
+  _healthBarRect: {fileID: 1619226701}
+  _ultimateBarRect: {fileID: 1496187644}
 --- !u!4 &121342758 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
@@ -839,24 +839,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &675852823 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1883217469759206, guid: 0a9f5a205d30c264f9af1f908ecc403b,
-    type: 2}
-  m_PrefabInternal: {fileID: 676917941}
---- !u!114 &675852824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 675852823}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d440d49b415b7d144a1c2e5c9320883e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 100
-  MaxUltimate: 100
 --- !u!1001 &676917941
 Prefab:
   m_ObjectHideFlags: 0

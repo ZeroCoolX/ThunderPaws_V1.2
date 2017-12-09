@@ -67,7 +67,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: ef49da5a525873046bdf8188d38d00c1, type: 3}
   - {fileID: 21300000, guid: cc470222d0601ba4380f1ee12d083721, type: 3}
   - {fileID: 21300000, guid: ea6f42a05dd1f7446b72f8b7f2ce4fc4, type: 3}
+  - {fileID: 21300000, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  - {fileID: 21300002, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  - {fileID: 21300004, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   WeaponList:
   - {fileID: 4795677035519362, guid: 2d2a3dcd94c36474daa9b19e7cb2b0f6, type: 2}
   - {fileID: 4837475817054676, guid: 5debf3840e292094594dadf42ddfded6, type: 2}
-  UIOverlay: {fileID: 1088149005704814, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
+  UIOverlay: {fileID: 0}

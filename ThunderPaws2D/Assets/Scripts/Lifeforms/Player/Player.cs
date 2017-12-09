@@ -81,6 +81,16 @@ public class Player : AbstractLifeform {
         Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
         CalcualteFacingDirection();
         CalculateWeaponRotation();
+
+        //Completely for testing
+        if (Input.GetKeyDown(KeyCode.Q)) {
+            DamagePlayer();
+        }
+
+        //Completely for testing
+        if (Input.GetKeyDown(KeyCode.F)) {
+            RegenerateAllHealth();
+        }
     }
 
     /// <summary>
@@ -197,6 +207,16 @@ public class Player : AbstractLifeform {
     public void PickupCoin() {
         _playerStats.CurrentUltimate += 2;
         GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+    }
+
+    public void DamagePlayer() {
+        _playerStats.CurrentHealth -= 5;
+        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
+    }
+
+    public void RegenerateAllHealth() {
+        _playerStats.CurrentHealth = _playerStats.MaxHealth;
+        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
     }
 
     /// <summary>

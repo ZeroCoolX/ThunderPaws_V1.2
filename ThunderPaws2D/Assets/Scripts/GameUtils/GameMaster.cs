@@ -15,7 +15,7 @@ public class GameMaster : MonoBehaviour {
     /// <summary>
     /// Compile time collection of any sprites that need to be swapped out during the course of the game
     /// </summary>
-    public Sprite[] PlayerSprites = new Sprite[3];
+    public Sprite[] PlayerSprites = new Sprite[6];
     /// <summary>
     /// Mapping from angle of rotation to sprite
     /// </summary>
@@ -23,6 +23,7 @@ public class GameMaster : MonoBehaviour {
 
     public Transform[] WeaponList = new Transform[2];
     private Dictionary<string, Transform> _weaponMap = new Dictionary<string, Transform>();
+
     /// <summary>
     /// Delegate for switching weapons
     /// </summary>
@@ -54,10 +55,14 @@ public class GameMaster : MonoBehaviour {
             Instance = GameObject.FindGameObjectWithTag("GAMEMASTER").GetComponent<GameMaster>();
         }
 
-        //Load sprite map
+        //Load sprites for player animation map
         _playerSpiteMap.Add(0, PlayerSprites[0]);
         _playerSpiteMap.Add(45, PlayerSprites[1]);
         _playerSpiteMap.Add(90, PlayerSprites[2]);
+        //Load sprites for player health UI state
+        _playerSpiteMap.Add(100, PlayerSprites[3]);
+        _playerSpiteMap.Add(50, PlayerSprites[4]);
+        _playerSpiteMap.Add(25, PlayerSprites[5]);
 
         //Load weapon map
         _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
