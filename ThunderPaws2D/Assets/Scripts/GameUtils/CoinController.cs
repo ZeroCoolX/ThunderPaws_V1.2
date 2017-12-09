@@ -28,6 +28,10 @@ public class CoinController : MonoBehaviour {
     /// Indicates we're sitting on the ground
     /// </summary>
     private bool _landed = false;
+    /// <summary>
+    /// Indicates we've turned off physics and collision and instead
+    /// </summary>
+    private bool _collected = false;
 
     // Use this for initialization
     void Start() {
@@ -47,6 +51,13 @@ public class CoinController : MonoBehaviour {
     }
 
     void Update() {
+        if (_collected) {
+            if (_controller.enabled) {
+                _controller.enabled = false;
+            }
+            FlyToUltimateMeter();
+            return;
+        }
         //Do not accumulate gravity if colliding with anythig vertical
         if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
             _velocity.y = 0;
@@ -55,10 +66,15 @@ public class CoinController : MonoBehaviour {
         _controller.Move(_velocity * Time.deltaTime, Vector2.zero);
     }
 
+    private void FlyToUltimateMeter() {
+        transform.position = Vector3.Lerp(transform.position, GameMaster.Instance.CoinCollectionOrigin, 3f * Time.deltaTime);
+    }
+
     private void Apply(Vector3 v, Collider2D c) {
         var player = c.transform.GetComponent<Player>();
         player.PickupCoin();
-        Destroy(gameObject);
+        _collected = true;
+        //Destroy(gameObject);
     }
 
     private void ApplyGravity() {

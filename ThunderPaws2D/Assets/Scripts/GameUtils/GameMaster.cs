@@ -49,6 +49,11 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private PlayerStatsUIController _player2Stats;
 
+    /// <summary>
+    /// This is the world to screen point where any collected coin should go
+    /// </summary>
+    public Vector3 CoinCollectionOrigin { get; private set; }
+
     // Use this for initialization
     void Awake () {
         if (Instance == null) {
@@ -67,6 +72,7 @@ public class GameMaster : MonoBehaviour {
         //Load weapon map
         _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
         _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);
+
     }
 
     private void Start() {
@@ -74,11 +80,15 @@ public class GameMaster : MonoBehaviour {
         if (CamShake == null) {
             throw new MissingReferenceException("No CameraShake found on gamemaster");
         }
-
+        //Set player stats UI reference
         _player1Stats = GetPlayerStatsUi(1);
     }
 
     private void Update() {
+        //I think this needs to be updated every frame
+        //Set the coin collection anchor point
+        CoinCollectionOrigin = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+
         if (Input.GetButtonUp("X360_LBumper")) {
             OnWeaponSwitch.Invoke();
         }
