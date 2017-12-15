@@ -227,7 +227,6 @@ public class Player : AbstractLifeform {
         if (!_playerStats.UltEnabled) {
             _playerStats.UltEnabled = true;
             _playerStats.UltReady = false;
-            print("My Ultimate is activated!! All weapons enter ultimate mode!");
             InvokeRepeating("DepleteUltimate", 0, 0.07f);//100 max. 10 items a second = 1 item 1/10th of a second
             //After 10 seconds deactivate ultimate
             Invoke("DeactivateUltimate", 7f);
@@ -245,7 +244,6 @@ public class Player : AbstractLifeform {
     private void DeactivateUltimate() {
         _playerStats.UltEnabled = false;
         CancelInvoke("DepleteUltimate");
-        print("Ultimate over - all weapons go back to default mode");
     }
 
     /// <summary>

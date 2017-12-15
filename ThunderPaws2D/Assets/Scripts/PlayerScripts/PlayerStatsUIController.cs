@@ -23,6 +23,10 @@ public class PlayerStatsUIController : MonoBehaviour {
     /// Throbbing Y button once the ultimate is ready
     /// </summary>
     private Transform _ultimateIndicator;
+    /// <summary>
+    /// The border around the ultimate bar
+    /// </summary>
+    private Animator _ultimateBarAnimator;
 
     private void Awake() {
         if (_healthBarRect == null) {
@@ -41,6 +45,11 @@ public class PlayerStatsUIController : MonoBehaviour {
         _ultimateIndicator = transform.Find("UltIndicator");
         if(_ultimateIndicator == null) {
             throw new MissingComponentException("Missing an ultimate indicator");
+        }
+        _ultimateBarAnimator = transform.Find("BarContainer").Find("UltimateBar").GetComponent<Animator>();
+        if (_ultimateBarAnimator == null) {
+            Debug.LogError("No ultimateBarAnimator found");
+            throw new UnassignedReferenceException();
         }
     }
 
@@ -75,5 +84,6 @@ public class PlayerStatsUIController : MonoBehaviour {
         //TODO: Change color of bar over time
         _ultimateBarRect.localScale = new Vector3(value, _ultimateBarRect.localScale.y, _ultimateBarRect.localScale.z);
         _ultimateIndicator.gameObject.SetActive(cur >= max);
+        _ultimateBarAnimator.SetBool("UltimateReady", cur >= max);
     }
 }

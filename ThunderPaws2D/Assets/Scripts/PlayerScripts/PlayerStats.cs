@@ -27,22 +27,14 @@ public class PlayerStats : MonoBehaviour {
             _currentUltimate = Mathf.Clamp(value, 0, MaxUltimate);
             if(!UltReady && !UltEnabled) {
                 UltReady = _currentUltimate >= MaxUltimate;
-                if (UltReady) {
-                    print("ULT READAY!");
-                }
             }
         }
     }
-
-    //private Player _player;
 
     /// <summary>
     /// Create singleton
     /// </summary>
     private void Start() {
-        //_player = transform.parent.GetComponent<Player>();
-        //if(_player == null) {
-        //    throw new UnassignedReferenceException("The player stats was on an object with no player script");
-        //}
+
     }
 }
