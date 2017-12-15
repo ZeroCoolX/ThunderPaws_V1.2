@@ -34,6 +34,18 @@ public class PlayerWeapon : AbstractWeapon {
     /// </summary>
     private Player _player;
 
+    /// <summary>
+    /// Indicates the player is holding down the fire button
+    /// </summary>
+    private bool _holdingFireDown = false;
+    private bool _fireButtonPressed = false;
+    /// <summary>
+    /// If the player is holding down the button for >= 0.5 seconds start firing automatically.
+    /// Otherwise most weapons will be fired as fast as the player can pull the trigger.
+    /// </summary>
+    private float _fireHoldthreshold = 0.5f;
+    private float _initialFirePressTime;
+
     protected void Start() {
         base.Start();
         _player = transform.parent.parent.GetComponent<Player>();
@@ -71,8 +83,28 @@ public class PlayerWeapon : AbstractWeapon {
     protected override void HandleShootingInput() {
         if (FireRate == 0) {//Single fire
             var rightTrigger = Input.GetAxis("X360_Trigger_R");
-            if (Input.GetButtonDown("Fire1") || rightTrigger > 0) {
-                Shoot();
+            if (Input.GetButtonUp("Fire1") || rightTrigger == 0) {
+                _fireButtonPressed = false;
+                _holdingFireDown = false;
+            }
+            if((Input.GetButton("Fire1") || rightTrigger > 0)) {
+                if (!_fireButtonPressed) {
+                    _fireButtonPressed = true;
+                    _initialFirePressTime = Time.time + _fireHoldthreshold;
+                }
+                //They're been holding for longer than 0.5s so auto fire
+                _holdingFireDown = _fireButtonPressed && Time.time > _initialFirePressTime;
+
+            }
+            if (_holdingFireDown) {
+                if (Time.time > _timeToFire) {
+                    _timeToFire = Time.time + 0.25f;
+                    Shoot();
+                }
+            } else {
+                if (_fireButtonPressed) {
+                    Shoot();
+                }
             }
         }
         //else if (IsBurst) {
