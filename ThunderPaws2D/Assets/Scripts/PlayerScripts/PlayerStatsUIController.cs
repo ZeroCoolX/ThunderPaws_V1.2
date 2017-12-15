@@ -19,7 +19,12 @@ public class PlayerStatsUIController : MonoBehaviour {
     [SerializeField]
     private RectTransform _ultimateBarRect;
 
-    private void Start() {
+    /// <summary>
+    /// Throbbing Y button once the ultimate is ready
+    /// </summary>
+    private Transform _ultimateIndicator;
+
+    private void Awake() {
         if (_healthBarRect == null) {
             Debug.LogError("No HealthBarRect found");
             throw new UnassignedReferenceException();
@@ -28,12 +33,14 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No ultimateBarRect found");
             throw new UnassignedReferenceException();
         }
+        _playerImage = transform.Find("PlayerImage").GetComponent<Image>();
         if (_playerImage == null) {
-            _playerImage = transform.Find("PlayerImage").GetComponent<Image>();
-            if (_playerImage == null) {
-                Debug.LogError("No playerImage found");
-                throw new UnassignedReferenceException();
-            }
+            Debug.LogError("No playerImage found");
+            throw new UnassignedReferenceException();
+        }
+        _ultimateIndicator = transform.Find("UltIndicator");
+        if(_ultimateIndicator == null) {
+            throw new MissingComponentException("Missing an ultimate indicator");
         }
     }
 
@@ -53,13 +60,6 @@ public class PlayerStatsUIController : MonoBehaviour {
 
     private void CheckPlayerImage(int cur) {
         //Safety check in casae another class - Player - calls this before its had a chance to startup
-        if(_playerImage == null) {
-            _playerImage = transform.Find("PlayerImage").GetComponent<Image>();
-            if (_playerImage == null) {
-                Debug.LogError("No playerImage found");
-                throw new UnassignedReferenceException();
-            }
-        }
         var healthKey = cur > 50 ? 100 : cur > 25 ? 50 : 25;
         _playerImage.sprite = GameMaster.Instance.GetSpriteFromMap(healthKey);
     }
@@ -74,8 +74,6 @@ public class PlayerStatsUIController : MonoBehaviour {
         float value = (float)cur / max;
         //TODO: Change color of bar over time
         _ultimateBarRect.localScale = new Vector3(value, _ultimateBarRect.localScale.y, _ultimateBarRect.localScale.z);
-        if(cur >= max) {
-            //Indicate ultimate status!
-        }
+        _ultimateIndicator.gameObject.SetActive(cur >= max);
     }
 }
