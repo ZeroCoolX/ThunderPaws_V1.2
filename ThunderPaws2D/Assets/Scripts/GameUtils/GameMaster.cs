@@ -43,11 +43,17 @@ public class GameMaster : MonoBehaviour {
     /// <summary>
     /// Player 1 stats UI
     /// </summary>
-    private PlayerStatsUIController _player1Stats;
+    private PlayerStatsUIController _player1StatsUi;
     /// <summary>
     /// Player 2 stats UI
     /// </summary>
-    private PlayerStatsUIController _player2Stats;
+    private PlayerStatsUIController _player2StatsUi;
+
+    /// <summary>
+    /// index 0 = player 1 coins per level
+    /// index 1 = player 2 coins per level
+    /// </summary>
+    private int[] _playerCoinCounts = new int[2];
 
     /// <summary>
     /// This is the world to screen point where any collected coin should go
@@ -91,7 +97,7 @@ public class GameMaster : MonoBehaviour {
             throw new MissingReferenceException("No CameraShake found on gamemaster");
         }
         //Set player stats UI reference
-        _player1Stats = GetPlayerStatsUi(1);
+        _player1StatsUi = GetPlayerStatsUi(1);
     }
 
     private void Update() {
@@ -102,7 +108,7 @@ public class GameMaster : MonoBehaviour {
 
     public void UpdateHealthUI(int player, int current, int max) {
         if (player == 1) {
-            _player1Stats.SetHealthStatus(current, max);
+            _player1StatsUi.SetHealthStatus(current, max);
         } else {
             throw new System.Exception("This is bad because there is only one player...");
         }
@@ -110,12 +116,34 @@ public class GameMaster : MonoBehaviour {
 
     public void UpdateUltimateUI(int player, int current, int max) {
         if(player == 1) {
-            _player1Stats.SetUltimateStatus(current, max);
+            _player1StatsUi.SetUltimateStatus(current, max);
         }else {
             throw new System.Exception("This is bad because there is only one player...");
         }
     }
 
+    /// <summary>
+    /// Add to the global coin count for a player
+    /// </summary>
+    /// <param name="index"></param>
+    public void AddCoins(int index) {
+        ++_playerCoinCounts[index];
+    }
+
+    /// <summary>
+    /// Return the current number of coins
+    /// </summary>
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int GetCoinCount(int index) {
+        return _playerCoinCounts[index];
+    }
+
+    /// <summary>
+    /// Based off the key supplied return the corresponding weapon from the map
+    /// </summary>
+    /// <param name="weaponKey"></param>
+    /// <returns></returns>
     public Transform GetWeaponFromMap(string weaponKey) {
         Transform weapon;
         _weaponMap.TryGetValue(weaponKey, out weapon);

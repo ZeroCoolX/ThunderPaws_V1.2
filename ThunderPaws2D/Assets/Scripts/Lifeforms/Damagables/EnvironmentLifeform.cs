@@ -23,11 +23,11 @@ public class EnvironmentLifeform : BaseLifeform {
     /// <summary>
     /// Min bounce values
     /// </summary>
-    private Vector2 _explodeMin = new Vector2(1f, 10f);
+    private Vector2 _explodeMin = new Vector2(1f, 7f);
     /// <summary>
     /// Max bounce values
     /// </summary>
-    private Vector2 _explodeMax = new Vector2(3f, 20f);
+    private Vector2 _explodeMax = new Vector2(2f, 15f);
 
     // Use this for initialization
     void Start () {
@@ -37,14 +37,12 @@ public class EnvironmentLifeform : BaseLifeform {
     // Update is called once per frame
     void Update () {
         if (_damage) {
-            print("Heaalth down to: " + Health);
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0.8f);
             _damage = false;
         }else {
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         }
         if(Health <= 0) {
-            print("Exploding into coins!");
             GenerateCoinPayload();
             Explode();
             Destroy(gameObject);

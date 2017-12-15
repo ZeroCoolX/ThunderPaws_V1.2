@@ -91,6 +91,12 @@ public class Player : AbstractLifeform {
         if (Input.GetKeyDown(KeyCode.F)) {
             RegenerateAllHealth();
         }
+
+        //User is pressing the ultimate button - Inform the player
+        if (Input.GetKeyUp(KeyCode.Joystick1Button3) && _playerStats.UltReady) {
+            print("Pressing ult and we're ready!");
+            ActivateUltimate();
+        }
     }
 
     /// <summary>
@@ -205,15 +211,54 @@ public class Player : AbstractLifeform {
     }
 
     public void PickupCoin() {
-        _playerStats.CurrentUltimate += 2;
-        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        if (!_playerStats.UltEnabled) {
+            _playerStats.CurrentUltimate += 5;
+            GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        }
+        //Right now hardcoded for player 1 coins
+        GameMaster.Instance.AddCoins(0);
     }
 
+    /// <summary>
+    ///  Enable/disable UltMode on all weapons owned   
+    /// </summary>
+    private void ActivateUltimate() {
+        //Player has activated the ultimatet! (Pressed Y)
+        if (!_playerStats.UltEnabled) {
+            _playerStats.UltEnabled = true;
+            _playerStats.UltReady = false;
+            print("My Ultimate is activated!! All weapons enter ultimate mode!");
+            InvokeRepeating("DepleteUltimate", 0, 0.1f);//100 max. 10 items a second = 1 item 1/10th of a second
+            //After 10 seconds deactivate ultimate
+            Invoke("DeactivateUltimate", 10f);
+        }
+    }
+
+    private void DepleteUltimate() {
+        --_playerStats.CurrentUltimate;
+        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);
+    }
+
+    /// <summary>
+    /// Set all weapon states to default mode.
+    /// </summary>
+    private void DeactivateUltimate() {
+        _playerStats.UltEnabled = false;
+        CancelInvoke("DepleteUltimate");
+        print("Ultimate over - all weapons go back to default mode");
+    }
+
+    /// <summary>
+    /// Player takes damage and updates the status
+    /// </summary>
     public void DamagePlayer() {
         _playerStats.CurrentHealth -= 5;
         GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
     }
 
+    /// <summary>
+    /// Player gets all health back. This only occurs at beginning of spawn and checkpoints
+    /// </summary>
     public void RegenerateAllHealth() {
         _playerStats.CurrentHealth = _playerStats.MaxHealth;
         GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this

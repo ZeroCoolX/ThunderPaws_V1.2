@@ -3,7 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour {
-    public static PlayerStats Instance;
+    /// <summary>
+    /// Indicates if we are int the ultimate or not
+    /// </summary>
+    public bool UltEnabled = false;
+    /// <summary>
+    /// Indicates if we are ready for ultimate status or not
+    /// </summary>
+    public bool UltReady = false;
 
     public int MaxHealth = 100;
     private int _currentHealth;
@@ -16,15 +23,26 @@ public class PlayerStats : MonoBehaviour {
     private int _currentUltimate;
     public int CurrentUltimate {
         get { return _currentUltimate; }
-        set { _currentUltimate = Mathf.Clamp(value, 0, MaxUltimate); }
+        set {
+            _currentUltimate = Mathf.Clamp(value, 0, MaxUltimate);
+            if(!UltReady && !UltEnabled) {
+                UltReady = _currentUltimate >= MaxUltimate;
+                if (UltReady) {
+                    print("ULT READAY!");
+                }
+            }
+        }
     }
+
+    //private Player _player;
 
     /// <summary>
     /// Create singleton
     /// </summary>
-    private void Awake() {
-        if(Instance == null) {
-            Instance = this;
-        }
+    private void Start() {
+        //_player = transform.parent.GetComponent<Player>();
+        //if(_player == null) {
+        //    throw new UnassignedReferenceException("The player stats was on an object with no player script");
+        //}
     }
 }
