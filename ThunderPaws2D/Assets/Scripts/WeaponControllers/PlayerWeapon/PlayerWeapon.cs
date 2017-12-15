@@ -4,7 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerWeapon : AbstractWeapon {
+    /// <summary>
+    /// Indicates if this weapon has ammo. All weapons have a finite amount of ammo except the default weapon
+    /// </summary>
     private bool _hasAmmo = true;
+    /// <summary>
+    /// Indicates the weapon is in Ultimate Mode!
+    /// </summary>
+    public bool UltMode { get; set; }
 
     /// <summary>
     /// Amount to shake camera by
@@ -38,12 +45,18 @@ public class PlayerWeapon : AbstractWeapon {
     /// Indicates the player is holding down the fire button
     /// </summary>
     private bool _holdingFireDown = false;
+    /// <summary>
+    /// Allows me to track when the fire button is pressed to calculate if we should autofire or not
+    /// </summary>
     private bool _fireButtonPressed = false;
     /// <summary>
     /// If the player is holding down the button for >= 0.5 seconds start firing automatically.
     /// Otherwise most weapons will be fired as fast as the player can pull the trigger.
     /// </summary>
     private float _fireHoldthreshold = 0.5f;
+    /// <summary>
+    /// Must store the initial time the user pressed the button
+    /// </summary>
     private float _initialFirePressTime;
 
     protected void Start() {
@@ -79,6 +92,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// <summary>
     /// Used to determine if the player is holding the trigger down so we shuold shoot at some fixed interval, or whether they're
     /// pressing the trigger rapid fire like and so we should fire every shot.
+    /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     protected override void HandleShootingInput() {
         if (FireRate == 0) {//Single fire
@@ -107,21 +121,6 @@ public class PlayerWeapon : AbstractWeapon {
                 }
             }
         }
-        //else if (IsBurst) {
-        //    if (Input.GetButtonDown("Fire1") && Time.time > _timeToFire) {
-        //        //Update time to fire
-        //        _timeToFire = Time.time + FireDelay / FireRate;
-        //        Invoke("Shoot", 0f);
-        //        Invoke("Shoot", 0.025f);
-        //        Invoke("Shoot", 0.05f);
-        //    }
-        //} else {//Automatic fire is currently deprecated since its way too OP
-        //    if (Input.GetButton("Fire1") && Time.time > _timeToFire) {
-        //        //Update time to fire
-        //        _timeToFire = Time.time + FireDelay / FireRate;
-        //        Shoot();
-        //    }
-        //}
     }
 
     /// <summary>
@@ -161,7 +160,7 @@ public class PlayerWeapon : AbstractWeapon {
                 directionInput = _player.FacingRight ? Vector2.right : Vector2.left;
             }
             //Actually instantiate the effect
-            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE");
+            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE", UltMode);
             GenerateCamShake();
             ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;

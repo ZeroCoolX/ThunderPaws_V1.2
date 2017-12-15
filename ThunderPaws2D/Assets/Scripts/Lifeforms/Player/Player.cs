@@ -227,6 +227,9 @@ public class Player : AbstractLifeform {
         if (!_playerStats.UltEnabled) {
             _playerStats.UltEnabled = true;
             _playerStats.UltReady = false;
+            foreach(var weapon in _ownedWeapons) {
+                weapon.GetComponent<PlayerWeapon>().UltMode = true;
+            }
             InvokeRepeating("DepleteUltimate", 0, 0.07f);//100 max. 10 items a second = 1 item 1/10th of a second
             //After 10 seconds deactivate ultimate
             Invoke("DeactivateUltimate", 7f);
@@ -243,6 +246,9 @@ public class Player : AbstractLifeform {
     /// </summary>
     private void DeactivateUltimate() {
         _playerStats.UltEnabled = false;
+        foreach (var weapon in _ownedWeapons) {
+            weapon.GetComponent<PlayerWeapon>().UltMode = false;
+        }
         CancelInvoke("DepleteUltimate");
     }
 

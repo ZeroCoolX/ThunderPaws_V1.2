@@ -81,37 +81,31 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <param name="shotPos"></param>
     /// <param name="shotNormal"></param>
     /// <param name="whatToHit"></param>
-    public virtual void GenerateEffect(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, float freeFlyDelay = 0.5f) {
+    public virtual void GenerateEffect(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
-        Transform bulletInstance = Instantiate(BulletPrefab, FirePoint.position, projRotation) as Transform;
-        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-        AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-        //TODO will have to be changed when diagonal directional shooting comes into play - take out when we pass in the rotation of the bullet
-        if(Mathf.Sign(shotPos.x) < 0) {
-            Vector3 theScale = projectile.transform.localScale;
-            theScale.x *= -1;
-            projectile.transform.localScale = theScale;
+        var verticalUltOffset = 0.25f;
+        for (var i = 0; i < 3; ++i) {
+            var firePosition = FirePoint.position;
+            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? verticalUltOffset : verticalUltOffset * -1) : 0);
+            Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
+            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
+            //TODO will have to be changed when diagonal directional shooting comes into play - take out when we pass in the rotation of the bullet
+            if (Mathf.Sign(shotPos.x) < 0) {
+                Vector3 theScale = projectile.transform.localScale;
+                theScale.x *= -1;
+                projectile.transform.localScale = theScale;
+            }
+
+            //Set layermask of parent (either player or baddie)
+            projectile.SetLayerMask(whatToHit);
+            projectile.gameObject.layer = LayerMask.NameToLayer(layer);
+            projectile.Damage = Damage;
+            projectile.MoveSpeed = BulletSpeed;
+            projectile.Fire(shotPos, shotNormal);
+            if (!ultMode) return;
         }
-
-        //Set layermask of parent (either player or baddie)
-        projectile.SetLayerMask(whatToHit);
-        projectile.gameObject.layer = LayerMask.NameToLayer(layer);
-        projectile.Damage = Damage;
-        projectile.MoveSpeed = BulletSpeed;
-        projectile.Fire(shotPos, shotNormal);
-
-        //Generate muzzleFlash
-        //Transform muzzleFlash = Instantiate(MuzzleFlashPrefab, FirePoint.position, FirePoint.rotation) as Transform;
-        //Parent to firepoint
-        //muzzleFlash.parent = FirePoint;
-        //Randomize its size a bit
-        //float size = Random.Range(0.2f, 0.5f);
-        //muzzleFlash.localScale = new Vector3(size, size, size);
-        //Destroy muzzle flash
-        //Destroy(muzzleFlash.gameObject, 0.035f);
-        //Generate shot sound
-//        _audioManager.playSound(WeaponShootSound);
     }
 
     protected abstract void ApplyRecoil();
