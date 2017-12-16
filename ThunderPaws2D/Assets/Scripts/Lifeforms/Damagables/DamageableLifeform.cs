@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnvironmentLifeform : BaseLifeform {
+public class DamageableLifeform : BaseLifeform {
     /// <summary>
     /// This is what the explosion will generate
     /// </summary>
@@ -21,6 +21,10 @@ public class EnvironmentLifeform : BaseLifeform {
     /// </summary>
     private bool _damage = false;
     /// <summary>
+    /// How much health this object has
+    /// </summary>
+    public float Health = 1f;
+    /// <summary>
     /// Min bounce values
     /// </summary>
     private Vector2 _explodeMin = new Vector2(1f, 7f);
@@ -29,9 +33,26 @@ public class EnvironmentLifeform : BaseLifeform {
     /// </summary>
     private Vector2 _explodeMax = new Vector2(2f, 15f);
 
+    /// <summary>
+    /// Optional property that allows this object to be effected by gravity
+    /// </summary>
+    public float Gravity = 0f;
+    /// <summary>
+    /// Lifeform movement
+    /// </summary>
+    public Vector3 Velocity;
+    /// <summary>
+    /// collision detection controller
+    /// </summary>
+    private CollisionController2D _controller;
+
     // Use this for initialization
     void Start () {
-        Health = 50f;
+        //Phsyics controller used for all collision detection
+        _controller = transform.GetComponent<CollisionController2D>();
+        if(_controller == null) {
+            throw new MissingComponentException("There is no CollisionController2D on this object");
+        }
     }
 
     // Update is called once per frame
@@ -47,6 +68,12 @@ public class EnvironmentLifeform : BaseLifeform {
             Explode();
             Destroy(gameObject);
         }
+        //Do not accumulate gravity if colliding with anythig vertical
+        if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
+            Velocity.y = 0;
+        }
+        ApplyGravity();
+        _controller.Move(Velocity * Time.deltaTime, Vector2.left);//TODO: remove hardcoded direction
     }
 
     private void GenerateCoinPayload() {
@@ -79,4 +106,7 @@ public class EnvironmentLifeform : BaseLifeform {
         _damage = true;
     }
 
+    private void ApplyGravity() {
+        Velocity.y += Gravity * Time.deltaTime;
+    }
 }
