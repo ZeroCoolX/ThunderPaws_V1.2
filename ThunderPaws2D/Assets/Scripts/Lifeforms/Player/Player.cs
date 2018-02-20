@@ -77,8 +77,8 @@ public class Player : AbstractLifeform {
         }
         CalculateVelocityOffInput();
         ApplyGravity();
-        //Animator.SetFloat("vSpeed", Velocity.y);
         Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
+        CalculateMovementAnimation();
         CalcualteFacingDirection();
         CalculateWeaponRotation();
 
@@ -99,6 +99,17 @@ public class Player : AbstractLifeform {
         }
     }
 
+    private void CalculateMovementAnimation() {
+        var xVelocity = DirectionalInput.x;
+        // Indication we are in the air - jumping or falling
+        var yVelocity = Velocity.y > 0 ? 0 : 1;
+
+        // Play running animation if the Animator exists on the lifeform 
+        if (Animator != null) {
+            Animator.SetFloat("xVelocity", Math.Abs(xVelocity * yVelocity));
+        }
+    }
+
     /// <summary>
     /// Get the input from either the user 
     /// </summary>
@@ -112,6 +123,8 @@ public class Player : AbstractLifeform {
         var leftTrigger = Input.GetAxis("X360_Trigger_L");
         if (leftTrigger < 1 && yAxis <= 0.8) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
+            // Set the animator
+            Animator.SetFloat("xVelocity", targetVelocityX);
         }
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
     }

@@ -62,6 +62,11 @@ public abstract class AbstractLifeform : BaseLifeform {
     /// </summary>
     protected CollisionController2D Controller;
 
+    /// <summary>
+    /// Every lifeform has at lesat 1 animation thats needed
+    /// </summary>
+    protected Animator Animator;
+
     //protected List<PickupableEnum> Pickups;
 
     /// <summary>
@@ -91,6 +96,12 @@ public abstract class AbstractLifeform : BaseLifeform {
         MaxJumpVelocity = Mathf.Abs(Gravity) * TimeToJumpApex;
         MinJumpVelocity = (maxJumpHeight == minJumpHeight ? MaxJumpVelocity : Mathf.Sqrt(2 * Mathf.Abs(Gravity) * minJumpHeight));
         print("Gravity: " + Gravity + "\n Jump Velocity: " + MaxJumpVelocity);
+
+        // Set the animator
+        Animator = GetComponent<Animator>();
+        if(Animator == null) {
+            print("Animator was not set - however this is allowed for not : just logging for notice purposes");
+        }
     }
 
     /// <summary>
