@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 114198371125133536}
   - component: {fileID: 95652358285276492}
   m_Layer: 0
-  m_Name: default_weapon_jva
+  m_Name: DefaultWeapon_jva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

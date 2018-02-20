@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 95767282165768114}
   - component: {fileID: 114254912571850218}
   m_Layer: 0
-  m_Name: shotgun_jva
+  m_Name: Shotgun_jva
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ Animator:
   m_GameObject: {fileID: 1458409896996352}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0ec3c27bc776af5498b15106b007426a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9d1f08c239a7c274f84226c2b024e893, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

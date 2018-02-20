@@ -64,13 +64,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerSprites:
-  - {fileID: 21300000, guid: ef49da5a525873046bdf8188d38d00c1, type: 3}
-  - {fileID: 21300000, guid: cc470222d0601ba4380f1ee12d083721, type: 3}
-  - {fileID: 21300000, guid: ea6f42a05dd1f7446b72f8b7f2ce4fc4, type: 3}
+  - {fileID: 21300004, guid: c786fac1e1542fd4fb8baf1fed961d6e, type: 3}
+  - {fileID: 21300004, guid: c786fac1e1542fd4fb8baf1fed961d6e, type: 3}
+  - {fileID: 21300004, guid: c786fac1e1542fd4fb8baf1fed961d6e, type: 3}
   - {fileID: 21300000, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   - {fileID: 21300002, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   - {fileID: 21300004, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   WeaponList:
-  - {fileID: 4795677035519362, guid: 2d2a3dcd94c36474daa9b19e7cb2b0f6, type: 2}
-  - {fileID: 4837475817054676, guid: 5debf3840e292094594dadf42ddfded6, type: 2}
+  - {fileID: 4795677035519362, guid: 6c6ffa406a5c286448d15ffe54c6754a, type: 2}
+  - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
   UIOverlay: {fileID: 0}

@@ -7,7 +7,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// Constant for the default, always owned weapon
     /// </summary>
-    public readonly string DEFAULT_WEAPON_NAME = "default_weapon";
+    public readonly string DEFAULT_WEAPON_NAME = "DefaultWeapon_jva";
 
     /// <summary>
     /// Currently equipped weapon

@@ -11,7 +11,7 @@ public class PlayerInputController : MonoBehaviour {
 
     // Just a useful link to the xbox 360 controller map
     // http://wiki.unity3d.com/index.php?title=Xbox360Controller
-
+     
     void Start() {
         Player = GetComponent<Player>();
     }
