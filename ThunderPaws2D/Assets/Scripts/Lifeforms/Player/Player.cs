@@ -100,13 +100,22 @@ public class Player : AbstractLifeform {
     }
 
     private void CalculateMovementAnimation() {
+        // Allows us to set the running animation accurately
         var xVelocity = DirectionalInput.x;
-        // Indication we are in the air - jumping or falling
-        var yVelocity = Velocity.y > 0 ? 0 : 1;
+        // Store the Y value for multiple uses
+        var yVelocity = Velocity.y;
+        // Indication we are jumping up
+        var jumping = yVelocity > 0;
+        // Indicates we are on the descent
+        var falling = yVelocity < 0 && !Controller.Collisions.FromBelow;
 
         // Play running animation if the Animator exists on the lifeform 
         if (Animator != null) {
-            Animator.SetFloat("xVelocity", Math.Abs(xVelocity * yVelocity));
+            Animator.SetBool("Jumping", jumping);
+            Animator.SetBool("Falling", falling);
+            // The only time we want to be playing the run animation is if we are grounded
+            var finalXVelocity = Math.Abs(xVelocity * (yVelocity > 0 ? 0 : 1)) * Convert.ToInt32(!Controller.Collisions.FromBelow);
+            Animator.SetFloat("xVelocity",Math.Abs(xVelocity * (yVelocity > 0 ? 0 : 1)));
         }
     }
 
