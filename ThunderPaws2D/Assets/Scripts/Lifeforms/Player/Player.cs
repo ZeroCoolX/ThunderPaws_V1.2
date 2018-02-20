@@ -101,18 +101,23 @@ public class Player : AbstractLifeform {
 
     private void CalculateMovementAnimation() {
         // Allows us to set the running animation accurately
-        var xVelocity = DirectionalInput.x;
+        var xVelocity = DirectionalInput.x * Convert.ToInt32(DirectionalInput.y <= 0.8);
         // Store the Y value for multiple uses
         var yVelocity = Velocity.y;
         // Indication we are jumping up
         var jumping = yVelocity > 0;
         // Indicates we are on the descent
-        var falling = yVelocity < 0 && !Controller.Collisions.FromBelow;
+        var falling = !jumping && !Controller.Collisions.FromBelow;
+        // Indicates we are crouching
+        var crouch = DirectionalInput.y < -0.25;
 
         // Play running animation if the Animator exists on the lifeform 
         if (Animator != null) {
             Animator.SetBool("Jumping", jumping);
             Animator.SetBool("Falling", falling);
+
+            Animator.SetBool("Crouching", crouch);
+
             // The only time we want to be playing the run animation is if we are grounded
             var finalXVelocity = Math.Abs(xVelocity * (yVelocity > 0 ? 0 : 1)) * Convert.ToInt32(!Controller.Collisions.FromBelow);
             Animator.SetFloat("xVelocity",Math.Abs(xVelocity * (yVelocity > 0 ? 0 : 1)));
@@ -130,7 +135,7 @@ public class Player : AbstractLifeform {
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis("X360_Trigger_L");
-        if (leftTrigger < 1 && yAxis <= 0.8) {
+        if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
             // Set the animator
             Animator.SetFloat("xVelocity", targetVelocityX);
