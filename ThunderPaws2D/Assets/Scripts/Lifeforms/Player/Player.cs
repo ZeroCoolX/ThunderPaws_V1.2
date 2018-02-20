@@ -115,9 +115,8 @@ public class Player : AbstractLifeform {
         if (Animator != null) {
             Animator.SetBool("Jumping", jumping);
             Animator.SetBool("Falling", falling);
-
             Animator.SetBool("Crouching", crouch);
-
+            Animator.SetBool("Melee", ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && Controller.Collisions.FromBelow));
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
             var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis("X360_Trigger_L") < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling);
             Animator.SetFloat("xVelocity", finalXVelocity);
