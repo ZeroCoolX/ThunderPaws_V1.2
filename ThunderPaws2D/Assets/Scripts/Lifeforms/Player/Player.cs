@@ -144,6 +144,7 @@ public class Player : AbstractLifeform {
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis("X360_Trigger_L");
+        // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
         if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25 && !_meleeActive) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
             // Set the animator
