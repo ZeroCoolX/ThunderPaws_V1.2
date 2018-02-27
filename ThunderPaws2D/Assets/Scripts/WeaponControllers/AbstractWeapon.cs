@@ -32,6 +32,11 @@ public abstract class AbstractWeapon : MonoBehaviour {
     public float BulletSpeed;
 
     /// <summary>
+    /// Optionally set parameter to indicate how long we want the bullet to stay alive. For shotguns we want this to be halved
+    /// </summary>
+    public float MaxLifetime = 0.5f;
+
+    /// <summary>
     /// Bullet graphics
     /// </summary>
     [Header("Abstract: Effects")]
@@ -103,6 +108,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
             projectile.gameObject.layer = LayerMask.NameToLayer(layer);
             projectile.Damage = Damage;
             projectile.MoveSpeed = BulletSpeed;
+            projectile.MaxLifetime = MaxLifetime;
             projectile.Fire(shotPos, shotNormal);
             if (!ultMode) return;
         }

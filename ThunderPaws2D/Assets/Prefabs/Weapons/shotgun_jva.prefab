@@ -103,6 +103,7 @@ MonoBehaviour:
   FireDelay: 1
   Damage: 10
   BulletSpeed: 25
+  MaxLifetime: 0.15
   BulletPrefab: {fileID: 4898206938333864, guid: 1b930c5f6caf5c64789fabc3ec520e20,
     type: 2}
   TimeToSpawnEffect: 0

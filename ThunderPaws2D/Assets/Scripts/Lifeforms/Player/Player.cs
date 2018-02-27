@@ -26,6 +26,11 @@ public class Player : AbstractLifeform {
     private Transform _weaponAnchor;
 
     /// <summary>
+    /// Reference to the weapon anchor animator to play idle, crouch, and melee animations
+    /// </summary>
+    private Animator _weaponAnchorAnimator;
+
+    /// <summary>
     /// Reference to user input either from a keyboard or controller
     /// </summary>
     public Vector2 DirectionalInput { get; set; }
@@ -55,6 +60,10 @@ public class Player : AbstractLifeform {
         InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
 
         _weaponAnchor = transform.Find("WeaponAnchor");
+        _weaponAnchorAnimator = _weaponAnchor.GetComponent<Animator>();
+        if(_weaponAnchorAnimator == null) {
+            throw new MissingComponentException("The weapon anchor is missing an animator.");
+        }
         CreateAndEquipWeapon(DEFAULT_WEAPON_NAME);
 
         if(_currentWeapon == null) {
@@ -130,6 +139,13 @@ public class Player : AbstractLifeform {
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
             var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis("X360_Trigger_L") < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
+
+            // Also inform the weapon animator that we are crouching
+            _weaponAnchorAnimator.SetBool("Crouch", crouch);
+
+            // We want to hold still if any movement (even just pointing ad different angles) is happeneing
+            var holdStill = (Input.GetAxis("X360_Trigger_L") >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
+            _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
         }
     }
 
