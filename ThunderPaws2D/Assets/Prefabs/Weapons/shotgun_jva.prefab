@@ -103,7 +103,7 @@ MonoBehaviour:
   FireDelay: 1
   Damage: 10
   BulletSpeed: 25
-  BulletPrefab: {fileID: 4898206938333864, guid: 5d37411a16af27c4aade58b5a36588ad,
+  BulletPrefab: {fileID: 4898206938333864, guid: 1b930c5f6caf5c64789fabc3ec520e20,
     type: 2}
   TimeToSpawnEffect: 0
   EffectSpawnRate: 10
@@ -149,7 +149,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: d19f83f5149268e47ab5c5ee8beb1957, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5cf8cde606739949aef789bb36f0d5f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

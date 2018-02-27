@@ -11,7 +11,7 @@ public class PlayerWeapon : AbstractWeapon {
     /// <summary>
     /// Indicates the weapon is in Ultimate Mode!
     /// </summary>
-    public bool UltMode { get; set; }
+    public bool UltMode {get;set;}
 
     /// <summary>
     /// Amount to shake camera by
@@ -78,6 +78,7 @@ public class PlayerWeapon : AbstractWeapon {
         if (_hasAmmo) {
             AmmoCheck();
         }
+        WeaponAnimator.SetBool("UltModeActive", UltMode);
     }
 
     /// <summary>
