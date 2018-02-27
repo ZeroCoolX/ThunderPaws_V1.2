@@ -40,6 +40,10 @@ public class Player : AbstractLifeform {
     /// </summary>
     private PlayerStats _playerStats;
 
+    /// <summary>
+    /// Indicates we are melee'ing and we shouldn't be able to move left or right during melee animation
+    /// </summary>
+    private bool _meleeActive = false;
 
 
     /// <summary>
@@ -110,15 +114,21 @@ public class Player : AbstractLifeform {
         var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are crouching
         var crouch = DirectionalInput.y < -0.25;
-
+        // Indicates we are tail whipping
+        var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && Controller.Collisions.FromBelow) || _meleeActive;
+        if(melee && !_meleeActive) {
+            _meleeActive = true;
+            //After 0.25 seconds deactivate melee
+            Invoke("DeactivateMeleeTrigger", 0.25f);
+        }
         // Play running animation if the Animator exists on the lifeform 
         if (Animator != null) {
             Animator.SetBool("Jumping", jumping);
             Animator.SetBool("Falling", falling);
             Animator.SetBool("Crouching", crouch);
-            Animator.SetBool("Melee", ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && Controller.Collisions.FromBelow));
+            Animator.SetBool("Melee", melee);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis("X360_Trigger_L") < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling);
+            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis("X360_Trigger_L") < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
         }
     }
@@ -134,7 +144,7 @@ public class Player : AbstractLifeform {
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis("X360_Trigger_L");
-        if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25) {
+        if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25 && !_meleeActive) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
             // Set the animator
             Animator.SetFloat("xVelocity", targetVelocityX);
@@ -276,6 +286,13 @@ public class Player : AbstractLifeform {
             weapon.GetComponent<PlayerWeapon>().UltMode = false;
         }
         CancelInvoke("DepleteUltimate");
+    }
+
+    /// <summary>
+    /// Helper method that ensures the player cannot walk during the melee animation
+    /// </summary>
+    private void DeactivateMeleeTrigger() {
+        _meleeActive = false;
     }
 
     /// <summary>
