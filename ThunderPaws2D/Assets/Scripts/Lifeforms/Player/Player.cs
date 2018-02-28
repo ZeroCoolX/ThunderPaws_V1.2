@@ -83,7 +83,22 @@ public class Player : AbstractLifeform {
         GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
     }
 
+    /// <summary>
+    /// This is strictly used for testing
+    /// </summary>
+    public Transform[] ShowroomSpawns = new Transform[4];
+    private int spawnIndex = -1;
+
     void Update() {
+        //This is strictly testing - take out almost all the time
+        if (Input.GetKeyDown(KeyCode.S)) {
+            if(spawnIndex < 0 || spawnIndex >= ShowroomSpawns.Length) {
+                spawnIndex = 0;
+            }
+            transform.position = ShowroomSpawns[spawnIndex].position;
+            ++spawnIndex;
+        }
+
         //Do not accumulate gravity if colliding with anythig vertical
         if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
             Velocity.y = 0;

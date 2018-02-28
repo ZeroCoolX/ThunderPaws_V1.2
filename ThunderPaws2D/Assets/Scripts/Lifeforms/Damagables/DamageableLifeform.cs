@@ -15,7 +15,7 @@ public class DamageableLifeform : BaseLifeform {
     /// <summary>
     /// Hoow many coins in the payloada
     /// </summary>
-    private int _coinsInPayload = 10;
+    public int _coinsInPayload = 10;
     /// <summary>
     /// Indicated we should flash white because we got damaged
     /// </summary>
