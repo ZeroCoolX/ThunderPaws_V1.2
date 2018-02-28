@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: WeaponRecoil
+  m_Name: WeaponUltAnimation
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -19,11 +19,7 @@ AnimationClip:
   m_PPtrCurves:
   - curve:
     - time: 0
-      value: {fileID: 21300000, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
-    - time: 0.016666668
-      value: {fileID: 21300002, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
-    - time: 0.033333335
-      value: {fileID: 21300004, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
+      value: {fileID: 21300000, guid: 293d82e39e5ec4a42bc28f60308b5729, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -43,20 +39,18 @@ AnimationClip:
       customType: 23
       isPPtrCurve: 1
     pptrCurveMapping:
-    - {fileID: 21300000, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
-    - {fileID: 21300002, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
-    - {fileID: 21300004, guid: 86be40a554e2a1e46bada3966c3047f7, type: 3}
+    - {fileID: 21300000, guid: 293d82e39e5ec4a42bc28f60308b5729, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.050000004
+    m_StopTime: 0.016666668
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 0
+    m_LoopTime: 1
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0

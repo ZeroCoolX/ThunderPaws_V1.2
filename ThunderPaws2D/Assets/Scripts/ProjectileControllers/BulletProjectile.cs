@@ -43,8 +43,8 @@ public class BulletProjectile : AbstractProjectile {
         //IF we hit a lifeform damage it - otherwise move on
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();
         if(lifeform != null) {
-            print("calling damage on lifeform!");
-            lifeform.Damage(10f);
+            print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+            lifeform.Damage(Damage);
         }
         GenerateEffect();
         Destroy(gameObject);

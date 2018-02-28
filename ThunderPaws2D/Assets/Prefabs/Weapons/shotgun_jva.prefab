@@ -101,7 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FireRate: 0
   FireDelay: 1
-  Damage: 10
+  Damage: 33
   BulletSpeed: 25
   MaxLifetime: 0.15
   BulletPrefab: {fileID: 4898206938333864, guid: 1b930c5f6caf5c64789fabc3ec520e20,
@@ -150,12 +150,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c5cf8cde606739949aef789bb36f0d5f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 293d82e39e5ec4a42bc28f60308b5729, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.6571429, y: 3.6571429}
+  m_Size: {x: 3.2, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
