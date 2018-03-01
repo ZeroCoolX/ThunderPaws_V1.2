@@ -56,8 +56,8 @@ public class Player : AbstractLifeform {
     /// Initialize physics values
     /// </summary>
     void Start() {
-        //Set all physics values 
-        InitializePhysicsValues(7f, 3f, 1f, 0.3f, 0.2f, 0.1f);
+        //Set all physics values  - originally 3 and 1
+        InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
 
         _weaponAnchor = transform.Find("WeaponAnchor");
         _weaponAnchorAnimator = _weaponAnchor.GetComponent<Animator>();

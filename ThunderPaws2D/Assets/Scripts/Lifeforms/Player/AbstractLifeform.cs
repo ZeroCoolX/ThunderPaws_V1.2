@@ -89,7 +89,8 @@ public abstract class AbstractLifeform : BaseLifeform {
         Controller = GetComponent<CollisionController2D>();
         //Calculate gravity and jump velocity
         if (gravity == -1) {
-            Gravity = -(2 * MaxJumpHeight) / Mathf.Pow(TimeToJumpApex, 2);
+            // originally 2
+            Gravity = -(2.5f * MaxJumpHeight) / Mathf.Pow(TimeToJumpApex, 2);
         } else {
             Gravity = gravity;
         }

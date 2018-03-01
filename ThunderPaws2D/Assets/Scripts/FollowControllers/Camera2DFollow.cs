@@ -45,7 +45,7 @@ namespace UnityStandardAssets._2D {
 
             Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
             // TODO: add this offset as a configurable variable
-            aheadTargetPos.y += 5;
+            aheadTargetPos.y += 3;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
             newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), newPos.z);
 
