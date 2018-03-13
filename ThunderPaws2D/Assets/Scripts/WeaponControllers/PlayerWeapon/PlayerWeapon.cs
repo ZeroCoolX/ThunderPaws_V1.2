@@ -70,7 +70,7 @@ public class PlayerWeapon : AbstractWeapon {
             Debug.LogError("Weapon.cs: No CameraShake found on game master");
             throw new MissingComponentException();
         }
-        _hasAmmo = !gameObject.name.Equals(_player.DEFAULT_WEAPON_NAME);
+        _hasAmmo = !gameObject.name.Equals(GameConstants.ObjectName_DefaultWeapon);
     }
 
     private void Update() {
@@ -97,12 +97,12 @@ public class PlayerWeapon : AbstractWeapon {
     /// </summary>
     protected override void HandleShootingInput() {
         if (FireRate == 0) {//Single fire
-            var rightTrigger = Input.GetAxis("X360_Trigger_R");
-            if (Input.GetButtonUp("Fire1") || rightTrigger == 0) {
+            var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
+            if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
                 _fireButtonPressed = false;
                 _holdingFireDown = false;
             }
-            if((Input.GetButton("Fire1") || rightTrigger > 0)) {
+            if((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > 0)) {
                 if (!_fireButtonPressed) {
                     _fireButtonPressed = true;
                     _initialFirePressTime = Time.time + _fireHoldthreshold;
@@ -161,7 +161,7 @@ public class PlayerWeapon : AbstractWeapon {
                 directionInput = _player.FacingRight ? Vector2.right : Vector2.left;
             }
             //Actually instantiate the effect
-            GenerateEffect(directionInput, hitNormal, WhatToHit, "PLAYER_PROJECTILE", UltMode);
+            GenerateEffect(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
             GenerateCamShake();
             ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;

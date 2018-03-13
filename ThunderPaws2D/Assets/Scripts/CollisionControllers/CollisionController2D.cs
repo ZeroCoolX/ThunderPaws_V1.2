@@ -17,7 +17,7 @@ public class CollisionController2D : RaycastController {
     /// <summary>
     /// Sound name to play when we land
     /// </summary>
-    public string JumpLanding = "JumpLanding";
+    public string JumpLanding = GameConstants.Audio_JumpLanding;
     /// <summary>
     /// AudiManager reference for playing sounds
     /// </summary>

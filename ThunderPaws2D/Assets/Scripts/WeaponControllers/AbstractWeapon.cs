@@ -67,7 +67,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     public bool IsBurst = false;
 
     protected void Start() {
-        FirePoint = transform.Find("FirePoint");
+        FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (FirePoint == null) {
             Debug.LogError("AbstractWeapon.cs: No firePoint found");
             throw new UnassignedReferenceException();

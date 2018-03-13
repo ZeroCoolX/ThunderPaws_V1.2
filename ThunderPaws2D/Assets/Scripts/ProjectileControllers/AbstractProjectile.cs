@@ -67,7 +67,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += HitTarget;
-        Collider.Initialize(WhatToHit, TargetDirection, TargetPos, MoveSpeed, "OBSTACLE-THROUGH");
+        Collider.Initialize(WhatToHit, TargetDirection, TargetPos, MoveSpeed, GameConstants.Layer_ObstacleThrough);
     }
 
     /// <summary>

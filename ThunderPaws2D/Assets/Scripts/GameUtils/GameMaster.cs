@@ -73,7 +73,7 @@ public class GameMaster : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         if (Instance == null) {
-            Instance = GameObject.FindGameObjectWithTag("GAMEMASTER").GetComponent<GameMaster>();
+            Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
         }
 
         //Load sprites for player animation map
@@ -101,7 +101,7 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetButtonUp("X360_LBumper")) {
+        if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper)) {
             OnWeaponSwitch.Invoke();
         }
     }
@@ -177,7 +177,7 @@ public class GameMaster : MonoBehaviour {
         var statsName = "Player" + player + "Stats";
         var stats = UIOverlay.transform.Find(statsName).GetComponent<PlayerStatsUIController>();
         if (stats == null) {
-            throw new MissingComponentException("AAttempted to extract " + statsName + " but found none");
+            throw new MissingComponentException("Attempted to extract " + statsName + " but found none");
         }
         return stats;
     }

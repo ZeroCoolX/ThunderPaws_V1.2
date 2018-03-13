@@ -37,16 +37,16 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No ultimateBarRect found");
             throw new UnassignedReferenceException();
         }
-        _playerImage = transform.Find("PlayerImage").GetComponent<Image>();
+        _playerImage = transform.Find(GameConstants.ObjectName_PlayerImage).GetComponent<Image>();
         if (_playerImage == null) {
             Debug.LogError("No playerImage found");
             throw new UnassignedReferenceException();
         }
-        _ultimateIndicator = transform.Find("UltIndicator");
+        _ultimateIndicator = transform.Find(GameConstants.ObjectName_UltimateIndicator);
         if(_ultimateIndicator == null) {
             throw new MissingComponentException("Missing an ultimate indicator");
         }
-        _ultimateBarAnimator = transform.Find("BarContainer").Find("UltimateBar").GetComponent<Animator>();
+        _ultimateBarAnimator = transform.Find(GameConstants.ObjectName_BarContainer).Find(GameConstants.ObjectName_UltimateBar).GetComponent<Animator>();
         if (_ultimateBarAnimator == null) {
             Debug.LogError("No ultimateBarAnimator found");
             throw new UnassignedReferenceException();

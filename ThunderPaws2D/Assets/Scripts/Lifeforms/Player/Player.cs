@@ -4,10 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : AbstractLifeform {
-    /// <summary>
-    /// Constant for the default, always owned weapon
-    /// </summary>
-    public readonly string DEFAULT_WEAPON_NAME = "DefaultWeapon_jva";
 
     /// <summary>
     /// Currently equipped weapon
@@ -59,12 +55,12 @@ public class Player : AbstractLifeform {
         //Set all physics values  - originally 3 and 1
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
 
-        _weaponAnchor = transform.Find("WeaponAnchor");
+        _weaponAnchor = transform.Find(GameConstants.ObjectName_WeaponAnchor);
         _weaponAnchorAnimator = _weaponAnchor.GetComponent<Animator>();
         if(_weaponAnchorAnimator == null) {
             throw new MissingComponentException("The weapon anchor is missing an animator.");
         }
-        CreateAndEquipWeapon(DEFAULT_WEAPON_NAME);
+        CreateAndEquipWeapon(GameConstants.ObjectName_DefaultWeapon);
 
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
@@ -152,14 +148,14 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Crouching", crouch);
             Animator.SetBool("Melee", melee);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis("X360_Trigger_L") < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
+            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
             _weaponAnchorAnimator.SetBool("Crouch", crouch);
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
-            var holdStill = (Input.GetAxis("X360_Trigger_L") >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
+            var holdStill = (Input.GetAxis(GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
             _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
         }
     }
@@ -174,7 +170,7 @@ public class Player : AbstractLifeform {
         }
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
-        var leftTrigger = Input.GetAxis("X360_Trigger_L");
+        var leftTrigger = Input.GetAxis(GameConstants.Input_Xbox_LTrigger);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
         if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25 && !_meleeActive) {
             targetVelocityX = DirectionalInput.x * MoveSpeed;
@@ -237,7 +233,7 @@ public class Player : AbstractLifeform {
     /// </summary>
     /// <param name="weaponKey"></param>
     public void CreateAndEquipWeapon(string weaponKey) {
-        if (weaponKey != DEFAULT_WEAPON_NAME) {
+        if (weaponKey != GameConstants.ObjectName_DefaultWeapon) {
             _currentWeapon.gameObject.SetActive(false);
         }
         _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);

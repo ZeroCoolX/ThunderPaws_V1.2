@@ -75,7 +75,7 @@ public class CoinController : MonoBehaviour {
 
     private void SetupCoinCollider() {
         //Add delegate for collision detection
-        CoinCollider = transform.Find("Pickup").GetComponent<SimpleCollider>();
+        CoinCollider = transform.Find(GameConstants.ObjectName_Pickup).GetComponent<SimpleCollider>();
         if (CoinCollider == null) {
             throw new MissingComponentException("No collider for the coin object");
         }
