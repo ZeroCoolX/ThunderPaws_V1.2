@@ -239,11 +239,12 @@
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsUIController.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\AbstractProjectile.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\BulletProjectile.cs" />
-    <Compile Include="Assets\Scripts\WeaponControllers\AbstractWeapon.cs" />
-    <Compile Include="Assets\Scripts\WeaponControllers\PlasmaRifle.cs" />
-    <Compile Include="Assets\Scripts\WeaponControllers\PlayerWeapon\PlayerWeapon.cs" />
-    <Compile Include="Assets\Scripts\WeaponControllers\Shotgun.cs" />
-    <Compile Include="Assets\Scripts\WeaponControllers\Weapon.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\AbstractWeapon.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\EmissionIndex.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\FatCat.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\GaussRifle.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\PlasmaRifle.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\Shotgun.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\DefaultColorFlash.shader" />

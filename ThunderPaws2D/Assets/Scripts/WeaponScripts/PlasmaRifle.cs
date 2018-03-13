@@ -3,22 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlasmaRifle : Weapon {
-    
-    /// <summary>
-    /// Amount to shake camera by
-    /// </summary>
-    public float CamShakeAmount = 0.025f;
-    /// <summary>
-    /// Length of time to shake camera
-    /// </summary>
-    public float CamShakeLength = 0.1f;
-
-    /// <summary>
-    /// Need a reference to the player this weapon is aattached to so we can get the direction input
-    /// </summary>
-    private Player _player;
-
+public class PlasmaRifle : AbstractWeapon {
     /// <summary>
     /// Indicates the player is holding down the fire button
     /// </summary>
@@ -37,16 +22,6 @@ public class PlasmaRifle : Weapon {
     /// </summary>
     private float _initialFirePressTime;
 
-
-
-    protected new void Start() {
-        base.Start();
-        _player = transform.parent.parent.GetComponent<Player>();
-        if (_player == null) {
-            throw new MissingComponentException("This is massively bad... No Player.cs found on the Player");
-        }
-    }
-
     private void Update() {
         HandleShootingInput();
         if (HasAmmo) {
@@ -55,14 +30,6 @@ public class PlasmaRifle : Weapon {
         WeaponAnimator.SetBool("UltModeActive", UltMode);
     }
 
-    /// <summary>
-    /// Check if this weapon still has ammo
-    /// </summary>
-    private void AmmoCheck() {
-        if (Ammo == 0) {
-            _player.RemoveOtherWeapon(transform);
-        }
-    }
 
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
@@ -75,36 +42,33 @@ public class PlasmaRifle : Weapon {
     /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
-        if (FireRate == 0) {//Single fire
-            var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
-            if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
-                _fireButtonPressed = false;
-                _holdingFireDown = false;
-            }
-            if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > 0)) {
-                if (!_fireButtonPressed) {
-                    _fireButtonPressed = true;
-                    _initialFirePressTime = Time.time + _fireHoldthreshold;
-                }
-                //They're been holding for longer than 0.5s so auto fire
-                _holdingFireDown = _fireButtonPressed && Time.time > _initialFirePressTime;
-
-            }
-            if (_holdingFireDown) {
-                if (Time.time > TimeToFire) {
-                    TimeToFire = Time.time + 0.25f;
-                    CalculateShot();
-                }
-            } else {
-                if (_fireButtonPressed) {
-                    CalculateShot();
-                }
-            }
+        var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
+        // Indicates the user his not pressing the trigger nor the fire key
+        if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
+            _fireButtonPressed = false;
+            _holdingFireDown = false;
         }
+        // Indicates the user is trying to fire
+        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > 0.25)) {
+            if (!_fireButtonPressed) {
+                CalculateShot();
+                _fireButtonPressed = true;
+                _initialFirePressTime = Time.time + _fireHoldthreshold;
+            }
+            // They've been holding for longer than 0.5s so auto fire
+            _holdingFireDown = _fireButtonPressed && (Time.time > _initialFirePressTime);
+
+        }
+        if (_holdingFireDown) {
+            if (Time.time > TimeToFire) {
+                TimeToFire = Time.time + 0.25f;
+                CalculateShot();
+            }
+        } 
     }
 
     protected override void CalculateShot() {
-        Vector2 directionInput = _player.DirectionalInput;
+        Vector2 directionInput = Player.DirectionalInput;
 
         //Store bullet origin spawn popint (A)
         Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
@@ -130,11 +94,11 @@ public class PlasmaRifle : Weapon {
 
             var yAxis = directionInput.y;
             if (((yAxis > 0.3 && yAxis < 0.8))) {
-                directionInput = (Vector2.up + (_player.FacingRight ? Vector2.right : Vector2.left)).normalized;
+                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (yAxis > 0.8) {
                 directionInput = Vector2.up;
             } else {
-                directionInput = _player.FacingRight ? Vector2.right : Vector2.left;
+                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
             }
             //Actually instantiate the effect
             GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
@@ -179,9 +143,5 @@ public class PlasmaRifle : Weapon {
             projectile.Fire(shotPos, shotNormal);
             if (!ultMode) return;
         }
-    }
-
-    protected override void GenerateCameraShake() {
-        CamShake.Shake(CamShakeAmount, CamShakeLength);
     }
 }

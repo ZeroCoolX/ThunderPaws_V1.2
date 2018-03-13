@@ -2,20 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour {
+public abstract class AbstractWeapon : MonoBehaviour {
 
+    //******************************************* Camera properties *******************************************//
     /// <summary>
     /// Reference to the camera shake script
     /// </summary>
     protected CameraShake CamShake;
     /// <summary>
+    /// Amount to shake camera by
+    /// </summary>
+    public float CamShakeAmount = 0.025f;
+    /// <summary>
+    /// Length of time to shake camera
+    /// </summary>
+    public float CamShakeLength = 0.1f;
+
+
+    //******************************************* Animation Properties *******************************************//
+    /// <summary>
     /// Weapon for the weapon
     /// </summary>
     protected Animator WeaponAnimator;
+
+
+    //******************************************* Weapon Properties *******************************************//
     /// <summary>
     /// Graphics spawning: delay from spawning
     /// </summary>
-    [Header("Abstract: TimeAttributes")]
     public float TimeToSpawnEffect = 0f;
     /// <summary>
     /// Rate at which the effect should spawn
@@ -43,29 +57,26 @@ public abstract class Weapon : MonoBehaviour {
     /// </summary>
     public int Damage;
     /// <summary>
-    /// LayuerMask indicating what to hit
+    /// Every weapon aside from the default one has ammo that runs out eventually
     /// </summary>
-    public LayerMask WhatToHit;
+    public int Ammo;
 
+
+    //******************************************* Triggers *******************************************//
     /// <summary>
     /// Indicates if this weapon has ammo. All weapons have a finite amount of ammo except the default weapon
     /// </summary>
     protected bool HasAmmo;
     /// <summary>
-    /// Every weapon aside from the default one has ammo that runs out eventually
-    /// </summary>
-    public int Ammo;
-
-    /// <summary>
     /// Indicates the weapon is in Ultimate Mode!
     /// </summary>
     public bool UltMode { get; set; }
 
-    //******************************************* Optional *******************************************//
+
+    //******************************************* Optional Projectile Properties *******************************************//
     /// <summary>
     /// Bullet graphics
     /// </summary>
-    [Header("Abstract: Effects")]
     public Transform BulletPrefab;
     /// <summary>
     /// Optionally set param to indicate How fast the bullet travels
@@ -76,6 +87,17 @@ public abstract class Weapon : MonoBehaviour {
     /// </summary>
     public float MaxLifetime = 0.5f;
 
+    //******************************************* Extra Properties *******************************************//
+    /// <summary>
+    /// Need a reference to the player this weapon is aattached to so we can get the direction input
+    /// </summary>
+    protected Player Player;
+    /// <summary>
+    /// LayuerMask indicating what to hit
+    /// </summary>
+    public LayerMask WhatToHit;
+
+
 
     // Implementations must override how and when to apply recoil
     protected abstract void ApplyRecoil();
@@ -84,12 +106,18 @@ public abstract class Weapon : MonoBehaviour {
 
     protected abstract void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f);
 
-    protected abstract void GenerateCameraShake();
+
 
     /// <summary>
     /// Setup the weapon
     /// </summary>
     protected void Start() {
+        // Get the player this weapon is attached to
+        Player = transform.parent.parent.GetComponent<Player>();
+        if (Player == null) {
+            throw new MissingComponentException("This is massively bad... No Player.cs found on the Player");
+        }
+
         // Find the fire point - where the bullet origin will be
         FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (FirePoint == null) {
@@ -113,6 +141,15 @@ public abstract class Weapon : MonoBehaviour {
     }
 
     /// <summary>
+    /// Check if this weapon still has ammo
+    /// </summary>
+    protected void AmmoCheck() {
+        if (Ammo == 0) {
+            Player.RemoveOtherWeapon(transform);
+        }
+    }
+
+    /// <summary>
     /// Resets the animator
     /// </summary>
     /// <returns></returns>
@@ -131,5 +168,9 @@ public abstract class Weapon : MonoBehaviour {
             return rot;
         }
         return new Quaternion(Mathf.Abs(rot.x), Mathf.Abs(rot.y), Mathf.Abs(rot.z), rot.w);
+    }
+
+    protected void GenerateCameraShake() {
+        CamShake.Shake(CamShakeAmount, CamShakeLength);
     }
 }
