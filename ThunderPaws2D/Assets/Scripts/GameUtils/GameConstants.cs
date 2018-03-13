@@ -13,7 +13,7 @@ public class GameConstants {
 
     // Game object names
     public static string ObjectName_Pickup = "Pickup";
-    public static string ObjectName_DefaultWeapon = "DefaultWeapon_jva";
+    public static string ObjectName_DefaultWeapon = "PlasmaRifle";
     public static string ObjectName_WeaponAnchor = "WeaponAnchor";
     public static string ObjectName_UltimateIndicator = "UltIndicator";
     public static string ObjectName_PlayerImage = "PlayerImage";

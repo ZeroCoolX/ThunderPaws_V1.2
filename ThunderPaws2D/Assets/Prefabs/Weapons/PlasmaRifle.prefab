@@ -9,16 +9,16 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1458409896996352}
+  m_RootGameObject: {fileID: 1655051013322078}
   m_IsPrefabParent: 1
---- !u!1 &1277776296449870
+--- !u!1 &1650879315234378
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4238767026078708}
+  - component: {fileID: 4116513237807038}
   m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
@@ -26,61 +26,61 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1458409896996352
+--- !u!1 &1655051013322078
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4837475817054676}
-  - component: {fileID: 212496629544865582}
-  - component: {fileID: 95767282165768114}
-  - component: {fileID: 114254912571850218}
+  - component: {fileID: 4795677035519362}
+  - component: {fileID: 212479537771549468}
+  - component: {fileID: 95652358285276492}
+  - component: {fileID: 114563262228359984}
   m_Layer: 0
-  m_Name: Shotgun_jva
+  m_Name: PlasmaRifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4238767026078708
+--- !u!4 &4116513237807038
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1277776296449870}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.643, y: 0.044, z: 0}
+  m_GameObject: {fileID: 1650879315234378}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.034, y: 0.11, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4837475817054676}
+  m_Father: {fileID: 4795677035519362}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4837475817054676
+--- !u!4 &4795677035519362
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458409896996352}
+  m_GameObject: {fileID: 1655051013322078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4238767026078708}
+  - {fileID: 4116513237807038}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95767282165768114
+--- !u!95 &95652358285276492
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458409896996352}
+  m_GameObject: {fileID: 1655051013322078}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9d1f08c239a7c274f84226c2b024e893, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0ec3c27bc776af5498b15106b007426a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -88,40 +88,38 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114254912571850218
+--- !u!114 &114563262228359984
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458409896996352}
+  m_GameObject: {fileID: 1655051013322078}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b0314ceacc24014380416e6ff31aba6, type: 3}
+  m_Script: {fileID: 11500000, guid: 69294f9da1fb2cd4eb6fc15850304817, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireRate: 0
-  FireDelay: 1
-  Damage: 33
-  BulletSpeed: 25
-  MaxLifetime: 0.1
-  BulletPrefab: {fileID: 4898206938333864, guid: 1b930c5f6caf5c64789fabc3ec520e20,
-    type: 2}
   TimeToSpawnEffect: 0
   EffectSpawnRate: 10
-  _timeToFire: 0
-  IsBurst: 0
-  CamShakeAmount: 0.025
-  CamShakeLength: 0.1
+  FireRate: 0
+  FireDelay: 1
+  Damage: 5
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
-  Ammo: 25
---- !u!212 &212496629544865582
+  Ammo: -117
+  BulletPrefab: {fileID: 4659474290433748, guid: 82084d0bcef61f348bf206459e4eece0,
+    type: 2}
+  BulletSpeed: 25
+  MaxLifetime: 0.5
+  CamShakeAmount: 0.025
+  CamShakeLength: 0.1
+--- !u!212 &212479537771549468
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1458409896996352}
+  m_GameObject: {fileID: 1655051013322078}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -150,12 +148,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 293d82e39e5ec4a42bc28f60308b5729, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 19adab13d531c99469e5a5388870c1d0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 3.2, y: 1.6}
+  m_Size: {x: 3.6571429, y: 3.6571429}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
