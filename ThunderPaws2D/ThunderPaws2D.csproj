@@ -245,6 +245,9 @@
     <Compile Include="Assets\Scripts\WeaponScripts\GaussRifle.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\PlasmaRifle.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Shotgun.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\PlasmaRifleConfig.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\ShotgunConfig.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\WeaponConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\DefaultColorFlash.shader" />

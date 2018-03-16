@@ -21,7 +21,7 @@ public class Shotgun : AbstractWeapon {
         }
         // Get the player fire input
         var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
-        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > 0.25)) {
+        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             CalculateShot();
         }
         if (HasAmmo) {

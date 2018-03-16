@@ -49,7 +49,7 @@ public class PlasmaRifle : AbstractWeapon {
             _holdingFireDown = false;
         }
         // Indicates the user is trying to fire
-        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > 0.25)) {
+        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             if (!_fireButtonPressed) {
                 CalculateShot();
                 _fireButtonPressed = true;
