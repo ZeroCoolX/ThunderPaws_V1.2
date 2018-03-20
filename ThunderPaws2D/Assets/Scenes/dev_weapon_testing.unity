@@ -125,7 +125,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4600665347041842, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -7.18
+      value: -6.73
       objectReference: {fileID: 0}
     - target: {fileID: 4600665347041842, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f, type: 2}
       propertyPath: m_LocalPosition.z
@@ -162,7 +162,43 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1501338578048110, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212497095657811464, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4309ea0f4488d2842896ab1d6f6fe4bf,
+        type: 3}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.10449529
+      objectReference: {fileID: 0}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.0589671
+      objectReference: {fileID: 0}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.056776047
+      objectReference: {fileID: 0}
+    - target: {fileID: 61920936186256320, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 2.0782928
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fb4e71445e9b8424eb9a6aa5a8a57e3f, type: 2}
@@ -524,7 +560,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 668950108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -316, y: 283.3, z: 0}
+  m_LocalPosition: {x: -427, y: 283.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1135846118}
@@ -1363,7 +1399,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1399859066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 565.5, y: 318, z: 0}
+  m_LocalPosition: {x: 676.5, y: 318, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 668950109}
