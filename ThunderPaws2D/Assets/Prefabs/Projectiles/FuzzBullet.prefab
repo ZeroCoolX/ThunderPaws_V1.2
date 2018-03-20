@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 114933265235229270}
   - component: {fileID: 114994144921853518}
   m_Layer: 11
-  m_Name: BulletProjectile
+  m_Name: FuzzBullet
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 94b3d4fb5f7155e43842b9b5c5354ad4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d046db49b362467409ee0203c14cbd4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4817874658325376}
   m_Layer: 0
-  m_Name: WeaponPickup
+  m_Name: GaussPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -163,7 +163,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 716f24d823be3b94d80a51149a5c3f79, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 648aa56caf2b4a04892f85d464f57cf4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

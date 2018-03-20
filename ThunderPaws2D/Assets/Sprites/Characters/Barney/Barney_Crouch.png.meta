@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 82980dc2cb4c2af4eb56fb588bbc739b
-timeCreated: 1521576281
+timeCreated: 1521577744
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -85,10 +85,10 @@ TextureImporter:
       name: Barney_Crouch_0
       rect:
         serializedVersion: 2
-        x: 6
-        y: 2
-        width: 40
-        height: 34
+        x: 0
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,10 +99,10 @@ TextureImporter:
       name: Barney_Crouch_1
       rect:
         serializedVersion: 2
-        x: 54
-        y: 2
-        width: 40
-        height: 34
+        x: 48
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -113,10 +113,10 @@ TextureImporter:
       name: Barney_Crouch_2
       rect:
         serializedVersion: 2
-        x: 102
-        y: 2
-        width: 40
-        height: 34
+        x: 96
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,10 +127,10 @@ TextureImporter:
       name: Barney_Crouch_3
       rect:
         serializedVersion: 2
-        x: 150
-        y: 2
-        width: 40
-        height: 34
+        x: 144
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

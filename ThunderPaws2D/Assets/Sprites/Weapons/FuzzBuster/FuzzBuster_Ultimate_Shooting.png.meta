@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: a77a6c9502e589641b702ced8ba7f18b
-timeCreated: 1521576584
+timeCreated: 1521578630
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -85,11 +85,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 7
-        width: 41
-        height: 21
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        y: 0
+        width: 48
+        height: 32
+      alignment: 9
+      pivot: {x: 0.180776, y: 0.515873}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -98,12 +98,12 @@ TextureImporter:
       name: FuzzBuster_Ultimate_Shooting_1
       rect:
         serializedVersion: 2
-        x: 49
-        y: 5
-        width: 45
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 48
+        y: 0
+        width: 48
+        height: 32
+      alignment: 9
+      pivot: {x: 0.180776, y: 0.515873}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -112,12 +112,12 @@ TextureImporter:
       name: FuzzBuster_Ultimate_Shooting_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 6
-        width: 45
-        height: 26
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 96
+        y: 0
+        width: 48
+        height: 32
+      alignment: 9
+      pivot: {x: 0.180776, y: 0.515873}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

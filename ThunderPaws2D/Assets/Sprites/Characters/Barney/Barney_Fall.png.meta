@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: ca24b5f51a0beb941bb45afad390bbee
-timeCreated: 1521576331
+timeCreated: 1521577733
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -85,10 +85,10 @@ TextureImporter:
       name: Barney_Fall_0
       rect:
         serializedVersion: 2
-        x: 3
-        y: 3
-        width: 40
-        height: 44
+        x: 0
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -99,10 +99,10 @@ TextureImporter:
       name: Barney_Fall_1
       rect:
         serializedVersion: 2
-        x: 51
-        y: 3
-        width: 40
-        height: 44
+        x: 48
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -113,10 +113,10 @@ TextureImporter:
       name: Barney_Fall_2
       rect:
         serializedVersion: 2
-        x: 99
-        y: 3
-        width: 40
-        height: 44
+        x: 96
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,10 +127,10 @@ TextureImporter:
       name: Barney_Fall_3
       rect:
         serializedVersion: 2
-        x: 147
-        y: 3
-        width: 40
-        height: 44
+        x: 144
+        y: 0
+        width: 48
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
