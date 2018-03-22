@@ -8,11 +8,23 @@ public class Shotgun : AbstractWeapon {
     /// <summary>
     /// How long should the shotgun blast extend
     /// </summary>
-    private float _rayLength = 8;
+    private float _rayLength = 5;
 
     private float[] _blastRotations = new float[] { 11.25f, 5.625f, 0f, 348.75f, 354.375f };
 
     private Vector2[] _debugBlastRotations = new Vector2[7];
+
+    private bool _triggerLetGo = true;
+
+    /// <summary>
+    /// Some weapons have seperate blast prefabs
+    /// </summary>
+    public Transform BlastPrefab;
+
+    /// <summary>
+    /// Some weapons have seperate blast prefabs
+    /// </summary>
+    public Transform UltBlastPrefab;
 
     /// <summary>
     /// Sprite animatio to play when the bullet impacts
@@ -20,14 +32,23 @@ public class Shotgun : AbstractWeapon {
     public Transform ImpactEffect;
 
     private void Update() {
+        // Get the player fire input
+        var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
+        // This checks if the player released the trigger in between shots - because the shotgun is not full auto
+        if (!_triggerLetGo) {
+            if(rightTrigger <= WeaponConfig.TriggerFireThreshold) {
+                _triggerLetGo = true;
+            }
+        }
 
         for (var i = 1; i < _debugBlastRotations.Length; ++i) {
             Debug.DrawRay(_debugBlastRotations[0], _debugBlastRotations[i] * _rayLength, Color.green);
         }
-        // Get the player fire input
-        var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
-        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+
+        if (_triggerLetGo && (Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+            _triggerLetGo = false;
             CalculateShot();
+            ApplyRecoil();
         }
         if (HasAmmo) {
             AmmoCheck();
@@ -40,9 +61,50 @@ public class Shotgun : AbstractWeapon {
         StartCoroutine(ResetWeaponPosition());
     }
 
+    /// <summary>
+    /// Generate blast effect prefab.
+    /// This had to be independent because the weapon recoil animation is independent of the blast animation.
+    /// Also the blast is a seperate prefab so it stays in its position and doesn't continue tracking the gun once fired
+    /// </summary>
+    /// <param name="shotPos"></param>
+    /// <param name="shotNormal"></param>
+    /// <param name="whatToHit"></param>
+    protected void GenerateBlastEffect(Vector3 shotPos) {
+        // Spawn the blast effect so it stays in the position it spawns at and doesn't follow the gun - because that looks super weird
+        var blastRotation = CompensateQuaternion(FirePoint.rotation);
+
+        // Pad the X coordinate to ensure the blast is at the tip of the gun. 0.5 is an arbitrary number that seems to fit
+        var paddedX = (Player.Velocity.x * Time.deltaTime) + FirePoint.position.x + (0.5f * (Player.FacingRight ? 1 : -1));
+
+        // Pad the Z coordinate to ensure the blast is over the top of everything
+        var fixedPosition = new Vector3(paddedX, FirePoint.position.y, FirePoint.position.z - 5);
+        Transform blastInstance = Instantiate(!UltMode ? BlastPrefab : UltBlastPrefab, fixedPosition, blastRotation) as Transform;
+
+        // Account for needing to mirror the sprite
+        if (Mathf.Sign(shotPos.x) < 0) {
+            Vector3 theScale = blastInstance.transform.localScale;
+            theScale.x *= -1;
+            blastInstance.transform.localScale = theScale;
+        }
+        blastInstance.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        blastInstance.GetComponent<DeathTimer>().TimeToLive = 0.25f;
+        blastInstance.GetComponent<Animator>().SetBool("Invoke", false);
+    }
+
     protected override void CalculateShot() {
         if (Time.time >= TimeToSpawnEffect) {
-            // Generate 5 raycasts 45, 22.5, 0, 337.5, 315 degrees
+            Vector2 dir = Player.DirectionalInput;
+            var preCalcYaxis = dir.y;
+            if (((preCalcYaxis > 0.3 && preCalcYaxis < 0.8))) {
+                dir = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
+            } else if (preCalcYaxis > 0.8) {
+                dir = Vector2.up;
+            } else {
+                dir = Player.FacingRight ? Vector2.right : Vector2.left;
+            }
+            GenerateBlastEffect(dir);
+
+            // Generate 5 raycasts degrees
             // Rotation around the z axis
             var i = 1;
             var collisionMap = new Dictionary<string, Collider2D>();
@@ -90,7 +152,7 @@ public class Shotgun : AbstractWeapon {
                 ++i;
             }
 
-            foreach(var collider in collisionMap) {
+            foreach (var collider in collisionMap) {
                 HitTarget(collider.Value);
             }
 
@@ -136,4 +198,5 @@ public class Shotgun : AbstractWeapon {
     protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5F) {
         throw new NotImplementedException();
     }
+
 }

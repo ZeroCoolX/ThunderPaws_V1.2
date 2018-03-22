@@ -1,14 +1,13 @@
 fileFormatVersion: 2
-guid: f588f0f0fad6ffb42b2b9565b6be4a51
-timeCreated: 1521676630
+guid: 11ba68f587728674dac381700d7f9c4b
+timeCreated: 1521748179
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Shotgun_Shooting_0
-    21300002: Shotgun_Shooting_1
-    21300004: Shotgun_Shooting_2
-    21300006: Shotgun_Shooting_3
-    21300008: Shotgun_Shooting_4
+    21300000: Shotgun_Blast_FurtherRange_0
+    21300002: Shotgun_Blast_FurtherRange_1
+    21300004: Shotgun_Blast_FurtherRange_2
+    21300006: Shotgun_Blast_FurtherRange_3
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -83,21 +82,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Shotgun_Shooting_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 145
-        height: 77
-      alignment: 9
-      pivot: {x: 0.07229531, y: 0.49088204}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: Shotgun_Shooting_1
+      name: Shotgun_Blast_FurtherRange_0
       rect:
         serializedVersion: 2
         x: 145
@@ -105,13 +90,13 @@ TextureImporter:
         width: 145
         height: 77
       alignment: 9
-      pivot: {x: 0.07229531, y: 0.490882}
+      pivot: {x: 0.23787346, y: 0.54803616}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Shotgun_Shooting_2
+      name: Shotgun_Blast_FurtherRange_1
       rect:
         serializedVersion: 2
         x: 290
@@ -119,13 +104,13 @@ TextureImporter:
         width: 145
         height: 77
       alignment: 9
-      pivot: {x: 0.07229531, y: 0.490882}
+      pivot: {x: 0.2378735, y: 0.5480362}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Shotgun_Shooting_3
+      name: Shotgun_Blast_FurtherRange_2
       rect:
         serializedVersion: 2
         x: 435
@@ -133,13 +118,13 @@ TextureImporter:
         width: 145
         height: 77
       alignment: 9
-      pivot: {x: 0.07229531, y: 0.490882}
+      pivot: {x: 0.2378735, y: 0.5480362}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Shotgun_Shooting_4
+      name: Shotgun_Blast_FurtherRange_3
       rect:
         serializedVersion: 2
         x: 580
@@ -147,7 +132,7 @@ TextureImporter:
         width: 145
         height: 77
       alignment: 9
-      pivot: {x: 0.07229531, y: 0.490882}
+      pivot: {x: 0.2378735, y: 0.5480362}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
