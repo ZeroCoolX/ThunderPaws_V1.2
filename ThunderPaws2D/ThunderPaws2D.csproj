@@ -242,8 +242,8 @@
     <Compile Include="Assets\Scripts\WeaponScripts\AbstractWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\EmissionIndex.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\FatCat.cs" />
+    <Compile Include="Assets\Scripts\WeaponScripts\FuzzBuster.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\GaussRifle.cs" />
-    <Compile Include="Assets\Scripts\WeaponScripts\PlasmaRifle.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\Shotgun.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\PlasmaRifleConfig.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\ShotgunConfig.cs" />

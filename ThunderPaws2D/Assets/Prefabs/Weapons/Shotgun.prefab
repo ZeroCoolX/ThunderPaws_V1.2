@@ -105,14 +105,16 @@ MonoBehaviour:
   EffectSpawnRate: 10
   FireRate: 0
   FireDelay: 1
-  Damage: 0
+  Damage: 15
   Ammo: 100
   BulletPrefab: {fileID: 0}
   BulletSpeed: 0
   MaxLifetime: 0.5
   WhatToHit:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16384
+  ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
+    type: 2}
 --- !u!212 &212496629544865582
 SpriteRenderer:
   m_ObjectHideFlags: 1

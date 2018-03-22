@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlasmaRifle : AbstractWeapon {
+public class FuzzBuster : AbstractWeapon {
     /// <summary>
     /// Indicates the player is holding down the fire button
     /// </summary>
