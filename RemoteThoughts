@@ -1,14 +1,15 @@
-* Perhaps for art as a whole - move to a more 2.5D design.
+
+- ~~Perhaps for art as a whole - move to a more 2.5D design.~~ **Complete. base sprites are now 48x48 giving more room for detail**
 I think we're still early enough that the current pieces can be transposed to 2.5D to add more depth.
 Going forward I think it will add a better visual feel to the game.
 Also it will allow for more detail since 2/3 of whatever image we're drawing will now be shown instead of strictly 50%
 
-.* Idea for one of the bosses : (Similar to first boss in Nier)
+- Idea for one of the bosses : (Similar to first boss in Nier)
   Head and two hands. Hands shoot out the projectiles - you have to blow up each hand for the head to become vulnerable
   Then the head needs to be destroyed as it is also tryingto kill you.
   1/3 health for each hand and the head.
 
-* Idea for weapon (Particle beam, Molecule Rearranger, Gene ripper, Idk on a name just yet).
+- ~~Idea for weapon (Particle beam, Molecule Rearranger, Gene ripper, Idk on a name just yet).~~ **Complete. Emission Index**
 Inspiration is that of the Spartan Lazer from halo.
 Lazor that charges up. Has something like a 0.5s charge rate and then fires a massive (as tall as the player) lazor straight in 
 whatever direction the player was aiming at fire time.
