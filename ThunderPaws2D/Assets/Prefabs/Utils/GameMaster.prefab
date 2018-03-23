@@ -73,4 +73,5 @@ MonoBehaviour:
   WeaponList:
   - {fileID: 4795677035519362, guid: 6c6ffa406a5c286448d15ffe54c6754a, type: 2}
   - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
+  - {fileID: 4795677035519362, guid: 39de33104479d134e851ef57b2189e8d, type: 2}
   UIOverlay: {fileID: 0}

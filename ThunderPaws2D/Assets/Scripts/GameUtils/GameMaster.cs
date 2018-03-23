@@ -21,7 +21,7 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     private Dictionary<int, Sprite> _playerSpiteMap = new Dictionary<int, Sprite>();
 
-    public Transform[] WeaponList = new Transform[2];
+    public Transform[] WeaponList = new Transform[3];
     private Dictionary<string, Transform> _weaponMap = new Dictionary<string, Transform>();
 
     /// <summary>
@@ -88,7 +88,7 @@ public class GameMaster : MonoBehaviour {
         //Load weapon map
         _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
         _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);
-
+        _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);
     }
 
     private void Start() {
