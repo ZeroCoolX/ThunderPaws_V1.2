@@ -120,10 +120,26 @@ public class FuzzBuster : AbstractWeapon {
     protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
-        var verticalUltOffset = 0.25f;
+        var yUltOffset = 0.25f;
+        var xUltOffset = 0.25f;
         for (var i = 0; i < 3; ++i) {
             var firePosition = FirePoint.position;
-            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? verticalUltOffset : verticalUltOffset * -1) : 0);
+
+            // This calculation is necessary so the bullets don't stack on top of eachother
+            var yAxis = Player.DirectionalInput.y;
+            if (((yAxis > 0.3 && yAxis < 0.8))) {
+                yUltOffset = 0.125f;
+                xUltOffset = 0.125f;
+            } else if (yAxis > 0.8) {
+                yUltOffset = 0f;
+                xUltOffset = 0.25f;
+            } else {
+                yUltOffset = 0.25f;
+                xUltOffset = 0f;
+            }
+
+            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
+            firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();

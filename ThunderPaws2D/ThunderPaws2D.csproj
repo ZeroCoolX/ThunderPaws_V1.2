@@ -222,6 +222,7 @@
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
+    <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />

@@ -230,6 +230,7 @@ public class Player : AbstractLifeform {
 
     /// <summary>
     /// Creates a new instance of the weapon and equips it. This is used for picking up the weapons on map
+    /// If a special weapon is already equipped this weapon should remove that weapon and take its place
     /// </summary>
     /// <param name="weaponKey"></param>
     public void CreateAndEquipWeapon(string weaponKey) {
@@ -238,7 +239,13 @@ public class Player : AbstractLifeform {
         }
         _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
         _currentWeapon.gameObject.SetActive(true);
-        _ownedWeapons.Add(_currentWeapon);
+        if(_ownedWeapons.Count == 2) {
+            var previousWeapon = _ownedWeapons[1];
+            Destroy(previousWeapon.gameObject);
+            _ownedWeapons[1] = _currentWeapon;
+        }else {
+            _ownedWeapons.Add(_currentWeapon);
+        }
         print("Created weapon: " + _currentWeapon.gameObject.name);
     }
 
