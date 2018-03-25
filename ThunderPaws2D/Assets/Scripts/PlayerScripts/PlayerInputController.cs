@@ -22,8 +22,14 @@ public class PlayerInputController : MonoBehaviour {
         
         Vector2 directionalInput = new Vector2(Input.GetAxisRaw(GameConstants.Input_Horizontal), Input.GetAxisRaw(GameConstants.Input_Vertical));
         Player.DirectionalInput = directionalInput;
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.Joystick1Button0)) {
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(GameConstants.Input_Jump)) {
             Player.OnJumpInputUp();
         }
+        //if (Input.GetButtonDown("Melee")) {
+        //    Player.OnMeleeInputDown();
+        //}
+        //if (Input.GetButtonDown("Roll")) {
+        //    Player.OnRollInputDown();
+        //}
     }
 }

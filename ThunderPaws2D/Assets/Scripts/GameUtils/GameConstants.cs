@@ -28,6 +28,9 @@ public class GameConstants {
     public static string Input_Horizontal = "Horizontal";
     public static string Input_Vertical = "Vertical";
     public static string Input_Fire = "Fire1";
+    public static string Input_Jump = "Jump";
+    public static string Input_Melee = "Melee";
+    public static string Input_Roll = "Roll";
 
     // Layer names
     public static string Layer_PlayerProjectile = "PLAYER_PROJECTILE";

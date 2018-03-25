@@ -45,6 +45,18 @@ public class Player : AbstractLifeform {
     /// Indicates we are melee'ing and we shouldn't be able to move left or right during melee animation
     /// </summary>
     private bool _meleeActive = false;
+    /// <summary>
+    /// How far should the melee hit
+    /// </summary>
+    private int _meleeRaycastLength = 1.5;
+    /// <summary>
+    /// Specify which layers te melee should collide with
+    /// </summary>
+    private LayerMask _meleeLayerMask;
+    /// <summary>
+    /// How much damage to apply for each melee
+    /// </summary>
+    public float MeleeDamage = 10f;
 
 
     /// <summary>
@@ -77,6 +89,10 @@ public class Player : AbstractLifeform {
         GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
         _playerStats.CurrentUltimate = 0;
         GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+
+        // Bitshift the DAMAGEABLE layermask because that is what we want to hit
+        // 14 = DAMAGEABLE
+        _meleeLayerMask = 1 << 14;
     }
 
     /// <summary>
@@ -134,10 +150,11 @@ public class Player : AbstractLifeform {
         var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are crouching
         var crouch = DirectionalInput.y < -0.25;
-        // Indicates we are tail whipping
-        var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Joystick1Button1)) && Controller.Collisions.FromBelow) || _meleeActive;
+        // Indicates we are melee'ing
+        var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("Melee")) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
+            OnMeleeInputDown();
             //After 0.25 seconds deactivate melee
             Invoke("DeactivateMeleeTrigger", 0.25f);
         }
@@ -165,7 +182,7 @@ public class Player : AbstractLifeform {
     /// </summary>
     private void CalculateVelocityOffInput() {
         //check if user - or NPC - is trying to jump and is standing on the ground
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Joystick1Button0)) && Controller.Collisions.FromBelow) {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
             Velocity.y = MaxJumpVelocity;
         }
         var yAxis = DirectionalInput.y;
@@ -187,6 +204,34 @@ public class Player : AbstractLifeform {
         if (Velocity.y > MinJumpVelocity) {
             Velocity.y = MinJumpVelocity;
         }
+    }
+
+    /// <summary>
+    /// Handles Melee logic
+    /// Fire raycast out in forward facing direction
+    /// If it hits anything, damage the thing - only lifeforms
+    /// </summary>
+    public void OnMeleeInputDown() {
+        _meleeActive = true;
+        print("Melee'ing");
+        //Mini raycast to check handle ellusive targets
+        RaycastHit2D raycast = Physics2D.Raycast(transform.position, FacingRight ? Vector3.right : Vector3.left, _meleeRaycastLength, _meleeLayerMask);
+        //We want to allow bullets to pass throught obstacles that the player can pass through
+        if (raycast.collider != null) {
+            //IF we hit a lifeform damage it - otherwise move on
+            var lifeform = raycast.collider.transform.GetComponent<BaseLifeform>();
+            if (lifeform != null) {
+                print("hit lifeform: " + lifeform.gameObject.name + " and did " + MeleeDamage + " damage");
+                lifeform.Damage(MeleeDamage);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Handles roll logic
+    /// </summary>
+    public void OnRollInputDown() {
+
     }
 
     /// <summary>
