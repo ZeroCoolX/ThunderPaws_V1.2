@@ -192,6 +192,9 @@ public class Player : AbstractLifeform {
             var holdStill = (Input.GetAxis(GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
             _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
         }
+
+        // Set the weapons inactive if either the roll or melee animation is playing
+        _currentWeapon.gameObject.SetActive(!_rollActive && !_meleeActive);
     }
 
     /// <summary>
