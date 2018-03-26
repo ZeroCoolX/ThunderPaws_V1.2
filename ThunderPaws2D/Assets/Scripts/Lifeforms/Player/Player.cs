@@ -48,7 +48,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// How far should the melee hit
     /// </summary>
-    private int _meleeRaycastLength = 1.5;
+    private float _meleeRaycastLength = 2.5f;
     /// <summary>
     /// Specify which layers te melee should collide with
     /// </summary>
@@ -57,6 +57,16 @@ public class Player : AbstractLifeform {
     /// How much damage to apply for each melee
     /// </summary>
     public float MeleeDamage = 10f;
+
+
+    /// <summary>
+    /// Indicates we are rolling
+    /// </summary>
+    private bool _rollActive = false;
+    /// <summary>
+    /// How fast the roll speed is
+    /// </summary>
+    private float _rollSpeed = 16f;
 
 
     /// <summary>
@@ -133,7 +143,7 @@ public class Player : AbstractLifeform {
         }
 
         //User is pressing the ultimate button - Inform the player
-        if (Input.GetKeyUp(KeyCode.Joystick1Button3) && _playerStats.UltReady) {
+        if (Input.GetButtonUp(GameConstants.Input_Ultimate) && _playerStats.UltReady) {
             print("Pressing ult and we're ready!");
             ActivateUltimate();
         }
@@ -150,12 +160,15 @@ public class Player : AbstractLifeform {
         var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are crouching
         var crouch = DirectionalInput.y < -0.25;
+        // Indicates we are rolling
+        var rolling = ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown(GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
         // Indicates we are melee'ing
-        var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown("Melee")) && Controller.Collisions.FromBelow) || _meleeActive;
+        var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
-            OnMeleeInputDown();
-            //After 0.25 seconds deactivate melee
+            // Wait for half the animation to play so it looks like the object takes damage as the fist hits them instead of instantly on button press
+            Invoke("OnMeleeInputDown", 0.125f);
+            // After 0.25 seconds deactivate melee
             Invoke("DeactivateMeleeTrigger", 0.25f);
         }
         // Play running animation if the Animator exists on the lifeform 
@@ -164,6 +177,7 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Falling", falling);
             Animator.SetBool("Crouching", crouch);
             Animator.SetBool("Melee", melee);
+            Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
             var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
@@ -209,7 +223,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// Handles Melee logic
     /// Fire raycast out in forward facing direction
-    /// If it hits anything, damage the thing - only lifeforms
+    /// If it hits anything, damage the thing - only lifeforms.
     /// </summary>
     public void OnMeleeInputDown() {
         _meleeActive = true;

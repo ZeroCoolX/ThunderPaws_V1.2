@@ -31,6 +31,7 @@ public class GameConstants {
     public static string Input_Jump = "Jump";
     public static string Input_Melee = "Melee";
     public static string Input_Roll = "Roll";
+    public static string Input_Ultimate = "Ultimate";
 
     // Layer names
     public static string Layer_PlayerProjectile = "PLAYER_PROJECTILE";

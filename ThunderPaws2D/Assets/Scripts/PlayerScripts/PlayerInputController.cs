@@ -25,11 +25,5 @@ public class PlayerInputController : MonoBehaviour {
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(GameConstants.Input_Jump)) {
             Player.OnJumpInputUp();
         }
-        //if (Input.GetButtonDown("Melee")) {
-        //    Player.OnMeleeInputDown();
-        //}
-        //if (Input.GetButtonDown("Roll")) {
-        //    Player.OnRollInputDown();
-        //}
     }
 }
