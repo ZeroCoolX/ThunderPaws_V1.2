@@ -66,7 +66,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// How fast the roll speed is
     /// </summary>
-    private float _rollSpeed = 16f;
+    private float _rollSpeed = 6f;
 
 
     /// <summary>
@@ -162,6 +162,9 @@ public class Player : AbstractLifeform {
         var crouch = DirectionalInput.y < -0.25;
         // Indicates we are rolling
         var rolling = ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetButtonDown(GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
+        if(rolling && !_rollActive) {
+            _rollActive = true;
+        }
         // Indicates we are melee'ing
         var melee = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
@@ -179,7 +182,7 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger, and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive);
+            var finalXVelocity = Math.Abs(xVelocity) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
@@ -204,7 +207,13 @@ public class Player : AbstractLifeform {
         var leftTrigger = Input.GetAxis(GameConstants.Input_Xbox_LTrigger);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
         if (leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25 && !_meleeActive) {
-            targetVelocityX = DirectionalInput.x * MoveSpeed;
+            // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
+            // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
+            if(DirectionalInput.x != 0f && _rollActive) {
+                targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
+            } else {
+                targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+            }
             // Set the animator
             Animator.SetFloat("xVelocity", targetVelocityX);
         }
@@ -387,6 +396,13 @@ public class Player : AbstractLifeform {
     /// </summary>
     private void DeactivateMeleeTrigger() {
         _meleeActive = false;
+    }
+
+    /// <summary>
+    /// Helper method that ensures the player cannot walk during the melee animation
+    /// </summary>
+    private void DeactivateRollTrigger() {
+        _rollActive = false;
     }
 
     /// <summary>
