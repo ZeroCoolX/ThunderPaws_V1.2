@@ -44,19 +44,19 @@ public class DamageableLifeform : BaseLifeform {
     /// <summary>
     /// collision detection controller
     /// </summary>
-    private CollisionController2D _controller;
+    protected CollisionController2D Controller;
 
     // Use this for initialization
-    void Start () {
+    public void Start () {
         //Phsyics controller used for all collision detection
-        _controller = transform.GetComponent<CollisionController2D>();
-        if(_controller == null) {
+        Controller = transform.GetComponent<CollisionController2D>();
+        if(Controller == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
     }
 
     // Update is called once per frame
-    void Update () {
+    public void Update () {
         if (_damage) {
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0.8f);
             _damage = false;
@@ -69,11 +69,10 @@ public class DamageableLifeform : BaseLifeform {
             Destroy(gameObject);
         }
         //Do not accumulate gravity if colliding with anythig vertical
-        if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
+        if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
             Velocity.y = 0;
         }
         ApplyGravity();
-        _controller.Move(Velocity * Time.deltaTime, Vector2.left);//TODO: remove hardcoded direction
     }
 
     private void GenerateCoinPayload() {
@@ -106,7 +105,7 @@ public class DamageableLifeform : BaseLifeform {
         _damage = true;
     }
 
-    private void ApplyGravity() {
+    protected void ApplyGravity() {
         Velocity.y += Gravity * Time.deltaTime;
     }
 }

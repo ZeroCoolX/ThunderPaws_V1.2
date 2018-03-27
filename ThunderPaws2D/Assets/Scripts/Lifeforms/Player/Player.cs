@@ -432,6 +432,6 @@ public class Player : AbstractLifeform {
     }
 
     public override void Damage(float dmg) {
-        throw new NotImplementedException();
+        DamagePlayer();
     }
 }

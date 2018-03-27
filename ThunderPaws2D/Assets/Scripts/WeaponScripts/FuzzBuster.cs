@@ -143,7 +143,6 @@ public class FuzzBuster : AbstractWeapon {
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-            //TODO will have to be changed when diagonal directional shooting comes into play - take out when we pass in the rotation of the bullet
             if (Mathf.Sign(shotPos.x) < 0) {
                 Vector3 theScale = projectile.transform.localScale;
                 theScale.x *= -1;
