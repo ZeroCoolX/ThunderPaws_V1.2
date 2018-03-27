@@ -125,6 +125,7 @@ public class GaussRifle : AbstractWeapon {
         for (var i = 0; i < 3; ++i) {
             var firePosition = FirePoint.position;
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? verticalUltOffset : verticalUltOffset * -1) : 0);
+            //firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();

@@ -127,9 +127,15 @@ public class FuzzBuster : AbstractWeapon {
 
             // This calculation is necessary so the bullets don't stack on top of eachother
             var yAxis = Player.DirectionalInput.y;
+            print("yAxis = " + yAxis);
             if (((yAxis > 0.3 && yAxis < 0.8))) {
-                yUltOffset = 0.125f;
-                xUltOffset = 0.125f;
+                if (Player.FacingRight) {//This is the source of the problem
+                    yUltOffset = 0.125f;
+                    xUltOffset = 0.5f;
+                } else {
+                    yUltOffset = 0.25f;
+                    xUltOffset = 0.25f;
+                }
             } else if (yAxis > 0.8) {
                 yUltOffset = 0f;
                 xUltOffset = 0.25f;
@@ -141,6 +147,7 @@ public class FuzzBuster : AbstractWeapon {
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
+            print("Bullet position : " + bulletInstance.position);
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {
