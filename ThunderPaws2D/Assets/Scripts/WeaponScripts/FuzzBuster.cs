@@ -129,13 +129,10 @@ public class FuzzBuster : AbstractWeapon {
             var yAxis = Player.DirectionalInput.y;
             print("yAxis = " + yAxis);
             if (((yAxis > 0.3 && yAxis < 0.8))) {
-                if (Player.FacingRight) {//This is the source of the problem
-                    yUltOffset = 0.125f;
-                    xUltOffset = 0.5f;
-                } else {
-                    yUltOffset = 0.25f;
-                    xUltOffset = 0.25f;
-                }
+                yUltOffset = 0.125;
+                // There is one single special case - when the player is facing right, and looking at 45 degrees.
+                // Coorindates must then be +, - instead of all + or all -
+                xUltOffset = 0.125 * (Player.FacingRight ? -1 : 1);
             } else if (yAxis > 0.8) {
                 yUltOffset = 0f;
                 xUltOffset = 0.25f;
