@@ -22,10 +22,9 @@ GameObject:
   - component: {fileID: 212409509080490964}
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
-  - component: {fileID: 95661654946873380}
-  - component: {fileID: 114154121435458892}
+  - component: {fileID: 114309157922438426}
   m_Layer: 14
-  m_Name: Testrobot_GL1
+  m_Name: Testrobot_FL1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.85, y: -1.14, z: -1}
+  m_LocalPosition: {x: -18.298191, y: -1.7355332, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4782572345265172}
@@ -85,7 +84,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.026383162, y: 0.0429914}
+  m_Offset: {x: -0.0035858154, y: 0.014802694}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -96,26 +95,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.2151914, y: 2.1058621}
+  m_Size: {x: 1.5647583, y: 1.7366815}
   m_EdgeRadius: 0
---- !u!95 &95661654946873380
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1321417408384644}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 12eef75847dd361419864973554c6136, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114154121435458892
+--- !u!114 &114309157922438426
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -123,18 +105,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321417408384644}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
+  m_Script: {fileID: 11500000, guid: bbcc80f0790dc2148a99c26587d984e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  _coinsInPayload: 50
-  Health: 20
+  _coinsInPayload: 15
+  Health: 50
   Gravity: 0
   Velocity: {x: 0, y: 0, z: 0}
-  TurnAround: 0
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
-    type: 2}
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,7 +169,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 891aae398205a2a4688707f617c6360d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9d3a36a2518d3994eaf9eb6cd16aa0b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

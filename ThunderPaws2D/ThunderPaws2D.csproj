@@ -231,6 +231,7 @@
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_GL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Base\BaseLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Damagables\DamageableLifeform.cs" />
