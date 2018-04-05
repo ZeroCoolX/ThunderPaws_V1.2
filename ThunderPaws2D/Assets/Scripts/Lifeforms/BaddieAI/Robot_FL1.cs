@@ -99,7 +99,7 @@ public class Robot_FL1 : DamageableLifeform {
     private void Update() {
         base.Update();
 
-        if (!OverPlayer()) {
+        if (!OverPlayer() && !_bombDropInitiated) {
             // Find out where the target is in reference to this.
             var directionToTarget = transform.position.x - _target.position.x;
             CalcualteFacingDirection(directionToTarget);
@@ -162,7 +162,7 @@ public class Robot_FL1 : DamageableLifeform {
         projectile.MaxLifetime = 10;
         projectile.Fire(Vector2.down, (_facingRight ? Vector2.right : Vector2.left));
         // Make sure we don't drop another bomb till at LEAST 2 seconds
-        Invoke("ResetBombDrop", 2f);
+        Invoke("ResetBombDrop", 0.5f);
     }
 
     /// <summary>
