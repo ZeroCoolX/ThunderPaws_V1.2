@@ -24,11 +24,11 @@ public class Robot_FL1 : DamageableLifeform {
     /// <summary>
     /// The lowest this baddie can fly
     /// </summary>
-    private float _minHeight;
+    private float _minY;
     /// <summary>
     /// The highest this baddie can fly
     /// </summary>
-    private float _maxHeight;
+    private float _maxY;
     /// <summary>
     /// How fast can the baddie move
     /// </summary>
@@ -42,6 +42,7 @@ public class Robot_FL1 : DamageableLifeform {
     /// Only needed for the Math.SmoothDamp function
     /// </summary>
     private float _velocityXSmoothing;
+    private float _velocityYSmoothing;
     /// <summary>
     /// Need a reference to how close in the x direction we're trying to get
     /// </summary>
@@ -54,6 +55,11 @@ public class Robot_FL1 : DamageableLifeform {
     /// Indicates that a bomb is being dropped - so don't drop anymore until we're through
     /// </summary>
     private bool _bombDropInitiated = false;
+
+    private float _heightAbovePlayer;
+
+    private bool moveToNewY = false;
+    private float targetY;
 
     /// <summary>
     /// Find the player and begin tracking
@@ -79,6 +85,10 @@ public class Robot_FL1 : DamageableLifeform {
         if (Controller == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
+        _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
+        _minY = _target.position.y + 4;
+        print("min = " + _minY + " max = " + _maxY);
+        targetY = ChooseRandomHeight();
     }
 
     /// <summary>
@@ -97,9 +107,17 @@ public class Robot_FL1 : DamageableLifeform {
             CalculateVelocity();
 
             Controller.Move(Velocity * Time.deltaTime);
-        }else {
-            print("Over player!");
         }
+    }
+
+    /// <summary>
+    /// Choose a random height between 1 unit above the player, and the highest we can go without going out of the viewport
+    /// </summary>
+    /// <returns></returns>
+    private float ChooseRandomHeight() {
+        var randY = Random.Range(_minY, _maxY);
+        print("Random Y = " + randY);
+        return randY;
     }
 
     private bool OverPlayer() {
@@ -114,6 +132,21 @@ public class Robot_FL1 : DamageableLifeform {
 
     private void ResetBombDrop() {
         _bombDropInitiated = false;
+        targetY = ChooseRandomHeight();
+    }
+
+    private void CalculateVerticalThreshold() {
+        if(transform.position.y >= _maxY) {
+            print("Send it to the min");
+            targetY = _minY;
+        } else if(transform.position.y <= _minY) {
+            print("Send it to the max");
+            targetY = _maxY;
+        }else {
+            if(Mathf.Abs(transform.position.y - targetY) <= 0.25) {
+                targetY = ChooseRandomHeight();
+            }
+        }
     }
 
     private void DropBomb() {
@@ -138,6 +171,9 @@ public class Robot_FL1 : DamageableLifeform {
     private void CalculateVelocity() {
         float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, 0.2f);
+
+        CalculateVerticalThreshold();
+        Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY, ref _velocityYSmoothing, 1f);
     }
 
 
