@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Robot_GL1 : DamageableLifeform {
+    /// <summary>
+    /// Indicates this baddie is bound by ledges
+    /// </summary>
+    public bool LedgeBound = false;
+
     // These might be overkill
     /// <summary>
     /// Used for dampening movenents
@@ -82,6 +87,10 @@ public class Robot_GL1 : DamageableLifeform {
     /// </summary>
     private LayerMask _whatToHit;
 
+    private bool _turnAround = true;
+    private float _alertTimeThreshold = -1f;
+    private Vector2 _moveDirection = Vector2.left;
+
     /// <summary>
     /// How far out the baddie searches to see if it's on the same horizontal plane as the baddie
     /// This indicates it should start shooting in the direction of the target
@@ -117,21 +126,67 @@ public class Robot_GL1 : DamageableLifeform {
     public void Update() {
         base.Update();
 
-        // Find out where the target is in reference to this.
-        var directionToTarget = transform.position.x - _target.position.x;
+        if (LedgeBound) {
+            CalcualteFacingDirection(_moveDirection.x*-1);
+            if (Controller.Collisions.NearLedge && (_alertTimeThreshold == -1 || _alertTimeThreshold > Time.time)) {
+                print("pausing");
+                if (_alertTimeThreshold == -1) {
+                    _alertTimeThreshold = Time.time + 2f;
+                }
+                _moveDirection.x = 0;
+            }else if (Controller.Collisions.NearLedge && _turnAround) {
+                print("NEAR LEDGE!!!");
+                _moveDirection.x  = Vector2.right.x * (_facingRight ? -1f : 1f);
+                _turnAround = false;
+                Invoke("ResetTurnAround", 0.5f);
+            }
+            // Check if we can shoot at the target
+            // CheckForTargetInFront();
+            //Move the baddie
+            float targetVelocityX = _moveSpeed * _moveDirection.x;
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+            ApplyGravity();
 
-        // Check if we can shoot at the target
-        CheckForHorizontalEquality(directionToTarget);
+        } else {
+            // Find out where the target is in reference to this.
+            var directionToTarget = transform.position.x - _target.position.x;
 
-        // Face that direction
-        CalcualteFacingDirection(directionToTarget);
+            // Check if we can shoot at the target
+            CheckForHorizontalEquality(directionToTarget);
 
-        // Move in that direction
-        if (Time.time > _timeStopped) {
-            CalculateVelocity();
+            // Face that direction
+            CalcualteFacingDirection(directionToTarget);
+
+            // Move in that direction
+            if (Time.time > _timeStopped) {
+                CalculateVelocity();
+            }
         }
 
         Controller.Move(Velocity * Time.deltaTime);
+    }
+
+    private void ResetTurnAround() {
+        _turnAround = true;
+    }
+
+    private void CheckForTargetInFront() {
+        var targetLayer = 1 << 8;
+
+        Debug.DrawRay(transform.position, _moveDirection * _visionRaylength, Color.red);
+
+        RaycastHit2D horizontalCheck = Physics2D.Raycast(transform.position, _moveDirection, _visionRaylength, targetLayer);
+
+        if (horizontalCheck.collider != null) {
+            print("Hit!");
+            _alertTimeThreshold = Time.time;
+            // Has a chance to fire a bullet
+            _timeStopped = Time.time + _maxStopSeconds;
+            // Shoot a projectile towards the target in 1 second
+            _timeSinceLastFire = Time.time + _shotDelay;
+            Velocity.x = 0f;
+            Invoke("StopAndFire", 1f);
+        }
     }
 
     private void CheckForHorizontalEquality(float dirToTarget) {

@@ -274,7 +274,7 @@ public class CollisionController2D : RaycastController {
         //get direction of y velocity + up  - down
         float directionY = Mathf.Sign(velocity.y);
         //length of ray
-        float rayLength = Mathf.Abs(velocity.y) + SkinWidth;
+        float rayLength = Mathf.Abs(velocity.y) + SkinWidth * 2;
 
         //check in which direction we're moving
         Vector2 rayOrigin = (Mathf.Sign(velocity.x) == -1) ? RayOrigins.BottomLeft : RayOrigins.BottomRight;
