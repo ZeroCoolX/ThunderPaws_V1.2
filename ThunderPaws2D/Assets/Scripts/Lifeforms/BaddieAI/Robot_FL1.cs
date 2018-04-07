@@ -98,6 +98,8 @@ public class Robot_FL1 : DamageableLifeform {
     /// </summary>
     private void Update() {
         base.Update();
+        var rayLength = Vector2.Distance(transform.position, _target.position);
+        Debug.DrawRay(transform.position, Vector2.down * rayLength, Color.red);
 
         if (!OverPlayer() && !_bombDropInitiated) {
             // Find out where the target is in reference to this.
