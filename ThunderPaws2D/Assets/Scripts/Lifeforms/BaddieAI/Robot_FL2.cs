@@ -39,6 +39,16 @@ public class Robot_FL2 : DamageableLifeform {
     private Vector2[] _raycastAngles = new Vector2[] { new Vector2(-1, -1), Vector2.down, new Vector2(1, -1) };
 
     /// <summary>
+    /// Reference to the bullet prefab
+    /// </summary>
+    public Transform BulletPrefab;
+
+    /// <summary>
+    /// Delay in between shooting
+    /// </summary>
+    private float _timeToFire;
+
+    /// <summary>
     /// Find the player and begin tracking
     /// </summary>
     private void Start() {
@@ -65,7 +75,8 @@ public class Robot_FL2 : DamageableLifeform {
         _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
         _minY = _target.position.y + 6;
         print("min = " + _minY + " max = " + _maxY);
-        //targetY = ChooseRandomHeight();
+
+        _timeToFire = Time.time + 5f;
     }
 
     /// <summary>
@@ -82,6 +93,31 @@ public class Robot_FL2 : DamageableLifeform {
         var rayLength = Vector2.Distance(transform.position, _target.position);
         CalculateAngleCollisions(rayLength);
         Debug.DrawRay(transform.position, (_target.position - transform.position), Color.red);
+
+        CalculateFire();
+    }
+
+    private void CalculateFire() {
+        if(Time.time > _timeToFire) {
+            // Wait 5 seconds in between each shot
+            _timeToFire = Time.time + 3f;
+            Invoke("Fire", 0.1f);
+            Invoke("Fire", 0.15f);
+            Invoke("Fire", 0.2f);
+        }
+    }
+
+    private void Fire() {
+        Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
+        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+        AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
+
+        //Set layermask of parent (either player or baddie)
+        projectile.SetLayerMask(_whatToHit);
+        projectile.Damage = 5;
+        projectile.MoveSpeed = 12;
+        projectile.MaxLifetime = 10;
+        projectile.Fire(_target.position - transform.position, Vector2.up);
     }
 
     /// <summary>
