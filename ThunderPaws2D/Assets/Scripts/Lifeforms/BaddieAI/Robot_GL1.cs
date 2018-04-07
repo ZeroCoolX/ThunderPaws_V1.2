@@ -127,14 +127,16 @@ public class Robot_GL1 : DamageableLifeform {
         base.Update();
 
         if (LedgeBound) {
+            // Check if we can shoot at the target
+            CheckForTargetInFront();
+            if(_alertTimeThreshold >= Time.time) {
+                print("sTOPPING time");
+                Velocity = Vector2.zero;
+                return;
+            }
+
             CalcualteFacingDirection(_moveDirection.x*-1);
-            if (Controller.Collisions.NearLedge && (_alertTimeThreshold == -1 || _alertTimeThreshold > Time.time)) {
-                print("pausing");
-                if (_alertTimeThreshold == -1) {
-                    _alertTimeThreshold = Time.time + 2f;
-                }
-                _moveDirection.x = 0;
-            }else if (Controller.Collisions.NearLedge && _turnAround) {
+            if (Controller.Collisions.NearLedge && _turnAround) {
                 print("NEAR LEDGE!!!");
                 _moveDirection.x  = Vector2.right.x * (_facingRight ? -1f : 1f);
                 _turnAround = false;
@@ -176,10 +178,11 @@ public class Robot_GL1 : DamageableLifeform {
         Debug.DrawRay(transform.position, _moveDirection * _visionRaylength, Color.red);
 
         RaycastHit2D horizontalCheck = Physics2D.Raycast(transform.position, _moveDirection, _visionRaylength, targetLayer);
-
-        if (horizontalCheck.collider != null) {
+        if(horizontalCheck.collider != null) {
+            _alertTimeThreshold = Time.time + 2f;
+        }
+        if (horizontalCheck.collider != null && Time.time > _timeSinceLastFire) {
             print("Hit!");
-            _alertTimeThreshold = Time.time;
             // Has a chance to fire a bullet
             _timeStopped = Time.time + _maxStopSeconds;
             // Shoot a projectile towards the target in 1 second
