@@ -107,7 +107,6 @@ public class Robot_FL1 : DamageableLifeform {
             CalcualteFacingDirection(directionToTarget);
 
             CalculateVelocity();
-
             Controller.Move(Velocity * Time.deltaTime);
         }
     }
