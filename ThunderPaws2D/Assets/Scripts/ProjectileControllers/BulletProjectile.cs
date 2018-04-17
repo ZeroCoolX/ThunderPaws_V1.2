@@ -30,13 +30,13 @@ public class BulletProjectile : AbstractProjectile {
     protected override void HitTarget(Vector3 hitPos, Collider2D hitObject) {
         //Damage whoever we hit - or rocket jump
         Player player;
-        if (hitObject.gameObject.tag == GameConstants.Tag_Player) {
-            Debug.Log("We hit " + hitObject.name + " and did " + Damage + " damage");
-            player = hitObject.GetComponent<Player>();
-            if (player != null) {
-                //player.DamageHealth(Damage);
-            }
-        }
+        //if (hitObject.gameObject.tag == GameConstants.Tag_Player) {
+        //    Debug.Log("We hit " + hitObject.name + " and did " + Damage + " damage");
+        //    player = hitObject.GetComponent<Player>();
+        //    if (player != null) {
+        //       // player.Damage(Damage);
+        //    }
+        //}
         print("Hit object: " + hitObject.gameObject.tag);
         //IF we hit a lifeform damage it - otherwise move on
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();

@@ -111,17 +111,4 @@ public abstract class AbstractLifeform : BaseLifeform {
     /// </summary>
     protected abstract void ApplyGravity();
 
-    /// <summary>
-    /// Apply whatever pickup was found
-    /// </summary>
-    //public abstract void ApplyPickup(PickupableEnum pickupType);
-
-    /// <summary>
-    /// Add whatever pickup we collided with to the list
-    /// </summary>
-    /// <param name="pickup"></param>
-   // protected void AddPickupable(PickupableEnum pickup) {
-    //    Pickups.Add(pickup);
-   // }
-
 }

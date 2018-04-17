@@ -133,14 +133,14 @@ public class Player : AbstractLifeform {
         CalculateWeaponRotation();
 
         //Completely for testing
-        if (Input.GetKeyDown(KeyCode.Q)) {
-            DamagePlayer();
-        }
+        //if (Input.GetKeyDown(KeyCode.Q)) {
+        //    DamagePlayer();
+        //}
 
-        //Completely for testing
-        if (Input.GetKeyDown(KeyCode.F)) {
-            RegenerateAllHealth();
-        }
+        ////Completely for testing
+        //if (Input.GetKeyDown(KeyCode.F)) {
+        //    RegenerateAllHealth();
+        //}
 
         //User is pressing the ultimate button - Inform the player
         if (Input.GetButtonUp(GameConstants.Input_Ultimate) && _playerStats.UltReady) {
@@ -258,13 +258,6 @@ public class Player : AbstractLifeform {
                 lifeform.Damage(MeleeDamage);
             }
         }
-    }
-
-    /// <summary>
-    /// Handles roll logic
-    /// </summary>
-    public void OnRollInputDown() {
-
     }
 
     /// <summary>
@@ -418,9 +411,12 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// Player takes damage and updates the status
     /// </summary>
-    public void DamagePlayer() {
-        _playerStats.CurrentHealth -= 5;
+    public override void Damage(float dmg) {
+        _playerStats.CurrentHealth -= (int)dmg;
         GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
+        if(_playerStats.CurrentHealth <= 0) {
+            print("Player should die!");
+        }
     }
 
     /// <summary>
@@ -436,9 +432,5 @@ public class Player : AbstractLifeform {
     /// </summary>
     protected override void ApplyGravity() {
         Velocity.y += Gravity * Time.deltaTime;
-    }
-
-    public override void Damage(float dmg) {
-        DamagePlayer();
     }
 }
