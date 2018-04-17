@@ -187,6 +187,13 @@ public class Player : AbstractLifeform {
 
             // Also inform the weapon animator that we are crouching
             _weaponAnchorAnimator.SetBool("Crouch", crouch);
+            if (crouch) {
+                Controller.BoxCollider.size = new Vector2(Controller.BoxCollider.size.x, GameConstants.Data_PlayerCrouchSize);
+                Controller.BoxCollider.offset = new Vector2(Controller.BoxCollider.offset.x, GameConstants.Data_PlayerCrouchY);
+            } else {
+                Controller.BoxCollider.size = new Vector2(Controller.BoxCollider.size.x, GameConstants.Data_PlayerSize);
+                Controller.BoxCollider.offset = new Vector2(Controller.BoxCollider.offset.x, GameConstants.Data_PlayerY);
+            }
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
             var holdStill = (Input.GetAxis(GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
