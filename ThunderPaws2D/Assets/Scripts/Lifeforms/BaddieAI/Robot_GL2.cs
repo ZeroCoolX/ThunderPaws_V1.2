@@ -2,41 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot_GL1 : DamageableLifeform {
-    /// <summary>
-    /// Indicates this baddie is bound by ledges
-    /// </summary>
-    public bool LedgeBound = false;
-
-    // These might be overkill
-    /// <summary>
-    /// Used for dampening movenents
-    /// </summary>
-    protected float AccelerationTimeAirborne = 0.2f;
-    /// <summary>
-    /// Used for dampening movement
-    /// </summary>
-    protected float AccelerationTimeGrounded = 0.1f;
-
-    // These might be overkill as well
-    /// <summary>
-    /// Keep a reference to how far we've moved without stopping
-    /// </summary>
-    private float _unitsTraveledSinceLastStop = 0f;
-    /// <summary>
-    /// Max distance from last stop this baddie is allowed to go
-    /// </summary>
-    private float _maxUnitsAllowsToTravelBetweenStops;
-
-    /// <summary>
-    /// How fast the baddie moves
-    /// </summary>
-    private int _moveSpeed = 5;
-
-    /// <summary>
-    /// Just used as a reference for the Mathf.SmoothDamp function
-    /// </summary>
-    private float _velocityXSmoothing;
+public class Robot_GL2 : DamageableLifeform {
 
     /// <summary>
     /// Max time the baddie should stop foe
@@ -56,11 +22,6 @@ public class Robot_GL1 : DamageableLifeform {
     /// Random number of value to this means we should fire
     /// </summary>
     private float _timeSinceLastFire;
-
-    /// <summary>
-    /// Indicates if this baddie should turn around upon reaching the camera edge or a ledge edge
-    /// </summary>
-    public bool TurnAround = false;
 
     /// <summary>
     /// Who the baddie is focused on attacking
@@ -87,15 +48,17 @@ public class Robot_GL1 : DamageableLifeform {
     /// </summary>
     private LayerMask _whatToHit;
 
-    private bool _turnAround = true;
-    private float _alertTimeThreshold = -1f;
-    private Vector2 _moveDirection = Vector2.left;
+    /// <summary>
+    /// Reference to the animator
+    /// </summary>
+    private Animator _animator;
+
 
     /// <summary>
     /// How far out the baddie searches to see if it's on the same horizontal plane as the baddie
     /// This indicates it should start shooting in the direction of the target
     /// </summary>
-    private float _visionRaylength = 10f;
+    private float _visionRaylength = 20f;
 
     public void Start() {
         var playerLayer = 1 << 8;
@@ -113,6 +76,11 @@ public class Robot_GL1 : DamageableLifeform {
             _target = target.transform;
         }
 
+        _animator = transform.GetComponent<Animator>();
+        if(_animator == null) {
+            throw new MissingComponentException("There is no animator on this baddie");
+        }
+
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
             Debug.LogError("AbstractWeapon.cs: No firePoint found");
@@ -120,76 +88,19 @@ public class Robot_GL1 : DamageableLifeform {
         }
 
         Gravity = -25.08f;
-        Health = 5;
+        Health = 15;
+
+        // Find out where the target is in reference to this.
+        var directionToTarget = transform.position.x - _target.position.x;
+        CalcualteFacingDirection(directionToTarget);
     }
 
     public void Update() {
         base.Update();
-
-        if (LedgeBound) {
-            // Check if we can shoot at the target
-            CheckForTargetInFront();
-            if(_alertTimeThreshold >= Time.time) {
-                print("sTOPPING time");
-                Velocity = Vector2.zero;
-                return;
-            }
-
-            CalcualteFacingDirection(_moveDirection.x*-1);
-            if (Controller.Collisions.NearLedge && _turnAround) {
-                print("NEAR LEDGE!!!");
-                _moveDirection.x  = Vector2.right.x * (_facingRight ? -1f : 1f);
-                _turnAround = false;
-                Invoke("ResetTurnAround", 0.5f);
-            }
-            // Check if we can shoot at the target
-            // CheckForTargetInFront();
-            //Move the baddie
-            float targetVelocityX = _moveSpeed * _moveDirection.x;
-            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
-            ApplyGravity();
-
-        } else {
             // Find out where the target is in reference to this.
             var directionToTarget = transform.position.x - _target.position.x;
-
             // Check if we can shoot at the target
             CheckForHorizontalEquality(directionToTarget);
-
-            // Face that direction
-            CalcualteFacingDirection(directionToTarget);
-
-            // Move in that direction
-            if (Time.time > _timeStopped) {
-                CalculateVelocity();
-            }
-        }
-
-        Controller.Move(Velocity * Time.deltaTime);
-    }
-
-    private void ResetTurnAround() {
-        _turnAround = true;
-    }
-
-    private void CheckForTargetInFront() {
-        var targetLayer = 1 << 8;
-
-        Debug.DrawRay(_firePoint.position, _moveDirection * _visionRaylength, Color.red);
-
-        RaycastHit2D horizontalCheck = Physics2D.Raycast(_firePoint.position, _moveDirection, _visionRaylength, targetLayer);
-        if(horizontalCheck.collider != null) {
-            _alertTimeThreshold = Time.time + 2f;
-        }
-        if (horizontalCheck.collider != null && Time.time > _timeSinceLastFire) {
-            print("Hit!");
-            // Has a chance to fire a bullet
-            _timeStopped = Time.time + _maxStopSeconds;
-            // Shoot a projectile towards the target in 1 second
-            _timeSinceLastFire = Time.time + _shotDelay;
-            Velocity.x = 0f;
-            Invoke("StopAndFire", 1f);
-        }
     }
 
     private void CheckForHorizontalEquality(float dirToTarget) {
@@ -206,11 +117,12 @@ public class Robot_GL1 : DamageableLifeform {
             // Shoot a projectile towards the target in 1 second
             _timeSinceLastFire = Time.time + _shotDelay;
             Velocity.x = 0f;
-            Invoke("StopAndFire", 1f);
+            _animator.SetBool("ChargeAndFire", true);
+            Invoke("Fire", 1f);
         }
     }
 
-    private void StopAndFire() {
+    private void Fire() {
         print("Fire!");
         Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
@@ -222,6 +134,7 @@ public class Robot_GL1 : DamageableLifeform {
         projectile.MoveSpeed = 15;
         projectile.MaxLifetime = 10;
         projectile.Fire((_facingRight ? Vector2.right : Vector2.left), Vector2.up);
+        _animator.SetBool("ChargeAndFire", false);
     }
 
 
@@ -239,22 +152,4 @@ public class Robot_GL1 : DamageableLifeform {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-
-    /// <summary>
-    /// Calculate the velocity
-    /// </summary>
-    private void CalculateVelocity() {
-        float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
-        //CalculateRandomStop();
-        ApplyGravity();
-    }
-
-    //private void CalculateRandomStop() {
-    //    if (Random.Range(1, 10) == _randStopTarget) {
-    //        print("Randomly Stopping");
-    //        Velocity.x = 0f;
-    //        _timeStopped = Time.time + _maxStopSeconds;
-    //    }
-    //}
 }

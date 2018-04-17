@@ -19,7 +19,7 @@ public class DamageableLifeform : BaseLifeform {
     /// <summary>
     /// Indicated we should flash white because we got damaged
     /// </summary>
-    private bool _damage = false;
+    protected bool _damage = false;
     /// <summary>
     /// How much health this object has
     /// </summary>

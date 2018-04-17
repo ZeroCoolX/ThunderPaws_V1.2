@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Robot_FL2 : DamageableLifeform {
+public class Robot_FL3 : DamageableLifeform {
     /// <summary>
     /// What the baddie is tracking
     /// </summary>
@@ -26,7 +26,7 @@ public class Robot_FL2 : DamageableLifeform {
     /// <summary>
     /// How fast can the baddie move
     /// </summary>
-    private float _moveSpeed = 3.5f;
+    private float _moveSpeed = 5f;
     /// <summary>
     /// Stores the value of the horizontal movement this iteration of movement
     /// </summary>
@@ -49,7 +49,29 @@ public class Robot_FL2 : DamageableLifeform {
     /// References to wheree to fire the raycast angles
     /// -45degree down, 90degree down, 45degree down
     /// </summary>
-    private Vector2[] _raycastAngles = new Vector2[] { new Vector2(-1, -1), Vector2.down, new Vector2(1, -1) };
+    private Vector2[] _raycastAngles = new Vector2[] 
+    {
+        Vector2.right,
+        new Vector2(1, 0.5f),
+        new Vector2(1, 1),
+        new Vector2(0.5f, 1f),
+        Vector2.up,
+        new Vector2(-0.5f, 1f),
+        new Vector2(-1, 1),
+        new Vector2(-1f, 0.5f),
+        Vector2.left,
+        new Vector2(-1f, -0.5f),
+        new Vector2(-1, -1),
+        new Vector2(-0.5f, -1f),
+        Vector2.down,
+        new Vector2(0.5f, -1f),
+        new Vector2(1, -1),
+        new Vector2(1f, -0.5f)
+    };
+    /// <summary>
+    /// Indicates what index to fire at
+    /// </summary>
+    private int _angleIndex = 0;
 
     /// <summary>
     /// Reference to the bullet prefab
@@ -65,6 +87,18 @@ public class Robot_FL2 : DamageableLifeform {
     /// Indicates how long to move for
     /// </summary>
     private float _moveDuration;
+    /// <summary>
+    /// Indicates we're attacking the player and thus should stop moving
+    /// </summary>
+    private bool _firingAttack = false;
+
+    /// <summary>
+    /// Indicates if its a left, or right starting spiral - or a whole circle
+    /// 1  = counter clockwise
+    /// -1  = clockwise
+    /// 0 = whole 
+    /// </summary>
+    private int _attackMode = 0;
 
     /// <summary>
     /// Find the player and begin tracking
@@ -90,8 +124,8 @@ public class Robot_FL2 : DamageableLifeform {
         if (Controller == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
-        _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
-        _minY = _target.position.y + 6;
+        _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 3;
+        _minY = _target.position.y + 4;
         targetY = ChooseRandomHeight();
         print("min = " + _minY + " max = " + _maxY);
 
@@ -105,21 +139,25 @@ public class Robot_FL2 : DamageableLifeform {
     /// ALWAYS face the player no matter what
     /// </summary>
     private void Update() {
+        // We only move if we get hit
+        if (_damage) {
+            // Right now move between 1 and 3 seconds
+           // _moveDuration = Time.time + (Random.Range(1, 4));
+        }
+
         base.Update();
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - _target.position.x;
         CalcualteFacingDirection(directionToTarget);
 
-        var rayLength = Vector2.Distance(transform.position, _target.position);
-
         // If we need to be moving do that instead of checking sightline
-        if (_moveDuration > Time.time) {
+        if (_moveDuration > Time.time && !_firingAttack) {
             CalculateVelocity();
-        }else {
+        } else {
             Velocity.x = 0;
             Velocity.y = 0f;
-            CalculateAngleCollisions(rayLength);
+            CalculateMovementDirection();
         }
         Controller.Move(Velocity * Time.deltaTime);
         Debug.DrawRay(transform.position, (_target.position - transform.position), Color.red);
@@ -128,13 +166,52 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     private void CalculateFire() {
-        if(Time.time > _timeToFire) {
+        if (Time.time > _timeToFire && !_firingAttack) {
+            _firingAttack = true;
             // Wait 5 seconds in between each shot
-            _timeToFire = Time.time + 3f;
-            Invoke("Fire", 0.1f);
-            Invoke("Fire", 0.15f);
-            Invoke("Fire", 0.2f);
+            _timeToFire = Time.time + 5f;
+            _attackMode = DetermineRandomAttackMode();
+            if(_attackMode == 0) {
+                FireWhole();
+            }else {
+                var fireTime = 0.05f;
+                _angleIndex =  (_attackMode > 0 ? 0 : _raycastAngles.Length-1);
+                for (var i = 0; i < _raycastAngles.Length; ++i) {
+                    Invoke("Fire", fireTime);
+                    fireTime += 0.05f;
+                }
+            }
         }
+    }
+
+    private int DetermineRandomAttackMode() {
+        var rf1 = (int)Random.Range(0, 8);
+        print("Random Attack Mode: " + rf1);
+        if(rf1 == 0 || rf1 == 7) {
+            return 0;
+        }else {
+            if(rf1 % 2 == 0) {
+                return -1;
+            }else {
+                return 1;
+            }
+        }
+    }
+
+    private void FireWhole() {
+        foreach(var angle in _raycastAngles) {
+            Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
+            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
+
+            //Set layermask of parent (either player or baddie)
+            projectile.SetLayerMask(_whatToHit);
+            projectile.Damage = 5;
+            projectile.MoveSpeed = 12;
+            projectile.MaxLifetime = 10;
+            projectile.Fire(angle, Vector2.up);
+        }
+        _firingAttack = false;
     }
 
     private void Fire() {
@@ -147,7 +224,13 @@ public class Robot_FL2 : DamageableLifeform {
         projectile.Damage = 5;
         projectile.MoveSpeed = 12;
         projectile.MaxLifetime = 10;
-        projectile.Fire(_target.position - transform.position, Vector2.up);
+        projectile.Fire(_raycastAngles[_angleIndex], Vector2.up);
+        // _attackMode is either 1 or -1, so this allows for dynamic forward and backwards traversal of the array
+        _angleIndex = _angleIndex + _attackMode;
+        if (_angleIndex % 16 == 0 || _angleIndex < 0) {
+            _angleIndex = 0;
+            _firingAttack = false;
+        }
     }
 
     /// <summary>
@@ -203,42 +286,35 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     // new Vector2(-1, -1), Vector2.down, new Vector2(1, -1)
-    private void CalculateAngleCollisions(float rayLength) {
-        var targetLayer = 1 << 8;
-        foreach (var angle in _raycastAngles) {
-            Debug.DrawRay(transform.position, angle * rayLength, Color.green);
-            RaycastHit2D collisionCheck = Physics2D.Raycast(transform.position, angle, rayLength, targetLayer);
-            if(collisionCheck.collider != null) {
-                // We are either directly above or within the 45degree angle of the player and should move!
+    private void CalculateMovementDirection() {
+        // We are either directly above or within the 45degree angle of the player and should move!
 
-                // Right now move between 1 and 3 seconds
-                _moveDuration = Time.time + (Random.Range(1, 4));
+        // Right now move between 1 and 3 seconds
+        _moveDuration = Time.time + (Random.Range(1, 4));
 
-                // -1 = move left 
-                // 1 = move right
-                var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
+        // -1 = move left 
+        // 1 = move right
+        var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
 
-                // pos = we are on players right
-                // neg = we are on players left
-                var rf2 = Mathf.Sign(transform.position.x - _target.position.x);
+        // pos = we are on players right
+        // neg = we are on players left
+        var rf2 = Mathf.Sign(transform.position.x - _target.position.x);
 
-                var rf3 = 0f;
-                if (rf1 < 0 && rf2 < 0 ){
-                    // If we should move left, and are already left of player we should have a 75% change of moving right
-                    // 25% chance to keep moving left
-                    rf3 = ((Random.Range(2, 11) % 6 == 0) ? -1 : 1);
-                } else if(rf1 > 0 && rf2 > 0) {
-                    // If we should move right, and are already right of player we should have a 75% change of moving left
-                    // 25% chance to keep moving right
-                    rf3 = ((Random.Range(2, 11) % 6 == 0) ? 1 : -1);
-                }else {
-                    // Otherwise, we're on the opposite side of the player from where we're about to move so do that
-                    rf3 = rf1;
-                }
-
-                _horizontalMovespeed = _moveSpeed * rf3;
-                CalculateVerticalThreshold(false);
-            }
+        var rf3 = 0f;
+        if (rf1 < 0 && rf2 < 0) {
+            // If we should move left, and are already left of player we should have a 75% change of moving right
+            // 25% chance to keep moving left
+            rf3 = ((Random.Range(2, 11) % 6 == 0) ? -1 : 1);
+        } else if (rf1 > 0 && rf2 > 0) {
+            // If we should move right, and are already right of player we should have a 75% change of moving left
+            // 25% chance to keep moving right
+            rf3 = ((Random.Range(2, 11) % 6 == 0) ? 1 : -1);
+        } else {
+            // Otherwise, we're on the opposite side of the player from where we're about to move so do that
+            rf3 = rf1;
         }
+
+        _horizontalMovespeed = _moveSpeed * rf3;
+        CalculateVerticalThreshold(false);
     }
 }

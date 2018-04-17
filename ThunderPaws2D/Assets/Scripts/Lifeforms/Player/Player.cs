@@ -113,13 +113,13 @@ public class Player : AbstractLifeform {
 
     void Update() {
         //This is strictly testing - take out almost all the time
-        if (Input.GetKeyDown(KeyCode.S)) {
-            if(spawnIndex < 0 || spawnIndex >= ShowroomSpawns.Length) {
-                spawnIndex = 0;
-            }
-            transform.position = ShowroomSpawns[spawnIndex].position;
-            ++spawnIndex;
-        }
+        //if (Input.GetKeyDown(KeyCode.S)) {
+        //    if(spawnIndex < 0 || spawnIndex >= ShowroomSpawns.Length) {
+        //        spawnIndex = 0;
+        //    }
+        //    transform.position = ShowroomSpawns[spawnIndex].position;
+        //    ++spawnIndex;
+        //}
 
         //Do not accumulate gravity if colliding with anythig vertical
         if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
