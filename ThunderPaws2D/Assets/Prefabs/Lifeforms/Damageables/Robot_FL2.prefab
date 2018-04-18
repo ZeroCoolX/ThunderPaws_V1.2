@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.638706, y: 3.1993513, z: -1}
+  m_LocalPosition: {x: -18.71, y: 3.1993513, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4782572345265172}
@@ -124,13 +124,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ae255a1efbdfd04b89d315478facc10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
+  ApplyBaseMovement: 0
   _coinsInPayload: 10
   Health: 20
   Gravity: 0
