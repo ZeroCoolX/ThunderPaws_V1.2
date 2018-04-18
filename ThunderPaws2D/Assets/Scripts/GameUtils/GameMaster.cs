@@ -56,6 +56,41 @@ public class GameMaster : MonoBehaviour {
     private int[] _playerCoinCounts = new int[2];
 
     /// <summary>
+    /// Max lives per game
+    /// </summary>
+    [SerializeField]
+    private int _maxLives = 3;
+
+    /// <summary>
+    /// Determines when we have ended the game
+    /// </summary>
+    [SerializeField]
+    private static int _remainingLives;
+
+    /// <summary>
+    /// Player reference for respawning
+    /// </summary>
+    public Transform Player;
+    /// <summary>
+    /// Collection of all possible places of where to respawn the player 
+    /// </summary>
+    public Transform[] SpawnPoints;
+    /// <summary>
+    /// Indicates which spawn point the player should spawn from
+    /// Used for checkpoints
+    /// </summary>
+    public int SpawnPointIndex;
+    /// <summary>
+    /// How long to wait from player death to respawn
+    /// </summary>
+    public int SpawnDelay = 3;
+
+    /// <summary>
+    /// Remaining lives counter must persist through player deaths
+    /// </summary>
+    public int RemainingLives { get { return _remainingLives; } set { _remainingLives = value; } }
+
+    /// <summary>
     /// This is the world to screen point where any collected coin should go
     /// </summary>
     public Vector3 CoinCollectionOrigin {
@@ -98,6 +133,14 @@ public class GameMaster : MonoBehaviour {
         }
         //Set player stats UI reference
         _player1StatsUi = GetPlayerStatsUi(1);
+
+        //Double check that there is at least one spawn point in this level
+        if (SpawnPoints.Length <= 0) {
+            throw new MissingReferenceException("No spawn points for this level");
+        }
+        SpawnPointIndex = 0;
+        //Set remaining lives
+        _remainingLives = _maxLives;
     }
 
     private void Update() {
@@ -180,6 +223,55 @@ public class GameMaster : MonoBehaviour {
             throw new MissingComponentException("Attempted to extract " + statsName + " but found none");
         }
         return stats;
+    }
+
+    /// <summary>
+    /// Decrement lives, generate particles, shake camera and destroy current player reference
+    /// </summary>
+    /// <param name="player"></param>
+    public static void KillPlayer(Player player) {
+        //decrement lives
+        --_remainingLives;
+
+        //Generate death particles
+        //Transform clone = Instantiate(player.DeathParticles, player.transform.position, Quaternion.identity) as Transform;
+        //Destroy(clone.gameObject, 3f);
+
+        //Generate camera shake
+        //Instance.CamShake.Shake(player.ShakeAmount, player.ShakeLength);
+
+        //kill the player if necessary
+        Instance.KillDashNine(player.gameObject, _remainingLives > 0);
+    }
+
+    /// <summary>
+    /// Actual destruction of optional respawn
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <param name="respawn"></param>
+    private void KillDashNine(GameObject obj, bool respawn) {
+        Destroy(obj);
+        if (respawn) {
+            Instance.StartCoroutine(Instance.RespawnPlayer());
+        } else {
+            if (RemainingLives <= 0) {
+                print("GAME OVER DUDE");
+                //_audioManager.playSound(GameOverSoundName);
+                //GameOverUI.SetActive(true);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Respawn player
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator RespawnPlayer() {
+        //play sound and wait for delay
+        //_audioManager.playSound(RespawnCountdownSoundName);
+        yield return new WaitForSeconds(SpawnDelay);
+        //_audioManager.playSound(SpawnSoundName);
+        Instantiate(Player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
     }
 
 }

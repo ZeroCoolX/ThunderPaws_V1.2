@@ -108,10 +108,7 @@ public class Robot_GL1 : DamageableLifeform {
         }
 
         // Find the player and store the target reference
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
-        }
+        FindPlayer();
 
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
@@ -125,6 +122,10 @@ public class Robot_GL1 : DamageableLifeform {
 
     public void Update() {
         base.Update();
+        if (_target == null) {
+            FindPlayer();
+            return;
+        }
 
         if (LedgeBound) {
             // Check if we can shoot at the target
@@ -166,6 +167,14 @@ public class Robot_GL1 : DamageableLifeform {
         }
 
         Controller.Move(Velocity * Time.deltaTime);
+    }
+
+    private void FindPlayer() {
+        // Find the player and store the target reference
+        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+        if (target != null) {
+            _target = target.transform;
+        }
     }
 
     private void ResetTurnAround() {

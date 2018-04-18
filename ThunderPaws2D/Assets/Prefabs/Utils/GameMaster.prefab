@@ -75,3 +75,9 @@ MonoBehaviour:
   - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
   - {fileID: 4795677035519362, guid: 39de33104479d134e851ef57b2189e8d, type: 2}
   UIOverlay: {fileID: 0}
+  _maxLives: 3
+  Player: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
+  SpawnPoints:
+  - {fileID: 0}
+  SpawnPointIndex: 0
+  SpawnDelay: 3

@@ -71,10 +71,7 @@ public class Robot_GL2 : DamageableLifeform {
         }
 
         // Find the player and store the target reference
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
-        }
+        FindPlayer();
 
         _animator = transform.GetComponent<Animator>();
         if(_animator == null) {
@@ -97,10 +94,22 @@ public class Robot_GL2 : DamageableLifeform {
 
     public void Update() {
         base.Update();
-            // Find out where the target is in reference to this.
-            var directionToTarget = transform.position.x - _target.position.x;
-            // Check if we can shoot at the target
-            CheckForHorizontalEquality(directionToTarget);
+        if (_target == null) {
+            FindPlayer();
+            return;
+        }
+        // Find out where the target is in reference to this.
+        var directionToTarget = transform.position.x - _target.position.x;
+        // Check if we can shoot at the target
+        CheckForHorizontalEquality(directionToTarget);
+    }
+
+    private void FindPlayer() {
+        // Find the player and store the target reference
+        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+        if (target != null) {
+            _target = target.transform;
+        }
     }
 
     private void CheckForHorizontalEquality(float dirToTarget) {

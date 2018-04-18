@@ -187,7 +187,7 @@ public class Player : AbstractLifeform {
 
             // Also inform the weapon animator that we are crouching
             _weaponAnchorAnimator.SetBool("Crouch", crouch);
-            if (crouch) {
+            if (crouch || _rollActive) {
                 Controller.BoxCollider.size = new Vector2(Controller.BoxCollider.size.x, GameConstants.Data_PlayerCrouchSize);
                 Controller.BoxCollider.offset = new Vector2(Controller.BoxCollider.offset.x, GameConstants.Data_PlayerCrouchY);
             } else {
@@ -415,7 +415,7 @@ public class Player : AbstractLifeform {
         _playerStats.CurrentHealth -= (int)dmg;
         GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
         if(_playerStats.CurrentHealth <= 0) {
-            print("Player should die!");
+            GameMaster.KillPlayer(this);
         }
     }
 

@@ -9,6 +9,10 @@ public class DamageableLifeform : BaseLifeform {
     /// </summary>
     public Transform PayloadContent;
     /// <summary>
+    /// Indicates a special case where we want this class to apply movement
+    /// </summary>
+    public bool ApplyBaseMovement = false;
+    /// <summary>
     /// Stored instantiated prefabs awaiting activation
     /// </summary>
     private List<Transform> _coinPayload = new List<Transform>();
@@ -73,6 +77,9 @@ public class DamageableLifeform : BaseLifeform {
             Velocity.y = 0;
         }
         ApplyGravity();
+        if (ApplyBaseMovement) {
+            Controller.Move(Velocity * Time.deltaTime);
+        }
     }
 
     private void GenerateCoinPayload() {

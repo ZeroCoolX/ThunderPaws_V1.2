@@ -65,10 +65,7 @@ public class Robot_FL1 : DamageableLifeform {
     /// Find the player and begin tracking
     /// </summary>
     private void Start() {
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
-        }
+        FindPlayer();
 
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
@@ -98,6 +95,10 @@ public class Robot_FL1 : DamageableLifeform {
     /// </summary>
     private void Update() {
         base.Update();
+        if (_target == null) {
+            FindPlayer();
+            return;
+        }
         var rayLength = Vector2.Distance(transform.position, _target.position);
         Debug.DrawRay(transform.position, Vector2.down * rayLength, Color.red);
 
@@ -108,6 +109,14 @@ public class Robot_FL1 : DamageableLifeform {
 
             CalculateVelocity();
             Controller.Move(Velocity * Time.deltaTime);
+        }
+    }
+
+    private void FindPlayer() {
+        // Find the player and store the target reference
+        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+        if (target != null) {
+            _target = target.transform;
         }
     }
 

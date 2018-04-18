@@ -70,10 +70,7 @@ public class Robot_FL2 : DamageableLifeform {
     /// Find the player and begin tracking
     /// </summary>
     private void Start() {
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
-        }
+        FindPlayer();
 
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
@@ -106,6 +103,10 @@ public class Robot_FL2 : DamageableLifeform {
     /// </summary>
     private void Update() {
         base.Update();
+        if (_target == null) {
+            FindPlayer();
+            return;
+        }
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - _target.position.x;
@@ -125,6 +126,14 @@ public class Robot_FL2 : DamageableLifeform {
         Debug.DrawRay(transform.position, (_target.position - transform.position), Color.red);
 
         CalculateFire();
+    }
+
+    private void FindPlayer() {
+        // Find the player and store the target reference
+        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+        if (target != null) {
+            _target = target.transform;
+        }
     }
 
     private void CalculateFire() {

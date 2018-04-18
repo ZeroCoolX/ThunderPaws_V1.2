@@ -104,10 +104,7 @@ public class Robot_FL3 : DamageableLifeform {
     /// Find the player and begin tracking
     /// </summary>
     private void Start() {
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
-        }
+        FindPlayer();
 
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
@@ -139,13 +136,11 @@ public class Robot_FL3 : DamageableLifeform {
     /// ALWAYS face the player no matter what
     /// </summary>
     private void Update() {
-        // We only move if we get hit
-        if (_damage) {
-            // Right now move between 1 and 3 seconds
-           // _moveDuration = Time.time + (Random.Range(1, 4));
-        }
-
         base.Update();
+        if (_target == null) {
+            FindPlayer();
+            return;
+        }
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - _target.position.x;
@@ -163,6 +158,14 @@ public class Robot_FL3 : DamageableLifeform {
         Debug.DrawRay(transform.position, (_target.position - transform.position), Color.red);
 
         CalculateFire();
+    }
+
+    private void FindPlayer() {
+        // Find the player and store the target reference
+        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+        if (target != null) {
+            _target = target.transform;
+        }
     }
 
     private void CalculateFire() {
