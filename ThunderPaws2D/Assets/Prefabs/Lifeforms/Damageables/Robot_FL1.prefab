@@ -112,7 +112,7 @@ MonoBehaviour:
     type: 2}
   ApplyBaseMovement: 0
   _coinsInPayload: 15
-  Health: 50
+  Health: 15
   Gravity: 0
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,

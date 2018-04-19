@@ -88,7 +88,7 @@ public class Robot_FL2 : DamageableLifeform {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
         _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
-        _minY = _target.position.y + 6;
+        _minY = _target.position.y + 4;
         targetY = ChooseRandomHeight();
         print("min = " + _minY + " max = " + _maxY);
 
@@ -197,11 +197,12 @@ public class Robot_FL2 : DamageableLifeform {
             print("Send it to the max");
             targetY = _maxY;
         } else {
-            if (!whileMovementCheck) {
-                if (Mathf.Abs(transform.position.y - targetY) <= 0.25) {
+           // if (!whileMovementCheck) {
+                if (Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
+                print("TOO CLOSE!");
                     targetY = ChooseRandomHeight();
                 }
-            }
+           // }
         }
     }
 

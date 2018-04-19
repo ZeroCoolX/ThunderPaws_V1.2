@@ -85,9 +85,23 @@ public class SimpleCollider : MonoBehaviour {
             return;
         }
         if (_useCircleCollider) {
-            CheckForCircleCollisions();
+            if (_continuousCollision) {
+                CheckForMultiCircleCollisions();
+            } else {
+                CheckForCircleCollisions();
+            }
         } else {
             CheckForRaycastCollisions();
+        }
+    }
+
+    private void CheckForMultiCircleCollisions() {
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius, _whatToHit);
+        foreach (var collider in colliders) {
+            if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
+                InvokeCollision.Invoke(transform.position, collider);
+                _hit = true;
+            }
         }
     }
 

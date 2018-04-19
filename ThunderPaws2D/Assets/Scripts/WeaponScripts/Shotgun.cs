@@ -102,6 +102,7 @@ public class Shotgun : AbstractWeapon {
             } else {
                 dir = Player.FacingRight ? Vector2.right : Vector2.left;
             }
+            GenerateCameraShake();
             GenerateBlastEffect(dir);
 
             // Generate 5 raycasts degrees
