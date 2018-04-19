@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-
-namespace UnityStandardAssets._2D {
     public class Camera2DFollow : FollowBase {
 
         private float _currentXOffset;
@@ -27,9 +25,9 @@ namespace UnityStandardAssets._2D {
                 FindPlayer();
                 return;
             }
-            if (LockedPositionMovement) {
-                HandleLockedPositionMovement();
-            } else {
+            if (!LockedPositionMovement) {
+             //   HandleLockedPositionMovement();
+            //} else {
                 HandleFreePositionMovement();
             }
         }
@@ -74,4 +72,3 @@ namespace UnityStandardAssets._2D {
             LastTargetPosition = Target.position;
         }
     }
-}

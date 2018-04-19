@@ -232,6 +232,7 @@
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\HordeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL2.cs" />

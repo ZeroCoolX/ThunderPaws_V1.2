@@ -20,6 +20,7 @@ public class GameConstants {
     public static string ObjectName_BarContainer = "BarContainer";
     public static string ObjectName_UltimateBar = "UltimateBar";
     public static string ObjectName_FirePoint = "FirePoint";
+    public static string ObjectName_MainCamera = "MainCamera";
 
     // Input names
     public static string Input_Xbox_LBumper = "X360_LBumper";
