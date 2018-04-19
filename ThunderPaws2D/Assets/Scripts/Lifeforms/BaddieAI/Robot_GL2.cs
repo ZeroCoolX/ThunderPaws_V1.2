@@ -8,15 +8,11 @@ public class Robot_GL2 : DamageableLifeform {
     /// Max time the baddie should stop foe
     /// </summary>
     private float _maxStopSeconds = 2f;
-    /// <summary>
-    /// Keeps a record of how long we've been stopped
-    /// </summary>
-    private float _timeStopped = 0f;
 
     /// <summary>
     /// Random number of value to this means we should stop breifly
     /// </summary>
-    private float _shotDelay = 4f;
+    private float _shotDelay = 2f;
 
     /// <summary>
     /// Random number of value to this means we should fire
@@ -121,13 +117,11 @@ public class Robot_GL2 : DamageableLifeform {
 
         if (horizontalCheck.collider != null && Time.time > _timeSinceLastFire) {
             print("Hit!");
-            // Has a chance to fire a bullet
-            _timeStopped = Time.time + _maxStopSeconds;
             // Shoot a projectile towards the target in 1 second
             _timeSinceLastFire = Time.time + _shotDelay;
             Velocity.x = 0f;
             _animator.SetBool("ChargeAndFire", true);
-            Invoke("Fire", 1f);
+            Invoke("Fire", 0.5f);
         }
     }
 

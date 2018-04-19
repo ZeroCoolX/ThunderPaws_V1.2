@@ -27,13 +27,13 @@ public class BaddieActivator : MonoBehaviour {
 
 
     private void Apply(Vector3 v, Collider2D c) {
-        print("Collided with baddie: " + c.gameObject.name);
+        //print("Collided with baddie: " + c.gameObject.name);
         var baddieScript = c.transform.GetComponent<DamageableLifeform>();
             if (!baddieScript.enabled) {
-                print("Activated Baddie: " + c.gameObject.name);
+                //print("Activated Baddie: " + c.gameObject.name);
                 baddieScript.enabled = true;
             } else {
-                print("Baddie: " + c.gameObject.name + " is already activated.");
+                //print("Baddie: " + c.gameObject.name + " is already activated.");
             }
     }
 }

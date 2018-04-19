@@ -91,7 +91,7 @@ MonoBehaviour:
     type: 2}
   MoveSpeed: 15
   Damage: 10
-  MaxLifetime: 10
+  MaxLifetime: 5
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408

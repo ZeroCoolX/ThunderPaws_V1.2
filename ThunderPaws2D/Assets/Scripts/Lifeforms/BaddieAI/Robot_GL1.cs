@@ -50,7 +50,7 @@ public class Robot_GL1 : DamageableLifeform {
     /// <summary>
     /// Random number of value to this means we should stop breifly
     /// </summary>
-    private float _shotDelay = 4f;
+    private float _shotDelay = 3f;
 
     /// <summary>
     /// Random number of value to this means we should fire
@@ -188,7 +188,7 @@ public class Robot_GL1 : DamageableLifeform {
 
         RaycastHit2D horizontalCheck = Physics2D.Raycast(_firePoint.position, _moveDirection, _visionRaylength, targetLayer);
         if(horizontalCheck.collider != null) {
-            _alertTimeThreshold = Time.time + 2f;
+            _alertTimeThreshold = Time.time + 1f;
         }
         if (horizontalCheck.collider != null && Time.time > _timeSinceLastFire) {
             print("Hit!");
@@ -255,15 +255,6 @@ public class Robot_GL1 : DamageableLifeform {
     private void CalculateVelocity() {
         float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
-        //CalculateRandomStop();
         ApplyGravity();
     }
-
-    //private void CalculateRandomStop() {
-    //    if (Random.Range(1, 10) == _randStopTarget) {
-    //        print("Randomly Stopping");
-    //        Velocity.x = 0f;
-    //        _timeStopped = Time.time + _maxStopSeconds;
-    //    }
-    //}
 }

@@ -29,6 +29,10 @@ public class CoinController : MonoBehaviour {
     /// </summary>
     private float _maxMoveSpeed = 6f;
     /// <summary>
+    /// Max time in seconds this object can stay alive
+    /// </summary>
+    public float MaxLifetime = 10f;
+    /// <summary>
     /// Indicates we're sitting on the ground
     /// </summary>
     private bool _landed = false;
@@ -71,6 +75,9 @@ public class CoinController : MonoBehaviour {
         }
         //Generate how much this particular coin will move around when it contacts surfaces
         GenerateBounceEffectValues();
+
+        //Begin lifetime countdown
+        Invoke("MaxLifeExceededDestroy", MaxLifetime);
     }
 
     private void SetupCoinCollider() {
@@ -133,6 +140,18 @@ public class CoinController : MonoBehaviour {
         _collected = true;
         _shrinkAnimator.enabled = true;
         Invoke("DestroyCoin", 0.75f);
+    }
+
+    /// <summary>
+    /// Bullets have a killswitch where they get destroyed no maatter what after x seconds.
+    /// This helps cleanup any "stuck" bullets for whatever reason - I've seen a bullet here or there and not sure why at the moment
+    /// </summary>
+    protected void MaxLifeExceededDestroy() {
+        DestroyCoin();
+    }
+
+    private void OnBecameInvisible() {
+        DestroyCoin();
     }
 
     private void DestroyCoin() {

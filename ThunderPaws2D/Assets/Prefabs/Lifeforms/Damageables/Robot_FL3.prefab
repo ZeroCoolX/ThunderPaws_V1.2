@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
   - component: {fileID: 114440697300906780}
+  - component: {fileID: 114502721278329886}
   m_Layer: 14
   m_Name: Robot_FL3
   m_TagString: Untagged
@@ -138,6 +139,19 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
+--- !u!114 &114502721278329886
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417408384644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 15
 --- !u!212 &212409509080490964
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
   - component: {fileID: 114309157922438426}
+  - component: {fileID: 114972686550160120}
   m_Layer: 14
   m_Name: Robot_FL1
   m_TagString: Untagged
@@ -65,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -30.45, y: 0.23, z: -1}
+  m_LocalPosition: {x: 153.2, y: 4.41, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4782572345265172}
@@ -111,7 +112,7 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   ApplyBaseMovement: 0
-  _coinsInPayload: 15
+  _coinsInPayload: 3
   Health: 15
   Gravity: 0
   Velocity: {x: 0, y: 0, z: 0}
@@ -138,6 +139,19 @@ MonoBehaviour:
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+--- !u!114 &114972686550160120
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417408384644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 15
 --- !u!212 &212409509080490964
 SpriteRenderer:
   m_ObjectHideFlags: 1

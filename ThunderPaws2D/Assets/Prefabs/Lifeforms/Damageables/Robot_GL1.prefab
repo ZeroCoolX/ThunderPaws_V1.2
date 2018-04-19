@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114773207592181814}
   - component: {fileID: 114439827158824670}
   - component: {fileID: 95810098124186728}
+  - component: {fileID: 114293631626747342}
   m_Layer: 14
   m_Name: Robot_GL1
   m_TagString: Untagged
@@ -65,8 +66,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 53.477264, y: -7.0743613, z: -1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 92.11, y: -6.81, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4782572345265172}
@@ -115,6 +116,19 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114293631626747342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417408384644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 15
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,11 +164,11 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   ApplyBaseMovement: 0
-  _coinsInPayload: 10
+  _coinsInPayload: 3
   Health: 5
   Gravity: 0
   Velocity: {x: 0, y: 0, z: 0}
-  LedgeBound: 1
+  LedgeBound: 0
   TurnAround: 0
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}

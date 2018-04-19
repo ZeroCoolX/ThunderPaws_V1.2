@@ -79,13 +79,6 @@ public abstract class AbstractProjectile : MonoBehaviour {
     }
 
     /// <summary>
-    /// Once the bullet leaves the Cameras viewport destroy it
-    /// </summary>
-    void OnBecameInvisible() {
-        Destroy(gameObject);
-    }
-
-    /// <summary>
     /// Set the layermask
     /// </summary>
     /// <param name="parentLayerMask"></param>
@@ -102,6 +95,13 @@ public abstract class AbstractProjectile : MonoBehaviour {
         TargetPos = targetPos;
         TargetNormal = targetNormal;
         TargetDirection = TargetPos;
+    }
+
+    /// <summary>
+    /// Once the bullet leaves the Cameras viewport destroy it
+    /// </summary>
+    void OnBecameInvisible() {
+        Destroy(gameObject);
     }
 
     protected abstract void Move();

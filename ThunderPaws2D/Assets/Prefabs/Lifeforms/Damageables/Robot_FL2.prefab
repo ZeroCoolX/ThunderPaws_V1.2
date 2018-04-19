@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
   - component: {fileID: 114900665229515730}
+  - component: {fileID: 114022100060116186}
   m_Layer: 14
   m_Name: Robot_FL2
   m_TagString: Untagged
@@ -97,6 +98,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5647583, y: 1.7366815}
   m_EdgeRadius: 0
+--- !u!114 &114022100060116186
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417408384644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 15
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -132,7 +146,7 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   ApplyBaseMovement: 0
-  _coinsInPayload: 10
+  _coinsInPayload: 5
   Health: 20
   Gravity: 0
   Velocity: {x: 0, y: 0, z: 0}

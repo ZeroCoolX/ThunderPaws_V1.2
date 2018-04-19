@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 212488767765957678}
   - component: {fileID: 114053084070402498}
   - component: {fileID: 95558209853373978}
+  - component: {fileID: 114197836026510866}
   m_Layer: 0
   m_Name: Pickup
   m_TagString: Untagged
@@ -145,6 +146,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114197836026510866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1146770401727254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 3
 --- !u!114 &114572560977285148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -156,6 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 090bab40942f61648bb5e782542b702c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MaxLifetime: 10
 --- !u!114 &114922730178643706
 MonoBehaviour:
   m_ObjectHideFlags: 1
