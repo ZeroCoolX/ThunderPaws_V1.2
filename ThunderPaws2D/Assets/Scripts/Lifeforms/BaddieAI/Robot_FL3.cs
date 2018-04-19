@@ -275,7 +275,7 @@ public class Robot_FL3 : DamageableLifeform {
             targetY = _maxY;
         } else {
             if (!whileMovementCheck) {
-                if (Mathf.Abs(transform.position.y - targetY) <= 0.25) {
+                if (Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
                     targetY = ChooseRandomHeight();
                 }
             }

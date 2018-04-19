@@ -632,6 +632,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 114440697300906780, guid: 5476b08894b1bd6408a5ca019698d04a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5476b08894b1bd6408a5ca019698d04a, type: 2}
   m_IsPrefabParent: 0
@@ -2919,7 +2924,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4930055791183770, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 3.7954888
+      value: -2.56
       objectReference: {fileID: 0}
     - target: {fileID: 4930055791183770, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2944,6 +2949,11 @@ Prefab:
     - target: {fileID: 4930055791183770, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309157922438426, guid: 5ee4e561989f3834bad22226d8b5253d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
@@ -3832,6 +3842,11 @@ Prefab:
     - target: {fileID: 114773589586741528, guid: df12165279b87d440b10d9de3291acaa,
         type: 2}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114830801478932912, guid: df12165279b87d440b10d9de3291acaa,
+        type: 2}
+      propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -4349,6 +4364,11 @@ Prefab:
     - target: {fileID: 1321417408384644, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_Name
       value: Robot_FL2 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900665229515730, guid: dba113f8d3a62104eac6b4f53c7e356a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
@@ -6067,6 +6087,11 @@ Prefab:
       propertyPath: m_Name
       value: Robot_FL3 (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 114440697300906780, guid: 5476b08894b1bd6408a5ca019698d04a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5476b08894b1bd6408a5ca019698d04a, type: 2}
   m_IsPrefabParent: 0
@@ -6100,7 +6125,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 668950108}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -414.5, y: 289.8, z: 0}
+  m_LocalPosition: {x: -390, y: 289.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1135846118}
@@ -6203,11 +6228,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 16.45
+      value: 284.82
       objectReference: {fileID: 0}
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -7646,7 +7671,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 899860193}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f62c9af4bd5b24247b2eaf4838d5628d, type: 3}
   m_Name: 
@@ -8173,6 +8198,11 @@ Prefab:
     - target: {fileID: 1321417408384644, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
       propertyPath: m_Name
       value: Robot_FL1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114309157922438426, guid: 5ee4e561989f3834bad22226d8b5253d,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5ee4e561989f3834bad22226d8b5253d, type: 2}
@@ -9650,6 +9680,11 @@ Prefab:
     - target: {fileID: 1321417408384644, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_Name
       value: Robot_FL2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900665229515730, guid: dba113f8d3a62104eac6b4f53c7e356a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
@@ -11495,11 +11530,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4930055791183770, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 281.81168
+      value: 292.41
       objectReference: {fileID: 0}
     - target: {fileID: 4930055791183770, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 4.1091123
+      value: 6.99
       objectReference: {fileID: 0}
     - target: {fileID: 4930055791183770, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -11524,6 +11559,11 @@ Prefab:
     - target: {fileID: 4930055791183770, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114900665229515730, guid: dba113f8d3a62104eac6b4f53c7e356a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dba113f8d3a62104eac6b4f53c7e356a, type: 2}
@@ -13304,7 +13344,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1399859066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 664, y: 324.5, z: 0}
+  m_LocalPosition: {x: 639.5, y: 324.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 668950109}
@@ -15112,7 +15152,7 @@ Prefab:
     - target: {fileID: 114773589586741528, guid: df12165279b87d440b10d9de3291acaa,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: df12165279b87d440b10d9de3291acaa, type: 2}
@@ -19257,6 +19297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ParentCheck: 0
   KillImmediatelyOnInvisible: 0
   AllowLifetimeWhileInvisible: 15
 --- !u!1 &1990765133

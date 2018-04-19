@@ -65,6 +65,10 @@ public class Robot_FL2 : DamageableLifeform {
     /// Indicates how long to move for
     /// </summary>
     private float _moveDuration;
+    /// <summary>
+    /// Indicates how far the player can move away from the enemy until it stops firing
+    /// </summary>
+    private float _distanceThreshold = 15f;
 
     /// <summary>
     /// Find the player and begin tracking
@@ -88,11 +92,11 @@ public class Robot_FL2 : DamageableLifeform {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
         _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
-        _minY = _target.position.y + 4;
+        _minY = _maxY - 4f; // _target.position.y + 4;
         targetY = ChooseRandomHeight();
         print("min = " + _minY + " max = " + _maxY);
 
-        _timeToFire = Time.time + 5f;
+        _timeToFire = Time.time + 1f;
     }
 
     /// <summary>
@@ -115,7 +119,7 @@ public class Robot_FL2 : DamageableLifeform {
         var rayLength = Vector2.Distance(transform.position, _target.position);
 
         // If we need to be moving do that instead of checking sightline
-        if (_moveDuration > Time.time) {
+        if (_moveDuration > Time.time || !StillAbovePlayerCheck()) {
             CalculateVelocity();
         }else {
             Velocity.x = 0;
@@ -137,7 +141,7 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     private void CalculateFire() {
-        if(Time.time > _timeToFire) {
+        if(Time.time > _timeToFire && Vector2.Distance(transform.position, _target.position) <= _distanceThreshold) {
             // Wait 5 seconds in between each shot
             _timeToFire = Time.time + 3f;
             Invoke("Fire", 0.1f);
@@ -197,13 +201,17 @@ public class Robot_FL2 : DamageableLifeform {
             print("Send it to the max");
             targetY = _maxY;
         } else {
-           // if (!whileMovementCheck) {
-                if (Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
+            if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+                targetY = _maxY;
+            } else if (Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
                 print("TOO CLOSE!");
-                    targetY = ChooseRandomHeight();
-                }
-           // }
+                targetY = ChooseRandomHeight();
+            }
         }
+    }
+
+    private bool StillAbovePlayerCheck() {
+        return Mathf.Sign(transform.position.y - _target.position.y) > 0;
     }
 
     private void CalculateVelocity() {
