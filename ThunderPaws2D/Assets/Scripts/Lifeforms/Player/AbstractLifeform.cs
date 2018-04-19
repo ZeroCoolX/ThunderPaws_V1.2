@@ -36,6 +36,10 @@ public abstract class AbstractLifeform : BaseLifeform {
     /// </summary>
     protected float Gravity;
     /// <summary>
+    /// Indicates how far we can fall without dying
+    /// </summary>
+    protected float FallDeathHeight = -18;
+    /// <summary>
     /// Calculated based off gravity and jump constraints and player input (max)
     /// </summary>
     protected float MaxJumpVelocity;
@@ -102,6 +106,13 @@ public abstract class AbstractLifeform : BaseLifeform {
         Animator = GetComponent<Animator>();
         if(Animator == null) {
             print("Animator was not set - however this is allowed for not : just logging for notice purposes");
+        }
+    }
+
+    protected void FallCheck() {
+        if(transform.position.y <= FallDeathHeight) {
+            // Ensure nothing can survive
+            Damage(999);
         }
     }
 

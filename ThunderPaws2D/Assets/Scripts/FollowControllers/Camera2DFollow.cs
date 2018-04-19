@@ -10,6 +10,8 @@ namespace UnityStandardAssets._2D {
         /// </summary>
         public bool LockedPositionMovement = true;
 
+        private const float _bottomYThreshold = -19;
+
         private void Start() {
             _currentXOffset = OffsetX;
             InitializeSearchName(GameConstants.Tag_Player);

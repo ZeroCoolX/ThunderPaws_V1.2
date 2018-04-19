@@ -25,7 +25,7 @@ public class FollowBase : MonoBehaviour {
     /// </summary>
     protected float LookAheadMoveThreshold = 0.1f;
     //Threshold of camera movement down
-    protected float YPosClamp = -88;
+    protected float YPosClamp = -19;
 
     protected float OffsetZ;
     /// <summary>
