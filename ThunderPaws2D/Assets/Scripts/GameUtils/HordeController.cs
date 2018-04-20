@@ -9,6 +9,17 @@ public class HordeController : MonoBehaviour {
     private bool _spawningAllowed = false;
     
     /// <summary>
+    /// How long we should wait in between spawning more baddies.
+    /// We don't want to immedately spawn replacement baddies everytime one dies. (once a frame)
+    /// Instead check once every second
+    /// </summary>
+    private float _spawnDelay = 1f;
+    /// <summary>
+    /// INnicates the time that needs to pass before we can spawn baddies back in.
+    /// </summary>
+    private float _spawnWaitTime;
+    
+    /// <summary>
     /// Necessary for collisions
     /// </summary>
     private SimpleCollider Collider;
@@ -88,8 +99,10 @@ public class HordeController : MonoBehaviour {
             _spawningAllowed = false;
             KillAllBaddies();
         }
-        
-        SpawnBaddies();
+        if(Time.time > _spawnWaitTime){
+            __spawnWaitTime = Time.time + _spawnDelay;
+            SpawnBaddies();
+        }
     }
     
     private void SpawnBaddies(){
