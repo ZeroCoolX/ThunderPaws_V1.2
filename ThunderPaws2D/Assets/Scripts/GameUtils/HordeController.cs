@@ -168,10 +168,10 @@ public class HordeController : MonoBehaviour {
         }
         // Decrement the appropriate count 
         switch(baddieName){
-            case: "GR1"
+            case: "GL1"
                 --_activeGL1Count;
                 break;
-            case: "GR2"
+            case: "GL2"
                 --_activeGL2Count;
                 break;
             case: "FL1"
@@ -210,12 +210,12 @@ public class HordeController : MonoBehaviour {
     private void SpawnGroundBaddies(){
          var rand = (int)Random.Range(0, GroundSpawns.Length);
         if(_activeGL1Count < MaxGL1Count){
-            InstantiateBaddies("GR1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[rand].position);
+            InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[rand].position);
             _activeGL1Count = MaxGL1Count;
         }
         if(_activeFL2Count < MaxFL2Count){
             rand = Random.Range(0, GroundSpawns.Length);
-            InstantiateBaddies("GR2-", (MaxGL2Count - _activeGL2Count), MaxGL2Count, GL2BaddiePrefab, GroundSpawns[rand].position);
+            InstantiateBaddies("GL2-", (MaxGL2Count - _activeGL2Count), MaxGL2Count, GL2BaddiePrefab, GroundSpawns[rand].position);
             _activeGL2Count = MaxGL2Count;
         }
     }
