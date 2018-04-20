@@ -94,7 +94,33 @@ public class HordeController : MonoBehaviour {
             for(var i = numBaddies; i <= maxBaddies; ++i){
                 var cleanPosition = new Vector3(position.x, position.y + offset, position.z);
                 Transform baddieTransform = Instantiate(baddiePrefab, cleanPosition, transform.rotation) as Transform;
+                var damageableLifeform = baddieTransform.GetComponent<DamageableLifeform>();
+                if(damageableLifeform == null){
+                    throw new MissingComponentException("Somehow the baddie: " + baddieTransform.gameObject.name + " does not have a DamageableLifeform script attached");
+                }
+                damageableLifeform.HordeNotificationDelegate += UpdateBaddieCount
             }
+    }
+    
+    private void UpdateBaddieCount(string baddieName){
+        --BaddiesLeftToKill;
+        switch(baddieName){
+            case: "G1"
+                --_activeGL1Count;
+                break;
+            case: "G2"
+                --_activeGL2Count;
+                break;
+            case: "F1"
+                --_activeFL1Count;
+                break;
+            case: "F2"
+                --_activeFL2Count;
+                break;
+            case: "F3"
+                --_activeFL3Count;
+                break;
+        }
     }
     
     private void SpawnFlyingBaddies(){
