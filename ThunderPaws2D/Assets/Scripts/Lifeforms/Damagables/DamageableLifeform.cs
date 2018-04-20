@@ -49,6 +49,9 @@ public class DamageableLifeform : BaseLifeform {
     /// collision detection controller
     /// </summary>
     protected CollisionController2D Controller;
+    
+    public delegate void InvokeHordeUpdateDelegate(string baddie);
+    public InvokeHordeUpdateDelegate InvokeHordeUpdate;
 
     // Use this for initialization
     public void Start () {
@@ -70,6 +73,7 @@ public class DamageableLifeform : BaseLifeform {
         if(Health <= 0) {
             GenerateCoinPayload();
             Explode();
+            InvokeHordeUpdate(gameObject.name);
             Destroy(gameObject);
         }
         //Do not accumulate gravity if colliding with anythig vertical
