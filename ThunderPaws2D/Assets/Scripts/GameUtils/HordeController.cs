@@ -114,8 +114,8 @@ public class HordeController : MonoBehaviour {
     private void KillAllBaddies(){
         var deathOffset = 0.1;
         foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
-            Object.Destroy(baddie.gameObject, deathOffset);
-            deathOffse += 0.1;
+            baddie.GetComponent<DamageableLiform>().DestroyBaddie(false, deathOffset);
+            deathOffset += 0.1;
         }
         EndHorde();
     }
