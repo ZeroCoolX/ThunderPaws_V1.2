@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageableLifeform : BaseLifeform {
+    public bool PartOfHorder = false;
     /// <summary>
     /// This is what the explosion will generate
     /// </summary>
@@ -71,7 +72,7 @@ public class DamageableLifeform : BaseLifeform {
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         }
         if(Health <= 0) {
-            DestroyBaddie(true);
+            DestroyBaddie(false);
         }
         //Do not accumulate gravity if colliding with anythig vertical
         if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
@@ -85,7 +86,7 @@ public class DamageableLifeform : BaseLifeform {
     
     public void DestroyBaddie(bool invokeDelegate, float deathOffset = 0f){
         if(invokeDelegate){
-            InvokeHordeUpdate(gameObject.name);
+            InvokeHordeUpdate.Invoke(gameObject.name);
         }
         Invoke("InvokeDestroy", deathOffset);
     }

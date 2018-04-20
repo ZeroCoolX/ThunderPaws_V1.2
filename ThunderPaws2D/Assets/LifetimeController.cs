@@ -19,7 +19,7 @@ public class LifetimeController : MonoBehaviour {
     /// </summary>
     public float AllowLifetimeWhileInvisible = 10f;
     /// <summary>
-    /// Indicates how far this can fall before it dies
+    /// Indicates how far this can fall before it diesaaa
     /// </summary>
     private float FallDeathHeight = -19;
     /// <summary>

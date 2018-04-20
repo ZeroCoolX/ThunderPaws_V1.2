@@ -7,7 +7,7 @@ using UnityEngine;
         /// Flag to indicate whether the player can move freely around the area or they're forced to go forward
         /// </summary>
         public bool LockedPositionMovement = true;
-
+        public float YOffset = 5f;
         private const float _bottomYThreshold = -19;
 
         private void Start() {
@@ -25,9 +25,9 @@ using UnityEngine;
                 FindPlayer();
                 return;
             }
-            if (!LockedPositionMovement) {
-             //   HandleLockedPositionMovement();
-            //} else {
+            if (LockedPositionMovement) {
+                HandleLockedPositionMovement();
+            } else {
                 HandleFreePositionMovement();
             }
         }
@@ -45,7 +45,6 @@ using UnityEngine;
 
             Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
             // TODO: add this offset as a configurable variable
-            aheadTargetPos.y += 3;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
             newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), newPos.z);
 
@@ -65,6 +64,7 @@ using UnityEngine;
             }
 
             Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
+            aheadTargetPos.y += YOffset;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
             newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), newPos.z);
             transform.position = newPos;

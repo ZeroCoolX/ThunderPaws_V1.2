@@ -167,8 +167,11 @@ public class CollisionController2D : RaycastController {
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, CollisionMask);
             if (hit) {
+                if (gameObject.tag == GameConstants.Tag_Baddie && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                    continue;
+                }
                 //Check for one way platforms - or completely through ones
-                if (hit.collider.tag == "OBSTACLE-THROUGH") {
+                if (hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
                     if (directionY == 1 || hit.distance == 0) {
                         continue;
                     }
@@ -178,7 +181,7 @@ public class CollisionController2D : RaycastController {
                     continue;
                 }
                 //Give the player half a second chance to fall through the platform
-                if (PlayerInput.y == -1 && hit.collider.tag == "OBSTACLE-THROUGH") {
+                if (PlayerInput.y == -1 && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
                     Collisions.FallingThroughPlatform = true;
                     Invoke("ResetFallingThroughPlatform", 0.25f);
                     continue;

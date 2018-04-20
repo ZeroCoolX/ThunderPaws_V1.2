@@ -170,7 +170,7 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * (Conver.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
+            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching

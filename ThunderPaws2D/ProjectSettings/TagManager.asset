@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - OBSTACLE-THROUGH
   - GAMEMASTER
+  - Baddie
   layers:
   - Default
   - TransparentFX

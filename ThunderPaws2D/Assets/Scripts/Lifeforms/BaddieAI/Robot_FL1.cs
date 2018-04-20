@@ -32,7 +32,7 @@ public class Robot_FL1 : DamageableLifeform {
     /// <summary>
     /// How fast can the baddie move
     /// </summary>
-    private float _moveSpeed = 4f;
+    private float _moveSpeed = 2f;
     /// <summary>
     /// Indicates if this is facing right
     /// </summary>
@@ -61,6 +61,10 @@ public class Robot_FL1 : DamageableLifeform {
     private bool moveToNewY = false;
     private float targetY;
 
+    private bool RecalculateBounds = false;
+
+    private float _timeToFindNewSpeed;
+
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
@@ -82,10 +86,26 @@ public class Robot_FL1 : DamageableLifeform {
         if (Controller == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
-        _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
-        _minY = _maxY - 4f;
-        print("min = " + _minY + " max = " + _maxY);
+        CalculateBounds();
         targetY = ChooseRandomHeight();
+    }
+
+    private void CalculateBounds() {
+        print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
+        _minY = _target.position.y + 4f;
+        _maxY = _minY + 8f;
+    }
+
+    private void MaxBoundsCheck() {
+        if (transform.position.y >= _maxY) {
+            print("Send it to the min");
+            targetY = -1;
+        } else if (transform.position.y <= _minY) {
+            print("Send it to the max");
+            targetY = 1;
+        }else if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+            targetY = 1;
+        }
     }
 
     /// <summary>
@@ -99,6 +119,16 @@ public class Robot_FL1 : DamageableLifeform {
             FindPlayer();
             return;
         }
+
+        // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
+        if (RecalculateBounds) {
+            RecalculateBounds = false;
+            Invoke("CalculateBounds", 2f);
+        }
+
+        // always check for bounds
+        MaxBoundsCheck();
+
         var rayLength = Vector2.Distance(transform.position, _target.position);
         Debug.DrawRay(transform.position, Vector2.down * rayLength, Color.red);
 
@@ -145,17 +175,17 @@ public class Robot_FL1 : DamageableLifeform {
     }
 
     private void CalculateVerticalThreshold() {
-        if(transform.position.y >= _maxY) {
+        if (transform.position.y >= _maxY) {
             print("Send it to the min");
-            targetY = _minY;
-        } else if(transform.position.y <= _minY) {
+            targetY = -1;
+        } else if (transform.position.y <= _minY) {
             print("Send it to the max");
-            targetY = _maxY;
-        }else {
-            if(Mathf.Sign(transform.position.y - _target.position.y) < 0) {
-                targetY = _maxY;
-            } else if(Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
-                targetY = ChooseRandomHeight();
+            targetY = 1;
+        } else {
+            if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+                targetY = 1;
+            }else {
+                targetY = Mathf.Sign(ChooseRandomHeight());
             }
         }
     }
@@ -182,9 +212,12 @@ public class Robot_FL1 : DamageableLifeform {
     private void CalculateVelocity() {
         float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, 0.2f);
-
-        CalculateVerticalThreshold();
-        Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY, ref _velocityYSmoothing, 1f);
+        if (Time.time > _timeToFindNewSpeed) {
+            // random time between 1 and 3 seconds!
+            _timeToFindNewSpeed = Time.time + Random.Range(1f, 4f);
+            CalculateVerticalThreshold();
+        }
+        Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY * _moveSpeed, ref _velocityYSmoothing, 1f);
     }
 
 

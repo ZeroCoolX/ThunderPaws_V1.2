@@ -70,6 +70,8 @@ public class Robot_FL2 : DamageableLifeform {
     /// </summary>
     private float _distanceThreshold = 15f;
 
+    private bool RecalculateBounds = false;
+
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
@@ -91,12 +93,18 @@ public class Robot_FL2 : DamageableLifeform {
         if (Controller == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
-        _maxY = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, Camera.main.nearClipPlane)).y - 2;
-        _minY = _maxY - 4f; // _target.position.y + 4;
+        CalculateBounds();
+
         targetY = ChooseRandomHeight();
         print("min = " + _minY + " max = " + _maxY);
 
         _timeToFire = Time.time + 1f;
+    }
+
+    private void CalculateBounds() {
+        _minY = _target.position.y + 4f;
+        _maxY = _minY + 8f;
+        RecalculateBounds = true;
     }
 
     /// <summary>
@@ -111,6 +119,14 @@ public class Robot_FL2 : DamageableLifeform {
             FindPlayer();
             return;
         }
+
+        // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
+        if (RecalculateBounds) {
+            RecalculateBounds = false;
+            Invoke("CalculateBounds", 2f);
+        }
+
+        MaxBoundsCheck();
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - _target.position.x;
@@ -187,25 +203,36 @@ public class Robot_FL2 : DamageableLifeform {
         return randY;
     }
 
+    private void MaxBoundsCheck() {
+        if (transform.position.y >= _maxY) {
+            print("Send it to the min");
+            targetY = -1;
+        } else if (transform.position.y <= _minY) {
+            print("Send it to the max");
+            targetY = 1;
+        } else if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+            targetY = 1;
+        }
+    }
+
     /// <summary>
     /// whileMovementCheck just ensures that while we're moving we're keeping track of the bounds. 
     /// True indicates we want to se a new min and max if we hit the edges only.
     /// False indicates the same above, but also to choose a random height if not at the max or min
     /// </summary>
     /// <param name="whileMovementCheck"></param>
-    private void CalculateVerticalThreshold(bool whileMovementCheck) {
+    private void CalculateVerticalThreshold() {
         if (transform.position.y >= _maxY) {
             print("Send it to the min");
-            targetY = _minY;
+            targetY = -1;
         } else if (transform.position.y <= _minY) {
             print("Send it to the max");
-            targetY = _maxY;
+            targetY = 1;
         } else {
             if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
-                targetY = _maxY;
-            } else if (Mathf.Abs(transform.position.y - _target.position.y) <= 0.25) {
-                print("TOO CLOSE!");
-                targetY = ChooseRandomHeight();
+                targetY = 1;
+            } else {
+                targetY = Mathf.Sign(ChooseRandomHeight());
             }
         }
     }
@@ -216,7 +243,7 @@ public class Robot_FL2 : DamageableLifeform {
 
     private void CalculateVelocity() {
         Velocity.x = Mathf.SmoothDamp(Velocity.x, _horizontalMovespeed, ref _velocityXSmoothing, 0.2f);
-        CalculateVerticalThreshold(true);
+        CalculateVerticalThreshold();
         Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY, ref _velocityYSmoothing, 1f);
     }
 
@@ -255,7 +282,7 @@ public class Robot_FL2 : DamageableLifeform {
                 }
 
                 _horizontalMovespeed = _moveSpeed * rf3;
-                CalculateVerticalThreshold(false);
+                CalculateVerticalThreshold();
             }
         }
     }
