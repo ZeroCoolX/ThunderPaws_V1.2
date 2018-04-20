@@ -126,14 +126,9 @@ public class Player : AbstractLifeform {
         CalculateWeaponRotation();
 
         //Completely for testing
-        //if (Input.GetKeyDown(KeyCode.Q)) {
-        //    DamagePlayer();
-        //}
-
-        ////Completely for testing
-        //if (Input.GetKeyDown(KeyCode.F)) {
-        //    RegenerateAllHealth();
-        //}
+        if (Input.GetKeyDown(KeyCode.F)) {
+            RegenerateAllHealth();
+        }
 
         //User is pressing the ultimate button - Inform the player
         if (Input.GetButtonUp(GameConstants.Input_Ultimate) && _playerStats.UltReady) {
