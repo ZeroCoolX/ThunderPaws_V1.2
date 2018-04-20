@@ -71,10 +71,7 @@ public class DamageableLifeform : BaseLifeform {
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         }
         if(Health <= 0) {
-            GenerateCoinPayload();
-            Explode();
-            InvokeHordeUpdate(gameObject.name);
-            Destroy(gameObject);
+            DestroyBaddie(true);
         }
         //Do not accumulate gravity if colliding with anythig vertical
         if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
@@ -84,6 +81,15 @@ public class DamageableLifeform : BaseLifeform {
         if (ApplyBaseMovement) {
             Controller.Move(Velocity * Time.deltaTime);
         }
+    }
+    
+    public void DestroyBaddie(bool invokeDelegate){
+            GenerateCoinPayload();
+            Explode();
+        if(invokeDelegate){
+            InvokeHordeUpdate(gameObject.name);
+        }
+            Destroy(gameObject);
     }
 
     private void GenerateCoinPayload() {
