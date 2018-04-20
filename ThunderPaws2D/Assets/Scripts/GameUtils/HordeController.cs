@@ -99,7 +99,28 @@ public class HordeController : MonoBehaviour {
     
     // Goes through all the baddies still alive on screen and kills them 0.1 second from eachother
     private void KillAllBaddies(){
+        var deathOffset = 0.1;
+        foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
+            Object.Destroy(baddie.gameObject, deathOffset);
+            deathOffse += 0.1;
+        }
+        EndHorde();
+    }
     
+    private void EndHorde(){
+        var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+         SetCameraTarget(player, true);
+        
+        // Here we should also open the path to let the player out
+        
+        // Then destroy the spawns, and destroy ourself
+        foreach(var spawn in FlyingSpawns){
+            GameObject.Destroy(spawn);
+        }
+        foreach(var spawn in GroundSpawns){
+            GameObject.Destroy(spawn);
+        }
+        Destroy(gameObject);
     }
     
     private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, int maxBaddies, Transform baddiePrefab, Vector3 position){
@@ -199,6 +220,8 @@ public class HordeController : MonoBehaviour {
     /// <param name="v"></param>
     /// <param name="c"></param>
     private void Apply(Vector3 v, Collider2D c) {
+        // Here we should also close the path on either side of the horde section locking the player in
+
         SetCameraTarget(transform, false);
         _spawningAllowed = true;
     }
