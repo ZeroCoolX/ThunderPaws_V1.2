@@ -83,13 +83,17 @@ public class DamageableLifeform : BaseLifeform {
         }
     }
     
-    public void DestroyBaddie(bool invokeDelegate){
-            GenerateCoinPayload();
-            Explode();
+    public void DestroyBaddie(bool invokeDelegate, float deathOffset = 0f){
         if(invokeDelegate){
             InvokeHordeUpdate(gameObject.name);
         }
-            Destroy(gameObject);
+        Invoke("InvokeDestroy", deathOffset);
+    }
+    
+    private void InvokeDestroy(){
+        GenerateCoinPayload();
+        Explode();
+        Destroy(gameObject);
     }
 
     private void GenerateCoinPayload() {
