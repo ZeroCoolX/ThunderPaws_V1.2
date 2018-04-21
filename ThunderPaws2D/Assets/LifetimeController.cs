@@ -52,7 +52,12 @@ public class LifetimeController : MonoBehaviour {
     protected void FallCheck() {
         if (transform.position.y <= FallDeathHeight) {
             // Ensure nothing can survive
-            Destroy(gameObject);
+            var damageable = gameObject.GetComponent<DamageableLifeform>();
+            if (damageable != null) {
+                damageable.Damage(999);
+            } else {
+                Destroy(gameObject);
+            }
         }
     }
 }

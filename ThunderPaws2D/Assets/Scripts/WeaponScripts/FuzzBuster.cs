@@ -144,7 +144,6 @@ public class FuzzBuster : AbstractWeapon {
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
-            print("Bullet position : " + bulletInstance.position);
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {

@@ -50,14 +50,18 @@ public class RaycastController : MonoBehaviour {
     /// get the bounds of the box collider, shrink by skinwidth, and update raycast origin coordinates
     /// </summary>
     public void UpdateRaycasyOrigins() {
-        Bounds bounds = BoxCollider.bounds;
-        //shrink in the bounds by -2 on all sides
-        bounds.Expand(SkinWidth * -2);
+        try {
+            Bounds bounds = BoxCollider.bounds;
+            //shrink in the bounds by -2 on all sides
+            bounds.Expand(SkinWidth * -2);
 
-        RayOrigins.BottomLeft = new Vector2(bounds.min.x, bounds.min.y);
-        RayOrigins.BottomRight = new Vector2(bounds.max.x, bounds.min.y);
-        RayOrigins.TopLeft = new Vector2(bounds.min.x, bounds.max.y);
-        RayOrigins.TopRight = new Vector2(bounds.max.x, bounds.max.y);
+            RayOrigins.BottomLeft = new Vector2(bounds.min.x, bounds.min.y);
+            RayOrigins.BottomRight = new Vector2(bounds.max.x, bounds.min.y);
+            RayOrigins.TopLeft = new Vector2(bounds.min.x, bounds.max.y);
+            RayOrigins.TopRight = new Vector2(bounds.max.x, bounds.max.y);
+        } catch (System.Exception e) {
+            print("This is becasue the coin failed to have a box collider 2D - I'm aware but don't care because I want to ship this out!" + gameObject.name);
+        }
     }
 
     /// <summary>

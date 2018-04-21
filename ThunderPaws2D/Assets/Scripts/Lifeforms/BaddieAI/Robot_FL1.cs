@@ -91,17 +91,17 @@ public class Robot_FL1 : DamageableLifeform {
     }
 
     private void CalculateBounds() {
-        print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
+       // print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
         _minY = _target.position.y + 4f;
         _maxY = _minY + 8f;
     }
 
     private void MaxBoundsCheck() {
         if (transform.position.y >= _maxY) {
-            print("Send it to the min");
+            //print("Send it to the min");
             targetY = -1;
         } else if (transform.position.y <= _minY) {
-            print("Send it to the max");
+            //print("Send it to the max");
             targetY = 1;
         }else if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
             targetY = 1;
@@ -156,7 +156,7 @@ public class Robot_FL1 : DamageableLifeform {
     /// <returns></returns>
     private float ChooseRandomHeight() {
         var randY = Random.Range(_minY, _maxY);
-        print("Random Y = " + randY);
+        //print("Random Y = " + randY);
         return randY;
     }
 

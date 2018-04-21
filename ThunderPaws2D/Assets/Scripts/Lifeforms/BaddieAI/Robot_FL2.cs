@@ -72,6 +72,8 @@ public class Robot_FL2 : DamageableLifeform {
 
     private bool RecalculateBounds = false;
 
+    private bool MaxBoundsOverride = false;
+
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
@@ -102,8 +104,8 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     private void CalculateBounds() {
-        _minY = _target.position.y + 4f;
-        _maxY = _minY + 8f;
+        _minY = _target.position.y + 2f;
+        _maxY = _minY + 6f;
         RecalculateBounds = true;
     }
 
@@ -121,10 +123,10 @@ public class Robot_FL2 : DamageableLifeform {
         }
 
         // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
-        if (RecalculateBounds) {
-            RecalculateBounds = false;
-            Invoke("CalculateBounds", 2f);
-        }
+        //if (RecalculateBounds) {
+        //    RecalculateBounds = false;
+        //    Invoke("CalculateBounds", 2f);
+        //}
 
         MaxBoundsCheck();
 
@@ -199,18 +201,21 @@ public class Robot_FL2 : DamageableLifeform {
     /// <returns></returns>
     private float ChooseRandomHeight() {
         var randY = Random.Range(_minY, _maxY);
-        print("Random Y = " + randY);
+        //print("Random Y = " + randY);
         return randY;
     }
 
     private void MaxBoundsCheck() {
         if (transform.position.y >= _maxY) {
-            print("Send it to the min");
+            MaxBoundsOverride = true;
+          //  print("Send it to the min");
             targetY = -1;
         } else if (transform.position.y <= _minY) {
-            print("Send it to the max");
+            MaxBoundsOverride = true;
+           // print("Send it to the max");
             targetY = 1;
         } else if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+            MaxBoundsOverride = true;
             targetY = 1;
         }
     }
@@ -223,10 +228,10 @@ public class Robot_FL2 : DamageableLifeform {
     /// <param name="whileMovementCheck"></param>
     private void CalculateVerticalThreshold() {
         if (transform.position.y >= _maxY) {
-            print("Send it to the min");
+          //  print("Send it to the min");
             targetY = -1;
         } else if (transform.position.y <= _minY) {
-            print("Send it to the max");
+          //  print("Send it to the max");
             targetY = 1;
         } else {
             if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {

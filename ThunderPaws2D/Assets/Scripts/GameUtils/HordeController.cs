@@ -101,6 +101,7 @@ public class HordeController : MonoBehaviour {
             KillAllBaddies();
         }
         if(Time.time > _spawnWaitTime){
+            print("SPAWN BADDIES!");
             _spawnWaitTime = Time.time + _spawnDelay;
             SpawnBaddies();
         }
@@ -108,13 +109,14 @@ public class HordeController : MonoBehaviour {
     
     private void SpawnBaddies(){
         SpawnFlyingBaddies();
-        //SpawnGroundBaddies();
+        SpawnGroundBaddies();
     }
     
     // Goes through all the baddies still alive on screen and kills them 0.1 second from eachother
     private void KillAllBaddies(){
         var deathOffset = 0.1f;
         foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
+            baddie.Value.GetComponent<CollisionController2D>().enabled = false;
             baddie.Value.GetComponent<DamageableLifeform>().DestroyBaddie(false, deathOffset);
             deathOffset += 0.1f;
         }
@@ -129,17 +131,18 @@ public class HordeController : MonoBehaviour {
         
         // Then destroy the spawns, and destroy ourself
         foreach(var spawn in FlyingSpawns){
-            GameObject.Destroy(spawn);
+            GameObject.Destroy(spawn.gameObject);
         }
         foreach(var spawn in GroundSpawns){
-            GameObject.Destroy(spawn);
+            GameObject.Destroy(spawn.gameObject);
         }
         Destroy(gameObject);
     }
     
-    private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, int maxBaddies, Transform baddiePrefab, Vector3 position, bool yOffset){
+    private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, int maxBaddies, Transform baddiePrefab, Vector3 position, bool yOffset, int invertFactor = 1){
         // This just stops the baddies from spawning literally on top of one another
-        var offset = baddiePrefab.GetComponent<Renderer>().bounds.size;
+        var size = baddiePrefab.GetComponent<Renderer>().bounds.size;
+        var offset = size;
             // We need to spawn the difference of Max and active
             for (var i = 0; i <= numBaddies; ++i){
                 var cleanPosition = new Vector3((!yOffset ? position.x + offset.x : position.x), (yOffset ? position.y + offset.y : position.y), position.z);
@@ -151,6 +154,7 @@ public class HordeController : MonoBehaviour {
                     throw new MissingComponentException("Somehow the baddie: " + baddieTransform.gameObject.name + " does not have a DamageableLifeform script attached");
                 }
                 damageableLifeform.enabled = true;
+                damageableLifeform.PartOfHorde = true;
                 // Add delegate onto the created baddie so when it dies it can inform the hordecontroller to update the counts
                 damageableLifeform.InvokeHordeUpdate += UpdateBaddieCount;
                 print("Adding baddie: " + baddieTransform.gameObject.name);
@@ -158,7 +162,7 @@ public class HordeController : MonoBehaviour {
                 // Key = prefix-gameobject.name
                 // Value = actual transform
                 ActiveHordeBaddieCache.Add(baddieTransform.gameObject.name, baddieTransform);
-                offset *= 1.5f;
+                offset += (size * 1.5f * invertFactor);
             }
     }
     
@@ -167,12 +171,14 @@ public class HordeController : MonoBehaviour {
         // Try to get the baddie from the cache, and remove it
         Transform outBaddie;
         if(ActiveHordeBaddieCache.TryGetValue(baddieName, out outBaddie)){
+            print("Removing baddie: " + baddieName);
             ActiveHordeBaddieCache.Remove(baddieName);
         }
+        print("Update baddie count - decrement : " + baddieNameKey);
         // Decrement the appropriate count 
-        switch(baddieName){
+        switch(baddieNameKey) {
             case "GL1":
-                --_activeGL1Count;
+                _activeGL1Count = _activeGL1Count - 1;
                 break;
             case "GL2":
                 --_activeGL2Count;
@@ -193,36 +199,33 @@ public class HordeController : MonoBehaviour {
     }
     
     private void SpawnFlyingBaddies(){
-        var rand = Random.Range(0, 2);
-        if(_activeFL1Count < MaxFL1Count){
-            InstantiateBaddies("FL1-", 1, MaxFL1Count, FL1BaddiePrefab, FlyingSpawns[0].position, true);
+        var rand = (int)Random.Range(0, 10);
+        if (_activeFL1Count < MaxFL1Count){
+            InstantiateBaddies("FL1-", (MaxFL1Count - _activeFL1Count), MaxFL1Count, FL1BaddiePrefab, FlyingSpawns[rand <= 3 ? 0 : 1].position, false);
             _activeFL1Count = MaxFL1Count;
         }
-        //if (_activeFL2Count < MaxFL2Count) {
-        //    rand = Random.Range(1, 3);
-        //    InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[1].position, true);
-        //    _activeFL2Count = MaxFL2Count;
-        //}
-        //if (_activeFL3Count < MaxFL3Count) {
-        //    rand = Random.Range(0, 3);
-        //    InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), MaxFL3Count, FL3BaddiePrefab, FlyingSpawns[2].position, true);
-        //    _activeFL3Count = MaxFL3Count;
-        //}
+        if (_activeFL2Count < MaxFL2Count) {
+            InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[rand > 3 && rand <= 5 ? 1 : 2].position, false);
+            _activeFL2Count = MaxFL2Count;
+        }
+        if (_activeFL3Count < MaxFL3Count) {
+            InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), MaxFL3Count, FL3BaddiePrefab, FlyingSpawns[rand > 6 ? 2 : 0].position, false);
+            _activeFL3Count = MaxFL3Count;
+        }
     }
     
     private void SpawnGroundBaddies(){
-         var rand = (int)Random.Range(0, GroundSpawns.Length);
-        if(_activeGL1Count < MaxGL1Count){
-            InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[0].position, false);
+         var rand = (int)Random.Range(0, 9);
+        if (_activeGL1Count < MaxGL1Count) {
+            InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 0 : 1].position, false, (rand % 2 != 0) ? -1 : 1);
             _activeGL1Count = MaxGL1Count;
         }
-        if(_activeFL2Count < MaxFL2Count){
-            rand = Random.Range(0, GroundSpawns.Length);
-            InstantiateBaddies("GL2-", (MaxGL2Count - _activeGL2Count), MaxGL2Count, GL2BaddiePrefab, GroundSpawns[1].position, false);
-            _activeGL2Count = MaxGL2Count;
-        }
+        //if (_activeGL2Count < MaxGL2Count) {
+        //    InstantiateBaddies("GL2-", (MaxGL2Count - _activeGL2Count), MaxGL2Count, GL2BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 1 : 0].position, false);
+        //    _activeGL2Count = MaxGL2Count;
+        //}
     }
-    
+
 
     //void OnDrawGizmosSelected() {
     //    Gizmos.color = Color.green;

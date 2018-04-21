@@ -189,7 +189,7 @@ public class Robot_FL3 : DamageableLifeform {
 
     private int DetermineRandomAttackMode() {
         var rf1 = (int)Random.Range(0, 8);
-        print("Random Attack Mode: " + rf1);
+       // print("Random Attack Mode: " + rf1);
         if(rf1 == 0 || rf1 == 7) {
             return 0;
         }else {
@@ -256,7 +256,7 @@ public class Robot_FL3 : DamageableLifeform {
     /// <returns></returns>
     private float ChooseRandomHeight() {
         var randY = Random.Range(_minY, _maxY);
-        print("Random Y = " + randY);
+        //print("Random Y = " + randY);
         return randY;
     }
 
@@ -268,10 +268,10 @@ public class Robot_FL3 : DamageableLifeform {
     /// <param name="whileMovementCheck"></param>
     private void CalculateVerticalThreshold(bool whileMovementCheck) {
         if (transform.position.y >= _maxY) {
-            print("Send it to the min");
+            //print("Send it to the min");
             targetY = _minY;
         } else if (transform.position.y <= _minY) {
-            print("Send it to the max");
+            //print("Send it to the max");
             targetY = _maxY;
         } else {
             if (!whileMovementCheck) {
