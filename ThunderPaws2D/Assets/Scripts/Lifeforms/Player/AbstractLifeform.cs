@@ -75,6 +75,7 @@ public abstract class AbstractLifeform : BaseLifeform {
 
     //protected List<PickupableEnum> Pickups;
 
+
     /// <summary>
     /// Set all constant physics values
     /// Calculate dynamic values like Gravity and JumpVelocity

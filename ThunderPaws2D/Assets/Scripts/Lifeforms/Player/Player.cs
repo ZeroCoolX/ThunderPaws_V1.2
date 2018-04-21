@@ -68,12 +68,12 @@ public class Player : AbstractLifeform {
     /// </summary>
     private float _rollSpeed = 6f;
 
-
     /// <summary>
     /// Setup Player object.
     /// Initialize physics values
     /// </summary>
     void Start() {
+
         //Set all physics values  - originally 3 and 1
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
 
@@ -315,6 +315,7 @@ public class Player : AbstractLifeform {
             _ownedWeapons.Add(_currentWeapon);
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
+        GameMaster.Instance.AudioManager.playSound("WeaponPickup");
     }
 
     /// <summary>

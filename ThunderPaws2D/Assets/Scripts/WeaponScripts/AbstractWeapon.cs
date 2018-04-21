@@ -96,7 +96,10 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// LayuerMask indicating what to hit
     /// </summary>
     public LayerMask WhatToHit;
-
+    /// <summary>
+    /// Reference to the audio manager
+    /// </summary>
+    protected AudioManager AudioManager;
 
 
     // Implementations must override how and when to apply recoil
@@ -128,6 +131,11 @@ public abstract class AbstractWeapon : MonoBehaviour {
         WeaponAnimator = transform.GetComponent<Animator>();
         if (WeaponAnimator == null) {
             throw new MissingComponentException("No Weaapon animator was found on the weapon");
+        }
+
+        AudioManager = AudioManager.instance;
+        if (AudioManager == null) {
+            throw new MissingComponentException("No AudioManager was found");
         }
 
         CamShake = GameMaster.Instance.GetComponent<CameraShake>();

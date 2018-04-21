@@ -94,6 +94,8 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public int RemainingLives { get { return _remainingLives; } set { _remainingLives = value; } }
 
+    public AudioManager AudioManager;
+
     /// <summary>
     /// This is the world to screen point where any collected coin should go
     /// </summary>
@@ -113,6 +115,11 @@ public class GameMaster : MonoBehaviour {
     void Awake () {
         if (Instance == null) {
             Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
+        }
+
+        AudioManager = AudioManager.instance;
+        if (AudioManager == null) {
+            throw new MissingComponentException("No AudioManager was found");
         }
 
         //Load sprites for player animation map

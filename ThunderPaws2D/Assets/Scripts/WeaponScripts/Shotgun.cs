@@ -66,6 +66,7 @@ public class Shotgun : AbstractWeapon {
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
+        AudioManager.playSound("ShotgunShot");
     }
 
     /// <summary>

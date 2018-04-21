@@ -34,6 +34,7 @@ public class FuzzBuster : AbstractWeapon {
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
+        AudioManager.playSound("FuzzBusterShot");
     }
 
     /// <summary>
