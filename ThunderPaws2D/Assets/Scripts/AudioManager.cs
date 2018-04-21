@@ -64,7 +64,6 @@ public class AudioManager : MonoBehaviour {
             _go.transform.SetParent(this.transform);
             sounds[i].setSource(_go.AddComponent<AudioSource>());
         }
-        playSound("Music_Main");
     }
 
     public void playSound(string _name) {
