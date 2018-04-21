@@ -311,7 +311,7 @@ GameObject:
   - component: {fileID: 95194046474711488}
   m_Layer: 14
   m_Name: Robot_GL2 (6)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,7 +402,7 @@ GameObject:
   - component: {fileID: 114222666503046906}
   m_Layer: 14
   m_Name: Robot_GL1 (31)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 114910860979643008}
   m_Layer: 14
   m_Name: Robot_GL1 (21)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 114280756639306550}
   m_Layer: 14
   m_Name: Robot_GL1 (27)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -644,7 +644,7 @@ GameObject:
   - component: {fileID: 95610793684431220}
   m_Layer: 14
   m_Name: Robot_GL2 (8)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -680,7 +680,7 @@ GameObject:
   - component: {fileID: 114760919224180870}
   m_Layer: 14
   m_Name: Robot_GL1 (50)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -736,7 +736,7 @@ GameObject:
   - component: {fileID: 114663508388748390}
   m_Layer: 14
   m_Name: Robot_GL1 (28)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -757,7 +757,7 @@ GameObject:
   - component: {fileID: 114939377544098234}
   m_Layer: 14
   m_Name: Robot_GL1 (52)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -868,7 +868,7 @@ GameObject:
   - component: {fileID: 114710913560453910}
   m_Layer: 14
   m_Name: Robot_GL1 (32)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1194,7 +1194,7 @@ GameObject:
   - component: {fileID: 114600822915122118}
   m_Layer: 14
   m_Name: Robot_GL1 (23)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1310,7 +1310,7 @@ GameObject:
   - component: {fileID: 114506940011911696}
   m_Layer: 14
   m_Name: Robot_GL1 (26)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1331,7 +1331,7 @@ GameObject:
   - component: {fileID: 114601017329946234}
   m_Layer: 14
   m_Name: Robot_GL1 (22)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1392,7 +1392,7 @@ GameObject:
   - component: {fileID: 114604482852219866}
   m_Layer: 14
   m_Name: Robot_GL1 (24)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1518,7 +1518,7 @@ GameObject:
   - component: {fileID: 114243795801693526}
   m_Layer: 14
   m_Name: Robot_GL1 (29)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1574,7 +1574,7 @@ GameObject:
   - component: {fileID: 114339441370459896}
   m_Layer: 14
   m_Name: Robot_GL1 (51)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1665,7 +1665,7 @@ GameObject:
   - component: {fileID: 114080203902557678}
   m_Layer: 14
   m_Name: Robot_GL1 (25)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1705,7 +1705,7 @@ GameObject:
   - component: {fileID: 95527009643155698}
   m_Layer: 14
   m_Name: Robot_GL2 (7)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1741,7 +1741,7 @@ GameObject:
   - component: {fileID: 114361263512293830}
   m_Layer: 14
   m_Name: Robot_GL1 (30)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1812,7 +1812,7 @@ GameObject:
   - component: {fileID: 114119404987450824}
   m_Layer: 14
   m_Name: Robot_GL1 (34)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1887,7 +1887,7 @@ GameObject:
   - component: {fileID: 95867403835169158}
   m_Layer: 14
   m_Name: Robot_GL2 (5)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2088,7 +2088,7 @@ GameObject:
   - component: {fileID: 114472713532995196}
   m_Layer: 14
   m_Name: Robot_GL1 (33)
-  m_TagString: Untagged
+  m_TagString: Baddie
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -108,3 +108,10 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: SmallExplosion
+    clip: {fileID: 8300000, guid: d110a5c23422deb4c916a169608f2c46, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
