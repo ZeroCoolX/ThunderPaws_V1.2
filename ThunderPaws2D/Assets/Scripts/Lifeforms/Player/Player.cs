@@ -165,6 +165,7 @@ public class Player : AbstractLifeform {
         var melee = ((Input.GetKeyDown(KeyCode.RightShift) || Input.GetButtonDown(GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
+            GameMaster.Instance.AudioManager.playSound("FirePunch");
             // Wait for half the animation to play so it looks like the object takes damage as the fist hits them instead of instantly on button press
             Invoke("OnMeleeInputDown", 0.125f);
             // After 0.25 seconds deactivate melee

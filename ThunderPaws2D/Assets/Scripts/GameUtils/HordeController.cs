@@ -166,6 +166,8 @@ public class HordeController : MonoBehaviour {
     }
 
     private void ActivateExit() {
+        GameMaster.Instance.AudioManager.stopSound("Music_Boss");
+        GameMaster.Instance.AudioManager.playSound("Music_Main");
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
@@ -288,6 +290,9 @@ public class HordeController : MonoBehaviour {
         if (LeftBarrier != null) {
             LeftBarrier.gameObject.SetActive(true);
         }
+
+        GameMaster.Instance.AudioManager.stopSound("Music_Main");
+        GameMaster.Instance.AudioManager.playSound("Music_Boss");
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){

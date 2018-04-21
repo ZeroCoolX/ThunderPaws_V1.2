@@ -135,6 +135,7 @@ public class CoinController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         var player = c.transform.GetComponent<Player>();
         player.PickupCoin();
+        GameMaster.Instance.AudioManager.playSound("Coin");
         //Must set the script reference so we can tell where to put the coin collection offset
         _coinCollectionOffset = player.FacingRight ? 3 : -2;
         _collected = true;

@@ -60,8 +60,8 @@ MonoBehaviour:
     randomPitch: 0
     loop: 1
   - name: Music_Boss
-    clip: {fileID: 8300000, guid: 41b05e6d6118b6e41a846f221c87c0b6, type: 3}
-    volume: 0.1
+    clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
+    volume: 1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -96,20 +96,41 @@ MonoBehaviour:
     loop: 0
   - name: BulletImpact1
     clip: {fileID: 8300000, guid: 7785e5330a622554baffe2008bd2f158, type: 3}
-    volume: 0.3
+    volume: 0.1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 0
   - name: BulletImpact2
     clip: {fileID: 8300000, guid: 7b30d1ad6d8ab3e48937148f121101d5, type: 3}
-    volume: 0.3
+    volume: 0.1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 0
   - name: SmallExplosion
     clip: {fileID: 8300000, guid: d110a5c23422deb4c916a169608f2c46, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: WeaponSwitch
+    clip: {fileID: 8300000, guid: 270c422eeb528bb4cbf285f9037ec29f, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: FirePunch
+    clip: {fileID: 8300000, guid: e503ac30e1aa02041a53d613e175381b, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: Coin
+    clip: {fileID: 8300000, guid: db8e5ee15a83b044aba7941c837f5d22, type: 3}
     volume: 0.3
     pitch: 1
     randomVolume: 0

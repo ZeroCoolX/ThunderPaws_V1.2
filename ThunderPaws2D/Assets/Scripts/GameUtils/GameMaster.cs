@@ -163,6 +163,7 @@ public class GameMaster : MonoBehaviour {
     private void Update() {
         if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(KeyCode.UpArrow)) {
             OnWeaponSwitch.Invoke();
+            AudioManager.playSound("WeaponSwitch");
         }
     }
 
