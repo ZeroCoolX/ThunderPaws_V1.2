@@ -35,6 +35,8 @@ public class GameConstants {
     public static string Input_Melee = "Melee";
     public static string Input_Roll = "Roll";
     public static string Input_Ultimate = "Ultimate";
+    public static string Input_Back = "Back";
+    public static string Input_Start = "Start";
 
     // Layer names
     public static string Layer_PlayerProjectile = "PLAYER_PROJECTILE";
@@ -43,8 +45,11 @@ public class GameConstants {
     // Player Data
     public static float Data_PlayerCrouchY = -0.49f;
     public static float Data_PlayerCrouchSize = 0.78303f;
-
     public static float Data_PlayerY = -0.1063671f;
     public static float Data_PlayerSize = 1.536606f;
+
+    // Scene Name Data
+    public static string Scene_LevelName_1 = "PreAlphaDemoLevel1";
+    public static string Scene_LevelName_Menu = "PreAlphaDemoMainMenu";
 
 }

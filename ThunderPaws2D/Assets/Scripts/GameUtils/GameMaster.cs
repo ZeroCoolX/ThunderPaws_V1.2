@@ -41,6 +41,10 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public GameObject UIOverlay;
     /// <summary>
+    /// Reference to the game over screen
+    /// </summary>
+    public Transform GameOverUi;
+    /// <summary>
     /// Player 1 stats UI
     /// </summary>
     private PlayerStatsUIController _player1StatsUi;
@@ -266,6 +270,10 @@ public class GameMaster : MonoBehaviour {
                 //GameOverUI.SetActive(true);
             }
         }
+    }
+
+    public void GameOver() {
+        GameOverUi.gameObject.SetActive(true);
     }
 
     /// <summary>

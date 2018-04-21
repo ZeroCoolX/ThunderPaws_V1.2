@@ -228,7 +228,7 @@ public class Robot_GL1 : DamageableLifeform {
         //Set layermask of parent (either player or baddie)
         projectile.SetLayerMask(_whatToHit);
         projectile.Damage = 5;
-        projectile.MoveSpeed = 15;
+        projectile.MoveSpeed = 10;
         projectile.MaxLifetime = 10;
         projectile.Fire((_facingRight ? Vector2.right : Vector2.left), Vector2.up);
     }

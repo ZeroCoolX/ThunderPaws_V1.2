@@ -89,7 +89,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
     type: 2}
-  MoveSpeed: 15
+  MoveSpeed: 7
   Damage: 10
   MaxLifetime: 5
   WhatToHit:

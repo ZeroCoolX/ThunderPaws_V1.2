@@ -54,6 +54,13 @@ public class Shotgun : AbstractWeapon {
             AmmoCheck();
         }
         WeaponAnimator.SetBool("UltModeActive", UltMode);
+        if (UltMode && Damage < 100) {
+            Damage = 100;
+        }else {
+            if(Damage != 25) {
+                Damage = 25;
+            }
+        }
     }
 
     protected override void ApplyRecoil() {

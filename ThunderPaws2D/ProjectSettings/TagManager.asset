@@ -9,6 +9,9 @@ TagManager:
   - OBSTACLE-THROUGH
   - GAMEMASTER
   - Baddie
+  - BC1
+  - BC2
+  - BC3
   layers:
   - Default
   - TransparentFX
@@ -25,7 +28,7 @@ TagManager:
   - PLAYER_PROJECTILE
   - OBSTACLE_THROUGH
   - DAMAGABLE
-  - 
+  - OBSTACLE_HORDE
   - 
   - 
   - 

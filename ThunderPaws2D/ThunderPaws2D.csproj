@@ -219,20 +219,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\LifetimeController.cs" />
+    <Compile Include="Assets\Scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\CheckpointController.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
+    <Compile Include="Assets\Scripts\GameOverUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BaddieActivator.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CoinController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\CoopersLazyHack.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\HordeController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\LifetimeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL2.cs" />
@@ -243,6 +247,7 @@
     <Compile Include="Assets\Scripts\Lifeforms\Damagables\DamageableLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Player\AbstractLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Player\Player.cs" />
+    <Compile Include="Assets\Scripts\MenuController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsUIController.cs" />

@@ -138,9 +138,13 @@ public class HordeController : MonoBehaviour {
     private void KillAllBaddies(){
         var deathOffset = 0.1f;
         foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
-            baddie.Value.GetComponent<CollisionController2D>().enabled = false;
-            baddie.Value.GetComponent<DamageableLifeform>().DestroyBaddie(false, deathOffset);
-            deathOffset += 0.1f;
+            try {
+                baddie.Value.GetComponent<CollisionController2D>().enabled = false;
+                baddie.Value.GetComponent<DamageableLifeform>().DestroyBaddie(false, deathOffset);
+                deathOffset += 0.1f;
+            }catch(System.Exception e) {
+                print("Trying to disable already destroyed object, no worries move on");
+            }
         }
         EndHorde();
     }
@@ -169,6 +173,7 @@ public class HordeController : MonoBehaviour {
             Destroy(gameObject);
         }else {
             print("OMG YOU COMPLETED THE GAME!!!!");
+            GameMaster.Instance.GameOver();
         }
     }
 
