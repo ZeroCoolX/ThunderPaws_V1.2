@@ -79,5 +79,6 @@ MonoBehaviour:
   Player: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
   SpawnPoints:
   - {fileID: 0}
+  - {fileID: 0}
   SpawnPointIndex: 0
   SpawnDelay: 3

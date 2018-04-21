@@ -138,7 +138,13 @@ public class GameMaster : MonoBehaviour {
         if (SpawnPoints.Length <= 0) {
             throw new MissingReferenceException("No spawn points for this level");
         }
-        SpawnPointIndex = 0;
+        SpawnPointIndex = -1;
+        //var spawn = SpawnPoints[0];
+        //var controller = spawn.GetComponent<CheckpointController>();
+        //if (controller == null) {
+        //    throw new MissingComponentException("No Checkpoint controller");
+        //}
+        //controller.SpawnFreshBaddiesForCheckpoint();
         //Set remaining lives
         _remainingLives = _maxLives;
     }
@@ -270,6 +276,15 @@ public class GameMaster : MonoBehaviour {
         //play sound and wait for delay
         //_audioManager.playSound(RespawnCountdownSoundName);
         yield return new WaitForSeconds(SpawnDelay);
+
+        var spawn = SpawnPoints[SpawnPointIndex];
+        var controller = spawn.GetComponent<CheckpointController>();
+        if(controller == null) {
+            throw new MissingComponentException("No Checkpoint controller");
+        }
+        controller.DeactivateBaddiesInCheckpoint();
+        controller.SpawnFreshBaddiesForCheckpoint();
+
         //_audioManager.playSound(SpawnSoundName);
         Instantiate(Player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
     }

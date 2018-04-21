@@ -50,7 +50,8 @@ public class LifetimeController : MonoBehaviour {
     }
 
     protected void FallCheck() {
-        if (transform.position.y <= FallDeathHeight) {
+        // This is a super dumb hack to allow baddies to spawn in the last room because im so worn out I want to finish this
+        if (transform.position.y <= FallDeathHeight && transform.position.y > -40f) {
             // Ensure nothing can survive
             var damageable = gameObject.GetComponent<DamageableLifeform>();
             if (damageable != null) {

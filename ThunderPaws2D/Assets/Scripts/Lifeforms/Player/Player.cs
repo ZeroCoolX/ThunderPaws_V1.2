@@ -111,7 +111,15 @@ public class Player : AbstractLifeform {
     public Transform[] ShowroomSpawns = new Transform[4];
     private int spawnIndex = -1;
 
+    private void HackRollReset() {
+        _rollActive = false;
+    }
+
     void Update() {
+        if (Input.GetKeyUp(KeyCode.R)) {
+            HackRollReset();
+        }
+
         FallCheck();
 
         //Do not accumulate gravity if colliding with anythig vertical

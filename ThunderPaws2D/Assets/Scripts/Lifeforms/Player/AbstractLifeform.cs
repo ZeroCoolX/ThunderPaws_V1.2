@@ -6,6 +6,8 @@ using UnityEngine;
 /// Anything that "lives" and can "die" is consisdered a Lifeform
 /// </summary>
 public abstract class AbstractLifeform : BaseLifeform {
+    // TODO: Take this out but im so lazy
+    public bool NoFallCheck = false;
     /// <summary>
     /// How fast the Lifeform moves
     /// </summary>
@@ -110,7 +112,11 @@ public abstract class AbstractLifeform : BaseLifeform {
     }
 
     protected void FallCheck() {
-        if(transform.position.y <= FallDeathHeight) {
+        if (NoFallCheck) {
+            return;
+        }
+        // This is a super dumb hack to allow baddies to spawn in the last room because im so worn out I want to finish this
+        if(transform.position.y <= FallDeathHeight && transform.position.y > -40f) {
             // Ensure nothing can survive
             Damage(999);
         }

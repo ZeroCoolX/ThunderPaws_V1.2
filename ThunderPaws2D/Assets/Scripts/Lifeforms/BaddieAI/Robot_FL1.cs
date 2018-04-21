@@ -147,6 +147,10 @@ public class Robot_FL1 : DamageableLifeform {
         GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
         if (target != null) {
             _target = target.transform;
+        }else {
+            // This most likely means that he died!!! He will be respawning at a checkpoint so turn off this script
+            enabled = false;
+            // The BaddieActivator will turn you back on - don't worry
         }
     }
 
@@ -191,6 +195,10 @@ public class Robot_FL1 : DamageableLifeform {
     }
 
     private void DropBomb() {
+        if (!_overPlayer) {
+            Invoke("ResetBombDrop", 0f);
+            return;
+        }
         print("Fire!");
         Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)

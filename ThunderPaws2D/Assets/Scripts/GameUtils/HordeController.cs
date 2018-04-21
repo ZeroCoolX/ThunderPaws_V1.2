@@ -19,6 +19,15 @@ public class HordeController : MonoBehaviour {
     /// INnicates the time that needs to pass before we can spawn baddies back in.
     /// </summary>
     private float _spawnWaitTime;
+
+    /// <summary>
+    /// Reference to the left wall we activate to lock the player in duing a horde session
+    /// </summary>
+    public Transform LeftBarrier;
+    /// <summary>
+    /// Reference to the right wall we activate to lock the player in duing a horde session
+    /// </summary>
+    public Transform RightBarrier;
     
     /// <summary>
     /// Necessary for collisions
@@ -29,39 +38,46 @@ public class HordeController : MonoBehaviour {
     /// </summary>
     public Transform Camera;
 
+    private float GL1SpawnRate;
+    private float FL1SpawnRate;
+    private float FL2SpawnRate;
+    private float FL3SpawnRate;
+
     // Reference to all the currently active baddies so we can stop them all, kill them all
     private Dictionary<string, Transform> ActiveHordeBaddieCache = new Dictionary<string, Transform>();
     
     /// <summary>
     /// Total baddies left to kill before player can move on
     /// </summary>
-    public int BaddiesLeftToKill = 20;
+    public int BaddiesLeftToKill = 25;
+
+    public bool EndGameAfter = false;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
     public Transform GL1BaddiePrefab;
     // Indicates how many of each type of baddie is allowed on screen at any one point
-    public int MaxGL1Count = 10;
+    public int MaxGL1Count;
     // Keeps a count of how many baddies of this type on on screen
     private int _activeGL1Count = 0;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
     public Transform GL2BaddiePrefab;
-    public int MaxGL2Count = 3;
+    public int MaxGL2Count;
     private int _activeGL2Count = 0;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
     public Transform FL1BaddiePrefab;
-    public int MaxFL1Count = 5;
+    public int MaxFL1Count;
     private int _activeFL1Count = 0;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
     public Transform FL2BaddiePrefab;
-    public int MaxFL2Count = 4;
+    public int MaxFL2Count;
     private int _activeFL2Count = 0;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
     public Transform FL3BaddiePrefab;
-    public int MaxFL3Count = 1;
+    public int MaxFL3Count;
     private int _activeFL3Count = 0;
     
     /// <summary>
@@ -73,6 +89,8 @@ public class HordeController : MonoBehaviour {
     /// </summary>
     public Transform[] GroundSpawns;
 
+    public int RadiusOfTrigger = 12;
+
     // Use this for initialization
     void Start() {
         //Add delegate for collision detection
@@ -81,7 +99,7 @@ public class HordeController : MonoBehaviour {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 8, 12);
+        Collider.Initialize(1 << 8, RadiusOfTrigger);
         
         if(FlyingSpawns == null){
             throw new MissingComponentException("No Flying Spawns specified");
@@ -109,7 +127,11 @@ public class HordeController : MonoBehaviour {
     
     private void SpawnBaddies(){
         SpawnFlyingBaddies();
-        SpawnGroundBaddies();
+        if (Time.time > GL1SpawnRate) {
+            // Wait betweeen 5 and 10 seconds to spawn some more ground types
+            GL1SpawnRate = Time.time + Random.Range(5, 10);
+            SpawnGroundBaddies();
+        }
     }
     
     // Goes through all the baddies still alive on screen and kills them 0.1 second from eachother
@@ -136,9 +158,20 @@ public class HordeController : MonoBehaviour {
         foreach(var spawn in GroundSpawns){
             GameObject.Destroy(spawn.gameObject);
         }
-        Destroy(gameObject);
+        Invoke("ActivateExit", 5f);
     }
-    
+
+    private void ActivateExit() {
+        if (RightBarrier != null) {
+            RightBarrier.gameObject.SetActive(false);
+        }
+        if (!EndGameAfter) {
+            Destroy(gameObject);
+        }else {
+            print("OMG YOU COMPLETED THE GAME!!!!");
+        }
+    }
+
     private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, int maxBaddies, Transform baddiePrefab, Vector3 position, bool yOffset, int invertFactor = 1){
         // This just stops the baddies from spawning literally on top of one another
         var size = baddiePrefab.GetComponent<Renderer>().bounds.size;
@@ -200,15 +233,19 @@ public class HordeController : MonoBehaviour {
     
     private void SpawnFlyingBaddies(){
         var rand = (int)Random.Range(0, 10);
-        if (_activeFL1Count < MaxFL1Count){
+        if (Time.time > FL1SpawnRate && _activeFL1Count < MaxFL1Count){
+            // WAit between 1 and 4 seconds to spawn new badddies
+            FL1SpawnRate = Time.time + Random.Range(1, 5);
             InstantiateBaddies("FL1-", (MaxFL1Count - _activeFL1Count), MaxFL1Count, FL1BaddiePrefab, FlyingSpawns[rand <= 3 ? 0 : 1].position, false);
             _activeFL1Count = MaxFL1Count;
         }
-        if (_activeFL2Count < MaxFL2Count) {
+        if (Time.time > FL2SpawnRate && _activeFL2Count < MaxFL2Count) {
+            FL2SpawnRate = Time.time + Random.Range(3, 6);
             InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[rand > 3 && rand <= 5 ? 1 : 2].position, false);
             _activeFL2Count = MaxFL2Count;
         }
-        if (_activeFL3Count < MaxFL3Count) {
+        if (Time.time > FL1SpawnRate && _activeFL3Count < MaxFL3Count) {
+            FL3SpawnRate = Time.time + Random.Range(3, 10);
             InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), MaxFL3Count, FL3BaddiePrefab, FlyingSpawns[rand > 6 ? 2 : 0].position, false);
             _activeFL3Count = MaxFL3Count;
         }
@@ -227,10 +264,10 @@ public class HordeController : MonoBehaviour {
     }
 
 
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 12);
-    //}
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 5);
+    }
 
     /// <summary>
     /// The Player has walked into the horde zone.
@@ -243,6 +280,9 @@ public class HordeController : MonoBehaviour {
 
         SetCameraTarget(transform, false, 0f);
         _spawningAllowed = true;
+        if (LeftBarrier != null) {
+            LeftBarrier.gameObject.SetActive(true);
+        }
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){
