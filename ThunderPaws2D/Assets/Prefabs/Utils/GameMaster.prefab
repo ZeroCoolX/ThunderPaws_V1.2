@@ -63,6 +63,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e43e1f592541d345903d0b3cf4b6f37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BaddiesKilled: 0
+  FuzzBusterAmmo: 0
+  ShotgunAmmo: 0
   PlayerSprites:
   - {fileID: 21300000, guid: 7a179c8187baecb4491757cf56f2249f, type: 3}
   - {fileID: 21300000, guid: 7a179c8187baecb4491757cf56f2249f, type: 3}
@@ -83,4 +86,5 @@ MonoBehaviour:
   - {fileID: 0}
   SpawnPointIndex: 0
   SpawnDelay: 3
-  AudioManager: {fileID: 0}
+  AudioManager: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
+    type: 2}

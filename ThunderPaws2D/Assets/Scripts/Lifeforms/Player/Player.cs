@@ -316,7 +316,11 @@ public class Player : AbstractLifeform {
             _ownedWeapons.Add(_currentWeapon);
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
-        GameMaster.Instance.AudioManager.playSound("WeaponPickup");
+        try {
+            GameMaster.Instance.AudioManager.playSound("WeaponPickup");
+        }catch(System.Exception e) {
+            print("Either the game master or the audiomanager doesn't exist yet");
+        }
     }
 
     /// <summary>

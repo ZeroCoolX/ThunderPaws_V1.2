@@ -45,7 +45,10 @@ public class FuzzBuster : AbstractWeapon {
     private void HandleShootingInput() {
         var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
-        if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
+        if (Input.GetKeyUp(KeyCode.Return)) {
+            _fireButtonPressed = false;
+            _holdingFireDown = false;
+        } else if (!Input.GetKey(KeyCode.Return) && rightTrigger == 0) {
             _fireButtonPressed = false;
             _holdingFireDown = false;
         }
@@ -109,6 +112,7 @@ public class FuzzBuster : AbstractWeapon {
             if (HasAmmo) {
                 Ammo -= 1;
             }
+            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
         }
     }
 

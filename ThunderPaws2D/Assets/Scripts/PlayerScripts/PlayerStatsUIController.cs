@@ -27,6 +27,10 @@ public class PlayerStatsUIController : MonoBehaviour {
     /// The border around the ultimate bar
     /// </summary>
     private Animator _ultimateBarAnimator;
+    /// <summary>
+    /// Reference to the ammo UI
+    /// </summary>
+    private Text _ammo;
 
     private void Awake() {
         if (_healthBarRect == null) {
@@ -51,6 +55,12 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No ultimateBarAnimator found");
             throw new UnassignedReferenceException();
         }
+
+        _ammo = transform.Find(GameConstants.ObjectName_AmmoText).GetComponent<Text>();
+        if (_ammo == null) {
+            Debug.LogError("No AmmoText found");
+            throw new UnassignedReferenceException();
+        }
     }
 
 
@@ -71,6 +81,12 @@ public class PlayerStatsUIController : MonoBehaviour {
         //Safety check in casae another class - Player - calls this before its had a chance to startup
         var healthKey = cur > 50 ? 100 : cur > 25 ? 50 : 25;
         _playerImage.sprite = GameMaster.Instance.GetSpriteFromMap(healthKey);
+    }
+
+    public void SetAmmo(int ammo = -1) {
+        print(_ammo.text);
+        _ammo.text = " Ammo: " + (ammo > -1 ? ammo+"" : " infinity");
+        print(_ammo.text);
     }
 
     /// <summary>

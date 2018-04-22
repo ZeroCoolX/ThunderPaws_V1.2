@@ -12,6 +12,10 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public static GameMaster Instance;
 
+    public int BaddiesKilled;
+    public int FuzzBusterAmmo;
+    public int ShotgunAmmo;
+
     /// <summary>
     /// Compile time collection of any sprites that need to be swapped out during the course of the game
     /// </summary>
@@ -117,11 +121,6 @@ public class GameMaster : MonoBehaviour {
             Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
         }
 
-        AudioManager = AudioManager.instance;
-        if (AudioManager == null) {
-            throw new MissingComponentException("No AudioManager was found");
-        }
-
         //Load sprites for player animation map
         _playerSpiteMap.Add(0, PlayerSprites[0]);
         _playerSpiteMap.Add(45, PlayerSprites[1]);
@@ -138,6 +137,11 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Start() {
+        AudioManager = AudioManager.instance;
+        if (AudioManager == null) {
+            throw new MissingComponentException("No AudioManager was found");
+        }
+
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
             throw new MissingReferenceException("No CameraShake found on gamemaster");
@@ -161,6 +165,14 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Update() {
+        if (Input.GetKeyDown(KeyCode.M)) {
+            try {
+                AudioManager.stopSound("Music_Main");
+            }catch(System.Exception e){
+                print("Music Couldn't be stopped probably because it never stared. No worries");
+            }
+            AudioManager.playSound("Music_Main");
+        }
         if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(KeyCode.UpArrow)) {
             OnWeaponSwitch.Invoke();
             AudioManager.playSound("WeaponSwitch");

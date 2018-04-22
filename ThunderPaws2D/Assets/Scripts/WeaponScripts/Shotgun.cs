@@ -36,7 +36,7 @@ public class Shotgun : AbstractWeapon {
         var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
         // This checks if the player released the trigger in between shots - because the shotgun is not full auto
         if (!_triggerLetGo) {
-            if(rightTrigger <= WeaponConfig.TriggerFireThreshold) {
+            if(rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetButton(GameConstants.Input_Fire)) {
                 _triggerLetGo = true;
             }
         }
@@ -45,10 +45,11 @@ public class Shotgun : AbstractWeapon {
             Debug.DrawRay(_debugBlastRotations[0], _debugBlastRotations[i] * _rayLength, Color.green);
         }
 
-        if (_triggerLetGo && (Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if (_triggerLetGo && (Input.GetButtonDown(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             _triggerLetGo = false;
             CalculateShot();
             ApplyRecoil();
+            AudioManager.playSound("ShotgunShot");
         }
         if (HasAmmo) {
             AmmoCheck();
@@ -66,7 +67,6 @@ public class Shotgun : AbstractWeapon {
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
-        AudioManager.playSound("ShotgunShot");
     }
 
     /// <summary>
@@ -168,6 +168,10 @@ public class Shotgun : AbstractWeapon {
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
             if (HasAmmo) {
                 Ammo -= 1;
+                print("SettingAmmo");
+                GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo(Ammo);
+            }else {
+                GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
             }
         }
     }
