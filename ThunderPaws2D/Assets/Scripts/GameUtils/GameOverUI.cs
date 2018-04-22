@@ -6,11 +6,13 @@ using UnityEngine.SceneManagement;
 public class GameOverUI : MonoBehaviour {
 
     private GameObject _player;
-    
+
     private void Update() {
         if(_player == null) {
             _player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-            _player.transform.GetComponent<PlayerInputController>().enabled = false;
+            if (_player != null) {
+                _player.transform.GetComponent<PlayerInputController>().enabled = false;
+            }
         }
         if (Input.GetButtonUp(GameConstants.Input_Back)) {
             Menu();
@@ -25,6 +27,11 @@ public class GameOverUI : MonoBehaviour {
     }
 
     public void Menu() {
+        try {
+            GameMaster.Instance.AudioManager.stopSound("Music_Main");
+        }catch(System.Exception e) {
+            print("Don't care");
+        }
         SceneManager.LoadScene(GameConstants.Scene_LevelName_Menu);
     }
 

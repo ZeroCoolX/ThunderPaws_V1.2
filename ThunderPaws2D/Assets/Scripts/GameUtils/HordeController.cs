@@ -167,11 +167,11 @@ public class HordeController : MonoBehaviour {
 
     private void ActivateExit() {
         GameMaster.Instance.AudioManager.stopSound("Music_Boss");
-        GameMaster.Instance.AudioManager.playSound("Music_Main");
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
+            GameMaster.Instance.AudioManager.playSound("Music_Main");
             Destroy(gameObject);
         }else {
             print("OMG YOU COMPLETED THE GAME!!!!");

@@ -39,7 +39,7 @@ public class Player : AbstractLifeform {
     /// <summary>
     /// Quantatative data of stats. Visually the GameMaster handles that with the PlayerStatsUIController.
     /// </summary>
-    private PlayerStats _playerStats;
+    public PlayerStats PlayerStats;
 
     /// <summary>
     /// Indicates we are melee'ing and we shouldn't be able to move left or right during melee animation
@@ -90,14 +90,15 @@ public class Player : AbstractLifeform {
         GameMaster.Instance.OnWeaponSwitch += SwitchWeapon;
 
         //Setup stats
-        _playerStats = GetComponent<PlayerStats>();
-        if(_playerStats == null) {
+        PlayerStats = GetComponent<PlayerStats>();
+        if(PlayerStats == null) {
             throw new MissingComponentException("No player stats found on the Player");
         }
-        _playerStats.CurrentHealth = _playerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
-        _playerStats.CurrentUltimate = 0;
-        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerStats.MaxHealth = LivesManager.Health;
+        PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
+        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerStats.CurrentUltimate = 0;
+        GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
@@ -138,7 +139,7 @@ public class Player : AbstractLifeform {
         }
 
         //User is pressing the ultimate button - Inform the player
-        if ((Input.GetButtonUp(GameConstants.Input_Ultimate) || Input.GetKeyUp(KeyCode.Q)) && _playerStats.UltReady) {
+        if ((Input.GetButtonUp(GameConstants.Input_Ultimate) || Input.GetKeyUp(KeyCode.Q)) && PlayerStats.UltReady) {
             print("Pressing ult and we're ready!");
             ActivateUltimate();
         }
@@ -147,7 +148,6 @@ public class Player : AbstractLifeform {
     private void CalculateMovementAnimation() {
         // Allows us to set the running animation accurately
         var xVelocity = DirectionalInput.x * Convert.ToInt32(DirectionalInput.y <= 0.8 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)));
-        print(xVelocity + " is the velocity before check");
         // Store the Y value for multiple uses
         var yVelocity = Velocity.y;
         // Indication we are jumping up
@@ -180,7 +180,6 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
             var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * (Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
-            print(DirectionalInput + " final vel for run anim = " + finalXVelocity);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
@@ -370,9 +369,9 @@ public class Player : AbstractLifeform {
     }
 
     public void PickupCoin() {
-        if (!_playerStats.UltEnabled) {
-            _playerStats.CurrentUltimate += 5;
-            GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        if (!PlayerStats.UltEnabled) {
+            PlayerStats.CurrentUltimate += 5;
+            GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
         }
         //Right now hardcoded for player 1 coins
         GameMaster.Instance.AddCoins(0);
@@ -383,9 +382,9 @@ public class Player : AbstractLifeform {
     /// </summary>
     private void ActivateUltimate() {
         //Player has activated the ultimatet! (Pressed Y)
-        if (!_playerStats.UltEnabled) {
-            _playerStats.UltEnabled = true;
-            _playerStats.UltReady = false;
+        if (!PlayerStats.UltEnabled) {
+            PlayerStats.UltEnabled = true;
+            PlayerStats.UltReady = false;
             foreach(var weapon in _ownedWeapons) {
                 weapon.GetComponent<AbstractWeapon>().UltMode = true;
             }
@@ -396,15 +395,15 @@ public class Player : AbstractLifeform {
     }
 
     private void DepleteUltimate() {
-        --_playerStats.CurrentUltimate;
-        GameMaster.Instance.UpdateUltimateUI(1, _playerStats.CurrentUltimate, _playerStats.MaxUltimate);
+        --PlayerStats.CurrentUltimate;
+        GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
     }
 
     /// <summary>
     /// Set all weapon states to default mode.
     /// </summary>
     private void DeactivateUltimate() {
-        _playerStats.UltEnabled = false;
+        PlayerStats.UltEnabled = false;
         foreach (var weapon in _ownedWeapons) {
             weapon.GetComponent<AbstractWeapon>().UltMode = false;
         }
@@ -429,9 +428,9 @@ public class Player : AbstractLifeform {
     /// Player takes damage and updates the status
     /// </summary>
     public override void Damage(float dmg) {
-        _playerStats.CurrentHealth -= (int)dmg;
-        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
-        if(_playerStats.CurrentHealth <= 0) {
+        PlayerStats.CurrentHealth -= (int)dmg;
+        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        if(PlayerStats.CurrentHealth <= 0) {
             GameMaster.KillPlayer(this);
         }
     }
@@ -440,8 +439,8 @@ public class Player : AbstractLifeform {
     /// Player gets all health back. This only occurs at beginning of spawn and checkpoints
     /// </summary>
     public void RegenerateAllHealth() {
-        _playerStats.CurrentHealth = _playerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(1, _playerStats.CurrentHealth, _playerStats.MaxHealth);//TODO: Don't hardcode this
+        PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
+        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
     }
 
     /// <summary>

@@ -49,6 +49,9 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     public Transform GameOverUi;
     public Transform ControlScreen;
+    public Transform DifficultyScreen;
+    public Transform DifficultyExit;
+    public Transform GameOverLostScreen;
     /// <summary>
     /// Player 1 stats UI
     /// </summary>
@@ -75,6 +78,11 @@ public class GameMaster : MonoBehaviour {
     public int SpecialOverrideHealth;
 
     private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
+    public Transform[] DifficultyObjects = new Transform[3];
+    /// <summary>
+    /// Set by the player in the menu. Default is easy
+    /// </summary>
+    public string Difficulty = "easy";
 
     /// <summary>
     /// Determines when we have ended the game
@@ -99,6 +107,9 @@ public class GameMaster : MonoBehaviour {
     /// How long to wait from player death to respawn
     /// </summary>
     public int SpawnDelay = 3;
+
+    public bool ShowDifficultyScreen = false;
+
 
     /// <summary>
     /// Remaining lives counter must persist through player deaths
@@ -130,6 +141,10 @@ public class GameMaster : MonoBehaviour {
             Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
         }
 
+        if (ShowDifficultyScreen) {
+            DifficultyScreen.gameObject.SetActive(true);
+        }
+
         //Load sprites for player animation map
         _playerSpiteMap.Add(0, PlayerSprites[0]);
         _playerSpiteMap.Add(45, PlayerSprites[1]);
@@ -149,6 +164,36 @@ public class GameMaster : MonoBehaviour {
         _difficulties.Add("normal", new int[] { 10, 500 });
         _difficulties.Add("hard", new int[] { 5, 250 });
         _difficulties.Add("impossible", new int[] { 3, 100 });
+    }
+
+    public void SetDifficulty() {
+        int[] values;
+        var livesAndHealth = _difficulties.TryGetValue(Difficulty.ToLower(), out values);
+        if (values == null) {
+            print("Something went wrong - using the default difficulty");
+            livesAndHealth = _difficulties.TryGetValue("easy", out values);
+        }
+        LivesManager.Lives = values[0];
+        LivesManager.Health = values[1];
+        var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player).GetComponent<Player>();
+        if(player == null) {
+            throw new MissingComponentException("The player is missing at the time of selecting a difficulty?!");
+        }
+        var playerStats = player.PlayerStats;
+        if(playerStats == null) {
+            throw new MissingComponentException("There are no playterstats on the player");
+        }
+        // Set the max health
+        playerStats.MaxHealth = LivesManager.Health;
+        // Set the max lives
+        _maxLives = LivesManager.Lives;
+        DifficultyScreen.gameObject.SetActive(false);
+        DifficultyExit.gameObject.SetActive(false);
+        foreach(var difficulty in DifficultyObjects) {
+            difficulty.gameObject.SetActive(false);
+        }
+
+        GetPlayerStatsUi(1).SetLives(_maxLives);
     }
 
     private void Start() {
@@ -177,7 +222,9 @@ public class GameMaster : MonoBehaviour {
         //}
         //controller.SpawnFreshBaddiesForCheckpoint();
         //Set remaining lives
-        _remainingLives = _maxLives;
+        _remainingLives = LivesManager.Lives;
+        print("lives = " + LivesManager.Lives);
+        GetPlayerStatsUi(1).SetLives(_remainingLives);
     }
 
     private void Update() {
@@ -189,6 +236,13 @@ public class GameMaster : MonoBehaviour {
                 print("Music Couldn't be stopped probably because it never stared. No worries");
             }
             AudioManager.playSound("Music_Main");
+        }
+
+        // Special secret mode
+        if (Input.GetKeyDown(KeyCode.I)) {
+            print("You selected impossible mode");
+            Difficulty = "impossible";
+            SetDifficulty();
         }
 
         // Testing hack for pause
@@ -205,7 +259,11 @@ public class GameMaster : MonoBehaviour {
     }
 
     public void UpdateHealthUI(int player, int current, int max) {
+        print("Max health is " + max);
         if (player == 1) {
+            if(_player1StatsUi == null) {
+                _player1StatsUi = GetPlayerStatsUi(1);
+            }
             _player1StatsUi.SetHealthStatus(current, max);
         } else {
             throw new System.Exception("This is bad because there is only one player...");
@@ -214,6 +272,9 @@ public class GameMaster : MonoBehaviour {
 
     public void UpdateUltimateUI(int player, int current, int max) {
         if(player == 1) {
+            if (_player1StatsUi == null) {
+                _player1StatsUi = GetPlayerStatsUi(1);
+            }
             _player1StatsUi.SetUltimateStatus(current, max);
         }else {
             throw new System.Exception("This is bad because there is only one player...");
@@ -311,8 +372,7 @@ public class GameMaster : MonoBehaviour {
         } else {
             if (RemainingLives <= 0) {
                 print("GAME OVER DUDE");
-                //_audioManager.playSound(GameOverSoundName);
-                //GameOverUI.SetActive(true);
+                GameOverLostScreen.gameObject.SetActive(true);
             }
         }
     }
@@ -340,6 +400,7 @@ public class GameMaster : MonoBehaviour {
 
         //_audioManager.playSound(SpawnSoundName);
         Instantiate(Player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
+        GetPlayerStatsUi(1).SetLives(_remainingLives);
     }
 
 }

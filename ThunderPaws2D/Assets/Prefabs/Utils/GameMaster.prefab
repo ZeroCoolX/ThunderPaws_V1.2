@@ -79,12 +79,22 @@ MonoBehaviour:
   - {fileID: 4795677035519362, guid: 39de33104479d134e851ef57b2189e8d, type: 2}
   UIOverlay: {fileID: 0}
   GameOverUi: {fileID: 0}
+  ControlScreen: {fileID: 0}
+  DifficultyScreen: {fileID: 0}
+  DifficultyExit: {fileID: 0}
+  GameOverLostScreen: {fileID: 0}
   _maxLives: 500
+  SpecialOverrideHealth: 0
+  DifficultyObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Difficulty: easy
   Player: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
   SpawnPoints:
   - {fileID: 0}
   - {fileID: 0}
   SpawnPointIndex: 0
   SpawnDelay: 3
-  AudioManager: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-    type: 2}
+  ShowDifficultyScreen: 0
+  AudioManager: {fileID: 0}

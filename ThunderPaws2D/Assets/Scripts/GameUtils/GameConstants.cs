@@ -20,6 +20,7 @@ public class GameConstants {
     public static string ObjectName_UltimateIndicator = "UltIndicator";
     public static string ObjectName_PlayerImage = "PlayerImage";
     public static string ObjectName_AmmoText = "AmmoText";
+    public static string ObjectName_LivesText = "LivesText";
     public static string ObjectName_BarContainer = "BarContainer";
     public static string ObjectName_UltimateBar = "UltimateBar";
     public static string ObjectName_FirePoint = "FirePoint";

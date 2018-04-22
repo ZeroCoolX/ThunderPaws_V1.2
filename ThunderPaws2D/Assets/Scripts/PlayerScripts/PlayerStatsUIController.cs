@@ -31,6 +31,10 @@ public class PlayerStatsUIController : MonoBehaviour {
     /// Reference to the ammo UI
     /// </summary>
     private Text _ammo;
+    /// <summary>
+    /// Reference to the lives
+    /// </summary>
+    private Text _lives;
 
     private void Awake() {
         if (_healthBarRect == null) {
@@ -61,6 +65,12 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No AmmoText found");
             throw new UnassignedReferenceException();
         }
+
+        _lives = transform.Find(GameConstants.ObjectName_LivesText).GetComponent<Text>();
+        if (_lives == null) {
+            Debug.LogError("No LivesText found");
+            throw new UnassignedReferenceException();
+        }
     }
 
 
@@ -70,8 +80,13 @@ public class PlayerStatsUIController : MonoBehaviour {
     /// <param name="_cur"></param>
     /// <param name="_max"></param>
     public void SetHealthStatus(int cur, int max) {
-        //Calculate percentage of max health
-        float value = (float)cur / max;
+        float value;
+        if (cur == 0 && max == 0) {
+            value = 1f;
+        } else {
+            //Calculate percentage of max health
+            value = (float)cur / max;
+        }
         //TODO: Change color of bar over time
         _healthBarRect.localScale = new Vector3(value, _healthBarRect.localScale.y, _healthBarRect.localScale.z);
         CheckPlayerImage(cur);
@@ -87,6 +102,12 @@ public class PlayerStatsUIController : MonoBehaviour {
         print(_ammo.text);
         _ammo.text = " Ammo: " + (ammo > -1 ? ammo+"" : " infinity");
         print(_ammo.text);
+    }
+
+    public void SetLives(int lives) {
+        print(_lives.text);
+        _lives.text = " Lives: " + lives;
+        print(_lives.text);
     }
 
     /// <summary>
