@@ -97,7 +97,7 @@ public class FuzzBuster : AbstractWeapon {
             }
 
             var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8))) {
+            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                 directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (yAxis > 0.8) {
                 directionInput = Vector2.up;
@@ -133,7 +133,7 @@ public class FuzzBuster : AbstractWeapon {
             // This calculation is necessary so the bullets don't stack on top of eachother
             var yAxis = Player.DirectionalInput.y;
             print("yAxis = " + yAxis);
-            if (((yAxis > 0.3 && yAxis < 0.8))) {
+            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                 yUltOffset = 0.125f;
                 // There is one single special case - when the player is facing right, and looking at 45 degrees.
                 // Coorindates must then be +, - instead of all + or all -

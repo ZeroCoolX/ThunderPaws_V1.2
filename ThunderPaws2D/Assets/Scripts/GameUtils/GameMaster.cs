@@ -48,6 +48,7 @@ public class GameMaster : MonoBehaviour {
     /// Reference to the game over screen
     /// </summary>
     public Transform GameOverUi;
+    public Transform ControlScreen;
     /// <summary>
     /// Player 1 stats UI
     /// </summary>
@@ -68,6 +69,12 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     [SerializeField]
     private int _maxLives = 3;
+    /// <summary>
+    /// Allows the user to select between 3 difficulties
+    /// </summary>
+    public int SpecialOverrideHealth;
+
+    private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
 
     /// <summary>
     /// Determines when we have ended the game
@@ -99,6 +106,8 @@ public class GameMaster : MonoBehaviour {
     public int RemainingLives { get { return _remainingLives; } set { _remainingLives = value; } }
 
     public AudioManager AudioManager;
+
+    private bool _pauseHackIndicator = false;
 
     /// <summary>
     /// This is the world to screen point where any collected coin should go
@@ -134,6 +143,12 @@ public class GameMaster : MonoBehaviour {
         _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
         _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);
         _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);
+
+        // Difficulty, [lives, max health]
+        _difficulties.Add("easy", new int[] { 500, 1000 });
+        _difficulties.Add("normal", new int[] { 10, 500 });
+        _difficulties.Add("hard", new int[] { 5, 250 });
+        _difficulties.Add("impossible", new int[] { 3, 100 });
     }
 
     private void Start() {
@@ -141,6 +156,7 @@ public class GameMaster : MonoBehaviour {
         if (AudioManager == null) {
             throw new MissingComponentException("No AudioManager was found");
         }
+
 
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
@@ -165,6 +181,7 @@ public class GameMaster : MonoBehaviour {
     }
 
     private void Update() {
+        // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.M)) {
             try {
                 AudioManager.stopSound("Music_Main");
@@ -173,6 +190,14 @@ public class GameMaster : MonoBehaviour {
             }
             AudioManager.playSound("Music_Main");
         }
+
+        // Testing hack for pause
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            _pauseHackIndicator = !_pauseHackIndicator;
+            ControlScreen.gameObject.SetActive(_pauseHackIndicator);
+        }
+
+
         if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(KeyCode.UpArrow)) {
             OnWeaponSwitch.Invoke();
             AudioManager.playSound("WeaponSwitch");

@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class GameOverUI : MonoBehaviour {
 
+    private GameObject _player;
+    
     private void Update() {
+        if(_player == null) {
+            _player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+            _player.transform.GetComponent<PlayerInputController>().enabled = false;
+        }
         if (Input.GetButtonUp(GameConstants.Input_Back)) {
             Menu();
         }

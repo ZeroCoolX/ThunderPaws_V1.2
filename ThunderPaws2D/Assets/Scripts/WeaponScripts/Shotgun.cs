@@ -103,7 +103,7 @@ public class Shotgun : AbstractWeapon {
         if (Time.time >= TimeToSpawnEffect) {
             Vector2 dir = Player.DirectionalInput;
             var preCalcYaxis = dir.y;
-            if (((preCalcYaxis > 0.3 && preCalcYaxis < 0.8))) {
+            if (((preCalcYaxis > 0.3 && preCalcYaxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                 dir = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (preCalcYaxis > 0.8) {
                 dir = Vector2.up;
@@ -128,7 +128,7 @@ public class Shotgun : AbstractWeapon {
                 var yAxis = directionInput.y;
                 var xDir = 1.0f * (Player.FacingRight ? 1 : -1);
                 var yDir = 0f;
-                if (((yAxis > 0.3 && yAxis < 0.8))) {
+                if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                     yDir = 0.5f;
                     xDir = 0.5f * (Player.FacingRight ? 1 : -1);
                 } else if (yAxis > 0.8) {

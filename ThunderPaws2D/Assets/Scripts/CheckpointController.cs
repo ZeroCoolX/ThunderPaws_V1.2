@@ -51,5 +51,7 @@ public class CheckpointController : MonoBehaviour {
         print("Hit Checkpoint!!!!!");
         GameMaster.Instance.SpawnPointIndex += 1;
         SpawnFreshBaddiesForCheckpoint();
+        // Refresh the players health once they hit the checkpoint
+        c.transform.GetComponent<Player>().RegenerateAllHealth();
     }
 }

@@ -58,7 +58,6 @@ public class Player : AbstractLifeform {
     /// </summary>
     public float MeleeDamage = 10f;
 
-
     /// <summary>
     /// Indicates we are rolling
     /// </summary>
@@ -147,7 +146,8 @@ public class Player : AbstractLifeform {
 
     private void CalculateMovementAnimation() {
         // Allows us to set the running animation accurately
-        var xVelocity = DirectionalInput.x * Convert.ToInt32(DirectionalInput.y <= 0.8);
+        var xVelocity = DirectionalInput.x * Convert.ToInt32(DirectionalInput.y <= 0.8 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)));
+        print(xVelocity + " is the velocity before check");
         // Store the Y value for multiple uses
         var yVelocity = Velocity.y;
         // Indication we are jumping up
@@ -179,7 +179,8 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
+            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * (Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
+            print(DirectionalInput + " final vel for run anim = " + finalXVelocity);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
@@ -214,16 +215,29 @@ public class Player : AbstractLifeform {
         var leftTrigger = Input.GetAxis(GameConstants.Input_Xbox_LTrigger);
         var leftCtrl = Input.GetKey(KeyCode.LeftControl);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
-        if (!leftCtrl && leftTrigger < 1 && yAxis <= 0.8 && yAxis > -0.25 && !_meleeActive) {
-            // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
-            // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
-            if(DirectionalInput.x != 0f && _rollActive) {
-                targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
-            } else {
-                targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+        if (!leftCtrl && leftTrigger < 1  && !_meleeActive) {
+            if(DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)) {
+                // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
+                // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
+                if (DirectionalInput.x != 0f && _rollActive) {
+                    targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
+                } else {
+                    targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+                }
+                // Set the animator
+                Animator.SetFloat("xVelocity", targetVelocityX);
             }
-            // Set the animator
-            Animator.SetFloat("xVelocity", targetVelocityX);
+            else if ((yAxis <= 0.8 && yAxis > -0.25)) {
+                // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
+                // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
+                if (DirectionalInput.x != 0f && _rollActive) {
+                    targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
+                } else {
+                    targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+                }
+                // Set the animator
+                Animator.SetFloat("xVelocity", targetVelocityX);
+            }
         }
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
     }
@@ -278,7 +292,7 @@ public class Player : AbstractLifeform {
     private void CalculateWeaponRotation() {
         var yAxis = DirectionalInput.y;
         float rotation = 0f;
-        if( ((yAxis > 0.3 && yAxis < 0.8))) {
+        if( ((yAxis > 0.3 && yAxis < 0.8)) || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f))) {
             rotation = 45 * (FacingRight ? 1 : -1);
         }else if (yAxis > 0.8) {
             rotation = 90 * (FacingRight ? 1 : -1);
