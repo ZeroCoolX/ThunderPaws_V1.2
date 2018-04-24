@@ -168,7 +168,7 @@ public class Robot_FL1 : DamageableLifeform {
         _overPlayer = Mathf.Abs(transform.position.x - _target.position.x) < _overThreshold;
         if (_overPlayer && !_bombDropInitiated) {
             // Wait 0.25seconds then drop bomb.
-            Invoke("DropBomb", 0.25f);
+            Invoke("DropBomb", 0.1f);
             _bombDropInitiated = true;
         }
         return _overPlayer;
