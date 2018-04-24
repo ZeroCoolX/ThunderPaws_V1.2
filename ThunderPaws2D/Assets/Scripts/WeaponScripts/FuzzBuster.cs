@@ -45,15 +45,15 @@ public class FuzzBuster : AbstractWeapon {
     private void HandleShootingInput() {
         var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
-        if (Input.GetKeyUp(KeyCode.Return)) {
+        if (Input.GetKeyUp(InputManager.Instance.Fire)) {
             _fireButtonPressed = false;
             _holdingFireDown = false;
-        } else if (!Input.GetKey(KeyCode.Return) && rightTrigger == 0) {
+        } else if (!Input.GetKey(InputManager.Instance.Fire) && rightTrigger == 0) {
             _fireButtonPressed = false;
             _holdingFireDown = false;
         }
         // Indicates the user is trying to fire
-        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if ((Input.GetKey(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             if (!_fireButtonPressed) {
                 CalculateShot();
                 _fireButtonPressed = true;

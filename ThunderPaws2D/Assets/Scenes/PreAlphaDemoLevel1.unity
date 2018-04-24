@@ -3515,11 +3515,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.8
+      value: -9.1
       objectReference: {fileID: 0}
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -4.3
+      value: -5.3
       objectReference: {fileID: 0}
     - target: {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
       propertyPath: m_LocalPosition.z
@@ -4938,6 +4938,16 @@ Prefab:
       propertyPath: AudioManager
       value: 
       objectReference: {fileID: 1608814253}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: ShowDifficultyScreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: InputBindingScreen
+      value: 
+      objectReference: {fileID: 1479065955}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff171ff069abb2b48b248f7a3b838039, type: 2}
   m_IsPrefabParent: 0
@@ -8389,7 +8399,22 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 224087861357522560, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 87.79999
+      objectReference: {fileID: 0}
+    - target: {fileID: 224679139791768508, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 273.5
+      objectReference: {fileID: 0}
     - target: {fileID: 224282376895432438, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 87.79999
+      objectReference: {fileID: 0}
+    - target: {fileID: 224696106472889650, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
       propertyPath: m_LocalPosition.y
       value: 87.79999
@@ -8404,24 +8429,14 @@ Prefab:
       propertyPath: m_LocalPosition.y
       value: 308.5
       objectReference: {fileID: 0}
-    - target: {fileID: 224696106472889650, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 87.79999
-      objectReference: {fileID: 0}
-    - target: {fileID: 224087861357522560, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 87.79999
-      objectReference: {fileID: 0}
-    - target: {fileID: 224679139791768508, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 273.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
   m_IsPrefabParent: 0
+--- !u!224 &1479065955 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224216273111508856, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1479065954}
 --- !u!1001 &1483080689
 Prefab:
   m_ObjectHideFlags: 0
@@ -12494,7 +12509,7 @@ MonoBehaviour:
   FlyingSpawns:
   - {fileID: 815051627}
   - {fileID: 589765092}
-  - {fileID: 177748578}
+  - {fileID: 589765092}
   GroundSpawns:
   - {fileID: 798459636}
   - {fileID: 993674240}

@@ -29,7 +29,8 @@ public class GameOverUI : MonoBehaviour {
     public void Menu() {
         try {
             GameMaster.Instance.AudioManager.stopSound("Music_Main");
-        }catch(System.Exception e) {
+            GameMaster.Instance.AudioManager.playSound("Music_Menu");
+        } catch (System.Exception e) {
             print("Don't care");
         }
         SceneManager.LoadScene(GameConstants.Scene_LevelName_Menu);

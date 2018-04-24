@@ -139,7 +139,7 @@ public class Player : AbstractLifeform {
         }
 
         //User is pressing the ultimate button - Inform the player
-        if ((Input.GetButtonUp(GameConstants.Input_Ultimate) || Input.GetKeyUp(KeyCode.Q)) && PlayerStats.UltReady) {
+        if ((Input.GetButtonUp(GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
             print("Pressing ult and we're ready!");
             ActivateUltimate();
         }
@@ -157,12 +157,12 @@ public class Player : AbstractLifeform {
         // Indicates we are crouching
         var crouch = (DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S));
         // Indicates we are rolling
-        var rolling = ((Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButtonDown(GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
+        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
             _rollActive = true;
         }
         // Indicates we are melee'ing
-        var melee = ((Input.GetKeyDown(KeyCode.RightShift) || Input.GetButtonDown(GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
+        var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
             GameMaster.Instance.AudioManager.playSound("FirePunch");
@@ -179,7 +179,7 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(KeyCode.LeftControl))) * (Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
+            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(InputManager.Instance.LockMovement))) * (Convert.ToInt32(Input.GetAxis(GameConstants.Input_Xbox_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
@@ -193,7 +193,7 @@ public class Player : AbstractLifeform {
             }
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
-            var holdStill = (Input.GetKey(KeyCode.LeftControl) || Input.GetAxis(GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
+            var holdStill = (Input.GetKey(InputManager.Instance.LockMovement) || Input.GetAxis(GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
             _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
         }
 
@@ -212,7 +212,7 @@ public class Player : AbstractLifeform {
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis(GameConstants.Input_Xbox_LTrigger);
-        var leftCtrl = Input.GetKey(KeyCode.LeftControl);
+        var leftCtrl = Input.GetKey(InputManager.Instance.LockMovement);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
         if (!leftCtrl && leftTrigger < 1  && !_meleeActive) {
             if(DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)) {

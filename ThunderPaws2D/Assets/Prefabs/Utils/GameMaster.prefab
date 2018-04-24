@@ -83,6 +83,7 @@ MonoBehaviour:
   DifficultyScreen: {fileID: 0}
   DifficultyExit: {fileID: 0}
   GameOverLostScreen: {fileID: 0}
+  InputBindingScreen: {fileID: 0}
   _maxLives: 500
   SpecialOverrideHealth: 0
   DifficultyObjects:
@@ -96,5 +97,5 @@ MonoBehaviour:
   - {fileID: 0}
   SpawnPointIndex: 0
   SpawnDelay: 3
-  ShowDifficultyScreen: 0
+  ShowDifficultyScreen: 1
   AudioManager: {fileID: 0}

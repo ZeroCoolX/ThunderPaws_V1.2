@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Overseer of the game.
@@ -52,6 +53,7 @@ public class GameMaster : MonoBehaviour {
     public Transform DifficultyScreen;
     public Transform DifficultyExit;
     public Transform GameOverLostScreen;
+    public Transform InputBindingScreen;
     /// <summary>
     /// Player 1 stats UI
     /// </summary>
@@ -201,6 +203,9 @@ public class GameMaster : MonoBehaviour {
             throw new MissingComponentException("No AudioManager was found");
         }
 
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu)) {
+            AudioManager.playSound("Music_Menu");
+        }
 
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
@@ -237,6 +242,10 @@ public class GameMaster : MonoBehaviour {
             AudioManager.playSound("Music_Main");
         }
 
+        if (Input.GetKeyDown(KeyCode.B)) {
+            InputBindingScreen.gameObject.SetActive(!InputBindingScreen.gameObject.activeSelf);
+        }
+
         // Testing hack for pause
         if (Input.GetKeyDown(KeyCode.Escape)) {
             _pauseHackIndicator = !_pauseHackIndicator;
@@ -244,7 +253,7 @@ public class GameMaster : MonoBehaviour {
         }
 
 
-        if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(KeyCode.UpArrow)) {
+        if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
             OnWeaponSwitch.Invoke();
             AudioManager.playSound("WeaponSwitch");
         }

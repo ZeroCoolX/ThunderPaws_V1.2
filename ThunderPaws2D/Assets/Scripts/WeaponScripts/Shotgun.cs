@@ -36,7 +36,7 @@ public class Shotgun : AbstractWeapon {
         var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
         // This checks if the player released the trigger in between shots - because the shotgun is not full auto
         if (!_triggerLetGo) {
-            if(rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetButton(GameConstants.Input_Fire)) {
+            if(rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
                 _triggerLetGo = true;
             }
         }
@@ -45,7 +45,7 @@ public class Shotgun : AbstractWeapon {
             Debug.DrawRay(_debugBlastRotations[0], _debugBlastRotations[i] * _rayLength, Color.green);
         }
 
-        if (_triggerLetGo && (Input.GetButtonDown(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             _triggerLetGo = false;
             CalculateShot();
             ApplyRecoil();
