@@ -20,20 +20,20 @@ public class InputBindingUI : Monobehaviour {
     
     for(var i = o; i < _menuPanel.childCount; ++i){
       switch(_menuPanel.GetChild(i).name){
-        case "MeleeKey":
+        case "Melee":
           _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Melee.ToString();
           break;
-        case "FireKey":
+        case "Fire":
           _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Fire.ToString();
           break;
-        case "RollKey":
+        case "Roll":
           _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Roll.ToString();
           break;
-        case "LockMovementKey":
+        case "LockMovement":
           _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.LockMovement.ToString();
           break;
-        case "SwitchWeaponKey":
-          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.SwitchWeapon.ToString();
+        case "ChangeWeapon":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.ChangeWeapon.ToString();
           break;
       }      
     }
@@ -101,10 +101,10 @@ public class InputBindingUI : Monobehaviour {
           _buttonText.text = InputManager.Instance.LockMovement.ToString();
           PlayerPrefs.SetString("LockMovement", InputManager.Instance.LockMovement); // Save the new key to player prefs
           break;
-        case "SwitchWeapon":
-          InputManager.Instance.SwitchWeapon = _newKey;
-          _buttonText.text = InputManager.Instance.SwitchWeapon.ToString();
-          PlayerPrefs.SetString("SwitchWeapon", InputManager.Instance.SwitchWeapon); // Save the new key to player prefs
+        case "ChangeWeapon":
+          InputManager.Instance.ChangeWeapon = _newKey;
+          _buttonText.text = InputManager.Instance.ChangeWeapon.ToString();
+          PlayerPrefs.SetString("ChangeWeapon", InputManager.Instance.ChangeWeapon); // Save the new key to player prefs
           break;
       }
       
