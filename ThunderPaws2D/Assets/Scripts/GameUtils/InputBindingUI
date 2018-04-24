@@ -1,0 +1,118 @@
+using UnityEngine;
+using system.Collections;
+using UnityEngine.UI;
+
+public class InputBindingUI : Monobehaviour {
+  private Transform _menuPanel;
+  
+  private Event _keyEvent;
+  
+  public Text ButtonText;
+  
+  private KeyCode _newKey
+  
+  private bool _waitingForKey;
+  
+  void Start(){
+    _menuPanel = transform.FindChild("Panel");
+    _menuPanel.gameObject.SetActive(false);
+    _waitingForKey = false;
+    
+    for(var i = o; i < _menuPanel.childCount; ++i){
+      switch(_menuPanel.GetChild(i).name){
+        case "MeleeKey":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Melee.ToString();
+          break;
+        case "FireKey":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Fire.ToString();
+          break;
+        case "RollKey":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.Roll.ToString();
+          break;
+        case "LockMovementKey":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.LockMovement.ToString();
+          break;
+        case "SwitchWeaponKey":
+          _menuPanel.GetChild(i).GetComponentInChildren<Text>.text = InputManager.Instance.SwitchWeapon.ToString();
+          break;
+      }      
+    }
+  }
+  
+  void Update(){
+        if(Input.GetKeyDown(KeyCode.B)){
+          _menuPanel.gameObject.SetActive(!_menuPanel.gameObject.activeSelf)
+        }
+   }
+   
+   void OnGui(){
+      // _keyEvent dictates what key our user is pressing by using Event.current to detect the current event
+      _keyEvent = Event.current;
+      
+      // Execute if a button gets pressed
+      if(_keyEvent.isKey && _waitingForKey){
+        _newKey = keyEvent.keyCode; // Assigns _newKey to the key the user presses
+        _waitingForKey = false;
+      }
+      
+   }
+   
+   
+   private void StartAssignment(string keyName){
+      if(!_waitingForKey){
+        StartCoroutine(AssignKey(keyName));
+      }
+   }
+   
+   private void SendText(Text text){
+      _buttonText = text;
+   }
+   
+   
+   private IEnumerator WaitForKeys(){
+      while(!_keyEvent.isKey){
+        yield return null;
+      }
+   }
+   
+   
+   private OEnumerator AssignKey(string keyName){
+      _waitingForKey = true;
+      yield return WaitForKeys(); // Executes endlessly until the user presses a key
+      
+      switch(keyName){
+        case "Melee":
+          InputManager.Instance.Melee = _newKey;
+          _buttonText.text = InputManager.Instance.Melee.ToString();
+          PlayerPrefs.SetString("Melee", InputManager.Instance.Melee); // Save the new key to player prefs
+          break;
+        case "Fire":
+          InputManager.Instance.Fire = _newKey;
+          _buttonText.text = InputManager.Instance.Fire.ToString();
+          PlayerPrefs.SetString("Fire", InputManager.Instance.Fire); // Save the new key to player prefs
+          break;
+        case "Roll":
+          InputManager.Instance.Roll = _newKey;
+          _buttonText.text = InputManager.Instance.Roll.ToString();
+          PlayerPrefs.SetString("Roll", InputManager.Instance.Roll); // Save the new key to player prefs
+          break;
+        case "LockMovement":
+          InputManager.Instance.LockMovement = _newKey;
+          _buttonText.text = InputManager.Instance.LockMovement.ToString();
+          PlayerPrefs.SetString("LockMovement", InputManager.Instance.LockMovement); // Save the new key to player prefs
+          break;
+        case "SwitchWeapon":
+          InputManager.Instance.SwitchWeapon = _newKey;
+          _buttonText.text = InputManager.Instance.SwitchWeapon.ToString();
+          PlayerPrefs.SetString("SwitchWeapon", InputManager.Instance.SwitchWeapon); // Save the new key to player prefs
+          break;
+      }
+      
+      yield return null;
+      
+   }
+   
+   
+   
+  
+}
