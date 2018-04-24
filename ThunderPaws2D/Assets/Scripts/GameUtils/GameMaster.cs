@@ -160,10 +160,9 @@ public class GameMaster : MonoBehaviour {
         _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);
 
         // Difficulty, [lives, max health]
-        _difficulties.Add("easy", new int[] { 500, 1000 });
-        _difficulties.Add("normal", new int[] { 10, 500 });
-        _difficulties.Add("hard", new int[] { 5, 250 });
-        _difficulties.Add("impossible", new int[] { 3, 100 });
+        _difficulties.Add("easy", new int[] { 10, 500 });
+        _difficulties.Add("normal", new int[] { 5, 250 });
+        _difficulties.Add("hard", new int[] { 3, 100 });
     }
 
     public void SetDifficulty() {
@@ -236,13 +235,6 @@ public class GameMaster : MonoBehaviour {
                 print("Music Couldn't be stopped probably because it never stared. No worries");
             }
             AudioManager.playSound("Music_Main");
-        }
-
-        // Special secret mode
-        if (Input.GetKeyDown(KeyCode.I)) {
-            print("You selected impossible mode");
-            Difficulty = "impossible";
-            SetDifficulty();
         }
 
         // Testing hack for pause
