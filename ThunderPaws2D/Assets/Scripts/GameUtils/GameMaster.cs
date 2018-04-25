@@ -212,7 +212,7 @@ public class GameMaster : MonoBehaviour {
             throw new MissingComponentException("No AudioManager was found");
         }
 
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu)) {
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu) || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("PreAlphaDemoTutorial1")) {
             AudioManager.playSound("Music_Menu");
         }
 

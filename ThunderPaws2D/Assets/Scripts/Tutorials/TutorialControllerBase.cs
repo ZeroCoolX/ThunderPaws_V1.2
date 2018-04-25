@@ -6,6 +6,7 @@ public abstract class TutorialControllerBase : MonoBehaviour {
 
     protected bool TutorialComplete = false;
     protected bool TutorialFailedReset = false;
+    protected bool CheckForComplete = true;
 
 	// Use this for initialization
 	void Start () {
@@ -16,14 +17,19 @@ public abstract class TutorialControllerBase : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+        if (!CheckForComplete) {
+            return;
+        }
         if (TutorialComplete) {
             print("tutorial complete!");
             TutorialManager.Instance.TutorialCompleteMoveToNext();
             TutorialComplete = false;
+            CheckForComplete = false;
         }
         if (TutorialFailedReset) {
             TutorialManager.Instance.TutorialFailedReset();
             TutorialFailedReset = false;
+            CheckForComplete = true;
         }
-	}
+    }
 }

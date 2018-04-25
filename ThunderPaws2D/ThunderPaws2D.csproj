@@ -240,6 +240,7 @@
     <Compile Include="Assets\Scripts\GameUtils\HordeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\InputBindingUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\InputManager.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\IntroScreenUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\LifetimeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
