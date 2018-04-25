@@ -17,7 +17,7 @@ public class CoopersLazyHack : MonoBehaviour {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 8, 25);
+        Collider.Initialize(1 << 8, 25, true);
     }
 
     private void Apply(Vector3 v, Collider2D c) {
@@ -26,10 +26,10 @@ public class CoopersLazyHack : MonoBehaviour {
         if (lifeformScript != null) {
             lifeformScript.NoFallCheck = true;
         }
-        var playStats = c.transform.GetComponent<PlayerStats>();
+        //var playStats = c.transform.GetComponent<PlayerStats>();
 
-        playStats.MaxHealth = 1000;
-        playStats.CurrentHealth = playStats.MaxHealth;
+        //playStats.MaxHealth = 1000;
+        //playStats.CurrentHealth = playStats.MaxHealth;
 
         Camera.GetComponent<Camera2DFollow>().YPosClamp = -500f;
     }

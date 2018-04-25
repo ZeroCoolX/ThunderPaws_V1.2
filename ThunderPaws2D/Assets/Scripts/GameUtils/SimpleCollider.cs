@@ -55,6 +55,7 @@ public class SimpleCollider : MonoBehaviour {
         _radius = radius == 0 ? GetComponent<SpriteRenderer>().bounds.size.x : radius;
         _whatToHit = whatToHit;
         _continuousCollision = continuousCollision;
+        _hit = false;
     }
 
     public void Initialize(LayerMask whatToHit, Vector2 targetDirection, Vector3 targetPos, float moveSpeed, string exemptions, float raycastLength = 0.2f) {

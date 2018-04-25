@@ -65,6 +65,8 @@ public class Robot_FL1 : DamageableLifeform {
 
     private float _timeToFindNewSpeed;
 
+    public bool IsHorde2Hack = false;
+
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
@@ -91,9 +93,14 @@ public class Robot_FL1 : DamageableLifeform {
     }
 
     private void CalculateBounds() {
-       // print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
-        _minY = _target.position.y + 4f;
-        _maxY = _minY + 8f;
+        // print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
+        if (IsHorde2Hack) {
+            _minY = -85.89f;
+            _maxY = -77.9f;
+        }else {
+            _minY = _target.position.y + 2f;
+            _maxY = _minY + 6f;
+        }
     }
 
     private void MaxBoundsCheck() {

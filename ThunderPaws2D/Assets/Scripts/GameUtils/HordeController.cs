@@ -51,6 +51,8 @@ public class HordeController : MonoBehaviour {
     /// </summary>
     public int BaddiesLeftToKill = 25;
 
+    private int _baddieKillNumBackup;
+
     public bool EndGameAfter = false;
     
     // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
@@ -91,6 +93,8 @@ public class HordeController : MonoBehaviour {
 
     public int RadiusOfTrigger = 12;
 
+    private bool PlayerDiedHack = false;
+
     // Use this for initialization
     void Start() {
         //Add delegate for collision detection
@@ -107,9 +111,20 @@ public class HordeController : MonoBehaviour {
         if(GroundSpawns == null){
             throw new MissingComponentException("No Flying Spawns specified");
         }
+        GameMaster.Instance.OnHordeKilledPlayer += PlayerDiedReset;
+
+        _baddieKillNumBackup = BaddiesLeftToKill;
     }
-    
+
     void Update(){
+        if (PlayerDiedHack) {
+            var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
+            if(player != null) {
+                SetCameraTarget(player.transform, true, 5f);
+                PlayerDiedHack = false;
+            }
+        }
+
         if(!_spawningAllowed){
             return;
         }
@@ -133,6 +148,38 @@ public class HordeController : MonoBehaviour {
             SpawnGroundBaddies();
         }
     }
+
+    private void PlayerDiedReset() {
+        GameMaster.Instance.AudioManager.stopSound("Music_Boss");
+        GameMaster.Instance.AudioManager.playSound("Music_Main");
+        PlayerDiedHack = true;
+        // Inform collider to reset iteself
+        Collider.Initialize(1 << 8, RadiusOfTrigger);
+
+        // Clear cache
+        ActiveHordeBaddieCache = new Dictionary<string, Transform>();
+        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_HordeBaddie);
+
+        // DEstroy every baddie
+        foreach (var baddie in baddies) {
+            try {
+                Destroy(baddie);
+            } catch (System.Exception e) {
+                print("Trying to destroy already destroyed object, no worries move on");
+            }
+        }
+        _activeFL1Count = 0;
+        _activeFL2Count = 0;
+        _activeFL3Count = 0;
+        _activeGL1Count = 0;
+        _activeGL2Count = 0;
+        _spawnWaitTime = Time.time;
+        BaddiesLeftToKill = _baddieKillNumBackup;
+        _spawningAllowed = false;
+        if (LeftBarrier != null) {
+            LeftBarrier.gameObject.SetActive(false);
+        }
+    }
     
     // Goes through all the baddies still alive on screen and kills them 0.1 second from eachother
     private void KillAllBaddies(){
@@ -152,11 +199,12 @@ public class HordeController : MonoBehaviour {
     private void EndHorde(){
         var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
          SetCameraTarget(player.transform, true, 5f);
-        
+
         // Here we should also open the path to let the player out
-        
+        GameMaster.Instance.LastSeenInHorde = false;
+
         // Then destroy the spawns, and destroy ourself
-        foreach(var spawn in FlyingSpawns){
+        foreach (var spawn in FlyingSpawns){
             GameObject.Destroy(spawn.gameObject);
         }
         foreach(var spawn in GroundSpawns){
@@ -188,7 +236,7 @@ public class HordeController : MonoBehaviour {
                 var cleanPosition = new Vector3((!yOffset ? position.x + offset.x : position.x), (yOffset ? position.y + offset.y : position.y), position.z);
                 Transform baddieTransform = Instantiate(baddiePrefab, cleanPosition, transform.rotation) as Transform;
                 baddieTransform.gameObject.name = baddieCachePrefix+baddieTransform.gameObject.GetInstanceID();
-                
+                baddieTransform.tag = GameConstants.Tag_HordeBaddie;
                 var damageableLifeform = baddieTransform.GetComponent<DamageableLifeform>();
                 if(damageableLifeform == null){
                     throw new MissingComponentException("Somehow the baddie: " + baddieTransform.gameObject.name + " does not have a DamageableLifeform script attached");
@@ -284,6 +332,7 @@ public class HordeController : MonoBehaviour {
     /// <param name="c"></param>
     private void Apply(Vector3 v, Collider2D c) {
         // Here we should also close the path on either side of the horde section locking the player in
+        GameMaster.Instance.LastSeenInHorde = true;
 
         SetCameraTarget(transform, false, 0f);
         _spawningAllowed = true;

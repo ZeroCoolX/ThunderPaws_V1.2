@@ -138,7 +138,7 @@ MonoBehaviour:
     loop: 0
   - name: Music_Menu
     clip: {fileID: 8300000, guid: bb85f65c040652545bde61f158877b8d, type: 3}
-    volume: 0.1
+    volume: 0.2
     pitch: 1
     randomVolume: 0
     randomPitch: 0

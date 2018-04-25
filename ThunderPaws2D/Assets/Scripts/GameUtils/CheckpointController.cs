@@ -29,7 +29,9 @@ public class CheckpointController : MonoBehaviour {
     public void DeactivateBaddiesInCheckpoint() {
         //GameMaster.Instance.SpawnPointIndex -= 1;
         print("Destroying BADDIEDDSS");
-        Destroy(BaddiesInCheckpointRange.gameObject);
+        if(GameMaster.Instance.SpawnPointIndex != 2) {
+            Destroy(BaddiesInCheckpointRange.gameObject);
+        }
     }
 
     public void SpawnFreshBaddiesForCheckpoint() {
@@ -40,17 +42,19 @@ public class CheckpointController : MonoBehaviour {
         BaddiesInCheckpointRange = clone;
     }
 
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 8);
-    }
+    //void OnDrawGizmosSelected() {
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawSphere(transform.position, 8);
+    //}
 
 
     private void Apply(Vector3 v, Collider2D c) {
         // Increment spawn!
         print("Hit Checkpoint!!!!!");
         GameMaster.Instance.SpawnPointIndex += 1;
-        SpawnFreshBaddiesForCheckpoint();
+        if(GameMaster.Instance.SpawnPointIndex != 2) {
+            SpawnFreshBaddiesForCheckpoint();
+        }
         // Refresh the players health once they hit the checkpoint
         c.transform.GetComponent<Player>().RegenerateAllHealth();
     }

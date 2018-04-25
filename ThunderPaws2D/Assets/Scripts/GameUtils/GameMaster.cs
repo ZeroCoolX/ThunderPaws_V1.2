@@ -37,6 +37,15 @@ public class GameMaster : MonoBehaviour {
     public WeaponSwitchCallback OnWeaponSwitch;
 
     /// <summary>
+    /// Delegate for snotifying the horde the player died, so reset the camera and kill themselves
+    /// </summary>
+    /// <param name="choice"></param>
+    public delegate void PlayerDeadResetHordeCallback();
+    public PlayerDeadResetHordeCallback OnHordeKilledPlayer;
+
+    public bool LastSeenInHorde = false;
+
+    /// <summary>
     /// CameraShake instance so we know we can shake the screen
     /// </summary>
     public CameraShake CamShake { get; private set; }
@@ -390,14 +399,20 @@ public class GameMaster : MonoBehaviour {
         //play sound and wait for delay
         //_audioManager.playSound(RespawnCountdownSoundName);
         yield return new WaitForSeconds(SpawnDelay);
-
         var spawn = SpawnPoints[SpawnPointIndex];
         var controller = spawn.GetComponent<CheckpointController>();
-        if(controller == null) {
+        if (controller == null) {
             throw new MissingComponentException("No Checkpoint controller");
         }
-        controller.DeactivateBaddiesInCheckpoint();
-        controller.SpawnFreshBaddiesForCheckpoint();
+        if (SpawnPointIndex != 2) {
+            controller.DeactivateBaddiesInCheckpoint();
+            controller.SpawnFreshBaddiesForCheckpoint();
+            if (LastSeenInHorde) {
+                OnHordeKilledPlayer.Invoke();
+            }
+        } else {
+            OnHordeKilledPlayer.Invoke();
+        }
 
         //_audioManager.playSound(SpawnSoundName);
         Instantiate(Player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);

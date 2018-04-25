@@ -74,6 +74,9 @@ public class Robot_FL2 : DamageableLifeform {
 
     private bool MaxBoundsOverride = false;
 
+    public bool IsHorde2Hack = false;
+
+
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
@@ -104,8 +107,13 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     private void CalculateBounds() {
-        _minY = _target.position.y + 2f;
-        _maxY = _minY + 6f;
+        if (IsHorde2Hack) {
+            _minY = -85.89f;
+            _maxY = -77.9f;
+        } else {
+            _minY = _target.position.y + 2f;
+            _maxY = _minY + 6f;
+        }
         RecalculateBounds = true;
     }
 
