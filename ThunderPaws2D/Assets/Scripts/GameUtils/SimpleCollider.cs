@@ -50,7 +50,7 @@ public class SimpleCollider : MonoBehaviour {
     public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
     public InvokeCollisionDelegate InvokeCollision;
 
-    public void Initialize(LayerMask whatToHit, int radius = 0, bool continuousCollision = false) {
+    public void Initialize(LayerMask whatToHit, float radius = 0f, bool continuousCollision = false) {
         _useCircleCollider = true;
         _radius = radius == 0 ? GetComponent<SpriteRenderer>().bounds.size.x : radius;
         _whatToHit = whatToHit;

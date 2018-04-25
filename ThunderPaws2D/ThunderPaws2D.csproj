@@ -219,7 +219,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DifficultyUI.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
@@ -234,6 +233,7 @@
     <Compile Include="Assets\Scripts\GameUtils\CoopersLazyHack.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DifficultyController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\DifficultyUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameOverUI.cs" />
@@ -244,6 +244,9 @@
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleCollider.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\TutorialCollider.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\TutorialResetCollider.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL2.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\BaddieAI\Robot_FL3.cs" />
@@ -258,6 +261,13 @@
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsUIController.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\AbstractProjectile.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\BulletProjectile.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\Tutorial1Controller.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\Tutorial2Controller.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\Tutorial3Controller.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\Tutorial4Controller.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\Tutorial5Controller.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\TutorialControllerBase.cs" />
+    <Compile Include="Assets\Scripts\Tutorials\TutorialManager.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\AbstractWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\EmissionIndex.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\FatCat.cs" />
