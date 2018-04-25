@@ -164,7 +164,7 @@ MonoBehaviour:
   BoxCollider: {fileID: 0}
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 33792
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
 --- !u!114 &114236751249061372
@@ -196,6 +196,7 @@ MonoBehaviour:
   NoFallCheck: 0
   Velocity: {x: 0, y: 0, z: 0}
   FacingRight: 1
+  PlayerStats: {fileID: 0}
   MeleeDamage: 10
   ShowroomSpawns:
   - {fileID: 0}

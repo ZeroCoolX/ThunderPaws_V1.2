@@ -200,6 +200,9 @@ public class HordeController : MonoBehaviour {
         var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
          SetCameraTarget(player.transform, true, 5f);
 
+        // Failsafe just so the player doesn't die after beatig the horde
+        player.GetComponent<Player>().RegenerateAllHealth();
+
         // Here we should also open the path to let the player out
         GameMaster.Instance.LastSeenInHorde = false;
 
