@@ -159,7 +159,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ParentCheck: 1
   KillImmediatelyOnInvisible: 0
-  AllowLifetimeWhileInvisible: 3
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114572560977285148
 MonoBehaviour:
   m_ObjectHideFlags: 1

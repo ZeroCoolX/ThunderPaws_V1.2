@@ -370,7 +370,7 @@ public class Player : AbstractLifeform {
 
     public void PickupCoin() {
         if (!PlayerStats.UltEnabled) {
-            PlayerStats.CurrentUltimate += 5;
+            PlayerStats.CurrentUltimate += 1;
             GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
         }
         //Right now hardcoded for player 1 coins
