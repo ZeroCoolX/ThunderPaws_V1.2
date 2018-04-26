@@ -28,15 +28,19 @@ public class CheckpointController : MonoBehaviour {
 
     public void DeactivateBaddiesInCheckpoint() {
         //GameMaster.Instance.SpawnPointIndex -= 1;
-        print("Destroying BADDIEDDSS");
+        print("Destroying BADDIEDDSS" + " at Time [" + Time.time + "]");
         if(GameMaster.Instance.SpawnPointIndex != 2) {
             Destroy(BaddiesInCheckpointRange.gameObject);
         }
     }
 
-    public void SpawnFreshBaddiesForCheckpoint() {
+    public void SpawnFreshBaddiesForCheckpoint(float waitTime = 0f) {
+        Invoke("Spawn", waitTime);
+    }
+
+    private void Spawn() {
         BaddieSpawn = CheckpointSpawns[CheckpointSpawnIndex];
-        print("CreatingBaddies for spawn : " + gameObject.name + " with spawn index : " + GameMaster.Instance.SpawnPointIndex);
+        print("CreatingBaddies for spawn : " + gameObject.name + " with spawn index : " + GameMaster.Instance.SpawnPointIndex + " at Time [" + Time.time+"]");
         BaddiesInCheckpointRange = Checkpoints[CheckpointIndex];
         var clone = (Instantiate(BaddiesInCheckpointRange, BaddieSpawn.position, BaddieSpawn.rotation) as Transform);
         BaddiesInCheckpointRange = clone;

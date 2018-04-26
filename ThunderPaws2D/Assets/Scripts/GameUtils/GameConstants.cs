@@ -13,10 +13,11 @@ public class GameConstants {
     public static string Tag_ObstacleThrough = "OBSTACLE-THROUGH";
     public static string Tag_Baddie = "Baddie";
     public static string Tag_HordeBaddie = "HordeBaddie";
+    public static string Tag_Tutorial = "Tutorial";
 
     // Game object names
     public static string ObjectName_Pickup = "Pickup";
-    public static string ObjectName_DefaultWeapon = "PlasmaRifle";
+    public static string ObjectName_DefaultWeapon = "FuzzBuster";
     public static string ObjectName_WeaponAnchor = "WeaponAnchor";
     public static string ObjectName_UltimateIndicator = "UltIndicator";
     public static string ObjectName_PlayerImage = "PlayerImage";

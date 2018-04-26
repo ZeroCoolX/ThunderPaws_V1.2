@@ -218,21 +218,25 @@ public class Robot_FL3 : DamageableLifeform {
     }
 
     private void Fire() {
-        Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
-        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-        AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
+        try {
+            Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
+            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-        //Set layermask of parent (either player or baddie)
-        projectile.SetLayerMask(_whatToHit);
-        projectile.Damage = 5;
-        projectile.MoveSpeed = 12;
-        projectile.MaxLifetime = 10;
-        projectile.Fire(_raycastAngles[_angleIndex], Vector2.up);
-        // _attackMode is either 1 or -1, so this allows for dynamic forward and backwards traversal of the array
-        _angleIndex = _angleIndex + _attackMode;
-        if (_angleIndex % 16 == 0 || _angleIndex < 0) {
-            _angleIndex = 0;
-            _firingAttack = false;
+            //Set layermask of parent (either player or baddie)
+            projectile.SetLayerMask(_whatToHit);
+            projectile.Damage = 5;
+            projectile.MoveSpeed = 12;
+            projectile.MaxLifetime = 10;
+            projectile.Fire(_raycastAngles[_angleIndex], Vector2.up);
+            // _attackMode is either 1 or -1, so this allows for dynamic forward and backwards traversal of the array
+            _angleIndex = _angleIndex + _attackMode;
+            if (_angleIndex % 16 == 0 || _angleIndex < 0) {
+                _angleIndex = 0;
+                _firingAttack = false;
+            }
+        }catch(System.Exception e) {
+            print("Caught Exception trying to Fire from Baddie " + gameObject.name + " Exception : " + e.Message);
         }
     }
 

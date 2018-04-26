@@ -13,6 +13,7 @@ TagManager:
   - BC2
   - BC3
   - HordeBaddie
+  - Tutorial
   layers:
   - Default
   - TransparentFX

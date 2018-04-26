@@ -407,7 +407,7 @@ public class GameMaster : MonoBehaviour {
         }
         if (SpawnPointIndex != 2) {
             controller.DeactivateBaddiesInCheckpoint();
-            controller.SpawnFreshBaddiesForCheckpoint();
+            controller.SpawnFreshBaddiesForCheckpoint(1.5f);
             if (LastSeenInHorde) {
                 OnHordeKilledPlayer.Invoke();
             }

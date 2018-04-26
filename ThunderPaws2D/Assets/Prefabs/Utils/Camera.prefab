@@ -20,9 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4577878596718628}
   - component: {fileID: 114044399596692558}
-  - component: {fileID: 114001525882964988}
-  - component: {fileID: 114538208488728356}
-  - component: {fileID: 114608961691213636}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -68,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1440532710190838}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.5463626, y: -3.4600003, z: -5.3}
+  m_LocalPosition: {x: -82.5, y: -3.4600003, z: -5.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4442540198634662}
@@ -117,17 +114,6 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1726927396425108}
   m_Enabled: 1
---- !u!114 &114001525882964988
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1440532710190838}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114044399596692558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -142,29 +128,6 @@ MonoBehaviour:
   YPosClamp: -19
   LockedPositionMovement: 0
   YOffset: 5
---- !u!114 &114538208488728356
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1440532710190838}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7783b064e1438b24d8a179f7bce530a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MovementMode: 1
---- !u!114 &114608961691213636
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1440532710190838}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62c9af4bd5b24247b2eaf4838d5628d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!124 &124889709427851530
 Behaviour:
   m_ObjectHideFlags: 1

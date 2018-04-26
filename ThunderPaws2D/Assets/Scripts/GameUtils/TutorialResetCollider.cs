@@ -23,10 +23,10 @@ public class TutorialResetCollider : MonoBehaviour {
         Collider.Initialize(1 << WhatToCollideWith, SizeOfCollider, false);
     }
 
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 0.5f);
-    //}
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 10f);
+    }
 
 
     private void Apply(Vector3 v, Collider2D c) {

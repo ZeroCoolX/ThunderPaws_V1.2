@@ -309,6 +309,7 @@ GameObject:
   - component: {fileID: 114135459348260772}
   - component: {fileID: 114047536460052742}
   - component: {fileID: 95194046474711488}
+  - component: {fileID: 114115651956339586}
   m_Layer: 14
   m_Name: Robot_GL2 (6)
   m_TagString: Baddie
@@ -642,6 +643,7 @@ GameObject:
   - component: {fileID: 114680680613227518}
   - component: {fileID: 114228639029369052}
   - component: {fileID: 95610793684431220}
+  - component: {fileID: 114299642098933882}
   m_Layer: 14
   m_Name: Robot_GL2 (8)
   m_TagString: Baddie
@@ -1703,6 +1705,7 @@ GameObject:
   - component: {fileID: 114662764624965906}
   - component: {fileID: 114260273824700966}
   - component: {fileID: 95527009643155698}
+  - component: {fileID: 114087238559052402}
   m_Layer: 14
   m_Name: Robot_GL2 (7)
   m_TagString: Baddie
@@ -1885,6 +1888,7 @@ GameObject:
   - component: {fileID: 114145186034162876}
   - component: {fileID: 114319938550846330}
   - component: {fileID: 95867403835169158}
+  - component: {fileID: 114806126936498954}
   m_Layer: 14
   m_Name: Robot_GL2 (5)
   m_TagString: Baddie
@@ -5672,13 +5676,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114008803418233018
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1081492917048408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -5898,13 +5903,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114080203902557678
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837286141234320}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -5933,13 +5939,27 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
+--- !u!114 &114087238559052402
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1844467623182744}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114092402304944688
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519390237326400}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -5968,13 +5988,28 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
+--- !u!114 &114115651956339586
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1188171502191848}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114116088252998380
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1716606685677004}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -5988,7 +6023,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884680724004470}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6023,7 +6058,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1891670417226488}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6079,7 +6114,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1966718232063536}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6093,7 +6128,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491565033932844}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6166,6 +6201,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114189974482049964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6187,13 +6223,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114193092956079428
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1514463069776246}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6228,7 +6265,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1104928619679194}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6263,7 +6300,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253295579863826}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6321,7 +6358,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1680108537211640}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6356,7 +6393,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780952638261166}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6370,7 +6407,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977529488041322}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6441,13 +6478,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114262071415420164
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1910316880708972}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6461,7 +6499,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1286802941666444}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6517,7 +6555,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1298442725550758}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6525,13 +6563,27 @@ MonoBehaviour:
   ParentCheck: 0
   KillImmediatelyOnInvisible: 0
   AllowLifetimeWhileInvisible: 15
+--- !u!114 &114299642098933882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1365047362574280}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114308602702380240
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1482312590622382}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6566,7 +6618,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1723198705337168}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6601,7 +6653,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1341825496853762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6672,6 +6724,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114319938550846330
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -6699,7 +6752,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797051582277332}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6734,7 +6787,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1869959576089368}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6748,7 +6801,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811519683359628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6798,13 +6851,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114388455396215654
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1107159107423686}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -6862,7 +6916,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1750359937698958}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7025,7 +7079,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1235521222508706}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7039,7 +7093,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1989572016654626}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7053,7 +7107,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1043802299017186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7105,6 +7159,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114497086148987378
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7155,7 +7210,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1652262067059566}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7190,7 +7245,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1875216503532762}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7240,6 +7295,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114553864519794438
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7261,6 +7317,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114559661267303322
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7309,7 +7366,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1608450184349550}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7344,7 +7401,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1578106457609564}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7358,7 +7415,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1662451687216276}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7372,7 +7429,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1706897785297200}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7422,6 +7479,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114618420032158478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7466,6 +7524,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114623798829282706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7552,6 +7611,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114637684598310240
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7573,13 +7633,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114639535706843354
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1132930063358302}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7637,7 +7698,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1953681283264612}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7687,6 +7748,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114662764624965906
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7714,7 +7776,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1408788321612206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7728,7 +7790,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1277917435837658}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7820,13 +7882,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114690960947799092
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1830929232993734}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7840,7 +7903,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459668599496906}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7875,7 +7938,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1925644822372136}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7931,7 +7994,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1530165875842930}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7960,13 +8023,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114760919224180870
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1394013093938360}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -7980,7 +8044,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1935210653041444}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8009,6 +8073,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114778904072745306
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8072,6 +8137,20 @@ MonoBehaviour:
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+--- !u!114 &114806126936498954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1896640960574092}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114815269139251380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8099,7 +8178,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1781078945521268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8170,6 +8249,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114835437018478184
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8197,7 +8277,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1179166504238980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8268,13 +8348,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114854745790995912
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1398788957767284}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8347,6 +8428,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114873394507053030
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8397,7 +8479,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1892405960617892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8434,7 +8516,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534930657753182}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8448,7 +8530,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1258188636172782}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8565,13 +8647,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114939377544098234
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1410645010457624}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8600,13 +8683,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114955117413225066
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1705393255742400}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8641,7 +8725,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1476284745914954}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8676,7 +8760,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1841569407804956}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8726,6 +8810,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114983777490332660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8747,6 +8832,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114983849754662724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8768,13 +8854,14 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114984422190322814
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1191784225554540}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 
@@ -8803,6 +8890,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114986128831968010
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8866,6 +8954,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114999900945479676
 MonoBehaviour:
   m_ObjectHideFlags: 1

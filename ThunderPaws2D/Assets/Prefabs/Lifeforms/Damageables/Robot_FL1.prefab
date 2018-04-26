@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcc80f0790dc2148a99c26587d984e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PartOfHorde: 0
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   ApplyBaseMovement: 0
@@ -118,6 +119,7 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
+  IsHorde2Hack: 0
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -145,7 +147,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
   m_Name: 

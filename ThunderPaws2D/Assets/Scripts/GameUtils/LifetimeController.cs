@@ -32,6 +32,7 @@ public class LifetimeController : MonoBehaviour {
     }
 
     private void Kill() {
+        print("Killing Object because onBecameInvisble for object: " + gameObject.name);
         if (KillImmediatelyOnInvisible || !_seenRecently) {
             if(ParentCheck && transform.parent != null) {
                 Destroy(transform.parent.gameObject);
@@ -42,6 +43,7 @@ public class LifetimeController : MonoBehaviour {
     }
 
     void OnBecameVisible() {
+        print(" Object " + gameObject.name+" became visible!");
         _seenRecently = true;
     }
 

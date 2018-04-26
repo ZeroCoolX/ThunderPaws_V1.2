@@ -264,7 +264,7 @@ public class Player : AbstractLifeform {
         if (raycast.collider != null) {
             //IF we hit a lifeform damage it - otherwise move on
             var lifeform = raycast.collider.transform.GetComponent<BaseLifeform>();
-            if (lifeform != null) {
+            if (lifeform != null && lifeform.gameObject.tag != GameConstants.Tag_Tutorial) {
                 print("hit lifeform: " + lifeform.gameObject.name + " and did " + MeleeDamage + " damage");
                 lifeform.Damage(MeleeDamage);
             }

@@ -92,9 +92,13 @@ public class DamageableLifeform : BaseLifeform {
     }
     
     private void InvokeDestroy(){
-        GenerateCoinPayload();
-        Explode();
-        Destroy(gameObject);
+        try {
+            GenerateCoinPayload();
+            Explode();
+            Destroy(gameObject);
+        }catch(System.Exception e) {
+            print("Caught Exception : " + e.Message);
+        }
     }
 
     private void GenerateCoinPayload() {

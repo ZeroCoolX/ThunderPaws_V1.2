@@ -177,16 +177,20 @@ public class Robot_FL2 : DamageableLifeform {
     }
 
     private void Fire() {
-        Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
-        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-        AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
+        try {
+            Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
+            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-        //Set layermask of parent (either player or baddie)
-        projectile.SetLayerMask(_whatToHit);
-        projectile.Damage = 5;
-        projectile.MoveSpeed = 10;
-        projectile.MaxLifetime = 10;
-        projectile.Fire(_target.position - transform.position, Vector2.up);
+            //Set layermask of parent (either player or baddie)
+            projectile.SetLayerMask(_whatToHit);
+            projectile.Damage = 5;
+            projectile.MoveSpeed = 10;
+            projectile.MaxLifetime = 10;
+            projectile.Fire(_target.position - transform.position, Vector2.up);
+        }catch(System.Exception e) {
+            print("Caught exception for delayed firing because the player died literally inbetween 0.1 and 0.15 seconds. Catch and move on");
+        }
     }
 
     /// <summary>

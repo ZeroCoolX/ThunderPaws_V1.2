@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 114773589586741528}
   - component: {fileID: 114830801478932912}
   - component: {fileID: 95655896989755806}
+  - component: {fileID: 114801493458386830}
   m_Layer: 14
   m_Name: Robot_GL2
   m_TagString: Baddie
@@ -136,6 +137,20 @@ MonoBehaviour:
   Velocity: {x: 0, y: 0, z: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
+--- !u!114 &114801493458386830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1284931557945404}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114830801478932912
 MonoBehaviour:
   m_ObjectHideFlags: 1

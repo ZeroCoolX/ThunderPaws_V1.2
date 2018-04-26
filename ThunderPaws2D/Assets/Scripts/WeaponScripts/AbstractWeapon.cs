@@ -66,7 +66,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <summary>
     /// Indicates if this weapon has ammo. All weapons have a finite amount of ammo except the default weapon
     /// </summary>
-    protected bool HasAmmo;
+    public bool HasAmmo;
     /// <summary>
     /// Indicates the weapon is in Ultimate Mode!
     /// </summary>
@@ -143,9 +143,6 @@ public abstract class AbstractWeapon : MonoBehaviour {
             Debug.LogError("Weapon.cs: No CameraShake found on game master");
             throw new MissingComponentException();
         }
-
-        // Check if this weapon uses ammo or not
-        HasAmmo = !gameObject.name.Equals(GameConstants.ObjectName_DefaultWeapon);
     }
 
     /// <summary>
