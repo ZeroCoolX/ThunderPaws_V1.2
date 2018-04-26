@@ -42,6 +42,8 @@ GameObject:
   - component: {fileID: 114118023174978558}
   - component: {fileID: 114236751249061372}
   - component: {fileID: 95689846243776832}
+  - component: {fileID: 114834322300645876}
+  - component: {fileID: 114174318653646354}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -69,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.89, y: -6.608, z: 0}
+  m_LocalPosition: {x: -9.1, y: -5.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729872837897130}
@@ -164,9 +166,20 @@ MonoBehaviour:
   BoxCollider: {fileID: 0}
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 33792
+    m_Bits: 50176
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+--- !u!114 &114174318653646354
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114236751249061372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -180,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UltEnabled: 0
   UltReady: 0
-  MaxHealth: 100
+  MaxHealth: 500
   MaxUltimate: 100
 --- !u!114 &114337617909033218
 MonoBehaviour:
@@ -203,6 +216,17 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &114834322300645876
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f62c9af4bd5b24247b2eaf4838d5628d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212664059488354518
 SpriteRenderer:
   m_ObjectHideFlags: 1

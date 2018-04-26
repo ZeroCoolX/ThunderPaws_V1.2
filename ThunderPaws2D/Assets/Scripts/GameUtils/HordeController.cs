@@ -352,7 +352,9 @@ public class HordeController : MonoBehaviour {
         camFollow.Target = target;
         camFollow.YOffset = yOffset;
         // Disable the simple collider and activator as well. Not that this is necessary but why leave it running.
-        Camera.GetComponent<BaddieActivator>().enabled = activator;
-        Camera.GetComponent<SimpleCollider>().enabled = activator;
+        if(target.gameObject.tag == GameConstants.Tag_Player) {
+            target.GetComponent<BaddieActivator>().enabled = activator;
+            target.GetComponent<SimpleCollider>().enabled = activator;
+        }
     }
 }

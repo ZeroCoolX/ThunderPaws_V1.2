@@ -54,23 +54,23 @@ public class FollowBase : MonoBehaviour {
     protected void FindPlayer() {
         if (nextTimeToSearch <= Time.time) {
             GameObject searchResult = GameObject.FindGameObjectWithTag(_searchName);
-            var baddieActivator = gameObject.GetComponent<BaddieActivator>();
+            //var baddieActivator = gameObject.GetComponent<BaddieActivator>();
             if (searchResult != null) {
-                if (!baddieActivator.enabled) {
+                if (!searchResult.GetComponent<BaddieActivator>().enabled) {
                     // Activaate in 1 second
                     Invoke("DelayedActivate", 1);
                 }
                 Target = searchResult.transform;
                 nextTimeToSearch = Time.time + searchDelay;
             }else {
-                gameObject.GetComponent<BaddieActivator>().enabled = false;
-                gameObject.GetComponent<SimpleCollider>().enabled = false;
+                //gameObject.GetComponent<BaddieActivator>().enabled = false;
+                //gameObject.GetComponent<SimpleCollider>().enabled = false;
             }
         }
     }
 
     private void DelayedActivate() {
-        gameObject.GetComponent<BaddieActivator>().enabled = true;
-        gameObject.GetComponent<SimpleCollider>().enabled = true;
+        Target.gameObject.GetComponent<BaddieActivator>().enabled = true;
+        Target.gameObject.GetComponent<SimpleCollider>().enabled = true;
     }
 }

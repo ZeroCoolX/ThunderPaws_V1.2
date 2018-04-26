@@ -381,6 +381,7 @@ public class GameMaster : MonoBehaviour {
             Instance.StartCoroutine(Instance.RespawnPlayer());
         } else {
             if (RemainingLives <= 0) {
+                OnHordeKilledPlayer.Invoke();
                 print("GAME OVER DUDE");
                 GameOverLostScreen.gameObject.SetActive(true);
             }

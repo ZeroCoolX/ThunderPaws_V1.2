@@ -20,10 +20,10 @@ public class BaddieActivator : MonoBehaviour {
         Collider.Initialize(1 << 14, 25, true);
     }
 
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 25);
-    //}
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 25);
+    }
 
 
     private void Apply(Vector3 v, Collider2D c) {

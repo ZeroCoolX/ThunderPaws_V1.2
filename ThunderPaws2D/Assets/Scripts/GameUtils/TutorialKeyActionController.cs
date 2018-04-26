@@ -46,6 +46,7 @@ public class TutorialKeyActionController : MonoBehaviour {
                 }
                 break;
         }
+        print("success = " + successIndicator);
 	    if(successIndicator == 3) {
             _spriteRenderer.sprite = Sprites[1];
             Controller.IncrementProgress();
