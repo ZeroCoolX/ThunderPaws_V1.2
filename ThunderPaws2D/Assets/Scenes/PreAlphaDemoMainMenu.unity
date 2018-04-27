@@ -558,6 +558,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: dbff2063a7bee6e4c9509932d1789ee5, type: 2}
   m_IsPrefabParent: 0
+--- !u!224 &676836463 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224475948529413614, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1414756269}
 --- !u!1001 &676917941
 Prefab:
   m_ObjectHideFlags: 0
@@ -805,6 +810,16 @@ Prefab:
       propertyPath: ShowDifficultyScreen
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: GameOverLostScreen
+      value: 
+      objectReference: {fileID: 2098149270}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: GameOverUi
+      value: 
+      objectReference: {fileID: 676836463}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff171ff069abb2b48b248f7a3b838039, type: 2}
   m_IsPrefabParent: 0
@@ -1564,6 +1579,10 @@ Prefab:
         type: 2}
       propertyPath: m_RootOrder
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1644781887632956, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
@@ -2330,6 +2349,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbf53e6eaf7133048abe3700df4674bf, type: 2}
   m_IsPrefabParent: 0
+--- !u!224 &2098149270 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224273144114681518, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1414756269}
 --- !u!1001 &2102368448
 Prefab:
   m_ObjectHideFlags: 0

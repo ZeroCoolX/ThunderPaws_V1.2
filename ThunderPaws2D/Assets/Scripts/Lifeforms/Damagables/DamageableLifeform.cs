@@ -93,6 +93,21 @@ public class DamageableLifeform : BaseLifeform {
     
     private void InvokeDestroy(){
         try {
+            var increment = 0;
+            if (gameObject.name.Contains("GL1")) {
+                increment = 1;
+            } else if (gameObject.name.Contains("GL2")) {
+                increment = 2;
+            }
+            else if(gameObject.name.Contains("FL1")) {
+                increment = 1;
+            } else if (gameObject.name.Contains("FL2")) {
+                increment = 2;
+            }
+            else if(gameObject.name.Contains("FL3")) {
+                increment = 3;
+            }
+            GameMaster.Instance.Score += increment;
             GenerateCoinPayload();
             Explode();
             Destroy(gameObject);

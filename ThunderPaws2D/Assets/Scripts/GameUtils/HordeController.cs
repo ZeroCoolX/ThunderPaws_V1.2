@@ -222,9 +222,12 @@ public class HordeController : MonoBehaviour {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
+            // Was Horde 1
+            GameMaster.Instance.CalculateHordeScore(1);
             GameMaster.Instance.AudioManager.playSound("Music_Main");
             Destroy(gameObject);
         }else {
+            GameMaster.Instance.CalculateHordeScore(2);
             print("OMG YOU COMPLETED THE GAME!!!!");
             GameMaster.Instance.GameOver();
         }

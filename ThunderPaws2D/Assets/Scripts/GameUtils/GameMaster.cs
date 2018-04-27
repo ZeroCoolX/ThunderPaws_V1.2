@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /// <summary>
 /// Overseer of the game.
@@ -121,6 +122,13 @@ public class GameMaster : MonoBehaviour {
 
     public bool ShowDifficultyScreen = false;
 
+    /// <summary>
+    /// Super rudimentary score system
+    /// 
+    /// </summary>
+    public int Score { get; set; }
+
+    private int MaxScorePossible;
 
     /// <summary>
     /// Remaining lives counter must persist through player deaths
@@ -185,6 +193,10 @@ public class GameMaster : MonoBehaviour {
         }
         LivesManager.Lives = values[0];
         LivesManager.Health = values[1];
+
+        // Based on the difficulty selected set theit starting score
+        MaxScorePossible = values[0] == 10 ? 200 : values[0] == 5 ? 400 : 600;
+
         var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player).GetComponent<Player>();
         if(player == null) {
             throw new MissingComponentException("The player is missing at the time of selecting a difficulty?!");
@@ -388,7 +400,20 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    public void CalculateHordeScore(int horde) {
+        var inc = horde == 1 ? 25 : 50;
+        if (Difficulty.ToLower().Equals("easy")) {
+            inc = inc * 1;
+        }else if (Difficulty.ToLower().Equals("normal")) {
+            inc = inc * 2;
+        }else {
+            inc = inc * 3;
+        }
+        Score += inc;
+    }
+
     public void GameOver() {
+        GameOverUi.Find("ScoreText").GetComponent<Text>().text = "Your Score: " + Score;
         GameOverUi.gameObject.SetActive(true);
     }
 
