@@ -208,7 +208,6 @@ public class Player : AbstractLifeform {
         //check if user - or NPC - is trying to jump and is standing on the ground
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
-            print("Other jump");
             Velocity.y = MaxJumpVelocity;
         }
         var yAxis = DirectionalInput.y;
@@ -249,7 +248,6 @@ public class Player : AbstractLifeform {
     public void OnJumpInputUp() {
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S))) {
             if (Velocity.y > MinJumpVelocity) {
-                print("JUMP");
                 Velocity.y = MinJumpVelocity;
             }
         }
