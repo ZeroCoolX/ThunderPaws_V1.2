@@ -192,6 +192,7 @@ public class GameMaster : MonoBehaviour {
             livesAndHealth = _difficulties.TryGetValue("easy", out values);
         }
         LivesManager.Lives = values[0];
+        print("Settiung heath to " + values[1]);
         LivesManager.Health = values[1];
 
         // Based on the difficulty selected set theit starting score
@@ -254,13 +255,12 @@ public class GameMaster : MonoBehaviour {
 
     private void Update() {
         // Testing hack for music on and off
-        if (Input.GetKeyDown(KeyCode.M)) {
+        if (Input.GetKeyDown(KeyCode.F)) {
             try {
-                AudioManager.stopSound(GameConstants.Audio_MenuMusic);
+                SetDifficulty();
             }catch(System.Exception e){
-                print("Music Couldn't be stopped probably because it never stared. No worries");
+                print("Couldn't set difficulty");
             }
-            AudioManager.playSound("Music_Main");
         }
 
         if (Input.GetKeyDown(KeyCode.B)) {

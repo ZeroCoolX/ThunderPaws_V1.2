@@ -181,7 +181,9 @@ public class CollisionController2D : RaycastController {
                     continue;
                 }
                 //Give the player half a second chance to fall through the platform
-                if (PlayerInput.y == -1 && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                // KB can just press "S" whereas controller users have to 
+                if ((Input.GetKey(KeyCode.S) || (PlayerInput.y < -0.25 && Input.GetButton(GameConstants.Input_Jump)))
+                    && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
                     Collisions.FallingThroughPlatform = true;
                     Invoke("ResetFallingThroughPlatform", 0.25f);
                     continue;

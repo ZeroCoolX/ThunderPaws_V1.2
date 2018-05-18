@@ -150,12 +150,12 @@ public class Player : AbstractLifeform {
         var xVelocity = DirectionalInput.x * Convert.ToInt32(DirectionalInput.y <= 0.8 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)));
         // Store the Y value for multiple uses
         var yVelocity = Velocity.y;
-        // Indication we are jumping up
-        var jumping = yVelocity > 0;
-        // Indicates we are on the descent
-        var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are crouching
         var crouch = (DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S));
+        // Indication we are jumping up
+        var jumping = yVelocity > 0 && !crouch;
+        // Indicates we are on the descent
+        var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are rolling
         var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
@@ -206,7 +206,9 @@ public class Player : AbstractLifeform {
     /// </summary>
     private void CalculateVelocityOffInput() {
         //check if user - or NPC - is trying to jump and is standing on the ground
-        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
+        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&
+                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
+            print("Other jump");
             Velocity.y = MaxJumpVelocity;
         }
         var yAxis = DirectionalInput.y;
@@ -245,8 +247,11 @@ public class Player : AbstractLifeform {
     /// Helper method that handles variable jump height
     /// </summary>
     public void OnJumpInputUp() {
-        if (Velocity.y > MinJumpVelocity) {
-            Velocity.y = MinJumpVelocity;
+        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S))) {
+            if (Velocity.y > MinJumpVelocity) {
+                print("JUMP");
+                Velocity.y = MinJumpVelocity;
+            }
         }
     }
 
