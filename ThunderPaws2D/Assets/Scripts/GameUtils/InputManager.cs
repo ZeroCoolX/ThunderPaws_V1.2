@@ -25,7 +25,6 @@ public class InputManager : MonoBehaviour {
         LockMovement = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LockMovement", "LeftShift"));
         ChangeWeapon = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ChangeWeapon", "UpArrow"));
         Ultimate = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Ultimate", "Q"));
-        print("INputManager is alive");
     }
 
 

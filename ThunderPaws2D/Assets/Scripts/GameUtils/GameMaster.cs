@@ -94,7 +94,7 @@ public class GameMaster : MonoBehaviour {
     /// <summary>
     /// Set by the player in the menu. Default is easy
     /// </summary>
-    public string Difficulty = "easy";
+    public string Difficulty = GameConstants.Difficulty_Easy;
 
     /// <summary>
     /// Determines when we have ended the game
@@ -179,9 +179,9 @@ public class GameMaster : MonoBehaviour {
         _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);
 
         // Difficulty, [lives, max health]
-        _difficulties.Add("easy", new int[] { 10, 500 });
-        _difficulties.Add("normal", new int[] { 5, 250 });
-        _difficulties.Add("hard", new int[] { 3, 100 });
+        _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
+        _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
+        _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
     }
 
     public void SetDifficulty() {
@@ -225,7 +225,7 @@ public class GameMaster : MonoBehaviour {
         }
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu) || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("PreAlphaDemoTutorial1")) {
-            AudioManager.playSound("Music_Menu");
+            AudioManager.playSound(GameConstants.Audio_MenuMusic);
         }
 
         CamShake = transform.GetComponent<CameraShake>();
@@ -256,7 +256,7 @@ public class GameMaster : MonoBehaviour {
         // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.M)) {
             try {
-                AudioManager.stopSound("Music_Main");
+                AudioManager.stopSound(GameConstants.Audio_MenuMusic);
             }catch(System.Exception e){
                 print("Music Couldn't be stopped probably because it never stared. No worries");
             }
@@ -276,7 +276,7 @@ public class GameMaster : MonoBehaviour {
 
         if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
             OnWeaponSwitch.Invoke();
-            AudioManager.playSound("WeaponSwitch");
+            AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
         }
     }
 
@@ -402,9 +402,9 @@ public class GameMaster : MonoBehaviour {
 
     public void CalculateHordeScore(int horde) {
         var inc = horde == 1 ? 25 : 50;
-        if (Difficulty.ToLower().Equals("easy")) {
+        if (Difficulty.ToLower().Equals(GameConstants.Difficulty_Easy)) {
             inc = inc * 1;
-        }else if (Difficulty.ToLower().Equals("normal")) {
+        }else if (Difficulty.ToLower().Equals(GameConstants.Difficulty_Normal)) {
             inc = inc * 2;
         }else {
             inc = inc * 3;
@@ -413,7 +413,7 @@ public class GameMaster : MonoBehaviour {
     }
 
     public void GameOver() {
-        GameOverUi.Find("ScoreText").GetComponent<Text>().text = "Your Score: " + Score;
+        GameOverUi.Find(GameConstants.ObjectName_ScoreText).GetComponent<Text>().text = "Your Score: " + Score;
         GameOverUi.gameObject.SetActive(true);
     }
 

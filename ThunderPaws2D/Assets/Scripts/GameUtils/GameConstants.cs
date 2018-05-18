@@ -6,6 +6,11 @@ public class GameConstants {
 
     // Audio file names
 	public static string Audio_JumpLanding = "JumpLanding";
+    public static string Audio_MenuMusic = "Music_Menu";
+    public static string Audio_BossMusic = "Music_Boss";
+    public static string Audio_WeaponSwitch = "WeaponSwitch";
+    public static string Audio_FuzzBuster = "FuzzBusterShot";
+    public static string Audio_Shotgun = "ShotgunShot";
 
     // GameTags
     public static string Tag_Player = "Player";
@@ -27,6 +32,7 @@ public class GameConstants {
     public static string ObjectName_UltimateBar = "UltimateBar";
     public static string ObjectName_FirePoint = "FirePoint";
     public static string ObjectName_MainCamera = "MainCamera";
+    public static string ObjectName_ScoreText = "ScoreText";
 
     // Input names
     public static string Input_Xbox_LBumper = "X360_LBumper";
@@ -55,5 +61,10 @@ public class GameConstants {
     // Scene Name Data
     public static string Scene_LevelName_1 = "PreAlphaDemoLevel1";
     public static string Scene_LevelName_Menu = "PreAlphaDemoMainMenu";
+
+    // Difficulties
+    public static string Difficulty_Easy = "easy";
+    public static string Difficulty_Normal = "normal";
+    public static string Difficulty_Hard = "hard";
 
 }

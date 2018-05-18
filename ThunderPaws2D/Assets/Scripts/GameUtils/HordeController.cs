@@ -150,8 +150,8 @@ public class HordeController : MonoBehaviour {
     }
 
     private void PlayerDiedReset() {
-        GameMaster.Instance.AudioManager.stopSound("Music_Boss");
-        GameMaster.Instance.AudioManager.playSound("Music_Main");
+        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
+        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MenuMusic);
         PlayerDiedHack = true;
         // Inform collider to reset iteself
         Collider.Initialize(1 << 8, RadiusOfTrigger);
@@ -184,6 +184,7 @@ public class HordeController : MonoBehaviour {
     // Goes through all the baddies still alive on screen and kills them 0.1 second from eachother
     private void KillAllBaddies(){
         var deathOffset = 0.1f;
+
         foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
             try {
                 baddie.Value.GetComponent<CollisionController2D>().enabled = false;
@@ -217,14 +218,14 @@ public class HordeController : MonoBehaviour {
     }
 
     private void ActivateExit() {
-        GameMaster.Instance.AudioManager.stopSound("Music_Boss");
+        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
             // Was Horde 1
             GameMaster.Instance.CalculateHordeScore(1);
-            GameMaster.Instance.AudioManager.playSound("Music_Main");
+            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MenuMusic);
             Destroy(gameObject);
         }else {
             GameMaster.Instance.CalculateHordeScore(2);
@@ -346,8 +347,8 @@ public class HordeController : MonoBehaviour {
             LeftBarrier.gameObject.SetActive(true);
         }
 
-        GameMaster.Instance.AudioManager.stopSound("Music_Main");
-        GameMaster.Instance.AudioManager.playSound("Music_Boss");
+        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_MenuMusic);
+        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_BossMusic);
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){

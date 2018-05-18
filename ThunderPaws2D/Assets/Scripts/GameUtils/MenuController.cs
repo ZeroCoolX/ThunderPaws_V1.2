@@ -29,7 +29,7 @@ public class MenuController : MonoBehaviour {
 
     private void Apply(Vector3 v, Collider2D c) {
         SceneManager.LoadScene(GameConstants.Scene_LevelName_1);
-        GameMaster.Instance.AudioManager.stopSound("Music_Menu");
-        GameMaster.Instance.AudioManager.playSound("Music_Main");
+        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
+        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MenuMusic);
     }
 }

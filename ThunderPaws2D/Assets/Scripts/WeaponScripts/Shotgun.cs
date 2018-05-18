@@ -49,7 +49,7 @@ public class Shotgun : AbstractWeapon {
             _triggerLetGo = false;
             CalculateShot();
             ApplyRecoil();
-            AudioManager.playSound("ShotgunShot");
+            AudioManager.playSound(GameConstants.Audio_Shotgun);
         }
         if (HasAmmo) {
             AmmoCheck();
