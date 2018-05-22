@@ -29,3 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PreAlphaDemoTutorial5.unity
     guid: 827aa713da28d3e4892757df86414721
+  - enabled: 1
+    path: Assets/Scenes/PreAlphaDemoPlayerSelect.unity
+    guid: 4f8104932cde14441af80a1e86b5177c
+  - enabled: 1
+    path: Assets/Scenes/PreAlphaDemoControllerAssignment.unity
+    guid: c1ecd9ad289f93d4d9817e77a5238330

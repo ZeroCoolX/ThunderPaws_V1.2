@@ -7,6 +7,7 @@ public class GameConstants {
     // Audio file names
 	public static string Audio_JumpLanding = "JumpLanding";
     public static string Audio_MenuMusic = "Music_Menu";
+    public static string Audio_MainMusic = "Music_Main";
     public static string Audio_BossMusic = "Music_Boss";
     public static string Audio_WeaponSwitch = "WeaponSwitch";
     public static string Audio_FuzzBuster = "FuzzBusterShot";
@@ -35,9 +36,9 @@ public class GameConstants {
     public static string ObjectName_ScoreText = "ScoreText";
 
     // Input names
-    public static string Input_Xbox_LBumper = "X360_LBumper";
-    public static string Input_Xbox_LTrigger = "X360_Trigger_L";
-    public static string Input_Xbox_RTrigger = "X360_Trigger_R";
+    public static string Input_Xbox_LBumper = "LBumper";
+    public static string Input_Xbox_LTrigger = "LTrigger";
+    public static string Input_Xbox_RTrigger = "RTrigger";
     public static string Input_Horizontal = "Horizontal";
     public static string Input_Vertical = "Vertical";
     public static string Input_Fire = "Fire1";

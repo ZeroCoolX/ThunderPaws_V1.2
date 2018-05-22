@@ -75,6 +75,10 @@ public class Player : AbstractLifeform {
         if (string.IsNullOrEmpty(JoystickNumberPrefix)) {
             JoystickManagerController.AssignControllers();
         }
+        // There is no controller connected
+        if (string.IsNullOrEmpty(JoystickNumberPrefix)) {
+            JoystickNumberPrefix = "J1-";
+        }
     }
 
     /// <summary>

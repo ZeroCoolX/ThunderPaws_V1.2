@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class IntroScreenUI : MonoBehaviour {
 
 	public void PlayGame() {
-        SceneManager.LoadScene("PreAlphaDemoMainMenu");
+        SceneManager.LoadScene("PreAlphaDemoPlayerSelect");
     }
 
     public void PlayTutorial() {

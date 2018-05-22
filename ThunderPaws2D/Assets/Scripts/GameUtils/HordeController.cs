@@ -151,7 +151,7 @@ public class HordeController : MonoBehaviour {
 
     private void PlayerDiedReset() {
         GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
-        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MenuMusic);
+        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MainMusic);
         PlayerDiedHack = true;
         // Inform collider to reset iteself
         Collider.Initialize(1 << 8, RadiusOfTrigger);
@@ -225,7 +225,7 @@ public class HordeController : MonoBehaviour {
         if (!EndGameAfter) {
             // Was Horde 1
             GameMaster.Instance.CalculateHordeScore(1);
-            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MenuMusic);
+            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MainMusic);
             Destroy(gameObject);
         }else {
             GameMaster.Instance.CalculateHordeScore(2);
@@ -347,7 +347,7 @@ public class HordeController : MonoBehaviour {
             LeftBarrier.gameObject.SetActive(true);
         }
 
-        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_MenuMusic);
+        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_MainMusic);
         GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_BossMusic);
     }
         

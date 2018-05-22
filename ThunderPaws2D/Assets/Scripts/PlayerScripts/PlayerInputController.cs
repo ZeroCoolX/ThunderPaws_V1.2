@@ -19,7 +19,11 @@ public class PlayerInputController : MonoBehaviour {
     /// Get the player input and store it on the Player object
     /// </summary>
     void Update() {
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Vertical));
+        // need to check if there are any controllers connected
+        Vector2 directionalInput = JoystickManagerController.ControllersConnected
+            ? new Vector2(Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Vertical))
+            : new Vector2(Input.GetAxisRaw(GameConstants.Input_Horizontal), Input.GetAxisRaw(GameConstants.Input_Vertical));
+
         Player.DirectionalInput = directionalInput;
         
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(Player.JoystickNumberPrefix + GameConstants.Input_Jump)) {
