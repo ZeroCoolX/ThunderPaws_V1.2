@@ -273,8 +273,8 @@ public class GameMaster : MonoBehaviour {
             ControlScreen.gameObject.SetActive(_pauseHackIndicator);
         }
 
-
-        if (Input.GetButtonUp(GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
+        // TODO - this needs to be changed anyways right now just hardcode it
+        if (Input.GetButtonUp("J1-" + GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
             OnWeaponSwitch.Invoke();
             AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
         }

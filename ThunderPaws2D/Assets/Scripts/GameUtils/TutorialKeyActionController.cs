@@ -31,17 +31,17 @@ public class TutorialKeyActionController : MonoBehaviour {
         }
         switch (InputListener) {
             case "Melee":
-                if (Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(GameConstants.Input_Melee)) {
+                if (Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown("J1-"+GameConstants.Input_Melee)) {
                     ++successIndicator;
                 }
                 break;
             case "Roll":
-                if (Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(GameConstants.Input_Roll)) {
+                if (Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown("J1-" + GameConstants.Input_Roll)) {
                     ++successIndicator;
                 }
                 break;
             case "ChangeWeapon":
-                if (Input.GetKeyDown(InputManager.Instance.ChangeWeapon) || Input.GetButtonDown(GameConstants.Input_Xbox_LBumper)) {
+                if (Input.GetKeyDown(InputManager.Instance.ChangeWeapon) || Input.GetButtonDown("J1-" + GameConstants.Input_Xbox_LBumper)) {
                     ++successIndicator;
                 }
                 break;

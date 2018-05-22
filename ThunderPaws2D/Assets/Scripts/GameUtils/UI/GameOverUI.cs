@@ -14,10 +14,10 @@ public class GameOverUI : MonoBehaviour {
                 _player.transform.GetComponent<PlayerInputController>().enabled = false;
             }
         }
-        if (Input.GetButtonUp(GameConstants.Input_Back)) {
+        if (Input.GetButtonUp("J1-" + GameConstants.Input_Back)) {
             Menu();
         }
-        if (Input.GetButtonUp(GameConstants.Input_Start)) {
+        if (Input.GetButtonUp("J1-" + GameConstants.Input_Start)) {
             Quit();
         }
     }

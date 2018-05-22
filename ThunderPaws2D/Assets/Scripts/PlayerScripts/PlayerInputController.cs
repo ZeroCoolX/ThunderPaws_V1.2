@@ -19,10 +19,10 @@ public class PlayerInputController : MonoBehaviour {
     /// Get the player input and store it on the Player object
     /// </summary>
     void Update() {
-        
-        Vector2 directionalInput = new Vector2(Input.GetAxisRaw(GameConstants.Input_Horizontal), Input.GetAxisRaw(GameConstants.Input_Vertical));
+        Vector2 directionalInput = new Vector2(Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Vertical));
         Player.DirectionalInput = directionalInput;
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(GameConstants.Input_Jump)) {
+        
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(Player.JoystickNumberPrefix + GameConstants.Input_Jump)) {
             Player.OnJumpInputUp();
         }
     }
