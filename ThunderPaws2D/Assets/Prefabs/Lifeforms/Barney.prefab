@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 114834322300645876}
   - component: {fileID: 114174318653646354}
   m_Layer: 8
-  m_Name: Player
+  m_Name: Barney
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -71,7 +71,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.1, y: -5.3, z: 0}
+  m_LocalPosition: {x: -92.13, y: -6.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729872837897130}
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UltEnabled: 0
   UltReady: 0
-  MaxHealth: 500
+  MaxHealth: 10
   MaxUltimate: 100
 --- !u!114 &114337617909033218
 MonoBehaviour:
@@ -208,6 +208,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoFallCheck: 0
   Velocity: {x: 0, y: 0, z: 0}
+  PlayerNumber: 1
+  JoystickId: 
   FacingRight: 1
   PlayerStats: {fileID: 0}
   MeleeDamage: 10

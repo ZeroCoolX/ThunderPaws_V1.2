@@ -105,6 +105,13 @@ public class PlayerStatsUIController : MonoBehaviour {
     }
 
     public void SetLives(int lives) {
+        if(_lives == null) {
+            _lives = transform.Find(GameConstants.ObjectName_LivesText).GetComponent<Text>();
+            if (_lives == null) {
+                Debug.LogError("No LivesText found what the FUCK");
+                throw new UnassignedReferenceException();
+            }
+        }
         print(_lives.text);
         _lives.text = " Lives: " + lives;
         print(_lives.text);

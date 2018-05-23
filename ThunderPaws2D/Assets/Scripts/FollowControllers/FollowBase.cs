@@ -46,6 +46,10 @@ public class FollowBase : MonoBehaviour {
     }
 
     protected void Start() {
+        if(Target == null) {
+            FindPlayer();
+            return;
+        }
         LastTargetPosition = Target.position;
         OffsetZ = (transform.position - Target.position).z;
         transform.parent = null;

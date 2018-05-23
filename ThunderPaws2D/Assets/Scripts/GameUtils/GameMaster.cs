@@ -18,6 +18,8 @@ public class GameMaster : MonoBehaviour {
     public int FuzzBusterAmmo;
     public int ShotgunAmmo;
 
+    public bool PopulatePlayers;
+
     /// <summary>
     /// Compile time collection of any sprites that need to be swapped out during the course of the game
     /// </summary>
@@ -103,9 +105,11 @@ public class GameMaster : MonoBehaviour {
     private static int _remainingLives;
 
     /// <summary>
-    /// Player reference for respawning
+    /// Player array holding 1-2 players depending on how many are playing
     /// </summary>
-    public Transform Player;
+    public List<Transform> Players;
+    public Transform BarneyPrefab;
+    public Transform RupertPrefab;
     /// <summary>
     /// Collection of all possible places of where to respawn the player 
     /// </summary>
@@ -160,6 +164,11 @@ public class GameMaster : MonoBehaviour {
             Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
         }
 
+        if (PopulatePlayers) {
+            PopulatePlayerArray();
+        }
+        SpawnPlayers();
+
         if (ShowDifficultyScreen) {
             DifficultyScreen.gameObject.SetActive(true);
         }
@@ -182,6 +191,51 @@ public class GameMaster : MonoBehaviour {
         _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
         _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
         _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
+
+        _remainingLives = LivesManager.Lives;
+        print("lives = " + LivesManager.Lives);
+    }
+
+    // Based off how many joysticks are connected populate the player array
+    public void PopulatePlayerArray() {
+        print("Populating Player Array!");
+        // check if there is only 1 player or we're using a KB
+        var prefix = "";
+        if (JoystickManagerController.Instance.ControllerMap.Count < 2) {
+            print("there was only 0-1 players in map so set player 1 and leave");
+            JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix);
+            BarneyPrefab.GetComponent<Player>().JoystickId = prefix;
+            print("Set BarneyPrefab.JoystickId to " + prefix);
+            Players.Add(BarneyPrefab);
+            return;
+        }
+        // Assign Player 1
+        prefix = "";
+        JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix);
+        BarneyPrefab.GetComponent<Player>().JoystickId = prefix;
+        print("Set BarneyPrefab.JoystickId to " + prefix);
+        Players.Add(BarneyPrefab);
+
+        // Assign Player 2
+        prefix = "";
+        JoystickManagerController.Instance.ControllerMap.TryGetValue(2, out prefix);
+        RupertPrefab.GetComponent<Player>().JoystickId = prefix;
+        print("Set RupertPrefab.JoystickId to " + prefix);
+        Players.Add(RupertPrefab);
+    }
+
+    // Spawn as many players that live in the array
+    public void SpawnPlayers() {
+        // Spawn the allotted number of players into the room
+        var startSpawns = GameObject.FindGameObjectsWithTag(GameConstants.Tag_StartSpawn);
+        var spawnIndex = 0;
+        foreach(var player in Players) {
+            Instantiate(player, startSpawns[spawnIndex].transform.position, startSpawns[spawnIndex].transform.rotation);
+            print("Setting lives for player " + player.GetComponent<Player>().PlayerNumber);
+            GetPlayerStatsUi(player.GetComponent<Player>().PlayerNumber).SetLives(_remainingLives);
+            print("success");
+            ++spawnIndex;
+        }
     }
 
     public void SetDifficulty() {
@@ -235,6 +289,7 @@ public class GameMaster : MonoBehaviour {
         }
         //Set player stats UI reference
         _player1StatsUi = GetPlayerStatsUi(1);
+        _player2StatsUi = GetPlayerStatsUi(2);
 
         //Double check that there is at least one spawn point in this level
         if (SpawnPoints.Length <= 0) {
@@ -273,11 +328,11 @@ public class GameMaster : MonoBehaviour {
             ControlScreen.gameObject.SetActive(_pauseHackIndicator);
         }
 
-        // TODO - this needs to be changed anyways right now just hardcode it
-        if (Input.GetButtonUp("J1-" + GameConstants.Input_Xbox_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
-            OnWeaponSwitch.Invoke();
-            AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
-        }
+        //// TODO - this needs to be changed anyways right now just hardcode it
+        //if (Input.GetButtonUp("J1-" + GameConstants.Input_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
+        //    OnWeaponSwitch.Invoke();
+        //    AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
+        //}
     }
 
     public void UpdateHealthUI(int player, int current, int max) {
@@ -288,7 +343,10 @@ public class GameMaster : MonoBehaviour {
             }
             _player1StatsUi.SetHealthStatus(current, max);
         } else {
-            throw new System.Exception("This is bad because there is only one player...");
+            if (_player2StatsUi == null) {
+                _player2StatsUi = GetPlayerStatsUi(2);
+            }
+            _player2StatsUi.SetHealthStatus(current, max);
         }
     }
 
@@ -299,7 +357,10 @@ public class GameMaster : MonoBehaviour {
             }
             _player1StatsUi.SetUltimateStatus(current, max);
         }else {
-            throw new System.Exception("This is bad because there is only one player...");
+            if (_player2StatsUi == null) {
+                _player2StatsUi = GetPlayerStatsUi(2);
+            }
+            _player2StatsUi.SetUltimateStatus(current, max);
         }
     }
 
@@ -379,7 +440,7 @@ public class GameMaster : MonoBehaviour {
         //Instance.CamShake.Shake(player.ShakeAmount, player.ShakeLength);
 
         //kill the player if necessary
-        Instance.KillDashNine(player.gameObject, _remainingLives > 0);
+        Instance.KillDashNine(player.gameObject, _remainingLives > 0, 1 /*TODO : add number to player so we can extract it here*/);
     }
 
     /// <summary>
@@ -387,10 +448,10 @@ public class GameMaster : MonoBehaviour {
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="respawn"></param>
-    private void KillDashNine(GameObject obj, bool respawn) {
+    private void KillDashNine(GameObject obj, bool respawn, int player) {
         Destroy(obj);
         if (respawn) {
-            Instance.StartCoroutine(Instance.RespawnPlayer());
+            Instance.StartCoroutine(Instance.RespawnPlayer(player));
         } else {
             if (RemainingLives <= 0) {
                 OnHordeKilledPlayer.Invoke();
@@ -421,7 +482,7 @@ public class GameMaster : MonoBehaviour {
     /// Respawn player
     /// </summary>
     /// <returns></returns>
-    private IEnumerator RespawnPlayer() {
+    private IEnumerator RespawnPlayer(int playerToRespawn) {
         //play sound and wait for delay
         //_audioManager.playSound(RespawnCountdownSoundName);
         yield return new WaitForSeconds(SpawnDelay);
@@ -441,8 +502,8 @@ public class GameMaster : MonoBehaviour {
         }
 
         //_audioManager.playSound(SpawnSoundName);
-        Instantiate(Player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
-        GetPlayerStatsUi(1).SetLives(_remainingLives);
+        Instantiate(Players[playerToRespawn], SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
+        GetPlayerStatsUi(playerToRespawn).SetLives(_remainingLives);
     }
 
 }

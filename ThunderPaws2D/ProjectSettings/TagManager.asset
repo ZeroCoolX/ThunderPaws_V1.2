@@ -14,6 +14,7 @@ TagManager:
   - BC3
   - HordeBaddie
   - Tutorial
+  - StartSpawn
   layers:
   - Default
   - TransparentFX

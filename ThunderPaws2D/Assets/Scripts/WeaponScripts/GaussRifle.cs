@@ -43,7 +43,7 @@ public class GaussRifle : AbstractWeapon {
     /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
-        var rightTrigger = Input.GetAxis(GameConstants.Input_Xbox_RTrigger);
+        var rightTrigger = Input.GetAxis(GameConstants.Input_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
         if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
             _fireButtonPressed = false;

@@ -5,9 +5,14 @@ using UnityEngine;
 
 public class Player : AbstractLifeform {
 
-    // THis indicates which "Joy Num" we use to query for keyboard input since 
-    // Unity sucks and we have to hack our way through it to use multiple controller input
-    public string JoystickNumberPrefix { get; set; }
+    /// <summary>
+    /// Indicates which player this is (either 1 or 2)
+    /// </summary>
+    public int PlayerNumber;
+    /// <summary>
+    /// How we can identify which controller we need to query for input
+    /// </summary>
+    public string JoystickId;
 
     /// <summary>
     /// Currently equipped weapon
@@ -71,21 +76,15 @@ public class Player : AbstractLifeform {
     /// </summary>
     private float _rollSpeed = 6f;
 
-    private void Awake() {
-        if (string.IsNullOrEmpty(JoystickNumberPrefix)) {
-            JoystickManagerController.AssignControllers();
-        }
-        // There is no controller connected
-        if (string.IsNullOrEmpty(JoystickNumberPrefix)) {
-            JoystickNumberPrefix = "J1-";
-        }
-    }
-
     /// <summary>
     /// Setup Player object.
     /// Initialize physics values
     /// </summary>
     void Start() {
+
+        if(PlayerNumber == 0 || PlayerNumber > 2) {
+            throw new Exception("Somehow the player was either not set or too high with PlayerNumber of " + PlayerNumber);
+        }
 
         //Set all physics values  - originally 3 and 1
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
@@ -130,6 +129,7 @@ public class Player : AbstractLifeform {
     }
 
     void Update() {
+        print("Querying for inputs with prefix : " + JoystickId);
         if (Input.GetKeyUp(KeyCode.R)) {
             HackRollReset();
         }
@@ -153,9 +153,14 @@ public class Player : AbstractLifeform {
         }
 
         //User is pressing the ultimate button - Inform the player
-        if ((Input.GetButtonUp(JoystickNumberPrefix + GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
+        if ((Input.GetButtonUp(JoystickId + GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
             print("Pressing ult and we're ready!");
             ActivateUltimate();
+        }
+
+        if (Input.GetButtonUp(JoystickId + GameConstants.Input_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
+            SwitchWeapon();
+            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
         }
     }
 
@@ -171,15 +176,15 @@ public class Player : AbstractLifeform {
         // Indicates we are on the descent
         var falling = !jumping && !Controller.Collisions.FromBelow;
         // Indicates we are rolling
-        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickNumberPrefix + GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
+        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
             _rollActive = true;
         }
         // Indicates we are melee'ing
-        var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickNumberPrefix + GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
+        var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
-            GameMaster.Instance.AudioManager.playSound("FirePunch");
+            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_Melee);
             // Wait for half the animation to play so it looks like the object takes damage as the fist hits them instead of instantly on button press
             Invoke("OnMeleeInputDown", 0.125f);
             // After 0.25 seconds deactivate melee
@@ -193,7 +198,7 @@ public class Player : AbstractLifeform {
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
-            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(InputManager.Instance.LockMovement))) * (Convert.ToInt32(Input.GetAxis(JoystickNumberPrefix + GameConstants.Input_Xbox_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
+            var finalXVelocity = Math.Abs(xVelocity) * (Convert.ToInt32(!Input.GetKey(InputManager.Instance.LockMovement))) * (Convert.ToInt32(Input.GetAxis(JoystickId + GameConstants.Input_LTrigger) < 1 || (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)))) * Convert.ToInt32(!crouch) * Convert.ToInt32(!jumping) * Convert.ToInt32(!falling) * Convert.ToInt32(!_meleeActive) * Convert.ToInt32(!_rollActive);
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
@@ -207,7 +212,7 @@ public class Player : AbstractLifeform {
             }
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
-            var holdStill = (Input.GetKey(InputManager.Instance.LockMovement) || Input.GetAxis(JoystickNumberPrefix + GameConstants.Input_Xbox_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
+            var holdStill = (Input.GetKey(InputManager.Instance.LockMovement) || Input.GetAxis(JoystickId + GameConstants.Input_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
             _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
         }
 
@@ -221,12 +226,12 @@ public class Player : AbstractLifeform {
     private void CalculateVelocityOffInput() {
         //check if user - or NPC - is trying to jump and is standing on the ground
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&
-                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickNumberPrefix + GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
+                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
             Velocity.y = MaxJumpVelocity;
         }
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
-        var leftTrigger = Input.GetAxis(JoystickNumberPrefix + GameConstants.Input_Xbox_LTrigger);
+        var leftTrigger = Input.GetAxis(JoystickId + GameConstants.Input_LTrigger);
         var leftCtrl = Input.GetKey(InputManager.Instance.LockMovement);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
         if (!leftCtrl && leftTrigger < 1  && !_meleeActive) {
@@ -347,7 +352,7 @@ public class Player : AbstractLifeform {
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
         try {
-            GameMaster.Instance.AudioManager.playSound("WeaponPickup");
+            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_WeaponPickup);
         }catch(System.Exception e) {
             print("Either the game master or the audiomanager doesn't exist yet");
         }

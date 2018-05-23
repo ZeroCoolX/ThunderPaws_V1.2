@@ -41,7 +41,7 @@ public class TutorialKeyActionController : MonoBehaviour {
                 }
                 break;
             case "ChangeWeapon":
-                if (Input.GetKeyDown(InputManager.Instance.ChangeWeapon) || Input.GetButtonDown("J1-" + GameConstants.Input_Xbox_LBumper)) {
+                if (Input.GetKeyDown(InputManager.Instance.ChangeWeapon) || Input.GetButtonDown("J1-" + GameConstants.Input_LBumper)) {
                     ++successIndicator;
                 }
                 break;

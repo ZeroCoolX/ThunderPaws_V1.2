@@ -43,8 +43,7 @@ public class FuzzBuster : AbstractWeapon {
     /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
-        var rightTrigger = Input.GetAxis("J1-" + GameConstants.Input_Xbox_RTrigger);
-        print("rt  = " + rightTrigger);
+        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
         if (Input.GetKeyUp(InputManager.Instance.Fire)) {
             _fireButtonPressed = false;

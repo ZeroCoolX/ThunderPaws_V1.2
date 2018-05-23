@@ -20,13 +20,13 @@ public class PlayerInputController : MonoBehaviour {
     /// </summary>
     void Update() {
         // need to check if there are any controllers connected
-        Vector2 directionalInput = JoystickManagerController.ControllersConnected
-            ? new Vector2(Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickNumberPrefix + GameConstants.Input_Vertical))
+        Vector2 directionalInput = (JoystickManagerController.Instance.ConnectedControllers() > 0)
+            ? new Vector2(Input.GetAxisRaw(Player.JoystickId + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickId + GameConstants.Input_Vertical))
             : new Vector2(Input.GetAxisRaw(GameConstants.Input_Horizontal), Input.GetAxisRaw(GameConstants.Input_Vertical));
-
+        print("Player " + Player.PlayerNumber + " Directional Input = " + directionalInput);
         Player.DirectionalInput = directionalInput;
         
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(Player.JoystickNumberPrefix + GameConstants.Input_Jump)) {
+        if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(Player.JoystickId + GameConstants.Input_Jump)) {
             Player.OnJumpInputUp();
         }
     }

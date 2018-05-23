@@ -25,21 +25,21 @@ public class ControllerAssignmentUI : MonoBehaviour {
             SceneManager.LoadScene("PreAlphaDemoMainMenu");
         }
 
-        if (JoystickManagerController.ConnectedControllers() < 2) {
+        if (JoystickManagerController.Instance.ConnectedControllers() < 2) {
             if (!ControllerConnectionWarning.gameObject.activeSelf) {
                 ControllerConnectionWarning.gameObject.SetActive(true);
                 return;
             }
         }else {
             ControllerConnectionWarning.gameObject.SetActive(false);
-            if (JoystickManagerController.ControllerMap.Count < 2) {
-                JoystickManagerController.CollectControllers();
+            if (JoystickManagerController.Instance.ControllerMap.Count < 2) {
+                JoystickManagerController.Instance.CollectControllers();
             }
         }
 
             string prefix = "";
             // Check if player 1 has pressed the button yet
-            if (JoystickManagerController.ControllerMap.TryGetValue(1, out prefix)) {
+            if (JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix)) {
                 print("Player 1 looking for joystick : " + prefix);
                 if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
                     print("player 1 pressed a!!!!");
@@ -48,7 +48,7 @@ public class ControllerAssignmentUI : MonoBehaviour {
             }
 
             // Check if player 2 has pressed the button yet
-            if (JoystickManagerController.ControllerMap.TryGetValue(2, out prefix)) {
+            if (JoystickManagerController.Instance.ControllerMap.TryGetValue(2, out prefix)) {
                 print("Player 2 looking for joystick : " + prefix);
                 if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
                     print("player 2 pressed a!!!!");

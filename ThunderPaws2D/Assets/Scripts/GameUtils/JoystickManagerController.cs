@@ -4,13 +4,26 @@ using UnityEngine;
 
 
 public class JoystickManagerController : MonoBehaviour{
+    public static JoystickManagerController Instance;
+
+    void Awake() {
+        if (Instance != null) {
+            if (Instance != this) {
+                Destroy(this.gameObject);
+            }
+        } else {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+    }
+
 
     public static bool ControllersConnected = false;
 
     // Mapping from <Player, Controller input identifier prefix>
-    public static Dictionary<int, string> ControllerMap = new Dictionary<int, string>();
+    public Dictionary<int, string> ControllerMap = new Dictionary<int, string>();
 
-    public static void CollectControllers() {
+    public void CollectControllers() {
         var connectedControllers = Input.GetJoystickNames();
         for (var i = 0; i < connectedControllers.Length; ++i) {
             if (string.IsNullOrEmpty(connectedControllers[i])) {
@@ -27,7 +40,7 @@ public class JoystickManagerController : MonoBehaviour{
         }
     }
 
-    public static int ConnectedControllers() {
+    public int ConnectedControllers() {
         var controllerNum = 0;
         var connectedControllers = Input.GetJoystickNames();
         for (var i = 0; i < connectedControllers.Length; ++i) {
@@ -37,25 +50,5 @@ public class JoystickManagerController : MonoBehaviour{
             ++controllerNum;
         }
         return controllerNum;
-    }
-
-    public static void AssignControllers() {
-        // Grab the players (1-2)
-        var player1 = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player).GetComponent<Player>();
-        //var player2 = null;
-
-        // Get a string[] of all the connected controllers 
-        print("Beginning controller assignment");
-        var connectedControllers = Input.GetJoystickNames();
-        for(var i = 0; i < connectedControllers.Length; ++i) {
-            if (string.IsNullOrEmpty(connectedControllers[i])) {
-                continue;
-            }
-            // There is at least one controller connected so use that for input
-            ControllersConnected = true;
-            print("Assigning joystick " + i + " named: "+ connectedControllers[i]);
-            // Just assign player1 to the first controller we find
-            player1.JoystickNumberPrefix = "J"+(i + 1)+"-";
-        }
     }
 }

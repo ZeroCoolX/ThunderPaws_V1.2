@@ -1033,7 +1033,7 @@ Prefab:
     - target: {fileID: 114337617909033218, guid: 0a9f5a205d30c264f9af1f908ecc403b,
         type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114174318653646354, guid: 0a9f5a205d30c264f9af1f908ecc403b,
         type: 2}
@@ -1428,6 +1428,11 @@ Prefab:
     - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
         type: 2}
       propertyPath: ShowDifficultyScreen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

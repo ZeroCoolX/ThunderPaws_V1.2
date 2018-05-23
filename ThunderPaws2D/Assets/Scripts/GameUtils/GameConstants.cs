@@ -12,6 +12,8 @@ public class GameConstants {
     public static string Audio_WeaponSwitch = "WeaponSwitch";
     public static string Audio_FuzzBuster = "FuzzBusterShot";
     public static string Audio_Shotgun = "ShotgunShot";
+    public static string Audio_WeaponPickup = "WeaponPickup";
+    public static string Audio_Melee = "FirePunch";
 
     // GameTags
     public static string Tag_Player = "Player";
@@ -20,6 +22,7 @@ public class GameConstants {
     public static string Tag_Baddie = "Baddie";
     public static string Tag_HordeBaddie = "HordeBaddie";
     public static string Tag_Tutorial = "Tutorial";
+    public static string Tag_StartSpawn = "StartSpawn";
 
     // Game object names
     public static string ObjectName_Pickup = "Pickup";
@@ -36,9 +39,9 @@ public class GameConstants {
     public static string ObjectName_ScoreText = "ScoreText";
 
     // Input names
-    public static string Input_Xbox_LBumper = "LBumper";
-    public static string Input_Xbox_LTrigger = "LTrigger";
-    public static string Input_Xbox_RTrigger = "RTrigger";
+    public static string Input_LBumper = "LBumper";
+    public static string Input_LTrigger = "LTrigger";
+    public static string Input_RTrigger = "RTrigger";
     public static string Input_Horizontal = "Horizontal";
     public static string Input_Vertical = "Vertical";
     public static string Input_Fire = "Fire1";
