@@ -33,7 +33,7 @@ public class ControllerAssignmentUI : MonoBehaviour {
         }else {
             ControllerConnectionWarning.gameObject.SetActive(false);
             if (JoystickManagerController.Instance.ControllerMap.Count < 2) {
-                JoystickManagerController.Instance.CollectControllers();
+                JoystickManagerController.Instance.CollectControllers(false);
             }
         }
 

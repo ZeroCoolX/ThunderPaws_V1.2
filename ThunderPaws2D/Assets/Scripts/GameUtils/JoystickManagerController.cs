@@ -23,7 +23,7 @@ public class JoystickManagerController : MonoBehaviour{
     // Mapping from <Player, Controller input identifier prefix>
     public Dictionary<int, string> ControllerMap = new Dictionary<int, string>();
 
-    public void CollectControllers() {
+    public void CollectControllers(bool singlePlayer) {
         var connectedControllers = Input.GetJoystickNames();
         for (var i = 0; i < connectedControllers.Length; ++i) {
             if (string.IsNullOrEmpty(connectedControllers[i])) {
@@ -32,6 +32,10 @@ public class JoystickManagerController : MonoBehaviour{
             string outVal = null;
             var player = 1;
             if (ControllerMap.TryGetValue(1, out outVal)) {
+                // This is a failsafe in case they user has multiple controllers conntect but is playing single player
+                if (singlePlayer) {
+                    return;
+                }
                 print("player 2 exists");
                 player = 2;
             }
