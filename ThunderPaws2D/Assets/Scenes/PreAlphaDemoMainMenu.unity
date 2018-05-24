@@ -1096,6 +1096,11 @@ Prefab:
       objectReference: {fileID: 1414756270}
     - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
         type: 2}
+      propertyPath: GameOverUi
+      value: 
+      objectReference: {fileID: 676836463}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
       propertyPath: ControlScreen
       value: 
       objectReference: {fileID: 1645090123}
@@ -1109,6 +1114,11 @@ Prefab:
       propertyPath: DifficultyExit
       value: 
       objectReference: {fileID: 1239977295}
+    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
+        type: 2}
+      propertyPath: GameOverLostScreen
+      value: 
+      objectReference: {fileID: 2098149270}
     - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
         type: 2}
       propertyPath: InputBindingScreen
@@ -1129,26 +1139,6 @@ Prefab:
       propertyPath: DifficultyObjects.Array.data[2]
       value: 
       objectReference: {fileID: 1064090997}
-    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
-        type: 2}
-      propertyPath: ShowDifficultyScreen
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
-        type: 2}
-      propertyPath: GameOverLostScreen
-      value: 
-      objectReference: {fileID: 2098149270}
-    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
-        type: 2}
-      propertyPath: GameOverUi
-      value: 
-      objectReference: {fileID: 676836463}
-    - target: {fileID: 114671961715356918, guid: ff171ff069abb2b48b248f7a3b838039,
-        type: 2}
-      propertyPath: PopulatePlayers
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff171ff069abb2b48b248f7a3b838039, type: 2}
   m_IsPrefabParent: 0
