@@ -222,6 +222,7 @@ public class GameMaster : MonoBehaviour {
         RupertPrefab.GetComponent<Player>().JoystickId = prefix;
         print("Set RupertPrefab.JoystickId to " + prefix);
         Players.Add(RupertPrefab);
+
     }
 
     // Spawn as many players that live in the array
@@ -289,7 +290,9 @@ public class GameMaster : MonoBehaviour {
         }
         //Set player stats UI reference
         _player1StatsUi = GetPlayerStatsUi(1);
-        _player2StatsUi = GetPlayerStatsUi(2);
+        if (Players.Count == 2) {
+            _player2StatsUi = GetPlayerStatsUi(2);
+        }
 
         //Double check that there is at least one spawn point in this level
         if (SpawnPoints.Length <= 0) {
@@ -417,7 +420,11 @@ public class GameMaster : MonoBehaviour {
     /// <returns></returns>
     public PlayerStatsUIController GetPlayerStatsUi(int player) {
         var statsName = "Player" + player + "Stats";
-        var stats = UIOverlay.transform.Find(statsName).GetComponent<PlayerStatsUIController>();
+        var statsUi = UIOverlay.transform.Find(statsName);
+        if (!statsUi.gameObject.activeSelf) {
+            statsUi.gameObject.SetActive(true);
+        }
+        var stats = statsUi.GetComponent<PlayerStatsUIController>();
         if (stats == null) {
             throw new MissingComponentException("Attempted to extract " + statsName + " but found none");
         }

@@ -109,9 +109,9 @@ public class Player : AbstractLifeform {
         }
         PlayerStats.MaxHealth = LivesManager.Health;
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
         PlayerStats.CurrentUltimate = 0;
-        GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
@@ -393,7 +393,7 @@ public class Player : AbstractLifeform {
     public void PickupCoin() {
         if (!PlayerStats.UltEnabled) {
             PlayerStats.CurrentUltimate += 1;
-            GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+            GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
         }
         //Right now hardcoded for player 1 coins
         GameMaster.Instance.AddCoins(0);
@@ -418,7 +418,7 @@ public class Player : AbstractLifeform {
 
     private void DepleteUltimate() {
         --PlayerStats.CurrentUltimate;
-        GameMaster.Instance.UpdateUltimateUI(1, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
     }
 
     /// <summary>
@@ -451,7 +451,7 @@ public class Player : AbstractLifeform {
     /// </summary>
     public override void Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
-        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
         if(PlayerStats.CurrentHealth <= 0) {
             GameMaster.KillPlayer(this);
         }
@@ -462,7 +462,7 @@ public class Player : AbstractLifeform {
     /// </summary>
     public void RegenerateAllHealth() {
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(1, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
     }
 
     /// <summary>
