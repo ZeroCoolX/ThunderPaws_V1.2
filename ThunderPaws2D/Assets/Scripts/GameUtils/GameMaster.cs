@@ -125,7 +125,7 @@ public class GameMaster : MonoBehaviour {
     /// if this is single payer - respawn them almost immeddiately.
     /// Otherwise, if this is Co-op wait a significantly longer time since one player dying doesn't subtract lives
     /// </summary>
-    public int SpawnDelay { get { return SinglePlayer ? 3 : 10; } }
+    public int SpawnDelay { get { return SinglePlayer || FullRespawnOccurred ? 3 : 10; } }
 
     public bool ShowDifficultyScreen = false;
 
@@ -136,6 +136,10 @@ public class GameMaster : MonoBehaviour {
     public int Score { get; set; }
     // Indicates if this is single player by checking the Players list count
     public bool SinglePlayer { get { return Players != null && Players.Count == 1; } }
+
+    // Indicates while one player was dead and waiting to respawn - the other player died
+    // and when that coroutine ends it should do nothing.
+    private bool FullRespawnOccurred;
 
     // Keeps track of how many players are actively alive in the world.
     // Useful for determining if we should decrement a life and respawn them
@@ -514,11 +518,9 @@ public class GameMaster : MonoBehaviour {
     // fullRespawn = true indicates there are no more players on the field
     // fullRespawn = false indicates we're in co-op mode and only one of the players has died
     private IEnumerator RespawnPlayer(int playerToRespawn, bool fullRespawn) {
-        //play sound and wait for delay
-        Vector3 spawnLocation;
-        Quaternion spawnRotation;
         yield return new WaitForSeconds(SpawnDelay);
         if (fullRespawn) {
+            FullRespawnOccurred = true;
             var spawn = SpawnPoints[SpawnPointIndex];
             var controller = spawn.GetComponent<CheckpointController>();
             if (controller == null) {
@@ -533,15 +535,30 @@ public class GameMaster : MonoBehaviour {
             } else {
                 OnHordeKilledPlayer.Invoke();
             }
-            spawnLocation = SpawnPoints[SpawnPointIndex].position;
-            spawnRotation = SpawnPoints[SpawnPointIndex].rotation;
+            // If this is a full respawn we are respawning 1-2 players exactly at the last checkpoint
+            foreach (var player in Players) {
+                // Have to subtract 1 from the player we want because 0 indexes
+                Instantiate(player, SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
+                GetPlayerStatsUi(player.GetComponent<Player>().PlayerNumber).SetLives(_remainingLives);
+                // Push a player onto the stack indicating he is alive in the scene
+                PlayersCurrentlyAlive.Push(0);
+            }
         }else {
+            // Short circuit if while we were dead the other player died
+            if (FullRespawnOccurred) {
+                print("Full Respawn occurred");
+                FullRespawnOccurred = false;
+                yield break;
+            }
             // There is still a teamate on the battle field!
             // Get their location and spawn on their position
             try {
                 var playerStillAlive = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-                spawnLocation = playerStillAlive.transform.position;
-                spawnRotation = playerStillAlive.transform.rotation;
+                // Have to subtract 1 from the player we want because 0 indexes
+                Instantiate(Players[playerToRespawn - 1], playerStillAlive.transform.position, playerStillAlive.transform.rotation);
+                // Since both players call respawn this should be pushing 1-2 values
+                Instance.PlayersCurrentlyAlive.Push(0);
+                GetPlayerStatsUi(playerToRespawn).SetLives(_remainingLives);
             } catch (Exception e) {
                 print("Hit the one in a million exception. Congratulations");
                 // Its possible like the EXACT moment we try and get the player that's alive, he might die. if that happens and this throws an error just chill because
@@ -549,11 +566,6 @@ public class GameMaster : MonoBehaviour {
                 yield break;
             }
         }
-        // Have to subtract 1 from the player we want because 0 indexes
-        Instantiate(Players[playerToRespawn-1], spawnLocation, spawnRotation);
-        // Since both players call respawn this should be pushing 1-2 values
-        Instance.PlayersCurrentlyAlive.Push(0);
-        GetPlayerStatsUi(playerToRespawn).SetLives(_remainingLives);
     }
 
 
