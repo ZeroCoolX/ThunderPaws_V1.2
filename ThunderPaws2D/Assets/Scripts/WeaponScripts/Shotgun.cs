@@ -33,7 +33,7 @@ public class Shotgun : AbstractWeapon {
 
     private void Update() {
         // Get the player fire input
-        var rightTrigger = Input.GetAxis("J1-" + GameConstants.Input_RTrigger);
+        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
         // This checks if the player released the trigger in between shots - because the shotgun is not full auto
         if (!_triggerLetGo) {
             if(rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
