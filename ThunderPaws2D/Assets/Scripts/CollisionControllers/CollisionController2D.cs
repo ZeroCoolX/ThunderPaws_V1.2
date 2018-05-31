@@ -57,7 +57,8 @@ public class CollisionController2D : RaycastController {
     /// Optional input parameter is for one way platforms. Need a reference to the player input to know if we should drop through platforms
     /// </summary>
     /// <param name="velocity"></param>
-    public void Move(Vector3 velocity, Vector2 input) {
+    // Optional parameter to pass in playerJoystickId for checking the crouch - drop through floors
+    public void Move(Vector3 velocity, Vector2 input, string playerJoystickId = "") {
         PlayerInput = input;
         UpdateRaycasyOrigins();
         bool wasGrounded = Collisions.FromBelow;
@@ -70,7 +71,7 @@ public class CollisionController2D : RaycastController {
             CalculateHorizontalCollisions(ref velocity);
         }
         if (velocity.y != 0) {
-            CalculateVerticalCollisions(ref velocity);
+            CalculateVerticalCollisions(ref velocity, playerJoystickId);
         }
         if (wasGrounded != Collisions.FromBelow && Collisions.FromBelow) {
             //_audioManager.playSound(JumpLanding);
@@ -152,7 +153,8 @@ public class CollisionController2D : RaycastController {
     /// Set velocity.y to the distance to the nearest collision
     /// </summary>
     /// <param name="velocity"></param>
-    public void CalculateVerticalCollisions(ref Vector3 velocity) {
+    // Optional Joystick ID - if one is not supplied its fine just use J1
+    public void CalculateVerticalCollisions(ref Vector3 velocity, string joystickId = "J1-") {
         //get direction of y velocity + up  - down
         float directionY = Mathf.Sign(velocity.y);
         //length of ray
@@ -182,7 +184,7 @@ public class CollisionController2D : RaycastController {
                 }
                 //Give the player half a second chance to fall through the platform
                 // KB can just press "S" whereas controller users have to 
-                if ((Input.GetKey(KeyCode.S) || (PlayerInput.y < -0.25 && Input.GetButton("J1-"+GameConstants.Input_Jump)))
+                if ((Input.GetKey(KeyCode.S) || (PlayerInput.y < -0.25 && Input.GetButton(joystickId + GameConstants.Input_Jump)))
                     && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
                     Collisions.FallingThroughPlatform = true;
                     Invoke("ResetFallingThroughPlatform", 0.25f);

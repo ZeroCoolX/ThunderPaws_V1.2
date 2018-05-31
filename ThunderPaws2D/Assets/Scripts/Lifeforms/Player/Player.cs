@@ -142,7 +142,7 @@ public class Player : AbstractLifeform {
         }
         CalculateVelocityOffInput();
         ApplyGravity();
-        Controller.Move(Velocity * Time.deltaTime, DirectionalInput);
+        Controller.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
         CalculateMovementAnimation();
         CalcualteFacingDirection();
         CalculateWeaponRotation();
