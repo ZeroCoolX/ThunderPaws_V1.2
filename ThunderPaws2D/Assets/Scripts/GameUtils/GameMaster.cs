@@ -231,6 +231,7 @@ public class GameMaster : MonoBehaviour {
         var startSpawns = GameObject.FindGameObjectsWithTag(GameConstants.Tag_StartSpawn);
         var spawnIndex = 0;
         foreach(var player in Players) {
+            // ashley fires
             Instantiate(player, startSpawns[spawnIndex].transform.position, startSpawns[spawnIndex].transform.rotation);
             print("Setting lives for player " + player.GetComponent<Player>().PlayerNumber);
             GetPlayerStatsUi(player.GetComponent<Player>().PlayerNumber).SetLives(_remainingLives);
@@ -492,25 +493,26 @@ public class GameMaster : MonoBehaviour {
     private IEnumerator RespawnPlayer(int playerToRespawn) {
         //play sound and wait for delay
         //_audioManager.playSound(RespawnCountdownSoundName);
-        yield return new WaitForSeconds(SpawnDelay);
-        var spawn = SpawnPoints[SpawnPointIndex];
-        var controller = spawn.GetComponent<CheckpointController>();
-        if (controller == null) {
-            throw new MissingComponentException("No Checkpoint controller");
-        }
-        if (SpawnPointIndex != 2) {
-            controller.DeactivateBaddiesInCheckpoint();
-            controller.SpawnFreshBaddiesForCheckpoint(1.5f);
-            if (LastSeenInHorde) {
+            yield return new WaitForSeconds(SpawnDelay);
+            var spawn = SpawnPoints[SpawnPointIndex];
+            var controller = spawn.GetComponent<CheckpointController>();
+            if (controller == null) {
+                throw new MissingComponentException("No Checkpoint controller");
+            }
+            if (SpawnPointIndex != 2) {
+                controller.DeactivateBaddiesInCheckpoint();
+                controller.SpawnFreshBaddiesForCheckpoint(1.5f);
+                if (LastSeenInHorde) {
+                    OnHordeKilledPlayer.Invoke();
+                }
+            } else {
                 OnHordeKilledPlayer.Invoke();
             }
-        } else {
-            OnHordeKilledPlayer.Invoke();
-        }
 
-        //_audioManager.playSound(SpawnSoundName);
-        Instantiate(Players[playerToRespawn], SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
-        GetPlayerStatsUi(playerToRespawn).SetLives(_remainingLives);
+            //_audioManager.playSound(SpawnSoundName);
+            // Have to subtract 1 from the player we want because 0 indexes
+            Instantiate(Players[playerToRespawn-1], SpawnPoints[SpawnPointIndex].position, SpawnPoints[SpawnPointIndex].rotation);
+            GetPlayerStatsUi(playerToRespawn).SetLives(_remainingLives);
     }
 
 }
