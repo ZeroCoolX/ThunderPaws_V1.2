@@ -129,7 +129,7 @@ public class Player : AbstractLifeform {
     }
 
     void Update() {
-        print("Querying for inputs with prefix : " + JoystickId);
+        //print("Querying for inputs with prefix : " + JoystickId);
         if (Input.GetKeyUp(KeyCode.R)) {
             HackRollReset();
         }

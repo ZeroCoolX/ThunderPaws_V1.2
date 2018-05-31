@@ -40,18 +40,18 @@ public class ControllerAssignmentUI : MonoBehaviour {
             string prefix = "";
             // Check if player 1 has pressed the button yet
             if (JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix)) {
-                print("Player 1 looking for joystick : " + prefix);
+                //print("Player 1 looking for joystick : " + prefix);
                 if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
-                    print("player 1 pressed a!!!!");
+                   // print("player 1 pressed a!!!!");
                     AssignController(1);
                 }
             }
 
             // Check if player 2 has pressed the button yet
             if (JoystickManagerController.Instance.ControllerMap.TryGetValue(2, out prefix)) {
-                print("Player 2 looking for joystick : " + prefix);
+                //print("Player 2 looking for joystick : " + prefix);
                 if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
-                    print("player 2 pressed a!!!!");
+                    //print("player 2 pressed a!!!!");
                     AssignController(2);
                 }
             }

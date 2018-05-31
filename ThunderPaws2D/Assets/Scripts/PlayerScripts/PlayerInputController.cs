@@ -23,7 +23,7 @@ public class PlayerInputController : MonoBehaviour {
         Vector2 directionalInput = (JoystickManagerController.Instance.ConnectedControllers() > 0)
             ? new Vector2(Input.GetAxisRaw(Player.JoystickId + GameConstants.Input_Horizontal), Input.GetAxisRaw(Player.JoystickId + GameConstants.Input_Vertical))
             : new Vector2(Input.GetAxisRaw(GameConstants.Input_Horizontal), Input.GetAxisRaw(GameConstants.Input_Vertical));
-        print("Player " + Player.PlayerNumber + " Directional Input = " + directionalInput);
+        //print("Player " + Player.PlayerNumber + " Directional Input = " + directionalInput);
         Player.DirectionalInput = directionalInput;
         
         if (Input.GetKeyUp(KeyCode.Space) || Input.GetButtonUp(Player.JoystickId + GameConstants.Input_Jump)) {
