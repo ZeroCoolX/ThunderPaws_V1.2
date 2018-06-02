@@ -82,7 +82,7 @@ public class Shotgun : AbstractWeapon {
         var blastRotation = CompensateQuaternion(FirePoint.rotation);
 
         // Pad the X coordinate to ensure the blast is at the tip of the gun. 0.5 is an arbitrary number that seems to fit
-        var paddedX = Mathf.Abs(Player.Velocity.x) > 3 ? (Player.Velocity.x * Time.deltaTime) + FirePoint.position.x + (0.5f * (Player.FacingRight ? 1 : -1)) : FirePoint.position.x;
+        var paddedX = Mathf.Abs(Player.GetVelocity.x) > 3 ? (Player.GetVelocity.x * Time.deltaTime) + FirePoint.position.x + (0.5f * (Player.FacingRight ? 1 : -1)) : FirePoint.position.x;
 
         // Pad the Z coordinate to ensure the blast is over the top of everything
         var fixedPosition = new Vector3(paddedX, FirePoint.position.y, FirePoint.position.z - 5);

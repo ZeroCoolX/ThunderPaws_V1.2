@@ -65,8 +65,8 @@ public class Robot_GL2 : DamageableLifeform {
         var obstacleLayer = 1 << 10;
         _whatToHit = playerLayer | obstacleLayer;
         //Phsyics controller used for all collision detection
-        Controller = transform.GetComponent<CollisionController2D>();
-        if (Controller == null) {
+        Controller2d = transform.GetComponent<CollisionController2D>();
+        if (Controller2d == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
 

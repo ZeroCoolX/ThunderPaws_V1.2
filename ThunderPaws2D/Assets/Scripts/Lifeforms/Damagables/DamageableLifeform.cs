@@ -3,150 +3,126 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class handles all logic involving damaging and killing the lifeform. Also
+/// generating the payload each lifeform has secretly within itself.
+/// Baddies, Circuitboxes...etc
+/// </summary>
 public class DamageableLifeform : BaseLifeform {
-    public bool PartOfHorde = false;
+
+    // Payload Properties
     /// <summary>
-    /// This is what the explosion will generate
+    /// What is generated upon the death of the lifeform.
+    /// Could be either a Coin or a WeaponPickup prefab
     /// </summary>
     public Transform PayloadContent;
     /// <summary>
-    /// Indicates a special case where we want this class to apply movement
+    /// Number of items in the payload.
+    /// Deafult is 10 items.
     /// </summary>
-    public bool ApplyBaseMovement = false;
+    public int PayloadItemCount = 10;
     /// <summary>
-    /// Stored instantiated prefabs awaiting activation
+    /// Min and Max values for the range to which the items in the payload can 
+    /// explode.
+    /// [0] = min
+    /// [1] = max
     /// </summary>
-    private List<Transform> _coinPayload = new List<Transform>();
+    private Vector2[] _explodeRanges = new []{
+        new Vector2(1f, 7f),
+        new Vector2(2f, 15f)
+    };
+
+    // Lifeform Properties
     /// <summary>
-    /// Hoow many coins in the payloada
-    /// </summary>
-    public int _coinsInPayload = 10;
-    /// <summary>
-    /// Indicated we should flash white because we got damaged
-    /// </summary>
-    protected bool _damage = false;
-    /// <summary>
-    /// How much health this object has
+    /// How much health this lifeform has.
+    /// Default is 1f (dies in a single collision)
     /// </summary>
     public float Health = 1f;
-    /// <summary>
-    /// Min bounce values
-    /// </summary>
-    private Vector2 _explodeMin = new Vector2(1f, 7f);
-    /// <summary>
-    /// Max bounce values
-    /// </summary>
-    private Vector2 _explodeMax = new Vector2(2f, 15f);
-
-    /// <summary>
-    /// Optional property that allows this object to be effected by gravity
-    /// </summary>
-    public float Gravity = 0f;
-    /// <summary>
-    /// Lifeform movement
-    /// </summary>
-    public Vector3 Velocity;
-    /// <summary>
-    /// collision detection controller
-    /// </summary>
-    protected CollisionController2D Controller;
-    
-    public delegate void InvokeHordeUpdateDelegate(string baddie);
-    public InvokeHordeUpdateDelegate InvokeHordeUpdate;
-
-    // Use this for initialization
-    public void Start () {
-        //Phsyics controller used for all collision detection
-        Controller = transform.GetComponent<CollisionController2D>();
-        if(Controller == null) {
-            throw new MissingComponentException("There is no CollisionController2D on this object");
-        }
-    }
 
     // Update is called once per frame
-    public void Update () {
-        if (_damage) {
-            GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0.8f);
-            _damage = false;
-        }else {
-            GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
-        }
-        if(Health <= 0) {
-            DestroyBaddie(true && PartOfHorde);
+    public new void Update() {
+        base.Update();
+        if (Health <= 0) {
+            PreDestroy();
         }
         //Do not accumulate gravity if colliding with anythig vertical
-        if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
+        if (Controller2d.Collisions.FromBelow || Controller2d.Collisions.FromAbove) {
             Velocity.y = 0;
         }
         ApplyGravity();
-        if (ApplyBaseMovement) {
-            Controller.Move(Velocity * Time.deltaTime);
-        }
-    }
-    
-    public void DestroyBaddie(bool invokeDelegate, float deathOffset = 0f){
-        if(invokeDelegate){
-            InvokeHordeUpdate.Invoke(gameObject.name);
-        }
-        Invoke("InvokeDestroy", deathOffset);
-    }
-    
-    private void InvokeDestroy(){
-        try {
-            var increment = 0;
-            if (gameObject.name.Contains("GL1")) {
-                increment = 1;
-            } else if (gameObject.name.Contains("GL2")) {
-                increment = 2;
-            }
-            else if(gameObject.name.Contains("FL1")) {
-                increment = 1;
-            } else if (gameObject.name.Contains("FL2")) {
-                increment = 2;
-            }
-            else if(gameObject.name.Contains("FL3")) {
-                increment = 3;
-            }
-            GameMaster.Instance.Score += increment;
-            GenerateCoinPayload();
-            Explode();
-            Destroy(gameObject);
-        }catch(System.Exception e) {
-            print("Caught Exception : " + e.Message);
-        }
+        Move();
     }
 
-    private void GenerateCoinPayload() {
-        for (var i = 0; i < _coinsInPayload; ++i) {
-            var coin = Instantiate(PayloadContent, transform.position, Quaternion.identity) as Transform;
-            coin.gameObject.SetActive(false);
-            var coinController = coin.GetComponent<CoinController>();
+    /// <summary>
+    /// Base implementation is just to invoke destruction immedaitely
+    /// informing no one of the death
+    /// </summary>
+    protected virtual void PreDestroy() {
+        InvokeDestroy();
+    }
+
+    /// <summary>
+    /// Base implementation for destruction is simply to generate payload and 
+    /// destroy the GameObject.
+    /// Extending classes can override this for more functionality
+    /// </summary>
+    protected virtual void InvokeDestroy() {
+        GeneratePayload();
+        Destroy(gameObject);
+    }
+
+    /// <summary>
+    /// Construct a list of all the transforms that are in the payload.
+    /// Offload them by exploding.
+    /// </summary>
+    private void GeneratePayload() {
+        List<Transform> payload = new List<Transform>();
+        // Generate the items to be offloaded and store them in the list
+        for (var i = 0; i < PayloadItemCount; ++i) {
+            var pItem = Instantiate(PayloadContent, transform.position, Quaternion.identity) as Transform;
+            pItem.gameObject.SetActive(false);
+            // TODO: Allow for not just coins - currently CoinController is hardcoded
+            var coinController = pItem.GetComponent<CoinController>();
             coinController.Initialize(GenerateRandomExplosionDirection());
             coinController.enabled = false;
-            _coinPayload.Add(coin);
+            // Add the item to the payload
+            payload.Add(pItem);
         }
+
+        // Now offload in an explosive manor
+        Explode(payload);
     }
 
+    /// <summary>
+    /// Generate a random Vector based off explodeRanges [0]Min and [1]Max values
+    /// </summary>
+    /// <returns></returns>
     private Vector2 GenerateRandomExplosionDirection() {
-        var explodeX = UnityEngine.Random.Range(_explodeMin.x, _explodeMax.x);
+        var explodeX = UnityEngine.Random.Range(_explodeRanges[0].x, _explodeRanges[1].x);
         explodeX *= Mathf.Sign(UnityEngine.Random.Range(-1, 2));
-        var explodeY = UnityEngine.Random.Range(_explodeMin.y, _explodeMax.y);
+        var explodeY = UnityEngine.Random.Range(_explodeRanges[0].y, _explodeRanges[1].y);
         return new Vector2(explodeX, explodeY);
-}
+    }
 
-    private void Explode() {
-        foreach(var coin in _coinPayload) {
-            coin.GetComponent<CoinController>().enabled = true;
-            coin.gameObject.SetActive(true);
+    /// <summary>
+    /// Generate explosion effect by activating the script on each Transform
+    /// in the payload.
+    /// </summary>
+    private void Explode(List<Transform> payload) {
+        // TODO: Allow for not just coins - currently CoinController is hardcoded
+        foreach(var pItem in payload) {
+            pItem.GetComponent<CoinController>().enabled = true;
+            pItem.gameObject.SetActive(true);
         }
     }
 
-    public override void Damage(float dmg) {
-        Health -= dmg;
-        _damage = true;
-    }
-
-    protected void ApplyGravity() {
-        Velocity.y += Gravity * Time.deltaTime;
+    /// <summary>
+    /// Decrement the lifeforms health.
+    /// Trigger flash damage animation
+    /// </summary>
+    /// <param name="damage"></param>
+    public override void Damage(float damage) {
+        Health -= damage;
+        ActivateFlash();
     }
 }

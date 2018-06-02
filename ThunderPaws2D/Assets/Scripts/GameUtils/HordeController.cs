@@ -188,7 +188,7 @@ public class HordeController : MonoBehaviour {
         foreach(var baddie in ActiveHordeBaddieCache.ToArray()){
             try {
                 baddie.Value.GetComponent<CollisionController2D>().enabled = false;
-                baddie.Value.GetComponent<DamageableLifeform>().DestroyBaddie(false, deathOffset);
+                baddie.Value.GetComponent<BaddieLifeform>().DestroyBaddie(false, deathOffset);
                 deathOffset += 0.1f;
             }catch(System.Exception e) {
                 print("Trying to disable already destroyed object, no worries move on");
@@ -244,7 +244,7 @@ public class HordeController : MonoBehaviour {
                 Transform baddieTransform = Instantiate(baddiePrefab, cleanPosition, transform.rotation) as Transform;
                 baddieTransform.gameObject.name = baddieCachePrefix+baddieTransform.gameObject.GetInstanceID();
                 baddieTransform.tag = GameConstants.Tag_HordeBaddie;
-                var damageableLifeform = baddieTransform.GetComponent<DamageableLifeform>();
+                var damageableLifeform = baddieTransform.GetComponent<BaddieLifeform>();
                 if(damageableLifeform == null){
                     throw new MissingComponentException("Somehow the baddie: " + baddieTransform.gameObject.name + " does not have a DamageableLifeform script attached");
                 }

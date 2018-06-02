@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : AbstractLifeform {
+public class Player : PlayerLifeform {
 
     /// <summary>
     /// Indicates which player this is (either 1 or 2)
@@ -137,12 +137,12 @@ public class Player : AbstractLifeform {
         FallCheck();
 
         //Do not accumulate gravity if colliding with anythig vertical
-        if (Controller.Collisions.FromBelow || Controller.Collisions.FromAbove) {
+        if (Controller2d.Collisions.FromBelow || Controller2d.Collisions.FromAbove) {
             Velocity.y = 0;
         }
         CalculateVelocityOffInput();
         ApplyGravity();
-        Controller.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
+        Controller2d.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
         CalculateMovementAnimation();
         CalcualteFacingDirection();
         CalculateWeaponRotation();
@@ -174,14 +174,14 @@ public class Player : AbstractLifeform {
         // Indication we are jumping up
         var jumping = yVelocity > 0 && !crouch;
         // Indicates we are on the descent
-        var falling = !jumping && !Controller.Collisions.FromBelow;
+        var falling = !jumping && !Controller2d.Collisions.FromBelow;
         // Indicates we are rolling
-        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller.Collisions.FromBelow) || _rollActive;
+        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
             _rollActive = true;
         }
         // Indicates we are melee'ing
-        var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller.Collisions.FromBelow) || _meleeActive;
+        var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
             GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_Melee);
@@ -204,11 +204,11 @@ public class Player : AbstractLifeform {
             // Also inform the weapon animator that we are crouching
             _weaponAnchorAnimator.SetBool("Crouch", crouch);
             if (crouch || _rollActive) {
-                Controller.BoxCollider.size = new Vector2(Controller.BoxCollider.size.x, GameConstants.Data_PlayerCrouchSize);
-                Controller.BoxCollider.offset = new Vector2(Controller.BoxCollider.offset.x, GameConstants.Data_PlayerCrouchY);
+                Controller2d.BoxCollider.size = new Vector2(Controller2d.BoxCollider.size.x, GameConstants.Data_PlayerCrouchSize);
+                Controller2d.BoxCollider.offset = new Vector2(Controller2d.BoxCollider.offset.x, GameConstants.Data_PlayerCrouchY);
             } else {
-                Controller.BoxCollider.size = new Vector2(Controller.BoxCollider.size.x, GameConstants.Data_PlayerSize);
-                Controller.BoxCollider.offset = new Vector2(Controller.BoxCollider.offset.x, GameConstants.Data_PlayerY);
+                Controller2d.BoxCollider.size = new Vector2(Controller2d.BoxCollider.size.x, GameConstants.Data_PlayerSize);
+                Controller2d.BoxCollider.offset = new Vector2(Controller2d.BoxCollider.offset.x, GameConstants.Data_PlayerY);
             }
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
@@ -226,7 +226,7 @@ public class Player : AbstractLifeform {
     private void CalculateVelocityOffInput() {
         //check if user - or NPC - is trying to jump and is standing on the ground
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&
-                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && Controller.Collisions.FromBelow) {
+                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && Controller2d.Collisions.FromBelow) {
             Velocity.y = MaxJumpVelocity;
         }
         var yAxis = DirectionalInput.y;
@@ -258,7 +258,7 @@ public class Player : AbstractLifeform {
                 Animator.SetFloat("xVelocity", targetVelocityX);
             }
         }
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
     }
 
     /// <summary>
@@ -285,7 +285,7 @@ public class Player : AbstractLifeform {
         //We want to allow bullets to pass throught obstacles that the player can pass through
         if (raycast.collider != null) {
             //IF we hit a lifeform damage it - otherwise move on
-            var lifeform = raycast.collider.transform.GetComponent<BaseLifeform>();
+            var lifeform = raycast.collider.transform.GetComponent<DamageableLifeform>();
             if (lifeform != null && lifeform.gameObject.tag != GameConstants.Tag_Tutorial) {
                 print("hit lifeform: " + lifeform.gameObject.name + " and did " + MeleeDamage + " damage");
                 lifeform.Damage(MeleeDamage);
@@ -463,12 +463,5 @@ public class Player : AbstractLifeform {
     public void RegenerateAllHealth() {
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
         GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
-    }
-
-    /// <summary>
-    /// Overriden method to apply gravity ourselves
-    /// </summary>
-    protected override void ApplyGravity() {
-        Velocity.y += Gravity * Time.deltaTime;
     }
 }

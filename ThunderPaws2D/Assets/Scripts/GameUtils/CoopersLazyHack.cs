@@ -22,7 +22,7 @@ public class CoopersLazyHack : MonoBehaviour {
 
     private void Apply(Vector3 v, Collider2D c) {
         //print("Collided with baddie: " + c.gameObject.name);
-        var lifeformScript = c.transform.GetComponent<AbstractLifeform>();
+        var lifeformScript = c.transform.GetComponent<PlayerLifeform>();
         if (lifeformScript != null) {
             lifeformScript.NoFallCheck = true;
         }

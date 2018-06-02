@@ -91,8 +91,8 @@ public class Robot_FL1 : DamageableLifeform {
         _whatToHit = playerLayer | obstacleLayer;
 
         //Phsyics controller used for all collision detection
-        Controller = transform.GetComponent<CollisionController2D>();
-        if (Controller == null) {
+        Controller2d = transform.GetComponent<CollisionController2D>();
+        if (Controller2d == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
         CalculateBounds();
@@ -162,7 +162,7 @@ public class Robot_FL1 : DamageableLifeform {
             CalcualteFacingDirection(directionToTarget);
 
             CalculateVelocity();
-            Controller.Move(Velocity * Time.deltaTime);
+            Controller2d.Move(Velocity * Time.deltaTime);
         }
     }
 

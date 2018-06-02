@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Anything that "lives" and can "die" is consisdered a Lifeform
+/// Class specifically for Player Lifeforms.
 /// </summary>
-public abstract class AbstractLifeform : BaseLifeform {
+public abstract class PlayerLifeform : BaseLifeform {
     // TODO: Take this out but im so lazy
     public bool NoFallCheck = false;
     /// <summary>
@@ -34,10 +34,6 @@ public abstract class AbstractLifeform : BaseLifeform {
     protected float AccelerationTimeGrounded;
 
     /// <summary>
-    /// Calculated based off jump constraints
-    /// </summary>
-    protected float Gravity;
-    /// <summary>
     /// Indicates how far we can fall without dying
     /// </summary>
     protected float FallDeathHeight = -18;
@@ -49,31 +45,17 @@ public abstract class AbstractLifeform : BaseLifeform {
     /// Calculated based off gravity and jump constraints and player input (min)
     /// </summary>
     protected float MinJumpVelocity;
-    /// <summary>
-    /// Lifeform movement
-    /// </summary>
-    public Vector3 Velocity;
+
     /// <summary>
     /// Just used as a reference for the Mathf.SmoothDamp function
     /// </summary>
     protected float VelocityXSmoothing;
 
-    ///// <summary>
-    ///// The sound played when the lifeform drops some pickupable
-    ///// </summary>
-    //protected string PickupableDropSoundName = "DropPickup";
-
-    /// <summary>
-    /// collision detection controller
-    /// </summary>
-    protected CollisionController2D Controller;
 
     /// <summary>
     /// Every lifeform has at lesat 1 animation thats needed
     /// </summary>
     protected Animator Animator;
-
-    //protected List<PickupableEnum> Pickups;
 
 
     /// <summary>
@@ -93,7 +75,7 @@ public abstract class AbstractLifeform : BaseLifeform {
         AccelerationTimeAirborne = accelerationTimeAirborne;
         AccelerationTimeGrounded = accelerationTimeGrounded;
         //Phsyics controller used for all collision detection
-        Controller = GetComponent<CollisionController2D>();
+        Controller2d = GetComponent<CollisionController2D>();
         //Calculate gravity and jump velocity
         if (gravity == -1) {
             // originally 2
@@ -122,11 +104,4 @@ public abstract class AbstractLifeform : BaseLifeform {
             Damage(999);
         }
     }
-
-    /// <summary>
-    /// Add the gravity constant to .y component of velocity
-    /// Do not accumulate gravity if colliding with anything vertically
-    /// </summary>
-    protected abstract void ApplyGravity();
-
 }

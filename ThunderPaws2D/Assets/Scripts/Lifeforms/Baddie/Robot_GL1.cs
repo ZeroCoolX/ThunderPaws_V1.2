@@ -106,8 +106,8 @@ public class Robot_GL1 : DamageableLifeform {
         var obstacleLayer = 1 << 10;
         _whatToHit = playerLayer | obstacleLayer;
         //Phsyics controller used for all collision detection
-        Controller = transform.GetComponent<CollisionController2D>();
-        if (Controller == null) {
+        Controller2d = transform.GetComponent<CollisionController2D>();
+        if (Controller2d == null) {
             throw new MissingComponentException("There is no CollisionController2D on this object");
         }
 
@@ -151,7 +151,7 @@ public class Robot_GL1 : DamageableLifeform {
             }
 
             CalcualteFacingDirection(_moveDirection.x*-1);
-            if (Controller.Collisions.NearLedge && _turnAround) {
+            if (Controller2d.Collisions.NearLedge && _turnAround) {
                 print("NEAR LEDGE!!!");
                 _moveDirection.x  = Vector2.right.x * (_facingRight ? -1f : 1f);
                 _turnAround = false;
@@ -161,7 +161,7 @@ public class Robot_GL1 : DamageableLifeform {
             // CheckForTargetInFront();
             //Move the baddie
             float targetVelocityX = _moveSpeed * _moveDirection.x;
-            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
             ApplyGravity();
 
         } else {
@@ -180,7 +180,7 @@ public class Robot_GL1 : DamageableLifeform {
             }
         }
 
-        Controller.Move(Velocity * Time.deltaTime);
+        Controller2d.Move(Velocity * Time.deltaTime);
     }
 
     private void FindPlayers() {
@@ -288,7 +288,7 @@ public class Robot_GL1 : DamageableLifeform {
     /// </summary>
     private void CalculateVelocity() {
         float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
         ApplyGravity();
     }
 }
