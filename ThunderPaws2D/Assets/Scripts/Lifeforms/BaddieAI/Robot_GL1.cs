@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Robot_GL1 : DamageableLifeform {
@@ -64,7 +65,10 @@ public class Robot_GL1 : DamageableLifeform {
 
     /// <summary>
     /// Who the baddie is focused on attacking
+    /// Turned into array for co-op
     /// </summary>
+    private List<Transform> _targets = new List<Transform>();
+
     private Transform _target;
 
     /// <summary>
@@ -108,7 +112,7 @@ public class Robot_GL1 : DamageableLifeform {
         }
 
         // Find the player and store the target reference
-        FindPlayer();
+        FindPlayers();
 
         _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (_firePoint == null) {
@@ -122,9 +126,19 @@ public class Robot_GL1 : DamageableLifeform {
 
     public void Update() {
         base.Update();
-        if (_target == null) {
-            FindPlayer();
+        if (_targets == null || _targets.Count == 0) {
+            FindPlayers();
             return;
+        } else if (_targets.Contains(null)) {
+            _targets = _targets.Where(target => target != null).ToList();
+            // This means we only 
+            print("An item in the _targets list is null meaning a player died");
+            // The max spawn time is 10 seconds so in 10 seconds search again for a player
+            Invoke("FindPlayers", 10f);
+        }
+
+        if(_target == null) {
+            ChooseTarget();
         }
 
         if (LedgeBound) {
@@ -169,12 +183,32 @@ public class Robot_GL1 : DamageableLifeform {
         Controller.Move(Velocity * Time.deltaTime);
     }
 
-    private void FindPlayer() {
+    private void FindPlayers() {
         // Find the player and store the target reference
-        GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-        if (target != null) {
-            _target = target.transform;
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player);
+        if (targets == null || targets.Length == 0) {
+            return;
         }
+        foreach(var target in targets) {
+            // Only add the player if its not already in the list
+            if (!_targets.Contains(target.transform)) {
+                _targets.Add(target.transform);
+            }
+        }
+    }
+
+    private void ChooseTarget() {
+        if(_targets == null || _targets.Count == 0) {
+            return;
+        }else if(_targets.Count == 1) {
+            _target = _targets.FirstOrDefault();
+        }else {
+            // choose a random player
+            var targets = _targets.Where(t => t != null).ToArray();
+            var index = Random.Range(0, targets.Length-1);
+            _target = targets[index];
+        }
+        print("FOUND NEW TARGET! : " + _target.gameObject.name);
     }
 
     private void ResetTurnAround() {
