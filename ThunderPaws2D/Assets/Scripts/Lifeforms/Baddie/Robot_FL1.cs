@@ -3,27 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Robot_FL1 : DamageableLifeform {
-    /// <summary>
-    /// Reference to bullet prefab
-    /// </summary>
-    public Transform BulletPrefab;
-    /// <summary>
-    /// Reference to where we should spawn the bullet from
-    /// </summary>
-    private Transform _firePoint;
-    /// <summary>
-    /// Indicates what the bullet should hit
-    /// </summary>
-    private LayerMask _whatToHit;
-
-    /// <summary>
-    /// Who the baddie is focused on attacking
-    /// Turned into array for co-op
-    /// </summary>
-    private List<Transform> _targets = new List<Transform>();
-
-    private Transform _target;
+public class Robot_FL1 : BaddieLifeform {
 
     /// <summary>
     /// The lowest this baddie can fly
@@ -37,10 +17,6 @@ public class Robot_FL1 : DamageableLifeform {
     /// How fast can the baddie move
     /// </summary>
     private float _moveSpeed = 2f;
-    /// <summary>
-    /// Indicates if this is facing right
-    /// </summary>
-    private bool _facingRight = false;
 
     /// <summary>
     /// Only needed for the Math.SmoothDamp function
@@ -74,27 +50,12 @@ public class Robot_FL1 : DamageableLifeform {
     /// <summary>
     /// Find the player and begin tracking
     /// </summary>
-    private void Start() {
-        FindPlayers();
-        if (_target == null) {
-            ChooseTarget();
-        }
+    protected new void Start() {
+        base.Start();
 
-        _firePoint = transform.Find(GameConstants.ObjectName_FirePoint);
-        if (_firePoint == null) {
-            Debug.LogError("AbstractWeapon.cs: No firePoint found");
-            throw new UnassignedReferenceException();
-        }
+        // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
+        AssignLayermask(8, 10);
 
-        var playerLayer = 1 << 8;
-        var obstacleLayer = 1 << 10;
-        _whatToHit = playerLayer | obstacleLayer;
-
-        //Phsyics controller used for all collision detection
-        Controller2d = transform.GetComponent<CollisionController2D>();
-        if (Controller2d == null) {
-            throw new MissingComponentException("There is no CollisionController2D on this object");
-        }
         CalculateBounds();
         targetY = ChooseRandomHeight();
     }
@@ -105,7 +66,7 @@ public class Robot_FL1 : DamageableLifeform {
             _minY = -85.89f;
             _maxY = -77.9f;
         }else {
-            _minY = _target.position.y + 2f;
+            _minY = Target.position.y + 2f;
             _maxY = _minY + 6f;
         }
     }
@@ -117,7 +78,7 @@ public class Robot_FL1 : DamageableLifeform {
         } else if (transform.position.y <= _minY) {
             //print("Send it to the max");
             targetY = 1;
-        }else if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+        }else if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
             targetY = 1;
         }
     }
@@ -129,20 +90,8 @@ public class Robot_FL1 : DamageableLifeform {
     /// </summary>
     private void Update() {
         base.Update();
-        if (_targets == null || _targets.Where(t => t != null).ToList().Count == 0) {
-            FindPlayers();
-            return;
-        } else if (_targets.Contains(null)) {
-            _targets = _targets.Where(target => target != null).ToList();
-            // This means we only 
-            print("An item in the _targets list is null meaning a player died");
-            // The max spawn time is 10 seconds so in 10 seconds search again for a player
-            Invoke("FindPlayers", 10f);
-        }
 
-        if (_target == null) {
-            ChooseTarget();
-        }
+        CheckTargetsExist();
 
         // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
         if (RecalculateBounds) {
@@ -153,58 +102,18 @@ public class Robot_FL1 : DamageableLifeform {
         // always check for bounds
         MaxBoundsCheck();
 
-        var rayLength = Vector2.Distance(transform.position, _target.position);
+        var rayLength = Vector2.Distance(transform.position, Target.position);
         Debug.DrawRay(transform.position, Vector2.down * rayLength, Color.red);
 
         if (!OverPlayer() && !_bombDropInitiated) {
             // Find out where the target is in reference to this.
-            var directionToTarget = transform.position.x - _target.position.x;
-            CalcualteFacingDirection(directionToTarget);
+            var directionToTarget = transform.position.x - Target.position.x;
+            CalculateFacingDirection(directionToTarget);
 
             CalculateVelocity();
-            Controller2d.Move(Velocity * Time.deltaTime);
+            Move();
         }
     }
-
-    private void FindPlayers() {
-        // Find the player and store the target reference
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player);
-        if (targets == null || targets.Where(t => t != null).ToList().Count == 0) {
-            return;
-        }
-        foreach (var target in targets) {
-            // Only add the player if its not already in the list
-            if (!_targets.Contains(target.transform)) {
-                _targets.Add(target.transform);
-            }
-        }
-    }
-
-    private void ChooseTarget() {
-        if (_targets == null || _targets.Where(t => t != null).ToList().Count == 0) {
-            return;
-        } else if (_targets.Count == 1) {
-            _target = _targets.FirstOrDefault();
-        } else {
-            // choose a random player
-            var targets = _targets.Where(t => t != null).ToArray();
-            var index = Random.Range(0, targets.Length - 1);
-            _target = targets[index];
-        }
-        print("FOUND NEW TARGET! : " + _target.gameObject.name);
-    }
-
-    //private void FindPlayer() {
-    //    // Find the player and store the target reference
-    //    GameObject target = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-    //    if (target != null) {
-    //        _target = target.transform;
-    //    }else {
-    //        // This most likely means that he died!!! He will be respawning at a checkpoint so turn off this script
-    //        enabled = false;
-    //        // The BaddieActivator will turn you back on - don't worry
-    //    }
-    //}
 
     /// <summary>
     /// Choose a random height between 1 unit above the player, and the highest we can go without going out of the viewport
@@ -217,7 +126,7 @@ public class Robot_FL1 : DamageableLifeform {
     }
 
     private bool OverPlayer() {
-        _overPlayer = Mathf.Abs(transform.position.x - _target.position.x) < _overThreshold;
+        _overPlayer = Mathf.Abs(transform.position.x - Target.position.x) < _overThreshold;
         if (_overPlayer && !_bombDropInitiated) {
             // Wait 0.25seconds then drop bomb.
             Invoke("DropBomb", 0.1f);
@@ -238,7 +147,7 @@ public class Robot_FL1 : DamageableLifeform {
             print("Send it to the max");
             targetY = 1;
         } else {
-            if (Mathf.Sign(transform.position.y - _target.position.y) < 0) {
+            if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
                 targetY = 1;
             }else {
                 targetY = Mathf.Sign(ChooseRandomHeight());
@@ -252,16 +161,16 @@ public class Robot_FL1 : DamageableLifeform {
             return;
         }
         print("Fire!");
-        Transform clone = Instantiate(BulletPrefab, _firePoint.position, _firePoint.rotation) as Transform;
+        Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
         //Set layermask of parent (either player or baddie)
-        projectile.SetLayerMask(_whatToHit);
+        projectile.SetLayerMask(ProjectileData.WhatToHit);
         projectile.Damage = 10;
         projectile.MoveSpeed = 10;
         projectile.MaxLifetime = 10;
-        projectile.Fire(Vector2.down, (_facingRight ? Vector2.right : Vector2.left));
+        projectile.Fire(Vector2.down, (FacingRight ? Vector2.right : Vector2.left));
         // Make sure we don't drop another bomb till at LEAST 2 seconds
         Invoke("ResetBombDrop", 0.5f);
     }
@@ -270,7 +179,7 @@ public class Robot_FL1 : DamageableLifeform {
     /// Calculate the velocity
     /// </summary>
     private void CalculateVelocity() {
-        float targetVelocityX = _moveSpeed * (_facingRight ? 1 : -1);
+        float targetVelocityX = _moveSpeed * (FacingRight ? 1 : -1);
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, 0.2f);
         if (Time.time > _timeToFindNewSpeed) {
             // random time between 1 and 3 seconds!
@@ -279,20 +188,4 @@ public class Robot_FL1 : DamageableLifeform {
         }
         Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY * _moveSpeed, ref _velocityYSmoothing, 1f);
     }
-
-
-    /// <summary>
-    /// Mirror the player graphics by inverting the .x local scale value
-    /// </summary>
-    private void CalcualteFacingDirection(float dirToTarget) {
-        if (dirToTarget == 0 || Mathf.Sign(transform.localScale.x) == Mathf.Sign(dirToTarget)) { return; }
-
-        // Switch the way the player is labelled as facing.
-        _facingRight = Mathf.Sign(dirToTarget) <= 0;
-
-        Vector3 theScale = transform.localScale;
-        theScale.x *= -1;
-        transform.localScale = theScale;
-    }
-
 }

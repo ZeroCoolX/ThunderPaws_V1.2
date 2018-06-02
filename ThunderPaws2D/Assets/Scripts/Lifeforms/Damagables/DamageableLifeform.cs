@@ -50,7 +50,6 @@ public class DamageableLifeform : BaseLifeform {
             Velocity.y = 0;
         }
         ApplyGravity();
-        Move();
     }
 
     /// <summary>
