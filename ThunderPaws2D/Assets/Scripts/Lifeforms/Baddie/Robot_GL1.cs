@@ -104,9 +104,6 @@ public class Robot_GL1 : BaddieLifeform {
     public void Start() {
         base.Start();
 
-        // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
-        AssignLayermask(8, 10);
-
         Gravity = -25.08f;
         Health = 5;
     }
@@ -132,12 +129,9 @@ public class Robot_GL1 : BaddieLifeform {
                 _turnAround = false;
                 Invoke("ResetTurnAround", 0.5f);
             }
-            // Check if we can shoot at the target
-            // CheckForTargetInFront();
             //Move the baddie
             float targetVelocityX = _moveSpeed * _moveDirection.x;
             Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
-            // ApplyGravity()
         } else {
             // Find out where the target is in reference to this.
             var directionToTarget = transform.position.x - Target.position.x;

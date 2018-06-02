@@ -63,6 +63,9 @@ public class BaddieLifeform : DamageableLifeform {
             throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.FirePoint");
         }
 
+        // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
+        AssignLayermask(8, 10);
+
         FindPlayers();
         if (Target == null) {
             ChooseTarget();

@@ -53,9 +53,6 @@ public class Robot_FL1 : BaddieLifeform {
     protected new void Start() {
         base.Start();
 
-        // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
-        AssignLayermask(8, 10);
-
         CalculateBounds();
         targetY = ChooseRandomHeight();
     }

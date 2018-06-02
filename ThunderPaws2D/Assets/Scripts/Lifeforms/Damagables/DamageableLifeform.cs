@@ -39,7 +39,10 @@ public class DamageableLifeform : BaseLifeform {
     /// </summary>
     public float Health = 1f;
 
-    // Update is called once per frame
+    /// <summary>
+    /// Call BaseLifeform.Update()
+    /// Check health for if we need to die andapply gravity
+    /// </summary>
     public new void Update() {
         base.Update();
         if (Health <= 0) {
