@@ -42,6 +42,7 @@ public class Robot_FL1 : FlyingBaddieLifeform {
     private void Update() {
         base.Update();
 
+        // Make sure the target exists
         if (!CheckTargetsExist()) {
             return;
         }
@@ -132,6 +133,8 @@ public class Robot_FL1 : FlyingBaddieLifeform {
     }
 
     /// <summary>
+    /// Each Flying baddie has their own implementation of the ActionData struct
+    /// FL1 Specifc data.
     /// Encapsultes all the data needed for actions like attacking, moving, bounds..etc
     /// </summary>
     private struct ActionData {

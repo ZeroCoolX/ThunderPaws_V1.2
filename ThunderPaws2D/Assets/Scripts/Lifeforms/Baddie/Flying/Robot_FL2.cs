@@ -3,59 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Robot_FL2 : BaddieLifeform {
+public class Robot_FL2 : FlyingBaddieLifeform {
     /// <summary>
-    /// <summary>
-    /// The lowest this baddie can fly
+    /// Struct that holds all data necessary to the actions this baddie can perform.
+    /// Horizontal move speed, time between firing, and how long to move in certain directions
     /// </summary>
-    private float _minY;
-    /// <summary>
-    /// The highest this baddie can fly
-    /// </summary>
-    private float _maxY;
-    /// <summary>
-    /// How fast can the baddie move
-    /// </summary>
-    private float _moveSpeed = 3.5f;
-    /// <summary>
-    /// Stores the value of the horizontal movement this iteration of movement
-    /// </summary>
-    private float _horizontalMovespeed;
-    /// <summary>
-    /// Needed to determine where in the y direction to go based off max and min values so we stay in frame
-    /// </summary>
-    private float targetY;
-
-    /// <summary>
-    /// Only needed for the Math.SmoothDamp function
-    /// </summary>
-    private float _velocityXSmoothing;
-    private float _velocityYSmoothing;
+    private ActionData _actionData;
     /// <summary>
     /// References to wheree to fire the raycast angles
     /// -45degree down, 90degree down, 45degree down
     /// </summary>
-    private Vector2[] _raycastAngles = new Vector2[] { new Vector2(-1, -1), Vector2.down, new Vector2(1, -1) };
-
-    /// <summary>
-    /// Delay in between shooting
-    /// </summary>
-    private float _timeToFire;
-
-    /// <summary>
-    /// Indicates how long to move for
-    /// </summary>
-    private float _moveDuration;
-    /// <summary>
-    /// Indicates how far the player can move away from the enemy until it stops firing
-    /// </summary>
-    private float _distanceThreshold = 15f;
-
-    private bool RecalculateBounds = false;
-
-    private bool MaxBoundsOverride = false;
-
-    public bool IsHorde2Hack = false;
+    private readonly Vector2[] _raycastAngles = new Vector2[] { new Vector2(-1, -1), Vector2.down, new Vector2(1, -1) };
 
 
     /// <summary>
@@ -66,21 +24,14 @@ public class Robot_FL2 : BaddieLifeform {
 
         CalculateBounds();
 
-        targetY = ChooseRandomHeight();
-        print("min = " + _minY + " max = " + _maxY);
+        FlyingPositionData.MoveSpeed = 3.5f;
 
-        _timeToFire = Time.time + 1f;
-    }
+        // TODO: this is bad - half the time TargetY is treated like an actual
+        // coordinate point in space, and the other half its treated strictly 
+        // as a -1 or 1 vertical direction indicator
+        FlyingPositionData.TargetYDirection = ChooseRandomHeight();
 
-    private void CalculateBounds() {
-        if (IsHorde2Hack) {
-            _minY = -85.89f;
-            _maxY = -77.9f;
-        } else {
-            _minY = Target.position.y + 2f;
-            _maxY = _minY + 6f;
-        }
-        RecalculateBounds = true;
+        _actionData.TimeToFire = Time.time + 1f;
     }
 
     /// <summary>
@@ -92,44 +43,54 @@ public class Robot_FL2 : BaddieLifeform {
     private void Update() {
         base.Update();
 
+        // Make sure the target exists
         if (!CheckTargetsExist()) {
             return;
         }
 
+        // Ensure we're within bounds
         MaxBoundsCheck();
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - Target.position.x;
+        // Face that direction
         CalculateFacingDirection(directionToTarget);
 
+        // Collect distance from this to target
         var rayLength = Vector2.Distance(transform.position, Target.position);
+        Debug.DrawRay(transform.position, (Target.position - transform.position), Color.red);
 
         // If we need to be moving do that instead of checking sightline
-        if (_moveDuration > Time.time || !StillAbovePlayerCheck()) {
+        // This ensures the baddie is elusive by valuing movement over firing
+        if (_actionData.MoveDuration > Time.time || !StillAbovePlayerCheck()) {
             CalculateVelocity();
         }else {
             Velocity.x = 0;
             Velocity.y = 0f;
             CalculateAngleCollisions(rayLength);
         }
-
         Move();
-        Debug.DrawRay(transform.position, (Target.position - transform.position), Color.red);
-
         CalculateFire();
     }
 
-
+    /// <summary>
+    /// Determine if the baddie should fire based off the distance from this to the target.
+    /// Fire mode is a 3 round burst
+    /// </summary>
     private void CalculateFire() {
-        if(Time.time > _timeToFire && Vector2.Distance(transform.position, Target.position) <= _distanceThreshold) {
-            // Wait 5 seconds in between each shot
-            _timeToFire = Time.time + 3f;
+        if(Time.time > _actionData.TimeToFire && Vector2.Distance(transform.position, Target.position) <= GameConstants.Data_SightDistance) {
+            // Wait 0.05 seconds in between each shot
+            _actionData.TimeToFire = Time.time + 3f;
             Invoke("Fire", 0.1f);
             Invoke("Fire", 0.15f);
             Invoke("Fire", 0.2f);
         }
     }
 
+    /// <summary>
+    /// Create a bullet prefab and send set the appropriate
+    /// properties so that it fires.
+    /// </summary>
     private void Fire() {
         try {
             Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
@@ -148,58 +109,30 @@ public class Robot_FL2 : BaddieLifeform {
     }
 
     /// <summary>
-    /// Choose a random height between 1 unit above the player, and the highest we can go without going out of the viewport
+    /// Helper method which returns true if the distance between the player and 
+    /// targets .Y positional element > 0
     /// </summary>
     /// <returns></returns>
-    private float ChooseRandomHeight() {
-        var randY = Random.Range(_minY, _maxY);
-        //print("Random Y = " + randY);
-        return randY;
-    }
-
-    private void MaxBoundsCheck() {
-        if (transform.position.y >= _maxY) {
-            targetY = -1;
-        } else if (transform.position.y <= _minY) {
-            targetY = 1;
-        } else if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
-            targetY = 1;
-        }
-    }
-
-    /// <summary>
-    /// whileMovementCheck just ensures that while we're moving we're keeping track of the bounds. 
-    /// True indicates we want to se a new min and max if we hit the edges only.
-    /// False indicates the same above, but also to choose a random height if not at the max or min
-    /// </summary>
-    /// <param name="whileMovementCheck"></param>
-    private void CalculateVerticalThreshold() {
-        if (transform.position.y >= _maxY) {
-          //  print("Send it to the min");
-            targetY = -1;
-        } else if (transform.position.y <= _minY) {
-          //  print("Send it to the max");
-            targetY = 1;
-        } else {
-            if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
-                targetY = 1;
-            } else {
-                targetY = Mathf.Sign(ChooseRandomHeight());
-            }
-        }
-    }
-
     private bool StillAbovePlayerCheck() {
         return Mathf.Sign(transform.position.y - Target.position.y) > 0;
     }
 
+    /// <summary>
+    /// Calculate velocity both horizontal and vertical
+    /// </summary>
     private void CalculateVelocity() {
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, _horizontalMovespeed, ref _velocityXSmoothing, 0.2f);
+        Velocity.x = Mathf.SmoothDamp(Velocity.x, _actionData.HorizontalMoveSpeed, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
         CalculateVerticalThreshold();
-        Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY, ref _velocityYSmoothing, 1f);
+        Velocity.y = Mathf.SmoothDamp(Velocity.y, FlyingPositionData.TargetYDirection, ref FlyingPositionData.VelocityYSmoothing, 1f);
     }
 
-    // new Vector2(-1, -1), Vector2.down, new Vector2(1, -1)
+    /// <summary>
+    /// Determine where to move if the target is within the angled sightlines.
+    /// Angled sightlines : +-45 degrees and directly under.
+    /// </summary>
+    /// <param name="rayLength">
+    /// Distance from this to target
+    /// </param>
     private void CalculateAngleCollisions(float rayLength) {
         var targetLayer = 1 << 8;
         foreach (var angle in _raycastAngles) {
@@ -209,7 +142,7 @@ public class Robot_FL2 : BaddieLifeform {
                 // We are either directly above or within the 45degree angle of the player and should move!
 
                 // Right now move between 1 and 3 seconds
-                _moveDuration = Time.time + (Random.Range(1, 4));
+                _actionData.MoveDuration = Time.time + (Random.Range(1, 4));
 
                 // -1 = move left 
                 // 1 = move right
@@ -233,9 +166,29 @@ public class Robot_FL2 : BaddieLifeform {
                     rf3 = rf1;
                 }
 
-                _horizontalMovespeed = _moveSpeed * rf3;
+                _actionData.HorizontalMoveSpeed = FlyingPositionData.MoveSpeed * rf3;
                 CalculateVerticalThreshold();
             }
         }
+    }
+
+    /// <summary>
+    /// Each Flying baddie has their own implementation of the ActionData struct
+    /// FL2 Specifc data.
+    /// Encapsultes all the data needed for actions like attacking, and moving both vertical and horizontal
+    /// </summary>
+    private struct ActionData {
+        /// <summary>
+        /// Stores the value of the horizontal movement this iteration of movement
+        /// </summary>
+        public float HorizontalMoveSpeed;
+        /// <summary>
+        /// Delay in between initiating Fire() attack
+        /// </summary>
+        public float TimeToFire;
+        /// <summary>
+        /// Indicates how long to move for
+        /// </summary>
+        public float MoveDuration;
     }
 }

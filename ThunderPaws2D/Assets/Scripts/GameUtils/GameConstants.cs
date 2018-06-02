@@ -65,6 +65,12 @@ public class GameConstants {
     // FL1 Baddie Data
     public static float Data_VerticalPrecision = 0.1f;
 
+    // FL2 Baddie Data
+    /// <summary>
+    /// Indicates how far the player can move away from the enemy until it stops firing
+    /// </summary>
+    public static float Data_SightDistance = 15f;
+
     // Scene Name Data
     public static string Scene_LevelName_1 = "PreAlphaDemoLevel1";
     public static string Scene_LevelName_Menu = "PreAlphaDemoMainMenu";

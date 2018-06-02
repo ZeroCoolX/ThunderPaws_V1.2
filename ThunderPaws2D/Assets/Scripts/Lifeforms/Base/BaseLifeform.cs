@@ -35,15 +35,20 @@ public abstract class BaseLifeform : MonoBehaviour {
     /// </summary>
     private bool _flashDamage = false;
 
-
-    // Base implementation of movement is nothing.
-    // If the lifeform moves the extending must override this.
+    /// <summary>
+    /// Base implementation of movement is nothing.
+    /// If the lifeform moves the extending must override this.
+    /// </summary>
     protected virtual void Move() { }
 
-    // Base implementation is to flash the sprite
+    /// <summary>
+    /// Base implementation is to flash the sprite
+    /// </summary>
     public abstract void Damage(float damage);
 
-    // Assign the CollisionController2d instance attached to the lifeform
+    /// <summary>
+    /// Assign the CollisionController2d instance attached to the lifeform
+    /// </summary>
     protected void Awake() {
         Controller2d = GetComponent<CollisionController2D>();
         if(Controller2d == null) {
