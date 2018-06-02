@@ -126,7 +126,7 @@ public class Robot_GL1 : DamageableLifeform {
 
     public void Update() {
         base.Update();
-        if (_targets == null || _targets.Count == 0) {
+        if (_targets == null || _targets.Where(t => t != null).ToList().Count == 0) {
             FindPlayers();
             return;
         } else if (_targets.Contains(null)) {
@@ -186,7 +186,7 @@ public class Robot_GL1 : DamageableLifeform {
     private void FindPlayers() {
         // Find the player and store the target reference
         GameObject[] targets = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player);
-        if (targets == null || targets.Length == 0) {
+        if (targets == null || targets.Where(t => t != null).ToList().Count == 0) {
             return;
         }
         foreach(var target in targets) {
@@ -198,7 +198,7 @@ public class Robot_GL1 : DamageableLifeform {
     }
 
     private void ChooseTarget() {
-        if(_targets == null || _targets.Count == 0) {
+        if (_targets == null || _targets.Where(t => t != null).ToList().Count == 0) {
             return;
         }else if(_targets.Count == 1) {
             _target = _targets.FirstOrDefault();
