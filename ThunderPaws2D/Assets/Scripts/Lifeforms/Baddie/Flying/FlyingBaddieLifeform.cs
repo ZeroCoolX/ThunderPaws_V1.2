@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class specifically for Flying Baddie types
+/// </summary>
 public class FlyingBaddieLifeform : BaddieLifeform {
     /// <summary>
     /// Struct holding flying data like where and how to fly

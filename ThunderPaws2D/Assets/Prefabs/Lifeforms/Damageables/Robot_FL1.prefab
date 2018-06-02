@@ -132,8 +132,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0

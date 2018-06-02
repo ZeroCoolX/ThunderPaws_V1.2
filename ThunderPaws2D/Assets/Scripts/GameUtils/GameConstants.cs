@@ -62,6 +62,9 @@ public class GameConstants {
     public static float Data_PlayerY = -0.1063671f;
     public static float Data_PlayerSize = 1.536606f;
 
+    // FL1 Baddie Data
+    public static float Data_VerticalPrecision = 0.1f;
+
     // Scene Name Data
     public static string Scene_LevelName_1 = "PreAlphaDemoLevel1";
     public static string Scene_LevelName_Menu = "PreAlphaDemoMainMenu";

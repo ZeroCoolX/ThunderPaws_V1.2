@@ -5632,7 +5632,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5673,7 +5673,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5693,8 +5693,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -5747,7 +5747,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5767,7 +5767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5808,8 +5808,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -5883,7 +5883,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5903,7 +5903,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -5924,7 +5924,7 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 5
+  Health: 25
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
 --- !u!114 &114160537228002892
@@ -5961,7 +5961,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6194,7 +6194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6242,8 +6242,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -6362,7 +6362,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6417,7 +6417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6437,7 +6437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6478,7 +6478,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6512,8 +6512,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -6531,7 +6531,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6551,7 +6551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6606,8 +6606,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -6639,7 +6639,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6743,7 +6743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6763,7 +6763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6819,7 +6819,7 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 5
+  Health: 25
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
 --- !u!114 &114396596784922818
@@ -7104,7 +7104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7138,8 +7138,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -7248,7 +7248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7324,7 +7324,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7358,7 +7358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7378,8 +7378,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -7467,7 +7467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7487,8 +7487,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -7520,7 +7520,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7554,8 +7554,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -7601,7 +7601,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7621,7 +7621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7746,7 +7746,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7787,8 +7787,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -7900,7 +7900,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7969,8 +7969,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -8037,8 +8037,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -8070,8 +8070,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 2
+  PayloadItemCount: 7
+  Health: 15
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -8089,7 +8089,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8151,8 +8151,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -8310,7 +8310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8330,7 +8330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8350,7 +8350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8391,7 +8391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8425,8 +8425,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
-  Health: 1
+  PayloadItemCount: 5
+  Health: 10
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
@@ -8486,7 +8486,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8548,7 +8548,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 3
   Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}

@@ -5,31 +5,21 @@ using UnityEngine;
 
 public class Robot_FL1 : FlyingBaddieLifeform {
     /// <summary>
-    /// Need a reference to how close in the x direction we're trying to get
+    /// Struct that holds all data necessary to the actions this baddie can perform.
+    /// Over a player, dropping a bomb, waiting to attack, should recalculate bounds
     /// </summary>
-    private float _overThreshold = 0.1f;
-    /// <summary>
-    /// Trigger to indicate we're over the player 
-    /// </summary>
-    private bool _overPlayer = false;
-    /// <summary>
-    /// Indicates that a bomb is being dropped - so don't drop anymore until we're through
-    /// </summary>
-    private bool _bombDropInitiated = false;
+    private ActionData _actionData;
 
-    private float _heightAbovePlayer;
-
-    private bool moveToNewY = false;
-    //private float targetY;
-
-    private bool RecalculateBounds = false;
-
-    private float _timeToFindNewSpeed;
-
-    //public bool IsHorde2Hack = false;
+    private new void Awake() {
+        base.Awake();
+        // Zero out all ActionData properties
+        _actionData.BombDropInitiated = _actionData.OverPlayer = _actionData.RecalculateBounds = false;
+    }
 
     /// <summary>
-    /// Find the player and begin tracking
+    /// Assign Layermasks for collision.
+    /// Find players and assign target.
+    /// Initiate movement bounds.
     /// </summary>
     protected new void Start() {
         base.Start();
@@ -57,52 +47,67 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         }
 
         // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
-        if (RecalculateBounds) {
-            RecalculateBounds = false;
+        // Right now RecalculateBounds is always false...
+        if (_actionData.RecalculateBounds) {
+            _actionData.RecalculateBounds = false;
             Invoke("CalculateBounds", 2f);
         }
 
-        // always check for bounds
+        // Ensure we're within bounds
         MaxBoundsCheck();
 
+        // Collect distance from this to target
         var rayLength = Vector2.Distance(transform.position, Target.position);
         Debug.DrawRay(transform.position, Vector2.down * rayLength, Color.red);
 
-        if (!OverPlayer() && !_bombDropInitiated) {
+        // Determine if we need to track the target
+        if (!OverPlayer() && !_actionData.BombDropInitiated) {
             // Find out where the target is in reference to this.
             var directionToTarget = transform.position.x - Target.position.x;
             CalculateFacingDirection(directionToTarget);
-
             CalculateVelocity();
             Move();
         }
     }
 
+    /// <summary>
+    /// Determines if we're over the player and schedule a bomb drop to occur
+    /// </summary>
+    /// <returns></returns>
     private bool OverPlayer() {
-        _overPlayer = Mathf.Abs(transform.position.x - Target.position.x) < _overThreshold;
-        if (_overPlayer && !_bombDropInitiated) {
-            // Wait 0.25seconds then drop bomb.
+        _actionData.OverPlayer = Mathf.Abs(transform.position.x - Target.position.x) < GameConstants.Data_VerticalPrecision;
+        if (_actionData.OverPlayer && !_actionData.BombDropInitiated) {
             Invoke("DropBomb", 0.1f);
-            _bombDropInitiated = true;
+            _actionData.BombDropInitiated = true;
         }
-        return _overPlayer;
+        return _actionData.OverPlayer;
     }
 
+    /// <summary>
+    /// Used to delay bomb dropping if continuously over the player
+    /// so its not just a constant stream of bombs.
+    /// </summary>
     private void ResetBombDrop() {
-        _bombDropInitiated = false;
+        _actionData.BombDropInitiated = false;
     }
 
+    /// <summary>
+    /// Create a bomb prefab and drop it straight down.
+    /// Schedule a reset of the bomb drop variable
+    /// </summary>
     private void DropBomb() {
-        if (!_overPlayer) {
+        // Shortcircuit if we're no longer over the player
+        if (!_actionData.OverPlayer) {
             Invoke("ResetBombDrop", 0f);
             return;
         }
-        print("Fire!");
+
+        // Create bomb
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
-        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+        // Parent the bomb to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-        //Set layermask of parent (either player or baddie)
+        // Set layermask of parent (either player or baddie)
         projectile.SetLayerMask(ProjectileData.WhatToHit);
         projectile.Damage = 10;
         projectile.MoveSpeed = 10;
@@ -113,16 +118,24 @@ public class Robot_FL1 : FlyingBaddieLifeform {
     }
 
     /// <summary>
-    /// Calculate the velocity
+    /// Calculate the velocity based off where the player is and our random vertical values
     /// </summary>
     private void CalculateVelocity() {
         float targetVelocityX = FlyingPositionData.MoveSpeed * (FacingRight ? 1 : -1);
         Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
-        if (Time.time > _timeToFindNewSpeed) {
+        if (Time.time > _actionData.TimeToFindNewSpeed) {
             // random time between 1 and 3 seconds!
-            _timeToFindNewSpeed = Time.time + Random.Range(1f, 4f);
+            _actionData.TimeToFindNewSpeed = Time.time + Random.Range(1f, 4f);
             CalculateVerticalThreshold();
         }
         Velocity.y = Mathf.SmoothDamp(Velocity.y, FlyingPositionData.TargetYDirection * FlyingPositionData.MoveSpeed, ref FlyingPositionData.VelocityYSmoothing, 1f);
+    }
+
+    /// <summary>
+    /// Encapsultes all the data needed for actions like attacking, moving, bounds..etc
+    /// </summary>
+    private struct ActionData {
+        public bool OverPlayer, BombDropInitiated, RecalculateBounds;
+        public float TimeToFindNewSpeed;
     }
 }

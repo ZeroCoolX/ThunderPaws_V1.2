@@ -133,7 +133,7 @@ MonoBehaviour:
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 5
+  Health: 25
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
 --- !u!114 &114502721278329886
