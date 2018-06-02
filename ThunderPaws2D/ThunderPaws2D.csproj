@@ -270,9 +270,10 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\IntroScreenUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerSelectUI.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\BaddieLifeform.cs" />
-    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_FL1.cs" />
-    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_FL2.cs" />
-    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_FL3.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\FlyingBaddieLifeform.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL1.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL2.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL3.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL2.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Base\BaseLifeform.cs" />

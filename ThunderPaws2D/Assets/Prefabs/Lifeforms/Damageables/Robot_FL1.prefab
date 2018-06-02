@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212409509080490964}
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
-  - component: {fileID: 114309157922438426}
   - component: {fileID: 114972686550160120}
+  - component: {fileID: 114661757419876786}
   m_Layer: 14
   m_Name: Robot_FL1
   m_TagString: Baddie
@@ -98,25 +98,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5647583, y: 1.7366815}
   m_EdgeRadius: 0
---- !u!114 &114309157922438426
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1321417408384644}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbcc80f0790dc2148a99c26587d984e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
-    type: 2}
-  PayloadItemCount: 10
-  Health: 15
-  BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
-    type: 2}
-  PartOfHorde: 0
-  IsHorde2Hack: 0
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -138,6 +119,25 @@ MonoBehaviour:
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+--- !u!114 &114661757419876786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1321417408384644}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
+    type: 2}
+  PayloadItemCount: 10
+  Health: 1
+  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+    type: 2}
+  PartOfHorde: 0
+  IsHorde2Hack: 0
 --- !u!114 &114972686550160120
 MonoBehaviour:
   m_ObjectHideFlags: 1

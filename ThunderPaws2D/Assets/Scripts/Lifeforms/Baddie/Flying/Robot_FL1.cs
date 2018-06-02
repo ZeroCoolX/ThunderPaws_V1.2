@@ -3,26 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class Robot_FL1 : BaddieLifeform {
-
-    /// <summary>
-    /// The lowest this baddie can fly
-    /// </summary>
-    private float _minY;
-    /// <summary>
-    /// The highest this baddie can fly
-    /// </summary>
-    private float _maxY;
-    /// <summary>
-    /// How fast can the baddie move
-    /// </summary>
-    private float _moveSpeed = 2f;
-
-    /// <summary>
-    /// Only needed for the Math.SmoothDamp function
-    /// </summary>
-    private float _velocityXSmoothing;
-    private float _velocityYSmoothing;
+public class Robot_FL1 : FlyingBaddieLifeform {
     /// <summary>
     /// Need a reference to how close in the x direction we're trying to get
     /// </summary>
@@ -39,13 +20,13 @@ public class Robot_FL1 : BaddieLifeform {
     private float _heightAbovePlayer;
 
     private bool moveToNewY = false;
-    private float targetY;
+    //private float targetY;
 
     private bool RecalculateBounds = false;
 
     private float _timeToFindNewSpeed;
 
-    public bool IsHorde2Hack = false;
+    //public bool IsHorde2Hack = false;
 
     /// <summary>
     /// Find the player and begin tracking
@@ -54,30 +35,13 @@ public class Robot_FL1 : BaddieLifeform {
         base.Start();
 
         CalculateBounds();
-        targetY = ChooseRandomHeight();
-    }
 
-    private void CalculateBounds() {
-        // print("min = " + _minY + " max = " + _maxY + " for baddie : " + gameObject.name);
-        if (IsHorde2Hack) {
-            _minY = -85.89f;
-            _maxY = -77.9f;
-        }else {
-            _minY = Target.position.y + 2f;
-            _maxY = _minY + 6f;
-        }
-    }
+        FlyingPositionData.MoveSpeed = 2f;
 
-    private void MaxBoundsCheck() {
-        if (transform.position.y >= _maxY) {
-            //print("Send it to the min");
-            targetY = -1;
-        } else if (transform.position.y <= _minY) {
-            //print("Send it to the max");
-            targetY = 1;
-        }else if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
-            targetY = 1;
-        }
+        // TODO: this is bad - half the time TargetY is treated like an actual
+        // coordinate point in space, and the other half its treated strictly 
+        // as a -1 or 1 vertical direction indicator
+        FlyingPositionData.TargetYDirection = ChooseRandomHeight();
     }
 
     /// <summary>
@@ -88,7 +52,9 @@ public class Robot_FL1 : BaddieLifeform {
     private void Update() {
         base.Update();
 
-        CheckTargetsExist();
+        if (!CheckTargetsExist()) {
+            return;
+        }
 
         // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
         if (RecalculateBounds) {
@@ -112,16 +78,6 @@ public class Robot_FL1 : BaddieLifeform {
         }
     }
 
-    /// <summary>
-    /// Choose a random height between 1 unit above the player, and the highest we can go without going out of the viewport
-    /// </summary>
-    /// <returns></returns>
-    private float ChooseRandomHeight() {
-        var randY = Random.Range(_minY, _maxY);
-        //print("Random Y = " + randY);
-        return randY;
-    }
-
     private bool OverPlayer() {
         _overPlayer = Mathf.Abs(transform.position.x - Target.position.x) < _overThreshold;
         if (_overPlayer && !_bombDropInitiated) {
@@ -134,22 +90,6 @@ public class Robot_FL1 : BaddieLifeform {
 
     private void ResetBombDrop() {
         _bombDropInitiated = false;
-    }
-
-    private void CalculateVerticalThreshold() {
-        if (transform.position.y >= _maxY) {
-            print("Send it to the min");
-            targetY = -1;
-        } else if (transform.position.y <= _minY) {
-            print("Send it to the max");
-            targetY = 1;
-        } else {
-            if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
-                targetY = 1;
-            }else {
-                targetY = Mathf.Sign(ChooseRandomHeight());
-            }
-        }
     }
 
     private void DropBomb() {
@@ -176,13 +116,13 @@ public class Robot_FL1 : BaddieLifeform {
     /// Calculate the velocity
     /// </summary>
     private void CalculateVelocity() {
-        float targetVelocityX = _moveSpeed * (FacingRight ? 1 : -1);
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref _velocityXSmoothing, 0.2f);
+        float targetVelocityX = FlyingPositionData.MoveSpeed * (FacingRight ? 1 : -1);
+        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
         if (Time.time > _timeToFindNewSpeed) {
             // random time between 1 and 3 seconds!
             _timeToFindNewSpeed = Time.time + Random.Range(1f, 4f);
             CalculateVerticalThreshold();
         }
-        Velocity.y = Mathf.SmoothDamp(Velocity.y, targetY * _moveSpeed, ref _velocityYSmoothing, 1f);
+        Velocity.y = Mathf.SmoothDamp(Velocity.y, FlyingPositionData.TargetYDirection * FlyingPositionData.MoveSpeed, ref FlyingPositionData.VelocityYSmoothing, 1f);
     }
 }

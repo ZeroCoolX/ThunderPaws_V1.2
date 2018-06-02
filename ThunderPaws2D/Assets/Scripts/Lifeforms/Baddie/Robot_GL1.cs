@@ -111,7 +111,9 @@ public class Robot_GL1 : BaddieLifeform {
     public void Update() {
         base.Update();
 
-        CheckTargetsExist();
+        if (!CheckTargetsExist()) {
+            return;
+        }
 
         if (LedgeBound) {
             // Check if we can shoot at the target

@@ -22,8 +22,8 @@ GameObject:
   - component: {fileID: 212409509080490964}
   - component: {fileID: 61970528034595748}
   - component: {fileID: 114439827158824670}
-  - component: {fileID: 114440697300906780}
   - component: {fileID: 114502721278329886}
+  - component: {fileID: 114492731381480572}
   m_Layer: 14
   m_Name: Robot_FL3
   m_TagString: Baddie
@@ -119,7 +119,7 @@ MonoBehaviour:
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
---- !u!114 &114440697300906780
+--- !u!114 &114492731381480572
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -127,17 +127,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1321417408384644}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b22287e0bc7a3694fa848a361212b5c4, type: 3}
+  m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PartOfHorde: 0
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  ApplyBaseMovement: 0
-  _coinsInPayload: 10
-  Health: 25
-  Gravity: 0
-  Velocity: {x: 0, y: 0, z: 0}
+  PayloadItemCount: 10
+  Health: 5
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
 --- !u!114 &114502721278329886

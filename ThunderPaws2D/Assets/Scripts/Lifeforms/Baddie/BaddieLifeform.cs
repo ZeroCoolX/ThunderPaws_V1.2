@@ -99,10 +99,10 @@ public class BaddieLifeform : DamageableLifeform {
     /// Assign specific target if necessary :
     ///     Previous target died but there is another player in the workd
     /// </summary>
-    protected void CheckTargetsExist() {
+    protected bool CheckTargetsExist() {
         if (Targets == null || Targets.Where(t => t != null).ToList().Count == 0) {
             FindPlayers();
-            return;
+            return false;
         } else if (Targets.Contains(null)) {
             Targets = Targets.Where(target => target != null).ToList();
             // The max spawn time is 10 seconds so in 10 seconds search again for a player
@@ -112,6 +112,7 @@ public class BaddieLifeform : DamageableLifeform {
         if (Target == null) {
             ChooseTarget();
         }
+        return true;
     }
 
     /// <summary>

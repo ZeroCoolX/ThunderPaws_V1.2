@@ -92,7 +92,9 @@ public class Robot_FL2 : BaddieLifeform {
     private void Update() {
         base.Update();
 
-        CheckTargetsExist();
+        if (!CheckTargetsExist()) {
+            return;
+        }
 
         MaxBoundsCheck();
 
@@ -157,15 +159,10 @@ public class Robot_FL2 : BaddieLifeform {
 
     private void MaxBoundsCheck() {
         if (transform.position.y >= _maxY) {
-            MaxBoundsOverride = true;
-          //  print("Send it to the min");
             targetY = -1;
         } else if (transform.position.y <= _minY) {
-            MaxBoundsOverride = true;
-           // print("Send it to the max");
             targetY = 1;
         } else if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
-            MaxBoundsOverride = true;
             targetY = 1;
         }
     }
