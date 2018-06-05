@@ -18,13 +18,13 @@ public class FlyingBaddieLifeform : BaddieLifeform {
     /// Determines the max and min Y values the baddie can go
     /// and stores them in the FlyingPositionData struct
     /// </summary>
-    protected void CalculateBounds() {
+    protected void CalculateBounds(float minAdd, float maxAdd) {
         if (IsHorde2Hack) {
             FlyingPositionData.MinY = -85.89f;
             FlyingPositionData.MaxY = -77.9f;
         } else {
-            FlyingPositionData.MinY = Target.position.y + 2f;
-            FlyingPositionData.MaxY = FlyingPositionData.MinY + 6f;
+            FlyingPositionData.MinY = Target.position.y + minAdd;//2f;
+            FlyingPositionData.MaxY = Target.position.y + maxAdd;// 6f;
         }
     }
 
@@ -34,10 +34,8 @@ public class FlyingBaddieLifeform : BaddieLifeform {
     /// </summary>
     protected void MaxBoundsCheck() {
         if (transform.position.y >= FlyingPositionData.MaxY) {
-            //print("Send it to the min");
             FlyingPositionData.TargetYDirection = -1;
         } else if (transform.position.y <= FlyingPositionData.MinY) {
-            //print("Send it to the max");
             FlyingPositionData.TargetYDirection = 1;
         } else if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {
             FlyingPositionData.TargetYDirection = 1;
@@ -60,10 +58,10 @@ public class FlyingBaddieLifeform : BaddieLifeform {
     // doesn't make any sense if TargetYDirection should be 1 or -1....
     protected void CalculateVerticalThreshold() {
         if (transform.position.y >= FlyingPositionData.MaxY) {
-            print("Send it to the min");
+            //print("Send it to the min");
             FlyingPositionData.TargetYDirection = -1;
         } else if (transform.position.y <= FlyingPositionData.MinY) {
-            print("Send it to the max");
+            //print("Send it to the max");
             FlyingPositionData.TargetYDirection = 1;
         } else {
             if (Mathf.Sign(transform.position.y - Target.position.y) < 0) {

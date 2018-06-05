@@ -83,7 +83,12 @@ public class Player : PlayerLifeform {
     void Start() {
 
         if(PlayerNumber == 0 || PlayerNumber > 2) {
-            throw new Exception("Somehow the player was either not set or too high with PlayerNumber of " + PlayerNumber);
+            PlayerNumber = 1;
+            //throw new Exception("Somehow the player was either not set or too high with PlayerNumber of " + PlayerNumber);
+        }
+
+        if (string.IsNullOrEmpty(JoystickId)) {
+            JoystickId = "J1-";
         }
 
         //Set all physics values  - originally 3 and 1

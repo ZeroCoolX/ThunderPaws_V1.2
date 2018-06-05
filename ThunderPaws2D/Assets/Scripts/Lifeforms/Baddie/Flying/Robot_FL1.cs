@@ -24,7 +24,7 @@ public class Robot_FL1 : FlyingBaddieLifeform {
     protected new void Start() {
         base.Start();
 
-        CalculateBounds();
+        CalculateBounds(2f, 6f);
 
         FlyingPositionData.MoveSpeed = 2f;
 
