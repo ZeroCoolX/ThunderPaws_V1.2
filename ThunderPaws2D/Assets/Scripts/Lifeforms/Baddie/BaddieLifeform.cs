@@ -8,6 +8,11 @@ using UnityEngine;
 /// </summary>
 public class BaddieLifeform : DamageableLifeform {
     /// <summary>
+    /// If needed extendors can store an animator
+    /// </summary>
+    public Animator Animator;
+    
+    /// <summary>
     /// Set on the prefab in Unity - Cannot be within struct
     /// </summary>
     public Transform BulletPrefab;

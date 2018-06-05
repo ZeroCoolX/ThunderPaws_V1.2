@@ -274,6 +274,7 @@
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL2.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL3.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\GroundBaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL2.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Base\BaseLifeform.cs" />
