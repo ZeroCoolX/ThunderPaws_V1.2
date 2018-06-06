@@ -26,17 +26,11 @@ public class GroundBaddieLifeform : BaddieLifeform {
     /// </summary>
     protected float VisionRayLength;
 
-    protected void CheckForHorizontalEquality(float fireDelay) {
-        CheckForHorizontalEquality(fireDelay, "", false);
-    }
-
-    protected void CheckForHorizontalEquality(float fireDelay, bool collisionFunc) {
-        CheckForHorizontalEquality(fireDelay, "", false, collisionFunc);
-    }
-
-    protected void CheckForHorizontalEquality(float fireDelay, string fireAnim, bool animBool) {
-        CheckForHorizontalEquality(fireDelay, fireAnim, animBool, true);
-    }
+    /// <summary>
+    /// Name of the attack animation we should play for an attack.
+    /// Its optional as not every baddie has this at the moment
+    /// </summary>
+    protected string OptionalAttackAnimation;
 
     /// <summary>
     /// Determine if we are on the same horizontal plane as the Target.
@@ -45,8 +39,8 @@ public class GroundBaddieLifeform : BaddieLifeform {
     /// is above them for example
     /// </summary>
     /// <param name="fireDelay"></param>
-    /// <param name="optionalAnim"></param>
-    protected void CheckForHorizontalEquality(float fireDelay, string optionalAnim, bool animBool, bool collisionFunc) {
+    /// <param name="collisionFunc"></param>
+    protected void CheckForHorizontalEquality(float fireDelay, bool collisionFunc = true) {
         // Specify the Player layer as the target (8)
         var targetLayer = 1 << 8;
         // Just useful for debugging
@@ -59,11 +53,12 @@ public class GroundBaddieLifeform : BaddieLifeform {
             // Shoot a projectile towards the target in 1 second
             GroundPositionData.TimeSinceLastFire = Time.time + GroundPositionData.ShotDelay;
             Velocity.x = 0f;
-            if (!string.IsNullOrEmpty(optionalAnim)) {
+            if (Animator != null) {
                 try {
-                    Animator.SetBool(optionalAnim, animBool);
+                    // Play the attack animation
+                    Animator.SetBool(OptionalAttackAnimation, true);
                 }catch(Exception e) {
-                    print("Failed assigning animation value to true : " + optionalAnim);
+                    print("Failed assigning animation value to true : " + OptionalAttackAnimation);
                 }
             }
             Invoke("Fire", fireDelay);
@@ -85,12 +80,13 @@ public class GroundBaddieLifeform : BaddieLifeform {
         projectile.MoveSpeed = 15;
         projectile.MaxLifetime = 10;
         projectile.Fire((FacingRight ? Vector2.right : Vector2.left), Vector2.up);
-        try {
-            if(Animator != null) {
-                Animator.SetBool("ChargeAndFire", false);
+        if (Animator != null) {
+            try {
+                // After the fire has occurred stop the attack animation
+                Animator.SetBool(OptionalAttackAnimation, false);
+            } catch (Exception e) {
+                print("Failed assigning animation value to false : " + OptionalAttackAnimation);
             }
-        } catch(Exception e) {
-
         }
     }
 
