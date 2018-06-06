@@ -40,16 +40,12 @@ public class GroundBaddieLifeform : BaddieLifeform {
     /// </summary>
     /// <param name="fireDelay"></param>
     /// <param name="collisionFunc"></param>
-    protected void CheckForHorizontalEquality(float fireDelay, bool collisionFunc = true) {
-        // Specify the Player layer as the target (8)
-        var targetLayer = 1 << 8;
-        // Just useful for debugging
-        Debug.DrawRay(ProjectileData.FirePoint.position, (FacingRight ? Vector2.right : Vector2.left) * VisionRayLength, Color.red);
-        // Fire raycast for collision check
-        RaycastHit2D horizontalCheck = Physics2D.Raycast(ProjectileData.FirePoint.position, FacingRight ? Vector2.right : Vector2.left, VisionRayLength, targetLayer);
-
-        if (horizontalCheck.collider != null && collisionFunc) {
+    protected void HandleCollision() {
+        if (Time.time > GroundPositionData.TimeSinceLastFire) {
             print("Hit!");
+            // Update the amount of time stopped to ensure we wait if necessary
+            // Not all baddies use this - but setting it won't effect those who don't care
+            GroundPositionData.TimeStopped = Time.time + GroundPositionData.MaxStopSeconds;
             // Shoot a projectile towards the target in 1 second
             GroundPositionData.TimeSinceLastFire = Time.time + GroundPositionData.ShotDelay;
             Velocity.x = 0f;
@@ -61,8 +57,21 @@ public class GroundBaddieLifeform : BaddieLifeform {
                     print("Failed assigning animation value to true : " + OptionalAttackAnimation);
                 }
             }
-            Invoke("Fire", fireDelay);
+            Invoke("Fire", GroundPositionData.FireDelay);
         }
+    }
+
+    /// <summary>
+    /// Fire a raycast forward
+    /// </summary>
+    /// <returns></returns>
+    protected RaycastHit2D FireRaycast() {
+        // Specify the Player layer as the target (8)
+        var targetLayer = 1 << 8;
+        // Just useful for debugging
+        Debug.DrawRay(ProjectileData.FirePoint.position, (FacingRight ? Vector2.right : Vector2.left) * VisionRayLength, Color.red);
+        // Fire raycast for collision check
+        return Physics2D.Raycast(ProjectileData.FirePoint.position, FacingRight ? Vector2.right : Vector2.left, VisionRayLength, targetLayer);
     }
 
     /// <summary>
@@ -95,17 +104,33 @@ public class GroundBaddieLifeform : BaddieLifeform {
     /// </summary>
     protected struct GroundPositionModel {
         /// <summary>
-        /// Random number of value to this means we should stop breifly
+        /// How long we should take between shots
         /// </summary>
         public float ShotDelay;
+        /// <summary>
+        /// How long it takess to fire a shot from collision contact
+        /// </summary>
+        public float FireDelay;
         /// <summary>
         /// Random number of value to this means we should fire
         /// </summary>
         public float TimeSinceLastFire;
         /// <summary>
+        /// Keeps track of how long a baddie has been stopped
+        /// </summary>
+        public float TimeStopped;
+        /// <summary>
+        /// Max number of seconds the baddie is allowed to be stopped
+        /// </summary>
+        public float MaxStopSeconds;
+        /// <summary>
         /// How fast the baddie moves
         /// </summary>
         public int MoveSpeed;
+        /// <summary>
+        /// Stores the direction we are moving
+        /// </summary>
+        public Vector2 MoveDirection;
         /// <summary>
         /// Needed for Mathf.SmoothDamp function when flying
         /// </summary>

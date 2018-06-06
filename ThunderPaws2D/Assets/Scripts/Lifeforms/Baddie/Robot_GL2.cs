@@ -4,13 +4,13 @@ using System.Linq;
 using UnityEngine;
 
 public class Robot_GL2 : GroundBaddieLifeform {
+    // These are the baddie specific values for properties that live on the parents
     // This could be extracted out into configs but I don't mind them living here
     // They're just used for initializing the property values that live on the 
     // parent classes
     private readonly float _gravity = -25.08f;
     private readonly float _health = 15f;
     private readonly float _shotDelay = 2f;
-    private readonly int _moveSpeed = 0;
     private readonly float _visionLength = 20f;
     private readonly string _attackAnimation = "ChargeAndFire";
 
@@ -19,7 +19,7 @@ public class Robot_GL2 : GroundBaddieLifeform {
         
         // Set baddie specific data
         GroundPositionData.ShotDelay = _shotDelay;
-        GroundPositionData.MoveSpeed = _moveSpeed;
+        GroundPositionData.FireDelay = 0.5f;
         VisionRayLength = _visionLength;
         Gravity = _gravity;
         Health = _health;
@@ -49,6 +49,9 @@ public class Robot_GL2 : GroundBaddieLifeform {
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - Target.position.x;
         // Check if we can shoot at the target
-        CheckForHorizontalEquality(0.5f, Time.time > GroundPositionData.TimeSinceLastFire);
+        var hCollider = FireRaycast();
+        if (hCollider.collider != null) {
+            HandleCollision();
+        }
     }
 }
