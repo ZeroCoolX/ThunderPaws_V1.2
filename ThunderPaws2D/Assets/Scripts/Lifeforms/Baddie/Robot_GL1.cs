@@ -63,34 +63,6 @@ public class Robot_GL1 : BaddieLifeform {
     /// </summary>
     public bool TurnAround = false;
 
-    /// <summary>
-    /// Who the baddie is focused on attacking
-    /// Turned into array for co-op
-    /// </summary>
-    //private List<Transform> _targets = new List<Transform>();
-
-   // private Transform _target;
-
-    /// <summary>
-    /// Prefab for what this baddie shoots
-    /// </summary>
-    //public Transform BulletPrefab;
-
-    /// <summary>
-    /// Reference to where we should spawn the bullet from
-    /// </summary>
-    //private Transform _firePoint;
-
-    /// <summary>
-    /// Indicates which direction we're facing
-    /// </summary>
-    //private bool _facingRight;
-
-    /// <summary>
-    /// Indicates what the bullet should hit
-    /// </summary>
-    //private LayerMask _whatToHit;
-
     private bool _turnAround = true;
     private float _alertTimeThreshold = -1f;
     private Vector2 _moveDirection = Vector2.left;
