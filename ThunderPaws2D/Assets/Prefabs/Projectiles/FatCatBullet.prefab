@@ -23,9 +23,8 @@ GameObject:
   - component: {fileID: 58570333761555686}
   - component: {fileID: 114933265235229270}
   - component: {fileID: 114994144921853518}
-  - component: {fileID: 95682698491387276}
   m_Layer: 11
-  m_Name: GaussBullet
+  m_Name: FatCatBullet
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,26 +55,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3, y: -0.031937122}
+  m_Offset: {x: 0.20564449, y: -0.031937122}
   serializedVersion: 2
-  m_Radius: 0.15
---- !u!95 &95682698491387276
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1447213198769282}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fadd2f304fb036e47b9958e582aa4776, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
+  m_Radius: 0.115134835
 --- !u!114 &114933265235229270
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -89,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
     type: 2}
-  MoveSpeed: 35
+  MoveSpeed: 30
   Damage: 0
   MaxLifetime: 0.5
   WhatToHit:
@@ -140,12 +122,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a4f55d9d336783d4b85720a01c0e50f0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d046db49b362467409ee0203c14cbd4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

@@ -23,9 +23,8 @@ GameObject:
   - component: {fileID: 58570333761555686}
   - component: {fileID: 114933265235229270}
   - component: {fileID: 114994144921853518}
-  - component: {fileID: 95682698491387276}
   m_Layer: 11
-  m_Name: GaussBullet
+  m_Name: GaussUltBullet
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,23 +58,6 @@ CircleCollider2D:
   m_Offset: {x: 0.3, y: -0.031937122}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!95 &95682698491387276
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1447213198769282}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fadd2f304fb036e47b9958e582aa4776, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114933265235229270
 MonoBehaviour:
   m_ObjectHideFlags: 1
