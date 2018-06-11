@@ -43,14 +43,14 @@ public class GaussRifle : AbstractWeapon {
     /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
-        var rightTrigger = Input.GetAxis(GameConstants.Input_RTrigger);
+        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
-        if (Input.GetButtonUp(GameConstants.Input_Fire) || rightTrigger == 0) {
+        if (Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger == 0) {
             _fireButtonPressed = false;
             _holdingFireDown = false;
         }
         // Indicates the user is trying to fire
-        if ((Input.GetButton(GameConstants.Input_Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if ((Input.GetKey(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             if (!_fireButtonPressed) {
                 CalculateShot();
                 _fireButtonPressed = true;
@@ -94,7 +94,7 @@ public class GaussRifle : AbstractWeapon {
             }
 
             var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8))) {
+            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                 directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (yAxis > 0.8) {
                 directionInput = Vector2.up;
@@ -109,6 +109,7 @@ public class GaussRifle : AbstractWeapon {
             if (HasAmmo) {
                 Ammo -= 1;
             }
+            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
         }
     }
 
@@ -121,15 +122,32 @@ public class GaussRifle : AbstractWeapon {
     protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
-        var verticalUltOffset = 0.25f;
+        var yUltOffset = 0.25f;
+        var xUltOffset = 0.25f;
         for (var i = 0; i < 3; ++i) {
             var firePosition = FirePoint.position;
-            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? verticalUltOffset : verticalUltOffset * -1) : 0);
-            //firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
+
+            // This calculation is necessary so the bullets don't stack on top of eachother
+            var yAxis = Player.DirectionalInput.y;
+            print("yAxis = " + yAxis);
+            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
+                yUltOffset = 0.125f;
+                // There is one single special case - when the player is facing right, and looking at 45 degrees.
+                // Coorindates must then be +, - instead of all + or all -
+                xUltOffset = 0.125f * (Player.FacingRight ? -1 : 1);
+            } else if (yAxis > 0.8) {
+                yUltOffset = 0f;
+                xUltOffset = 0.25f;
+            } else {
+                yUltOffset = 0.25f;
+                xUltOffset = 0f;
+            }
+
+            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
+            firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-            //TODO will have to be changed when diagonal directional shooting comes into play - take out when we pass in the rotation of the bullet
             if (Mathf.Sign(shotPos.x) < 0) {
                 Vector3 theScale = projectile.transform.localScale;
                 theScale.x *= -1;
