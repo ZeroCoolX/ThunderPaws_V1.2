@@ -429,7 +429,12 @@ public class Player : PlayerLifeform {
     /// <summary>
     /// Set all weapon states to default mode.
     /// </summary>
-    private void DeactivateUltimate() {
+    public void DeactivateUltimate() {
+        // Since we know we're forcibly calling deactive - make sure the UI updates correctly
+        PlayerStats.CurrentUltimate = 0;
+        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+
+        // Stop the ultimate
         PlayerStats.UltEnabled = false;
         foreach (var weapon in _ownedWeapons) {
             weapon.GetComponent<AbstractWeapon>().UltMode = false;

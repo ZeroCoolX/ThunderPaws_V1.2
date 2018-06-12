@@ -109,14 +109,16 @@ MonoBehaviour:
   Ammo: 25
   HasAmmo: 1
   BulletPrefab: {fileID: 0}
-  BulletSpeed: 0
-  MaxLifetime: 0.5
+  BulletSpeed: 15
+  MaxLifetime: 1
   WhatToHit:
     serializedVersion: 2
     m_Bits: 16384
   BlastPrefab: {fileID: 4823011963870936, guid: 1a0bdb0d46962584596af2e53d65bb0e,
     type: 2}
   UltBlastPrefab: {fileID: 4823011963870936, guid: 012ec4027cc4678468156555cb1e4a4f,
+    type: 2}
+  UltBulletPrefab: {fileID: 4659474290433748, guid: 54979856cb5501d458780234e9533d9b,
     type: 2}
   ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
     type: 2}

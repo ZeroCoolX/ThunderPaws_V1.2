@@ -7,19 +7,40 @@ using UnityEngine;
 /// This class hanadles projectile movement for "bullet" based projectiles.
 /// </summary>
 public class BulletProjectile : AbstractProjectile {
-
+    public float OptionalGravity = 0f;
+    private bool _applyGravity = false;
     private void Start() {
         //Call the base start
         base.Start();
+        if(OptionalGravity != 0f) {
+            // in a random time between 0.3 and 1 seconds apply gravity
+            //Invoke("BeginGravity", (UnityEngine.Random.Range(0.3f, 1f)));
+        }
+    }
+
+    private void BeginGravity() {
+        _applyGravity = true;
     }
 
     private void Update() {
+        //if (OptionalGravity != 0f) {
+        //    ApplyGravity();
+        //}
         Move();
     }
 
+    private void ApplyGravity() {
+        print("Applying gravity! - " + OptionalGravity);
+        TargetDirection.y += OptionalGravity * Time.deltaTime;
+    }
+
     protected override void Move() {
-        //Move as a constant speed
-        transform.Translate(TargetDirection.normalized * MoveSpeed * Time.deltaTime, Space.World);
+        //if (OptionalGravity != 0f) {
+        //    var newVector = TargetDirection.normalized;
+        //    transform.Translate(new Vector3(newVector.x, newVector.y, newVector.z) * MoveSpeed * Time.deltaTime, Space.World);
+        //} else {
+            transform.Translate(TargetDirection.normalized * MoveSpeed * Time.deltaTime, Space.World);
+        //}
     }
 
     /// <summary>

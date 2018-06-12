@@ -27,6 +27,11 @@ public class Shotgun : AbstractWeapon {
     public Transform UltBlastPrefab;
 
     /// <summary>
+    /// Explosive hairballs!
+    /// </summary>
+    public Transform UltBulletPrefab;
+
+    /// <summary>
     /// Sprite animatio to play when the bullet impacts
     /// </summary>
     public Transform ImpactEffect;
@@ -159,6 +164,26 @@ public class Shotgun : AbstractWeapon {
 
                 _debugBlastRotations[i] = rotatedDirection;
                 ++i;
+
+                if (UltMode) {
+                    Transform bulletInstance = Instantiate(UltBulletPrefab, firePointPosition, Quaternion.identity) as Transform;
+                    //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+                    var projectile = bulletInstance.GetComponent<BulletProjectile>();
+                    //if (Mathf.Sign(shot.x) < 0) {
+                    //    Vector3 theScale = projectile.transform.localScale;
+                    //    theScale.x *= -1;
+                    //    projectile.transform.localScale = theScale;
+                    //}
+
+                    //Set layermask of parent (either player or baddie)
+                    projectile.SetLayerMask(WhatToHit);
+                    projectile.gameObject.layer = LayerMask.NameToLayer(GameConstants.Layer_PlayerProjectile);
+                    projectile.Damage = Damage;
+                    projectile.MoveSpeed = (UnityEngine.Random.Range(12, 20));
+                    projectile.MaxLifetime = MaxLifetime;
+                    projectile.OptionalGravity = -25.08f;
+                    projectile.Fire(rotatedDirection, rotatedDirection.normalized);
+                }
             }
 
             foreach (var collider in collisionMap) {

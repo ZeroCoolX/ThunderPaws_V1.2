@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class FatCat : AbstractWeapon {
     /// <summary>
+    /// This is another case where the weapon needs special ult bullets
+    /// </summary>
+    public Transform UltBulletPrefab;
+    /// <summary>
     /// Indicates the ultimate animations have finished and we can shoot again.
     /// This inhibits users from spamming the fire key during the ult animation
     /// </summary>
@@ -20,6 +24,8 @@ public class FatCat : AbstractWeapon {
     private void Update() {
         if (UltMode) {
             // Carpet Bomb
+            MakeCarpetBomb();
+            Player.DeactivateUltimate();
         } else {
             HandleShootingInput();
         }
@@ -27,7 +33,6 @@ public class FatCat : AbstractWeapon {
             AmmoCheck();
         }
     }
-
 
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
@@ -37,6 +42,34 @@ public class FatCat : AbstractWeapon {
 
     private void AllowUltShooting() {
         _allowshooting = true;
+    }
+
+    private void MakeCarpetBomb() {
+        Vector2 topRightCorner = new Vector2(1, 1);
+        Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
+        float width = edgeVector.x * 2;
+        var interval = width / 15f;
+        var xSpacing = 0f;
+        var ySpacing = 0f;
+        for (var i = 0; i < 20; ++i) {
+            var pos = new Vector2(edgeVector.x - xSpacing, edgeVector.y + ySpacing);
+            CreateBomb(pos);
+            xSpacing += interval;
+            ySpacing += 2;
+        }
+    }
+
+    private void CreateBomb(Vector2 position) {
+        Transform bulletInstance = Instantiate(UltBulletPrefab, position, Quaternion.identity) as Transform;
+        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+        AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
+        //Set layermask of parent (either player or baddie)
+        projectile.SetLayerMask(WhatToHit);
+        projectile.gameObject.layer = LayerMask.NameToLayer(GameConstants.Layer_PlayerProjectile);
+        projectile.Damage = Damage;
+        projectile.MoveSpeed = BulletSpeed;
+        projectile.MaxLifetime = 10f;
+        projectile.Fire(Vector2.down, Vector2.up);
     }
 
     /// <summary>

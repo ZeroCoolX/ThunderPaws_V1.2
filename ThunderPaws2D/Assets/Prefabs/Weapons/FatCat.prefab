@@ -111,10 +111,12 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4659474290433748, guid: f5573197ad356784694b99152b365908,
     type: 2}
   BulletSpeed: 15
-  MaxLifetime: 1
+  MaxLifetime: 5
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
+  UltBulletPrefab: {fileID: 4659474290433748, guid: 9c235747e90dc2d4da708ffac8ca3a5d,
+    type: 2}
   _allowshooting: 1
 --- !u!212 &212479537771549468
 SpriteRenderer:
