@@ -10,6 +10,11 @@ public class GaussRifle : AbstractWeapon {
     /// </summary>
     public Transform UltBulletPrefab;
     /// <summary>
+    /// Indicates the ultimate animations have finished and we can shoot again.
+    /// This inhibits users from spamming the fire key during the ult animation
+    /// </summary>
+    public bool _allowshooting = true;
+    /// <summary>
     /// Indicates the player is holding down the fire button
     /// </summary>
     private bool _holdingFireDown = false;
@@ -62,6 +67,10 @@ public class GaussRifle : AbstractWeapon {
         WeaponAnimator.SetBool("FireUlt", false);
     }
 
+    private void AllowUltShooting() {
+        _allowshooting = true;
+    }
+
     /// <summary>
     /// Gauss Ultimate requires a special shooting mode.
     /// Instead of continuously shooting aws fast as the use pulls the trigger it 
@@ -70,15 +79,20 @@ public class GaussRifle : AbstractWeapon {
     private void HandleUltShooting() {
         // Get the player fire input
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
-        // This checks if the player released the trigger in between shots - because the shotgun is not full auto
+        // This checks if the player released the trigger in between shots - because this ultimate is not full auto
         if (!_triggerLetGo) {
             if (rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
                 _triggerLetGo = true;
             }
         }
 
-        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold) && _allowshooting) {
             _triggerLetGo = false;
+            _allowshooting = false;
+
+            // Allow the user's fire pressing to be registered in 0.35seconds
+            Invoke("AllowUltShooting", 0.35f);
+
             ApplyRecoil();
             // Also indicate that we should fire (special to the ult gauss)
             WeaponAnimator.SetBool("FireUlt", true);
@@ -90,13 +104,13 @@ public class GaussRifle : AbstractWeapon {
             AmmoCheck();
         }
         WeaponAnimator.SetBool("UltModeActive", UltMode);
-        if (UltMode && Damage < 100) {
-            Damage = 100;
-        } else {
-            if (Damage != 25) {
-                Damage = 25;
-            }
-        }
+        //if (UltMode && Damage < 100) {
+        //    Damage = 100;
+        //} else {
+        //    if (Damage != 25) {
+        //        Damage = 25;
+        //    }
+        //}
     }
 
     /// <summary>
@@ -136,6 +150,7 @@ public class GaussRifle : AbstractWeapon {
             } else {
                 directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
             }
+
             //Wait for a quarter of a second for the animation to play then fire!
             yield return new WaitForSeconds(0.25f);
             GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
@@ -257,9 +272,6 @@ public class GaussRifle : AbstractWeapon {
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
             Transform bulletInstance = Instantiate(ultMode ? UltBulletPrefab :  BulletPrefab, firePosition, projRotation) as Transform;
-            if (ultMode) {
-                bulletInstance.GetComponent<Animator>().SetBool("UltMode", true);
-            }
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {
