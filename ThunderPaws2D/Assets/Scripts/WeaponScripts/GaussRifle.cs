@@ -6,6 +6,10 @@ using UnityEngine;
 // TODO: this should astoundingly be refactored because its almost 100% copied from the FuzzBuster script
 public class GaussRifle : AbstractWeapon {
     /// <summary>
+    /// Some weapons have specific prefabs for their ultimate bullets
+    /// </summary>
+    public Transform UltBulletPrefab;
+    /// <summary>
     /// Indicates the player is holding down the fire button
     /// </summary>
     private bool _holdingFireDown = false;
@@ -23,8 +27,20 @@ public class GaussRifle : AbstractWeapon {
     /// </summary>
     private float _initialFirePressTime;
 
+    /// <summary>
+    /// Necessaary indicator for the ultMode.
+    /// Indicates the trigger was let go telling the
+    /// system we can shoot again
+    /// </summary>
+    private bool _triggerLetGo = true;
+
+
     private void Update() {
-        HandleShootingInput();
+        if (UltMode) {
+            HandleUltShooting();
+        }else {
+            HandleShootingInput();
+        }
         if (HasAmmo) {
             AmmoCheck();
         }
@@ -35,6 +51,101 @@ public class GaussRifle : AbstractWeapon {
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
+    }
+
+    /// <summary>
+    /// Resets the animator
+    /// </summary>
+    /// <returns></returns>
+    protected IEnumerator ResetUltFire() {
+        yield return new WaitForSeconds(0.5f);
+        WeaponAnimator.SetBool("FireUlt", false);
+    }
+
+    /// <summary>
+    /// Gauss Ultimate requires a special shooting mode.
+    /// Instead of continuously shooting aws fast as the use pulls the trigger it 
+    /// it charges a shot and shoots it as soon as they let go
+    /// </summary>
+    private void HandleUltShooting() {
+        // Get the player fire input
+        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
+        // This checks if the player released the trigger in between shots - because the shotgun is not full auto
+        if (!_triggerLetGo) {
+            if (rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
+                _triggerLetGo = true;
+            }
+        }
+
+        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+            _triggerLetGo = false;
+            ApplyRecoil();
+            // Also indicate that we should fire (special to the ult gauss)
+            WeaponAnimator.SetBool("FireUlt", true);
+            StartCoroutine(ResetUltFire());
+            StartCoroutine(CalculateUltShot());
+            //AudioManager.playSound(GameConstants.Audio_Shotgun);
+        }
+        if (HasAmmo) {
+            AmmoCheck();
+        }
+        WeaponAnimator.SetBool("UltModeActive", UltMode);
+        if (UltMode && Damage < 100) {
+            Damage = 100;
+        } else {
+            if (Damage != 25) {
+                Damage = 25;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Gauss Ultimate has a special different kind of bullet
+    /// that needs to be charged and then fired
+    /// </summary>
+    private IEnumerator CalculateUltShot() {
+        Vector2 directionInput = Player.DirectionalInput;
+
+        //Store bullet origin spawn popint (A)
+        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
+        //Collect the hit data - distance and direction from A -> B
+        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
+        //Generate bullet effect
+        if (Time.time >= TimeToSpawnEffect) {
+            //Bullet effect position data
+            Vector3 hitPosition;
+            Vector3 hitNormal;
+
+            //Precalculate so if we aren't shooting at anything at least the normal is correct
+            //Arbitrarily laarge number so the bullet trail flys off the camera
+            hitPosition = directionInput * 50f;
+            if (shot.collider != null) {
+                //If we most likely hit something store the normal so the particles make sense when they shoot out
+                hitNormal = shot.normal;
+                //hitPosition = shot.point;
+            } else {
+                //Rediculously huge so we can use it as a sanity check for the effect
+                hitNormal = new Vector3(999, 999, 999);
+            }
+
+            var yAxis = directionInput.y;
+            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
+                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
+            } else if (yAxis > 0.8) {
+                directionInput = Vector2.up;
+            } else {
+                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
+            }
+            //Wait for a quarter of a second for the animation to play then fire!
+            yield return new WaitForSeconds(0.25f);
+            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
+            GenerateCameraShake();
+            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
+            if (HasAmmo) {
+                Ammo -= 1;
+            }
+            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
+        }
     }
 
     /// <summary>
@@ -124,7 +235,7 @@ public class GaussRifle : AbstractWeapon {
         var projRotation = CompensateQuaternion(FirePoint.rotation);
         var yUltOffset = 0.25f;
         var xUltOffset = 0.25f;
-        for (var i = 0; i < 3; ++i) {
+        for (var i = 0; i < 1; ++i) {
             var firePosition = FirePoint.position;
 
             // This calculation is necessary so the bullets don't stack on top of eachother
@@ -145,7 +256,10 @@ public class GaussRifle : AbstractWeapon {
 
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
+            Transform bulletInstance = Instantiate(ultMode ? UltBulletPrefab :  BulletPrefab, firePosition, projRotation) as Transform;
+            if (ultMode) {
+                bulletInstance.GetComponent<Animator>().SetBool("UltMode", true);
+            }
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {

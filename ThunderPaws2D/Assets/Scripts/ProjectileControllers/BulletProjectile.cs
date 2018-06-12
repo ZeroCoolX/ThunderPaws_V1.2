@@ -48,12 +48,4 @@ public class BulletProjectile : AbstractProjectile {
         GenerateEffect();
         Destroy(gameObject);
     }
-
-    private void GenerateEffect() {
-        var clone = Instantiate(ImpactEffect, transform.position, transform.rotation);
-        clone.GetComponent<SpriteRenderer>().sortingOrder = 2;
-        clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
-        clone.GetComponent<Animator>().SetBool("Invoke", true);
-        GameMaster.Instance.AudioManager.playSound("SmallExplosion");
-    }
 }

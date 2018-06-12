@@ -115,6 +115,8 @@ MonoBehaviour:
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
+  UltBulletPrefab: {fileID: 4659474290433748, guid: 1e09c268f42fef745888ba18526d277f,
+    type: 2}
 --- !u!212 &212479537771549468
 SpriteRenderer:
   m_ObjectHideFlags: 1

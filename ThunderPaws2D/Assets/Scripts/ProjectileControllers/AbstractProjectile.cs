@@ -4,6 +4,10 @@ using UnityEngine;
 
 public abstract class AbstractProjectile : MonoBehaviour {
     /// <summary>
+    /// Indicates that even if the bullet didn't collide with anything it should explode upon death
+    /// </summary>
+    public bool ExplodeOnDeath;
+    /// <summary>
     /// Sprite animatio to play when the bullet impacts
     /// </summary>
     public Transform ImpactEffect;
@@ -75,6 +79,9 @@ public abstract class AbstractProjectile : MonoBehaviour {
     /// This helps cleanup any "stuck" bullets for whatever reason - I've seen a bullet here or there and not sure why at the moment
     /// </summary>
     protected void MaxLifeExceededDestroy() {
+        if (ExplodeOnDeath) {
+            GenerateEffect();
+        }
         Destroy(gameObject);
     }
 
@@ -102,6 +109,14 @@ public abstract class AbstractProjectile : MonoBehaviour {
     /// </summary>
     void OnBecameInvisible() {
         Destroy(gameObject);
+    }
+
+    protected void GenerateEffect() {
+        var clone = Instantiate(ImpactEffect, transform.position, transform.rotation);
+        clone.GetComponent<SpriteRenderer>().sortingOrder = 2;
+        clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
+        clone.GetComponent<Animator>().SetBool("Invoke", true);
+        GameMaster.Instance.AudioManager.playSound("SmallExplosion");
     }
 
     protected abstract void Move();
