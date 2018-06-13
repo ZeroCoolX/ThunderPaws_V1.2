@@ -1,12 +1,11 @@
 fileFormatVersion: 2
-guid: 536fa74b7d051614490ab7c85ba774c3
-timeCreated: 1528850945
+guid: 7fe93cbe39426a847969e1b484739e6e
+timeCreated: 1528850942
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: GaussRifle_Shooting_0
-    21300002: GaussRifle_Shooting_1
-    21300004: GaussRifle_Shooting_2
+    21300000: GaussRifle_HoldCharge_0
+    21300002: GaussRifle_HoldCharge_1
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -104,24 +103,10 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: GaussRifle_Shooting_0
+      name: GaussRifle_HoldCharge_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 145
-        height: 48
-      alignment: 9
-      pivot: {x: 0.44544703, y: 0.4924232}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: GaussRifle_Shooting_1
-      rect:
-        serializedVersion: 2
-        x: 145
         y: 0
         width: 145
         height: 48
@@ -132,10 +117,10 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: GaussRifle_Shooting_2
+      name: GaussRifle_HoldCharge_1
       rect:
         serializedVersion: 2
-        x: 290
+        x: 145
         y: 0
         width: 145
         height: 48

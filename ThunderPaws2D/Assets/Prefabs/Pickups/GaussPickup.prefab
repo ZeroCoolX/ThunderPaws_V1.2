@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b552997662c98e439a1f5e4f9c19350, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickupReward: {fileID: 4795677035519362, guid: 39de33104479d134e851ef57b2189e8d,
+  PickupReward: {fileID: 4795677035519362, guid: b4405405e64c4bc4e910556f47971a48,
     type: 2}
 --- !u!114 &114565320171094902
 MonoBehaviour:

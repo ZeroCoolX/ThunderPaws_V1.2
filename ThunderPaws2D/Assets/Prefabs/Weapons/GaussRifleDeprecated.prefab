@@ -36,9 +36,9 @@ GameObject:
   - component: {fileID: 4795677035519362}
   - component: {fileID: 212479537771549468}
   - component: {fileID: 114980024999372180}
-  - component: {fileID: 95512295065633348}
+  - component: {fileID: 95587363011828822}
   m_Layer: 0
-  m_Name: GaussRifle
+  m_Name: GaussRifleDeprecated
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,14 +64,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1655051013322078}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.787172, y: -3.3328955, z: 0}
+  m_LocalPosition: {x: -18.683817, y: -0.51952755, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4116513237807038}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95512295065633348
+--- !u!95 &95587363011828822
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -80,7 +80,7 @@ Animator:
   m_GameObject: {fileID: 1655051013322078}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9fbf61e235d0ad74aa2f8b08a289fd0e, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc3d9a792109e654687bfc1019eca56b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -152,7 +152,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 536fa74b7d051614490ab7c85ba774c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8091355f660973d47bb6afc1be13d788, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

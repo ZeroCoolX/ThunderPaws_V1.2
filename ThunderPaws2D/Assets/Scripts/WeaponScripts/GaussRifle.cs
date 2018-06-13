@@ -39,6 +39,15 @@ public class GaussRifle : AbstractWeapon {
     /// </summary>
     private bool _triggerLetGo = true;
 
+    /// <summary>
+    /// Allows detection of ".KeyUp()" logic for controllers since its
+    /// an axis instead of a button
+    /// </summary>
+    private float _triggerLastFrame;
+    private bool _triggerPressed;
+    private bool _holding;
+    private bool _holdingQueued;
+
 
     private void Update() {
         if (UltMode) {
@@ -49,7 +58,7 @@ public class GaussRifle : AbstractWeapon {
         if (HasAmmo) {
             AmmoCheck();
         }
-        WeaponAnimator.SetBool("UltModeActive", UltMode);
+        //WeaponAnimator.SetBool("UltModeActive", UltMode);
     }
 
 
@@ -97,7 +106,7 @@ public class GaussRifle : AbstractWeapon {
             // Also indicate that we should fire (special to the ult gauss)
             WeaponAnimator.SetBool("FireUlt", true);
             StartCoroutine(ResetUltFire());
-            StartCoroutine(CalculateUltShot());
+            CalculateUltShot();
             //AudioManager.playSound(GameConstants.Audio_Shotgun);
         }
         if (HasAmmo) {
@@ -117,7 +126,7 @@ public class GaussRifle : AbstractWeapon {
     /// Gauss Ultimate has a special different kind of bullet
     /// that needs to be charged and then fired
     /// </summary>
-    private IEnumerator CalculateUltShot() {
+    private void CalculateUltShot() {
         Vector2 directionInput = Player.DirectionalInput;
 
         //Store bullet origin spawn popint (A)
@@ -152,8 +161,7 @@ public class GaussRifle : AbstractWeapon {
             }
 
             //Wait for a quarter of a second for the animation to play then fire!
-            yield return new WaitForSeconds(0.25f);
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
+            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, true);
             GenerateCameraShake();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
             if (HasAmmo) {
@@ -163,35 +171,118 @@ public class GaussRifle : AbstractWeapon {
         }
     }
 
+    private void IndicateHolding() {
+        _holding = true;
+    }
+
+    private void ResetHoldCharge() {
+        WeaponAnimator.SetBool("HoldCharge", false);
+    } 
+
     /// <summary>
     /// Used to determine if the player is holding the trigger down so we shuold shoot at some fixed interval, or whether they're
     /// pressing the trigger rapid fire like and so we should fire every shot.
     /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
-        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
-        // Indicates the user his not pressing the trigger nor the fire key
-        if (Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger == 0) {
-            _fireButtonPressed = false;
-            _holdingFireDown = false;
-        }
-        // Indicates the user is trying to fire
-        if ((Input.GetKey(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
-            if (!_fireButtonPressed) {
-                CalculateShot();
-                _fireButtonPressed = true;
-                _initialFirePressTime = Time.time + _fireHoldthreshold;
+        // Its pretty damn different logic for KB/M vs controllers
+        print("JoystickManagerController.Instance.ConnectedControllers() = " + JoystickManagerController.Instance.ConnectedControllers());
+        if (JoystickManagerController.Instance.ConnectedControllers() == 0) {
+            if (Input.GetKeyUp(InputManager.Instance.Fire)) {
+                if (_holding) {
+                    CancelInvoke("IndicateHolding");
+                    // Fire awesome charge shot!
+                    WeaponAnimator.SetBool("HoldCharge", false);
+                    ApplyRecoil();
+                    CalculateUltShot();
+                } else {
+                    // Fire normal shot
+                    print("SHOOT");
+                    CancelInvoke("IndicateHolding");
+                    CalculateShot();
+                }
+                _triggerPressed = false;
+                _holding = false;
+            } else if (_holding) {
+                WeaponAnimator.SetBool("HoldCharge", true);
             }
-            // They've been holding for longer than 0.5s so auto fire
-            _holdingFireDown = _fireButtonPressed && (Time.time > _initialFirePressTime);
+            if (Input.GetKeyDown(InputManager.Instance.Fire) && !_holding) {
+                _holdingQueued = true;
+                // Wait 1/10th of a second to set the holding
+                Invoke("IndicateHolding", 0.25f);
+            }
+        }else { 
+            var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
+            // This indicates the user is pressing the trigger - must wait to determine if we are holding it 
+            // or going to let it go
+            if (_holding && (rightTrigger == 0)) {
+                CancelInvoke("IndicateHolding");
+                // Fire awesome charge shot!
+                WeaponAnimator.SetBool("HoldCharge", false);
+                ApplyRecoil();
+                CalculateUltShot();
+                _holdingQueued = false;
+                _triggerPressed = false;
+                _holding = false;
+            } else if (_holding) {
+                print("HOLDING");
+                WeaponAnimator.SetBool("HoldCharge", true);
+                //Invoke("ResetHoldCharge", 0.25f);
+            } else if (rightTrigger > WeaponConfig.TriggerFireThreshold) {
+                _triggerPressed = true;
+            } else {
+                if (_triggerPressed) {
+                    // Fire normal shot
+                    print("SHOOT");
+                    CancelInvoke("IndicateHolding");
+                    CalculateShot();
+                }
+                _holdingQueued = false;
+                _triggerPressed = false;
+                _holding = false;
+            }
+            if (_triggerPressed && !_holding && !_holdingQueued) {
+                _holdingQueued = true;
+                // Wait 1/10th of a second to set the holding
+                Invoke("IndicateHolding", 0.25f);
+            }
+        }
+        // This indicates the last frame we are holding the trigger
+        //if (rightTrigger != 0 && _triggerLastFrame == rightTrigger) {
+        //    print("HOLDING!");
+        //    _triggerLastFrame = rightTrigger;
+        //    return;
+        //} else {
+        //    if (rightTrigger > WeaponConfig.TriggerFireThreshold) {
+        //        _triggerLastFrame = rightTrigger;
+        //    }else if(_triggerLastFrame != rightTrigger) {
+        //        // Fire?
+        //        CalculateShot();
+        //    }
+        //}
+        //// Indicates the user his not pressing the trigger nor the fire key
+        //if (Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger == 0) {
+        //    _fireButtonPressed = false;
+        //    _holdingFireDown = false;
+        //}
+        //// Indicates the user is trying to fire
+        //if ((Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        //    if (!_fireButtonPressed) {
+        //        CalculateShot();
+        //        _fireButtonPressed = true;
+        //        _initialFirePressTime = Time.time + _fireHoldthreshold;
+        //    }
+        //    // They've been holding for longer than 0.5s so auto fire
+        //    _holdingFireDown = _fireButtonPressed && (Time.time > _initialFirePressTime);
 
-        }
-        if (_holdingFireDown) {
-            if (Time.time > TimeToFire) {
-                TimeToFire = Time.time + 0.25f;
-                CalculateShot();
-            }
-        }
+        //}
+        //if (_holdingFireDown) {
+        //    print("holding fire!");
+        //    if (Time.time > TimeToFire) {
+        //        TimeToFire = Time.time + 0.25f;
+        //        CalculateShot();
+        //    }
+        //}
     }
 
     protected override void CalculateShot() {
@@ -245,12 +336,13 @@ public class GaussRifle : AbstractWeapon {
     /// <param name="shotPos"></param>
     /// <param name="shotNormal"></param>
     /// <param name="whatToHit"></param>
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
+    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool chargeShot, float freeFlyDelay = 0.5f) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
         var yUltOffset = 0.25f;
         var xUltOffset = 0.25f;
-        for (var i = 0; i < 1; ++i) {
+        // for (var i = 0; i < 1; ++i) {
+        var i = 0;
             var firePosition = FirePoint.position;
 
             // This calculation is necessary so the bullets don't stack on top of eachother
@@ -271,7 +363,7 @@ public class GaussRifle : AbstractWeapon {
 
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(ultMode ? UltBulletPrefab :  BulletPrefab, firePosition, projRotation) as Transform;
+            Transform bulletInstance = Instantiate(chargeShot ? UltBulletPrefab :  BulletPrefab, firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {
@@ -287,7 +379,6 @@ public class GaussRifle : AbstractWeapon {
             projectile.MoveSpeed = BulletSpeed;
             projectile.MaxLifetime = MaxLifetime;
             projectile.Fire(shotPos, shotNormal);
-            if (!ultMode) return;
-        }
+        //}
     }
 }
