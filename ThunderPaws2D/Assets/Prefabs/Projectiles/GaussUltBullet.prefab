@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 58570333761555686}
   - component: {fileID: 114933265235229270}
   - component: {fileID: 114994144921853518}
-  - component: {fileID: 95770626432083926}
+  - component: {fileID: 95495319409433550}
   m_Layer: 11
   m_Name: GaussUltBullet
   m_TagString: Projectile
@@ -59,7 +59,7 @@ CircleCollider2D:
   m_Offset: {x: 0.3, y: -0.031937122}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!95 &95770626432083926
+--- !u!95 &95495319409433550
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 1
@@ -68,7 +68,7 @@ Animator:
   m_GameObject: {fileID: 1447213198769282}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9df7616c4db3aeb40b0793a89f082acb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7796be17b632d884b8c0d3fa1d2c1952, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -88,7 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ExplodeOnDeath: 1
-  ImpactEffect: {fileID: 4880655000989574, guid: 3ea66033a8b650b46b0b5ae8e0803c34,
+  ImpactEffect: {fileID: 4880655000989574, guid: 64b473a64a62907418829d5e18bed9f6,
     type: 2}
   MoveSpeed: 35
   Damage: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
+  OptionalGravity: 0
 --- !u!114 &114994144921853518
 MonoBehaviour:
   m_ObjectHideFlags: 1

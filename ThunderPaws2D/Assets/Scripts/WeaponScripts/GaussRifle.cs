@@ -10,6 +10,10 @@ public class GaussRifle : AbstractWeapon {
     /// </summary>
     public Transform UltBulletPrefab;
     /// <summary>
+    /// Some weapons have specific prefabs for their alternate fires bullets
+    /// </summary>
+    public Transform ChargeBulletPrefab;
+    /// <summary>
     /// Indicates the ultimate animations have finished and we can shoot again.
     /// This inhibits users from spamming the fire key during the ult animation
     /// </summary>
@@ -47,18 +51,23 @@ public class GaussRifle : AbstractWeapon {
     private bool _triggerPressed;
     private bool _holding;
     private bool _holdingQueued;
+    private bool _ulting;
 
 
     private void Update() {
         if (UltMode) {
-            HandleUltShooting();
-        }else {
+            if (!_ulting) {
+                WeaponAnimator.SetBool("FireUlt", true);
+                StartCoroutine(WaitThenFireUlt());
+                _ulting = true;
+                Invoke("HardResetPlayerUlt", 0.75f);
+            }
+        } else {
             HandleShootingInput();
         }
         if (HasAmmo) {
             AmmoCheck();
         }
-        //WeaponAnimator.SetBool("UltModeActive", UltMode);
     }
 
 
@@ -71,62 +80,32 @@ public class GaussRifle : AbstractWeapon {
     /// Resets the animator
     /// </summary>
     /// <returns></returns>
-    protected IEnumerator ResetUltFire() {
+    protected IEnumerator ResetChargeFire() {
         yield return new WaitForSeconds(0.5f);
+        WeaponAnimator.SetBool("FireCharge", false);
+    }
+
+    // Helper to wait before firing shot
+    private IEnumerator WaitThenFireUlt() {
+        yield return new WaitForSeconds(0.5f);
+        CalculateChargeShot();
+    }
+
+    private void HardResetPlayerUlt() {
+        Player.DeactivateUltimate();
+        _ulting = false;
         WeaponAnimator.SetBool("FireUlt", false);
     }
 
-    private void AllowUltShooting() {
+    private void AllowChargeShooting() {
         _allowshooting = true;
-    }
-
-    /// <summary>
-    /// Gauss Ultimate requires a special shooting mode.
-    /// Instead of continuously shooting aws fast as the use pulls the trigger it 
-    /// it charges a shot and shoots it as soon as they let go
-    /// </summary>
-    private void HandleUltShooting() {
-        // Get the player fire input
-        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
-        // This checks if the player released the trigger in between shots - because this ultimate is not full auto
-        if (!_triggerLetGo) {
-            if (rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
-                _triggerLetGo = true;
-            }
-        }
-
-        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold) && _allowshooting) {
-            _triggerLetGo = false;
-            _allowshooting = false;
-
-            // Allow the user's fire pressing to be registered in 0.35seconds
-            Invoke("AllowUltShooting", 0.35f);
-
-            ApplyRecoil();
-            // Also indicate that we should fire (special to the ult gauss)
-            WeaponAnimator.SetBool("FireUlt", true);
-            StartCoroutine(ResetUltFire());
-            CalculateUltShot();
-            //AudioManager.playSound(GameConstants.Audio_Shotgun);
-        }
-        if (HasAmmo) {
-            AmmoCheck();
-        }
-        WeaponAnimator.SetBool("UltModeActive", UltMode);
-        //if (UltMode && Damage < 100) {
-        //    Damage = 100;
-        //} else {
-        //    if (Damage != 25) {
-        //        Damage = 25;
-        //    }
-        //}
     }
 
     /// <summary>
     /// Gauss Ultimate has a special different kind of bullet
     /// that needs to be charged and then fired
     /// </summary>
-    private void CalculateUltShot() {
+    private void CalculateChargeShot() {
         Vector2 directionInput = Player.DirectionalInput;
 
         //Store bullet origin spawn popint (A)
@@ -194,7 +173,7 @@ public class GaussRifle : AbstractWeapon {
                     // Fire awesome charge shot!
                     WeaponAnimator.SetBool("HoldCharge", false);
                     ApplyRecoil();
-                    CalculateUltShot();
+                    CalculateChargeShot();
                 } else {
                     // Fire normal shot
                     print("SHOOT");
@@ -220,7 +199,7 @@ public class GaussRifle : AbstractWeapon {
                 // Fire awesome charge shot!
                 WeaponAnimator.SetBool("HoldCharge", false);
                 ApplyRecoil();
-                CalculateUltShot();
+                CalculateChargeShot();
                 _holdingQueued = false;
                 _triggerPressed = false;
                 _holding = false;
@@ -247,42 +226,6 @@ public class GaussRifle : AbstractWeapon {
                 Invoke("IndicateHolding", 0.25f);
             }
         }
-        // This indicates the last frame we are holding the trigger
-        //if (rightTrigger != 0 && _triggerLastFrame == rightTrigger) {
-        //    print("HOLDING!");
-        //    _triggerLastFrame = rightTrigger;
-        //    return;
-        //} else {
-        //    if (rightTrigger > WeaponConfig.TriggerFireThreshold) {
-        //        _triggerLastFrame = rightTrigger;
-        //    }else if(_triggerLastFrame != rightTrigger) {
-        //        // Fire?
-        //        CalculateShot();
-        //    }
-        //}
-        //// Indicates the user his not pressing the trigger nor the fire key
-        //if (Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger == 0) {
-        //    _fireButtonPressed = false;
-        //    _holdingFireDown = false;
-        //}
-        //// Indicates the user is trying to fire
-        //if ((Input.GetKeyUp(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
-        //    if (!_fireButtonPressed) {
-        //        CalculateShot();
-        //        _fireButtonPressed = true;
-        //        _initialFirePressTime = Time.time + _fireHoldthreshold;
-        //    }
-        //    // They've been holding for longer than 0.5s so auto fire
-        //    _holdingFireDown = _fireButtonPressed && (Time.time > _initialFirePressTime);
-
-        //}
-        //if (_holdingFireDown) {
-        //    print("holding fire!");
-        //    if (Time.time > TimeToFire) {
-        //        TimeToFire = Time.time + 0.25f;
-        //        CalculateShot();
-        //    }
-        //}
     }
 
     protected override void CalculateShot() {
@@ -363,7 +306,7 @@ public class GaussRifle : AbstractWeapon {
 
             firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
             firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(chargeShot ? UltBulletPrefab :  BulletPrefab, firePosition, projRotation) as Transform;
+            Transform bulletInstance = Instantiate(_ulting ? UltBulletPrefab : (chargeShot ? ChargeBulletPrefab :  BulletPrefab), firePosition, projRotation) as Transform;
             //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
             if (Mathf.Sign(shotPos.x) < 0) {

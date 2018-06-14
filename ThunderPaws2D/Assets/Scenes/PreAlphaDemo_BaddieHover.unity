@@ -1398,7 +1398,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.35
+      value: -7.2452583
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1504,7 +1504,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1098900087}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.515944, y: -5.45, z: 0}
+  m_LocalPosition: {x: -10.515944, y: 0.75227547, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2384,6 +2384,11 @@ Prefab:
       propertyPath: m_Name
       value: CircuitBox (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 114091060627946374, guid: 87f32575ecf49844a9a3712f662a2f4f,
+        type: 2}
+      propertyPath: PayloadItemCount
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
   m_IsPrefabParent: 0
@@ -2400,7 +2405,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -6.992275
+      value: -0.79
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2645,7 +2650,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1829760721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.971832, y: 1.1252586, z: 0}
+  m_LocalPosition: {x: -16.971832, y: -5.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2812,6 +2817,11 @@ Prefab:
     - target: {fileID: 1321417408384644, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
       propertyPath: m_Name
       value: CircuitBox (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091060627946374, guid: 87f32575ecf49844a9a3712f662a2f4f,
+        type: 2}
+      propertyPath: PayloadItemCount
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
