@@ -86,7 +86,6 @@ public class FatCat : ProjectileWeapon {
     /// </summary>
     /// <param name="position"></param>
     private void CreateBomb(Vector2 position) {
-        print("Making bomb at: " + position);
         Transform bulletInstance = Instantiate(BulletPrefabs[(int)BulletType.ULT], position, Quaternion.identity) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
