@@ -3,16 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FatCat : AbstractWeapon {
+public class FatCat : ProjectileWeapon {
     /// <summary>
-    /// This is another case where the weapon needs special ult bullets
+    /// List from least special to most special bullet prefabs
+    /// Access the indicies by using the BulletType enum
     /// </summary>
-    public Transform UltBulletPrefab;
+    public Transform[] BulletPrefabs;
     /// <summary>
     /// Indicates the ultimate animations have finished and we can shoot again.
     /// This inhibits users from spamming the fire key during the ult animation
     /// </summary>
-    public bool _allowshooting = true;
+    private bool _allowshooting = true;
     /// <summary>
     /// Necessaary indicator for the ultMode.
     /// Indicates the trigger was let go telling the
@@ -23,7 +24,6 @@ public class FatCat : AbstractWeapon {
 
     private void Update() {
         if (UltMode) {
-            // Carpet Bomb
             MakeCarpetBomb();
             Player.DeactivateUltimate();
         } else {
@@ -34,23 +34,44 @@ public class FatCat : AbstractWeapon {
         }
     }
 
+    /// <summary>
+    /// Implementation specific override.
+    /// Apply the recoil animation and reset the weapon position
+    /// </summary>
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
     }
 
-
+    /// <summary>
+    /// Helper method that allows for delayed setting of the variable which
+    /// indicates we can shoot. This creates a delay effect when shooting so you can't
+    /// spawm 1000 rockets per second
+    /// </summary>
     private void AllowUltShooting() {
         _allowshooting = true;
     }
 
+    /// <summary>
+    /// Ult logic for which a line of bombs are created outside the players field of view and dropped into the 
+    /// scene making it look like a plane flew over the top and dropped a line of bombs
+    /// </summary>
     private void MakeCarpetBomb() {
+        // Use the top right corner to determine the screen width in world points 
+        // so we know where to spawn the bombs
         Vector2 topRightCorner = new Vector2(1, 1);
         Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
         float width = edgeVector.x * 2;
+        // Arbitrary value honestly - I'm not sold on this yet
         var interval = width / 15f;
+
+        // These spacing variables increase as we move further from the left corner of the screen
+        // so that the bombs don't all drop in an actual straight line, but instead a diagonal
+        // So it's more realistic
         var xSpacing = 0f;
         var ySpacing = 0f;
+
+        // Create and drop the bombs
         for (var i = 0; i < 20; ++i) {
             var pos = new Vector2(edgeVector.x - xSpacing, edgeVector.y + ySpacing);
             CreateBomb(pos);
@@ -59,8 +80,14 @@ public class FatCat : AbstractWeapon {
         }
     }
 
+    /// <summary>
+    /// Helper method to create an individual bomb which is apart of the carpet bombing run.
+    /// Sets all the needed values
+    /// </summary>
+    /// <param name="position"></param>
     private void CreateBomb(Vector2 position) {
-        Transform bulletInstance = Instantiate(UltBulletPrefab, position, Quaternion.identity) as Transform;
+        print("Making bomb at: " + position);
+        Transform bulletInstance = Instantiate(BulletPrefabs[(int)BulletType.ULT], position, Quaternion.identity) as Transform;
         //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
         //Set layermask of parent (either player or baddie)
@@ -80,6 +107,7 @@ public class FatCat : AbstractWeapon {
     private void HandleShootingInput() {
         // Get the player fire input
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
+
         // This checks if the player released the trigger in between shots - because this ultimate is not full auto
         if (!_triggerLetGo) {
             if (rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
@@ -93,113 +121,8 @@ public class FatCat : AbstractWeapon {
 
             // Allow the user's fire pressing to be registered in 0.35seconds
             Invoke("AllowUltShooting", 0.35f);
-
-            ApplyRecoil();
-            CalculateCustomShot();
-            //AudioManager.playSound(GameConstants.Audio_Shotgun);
-        }
-    }
-
-    /// <summary>
-    /// Gauss Ultimate has a special different kind of bullet
-    /// that needs to be charged and then fired
-    /// </summary>
-    private void CalculateCustomShot() {
-        Vector2 directionInput = Player.DirectionalInput;
-
-        //Store bullet origin spawn popint (A)
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
-        //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
-        //Generate bullet effect
-        if (Time.time >= TimeToSpawnEffect) {
-            //Bullet effect position data
-            Vector3 hitPosition;
-            Vector3 hitNormal;
-
-            //Precalculate so if we aren't shooting at anything at least the normal is correct
-            //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = directionInput * 50f;
-            if (shot.collider != null) {
-                //If we most likely hit something store the normal so the particles make sense when they shoot out
-                hitNormal = shot.normal;
-                //hitPosition = shot.point;
-            } else {
-                //Rediculously huge so we can use it as a sanity check for the effect
-                hitNormal = new Vector3(999, 999, 999);
-            }
-
-            var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
-            } else if (yAxis > 0.8) {
-                directionInput = Vector2.up;
-            } else {
-                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
-            }
-
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile);
-            GenerateCameraShake();
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            if (HasAmmo) {
-                Ammo -= 1;
-            }
-            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
-        }
-    }
-
-    protected override void CalculateShot(int bulletCount = 1) {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// Generate particle effect, spawn bullet, then destroy after allotted time
-    /// </summary>
-    /// <param name="shotPos"></param>
-    /// <param name="shotNormal"></param>
-    /// <param name="whatToHit"></param>
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) {
-        //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
-        var projRotation = CompensateQuaternion(FirePoint.rotation);
-        var yUltOffset = 0.25f;
-        var xUltOffset = 0.25f;
-        for (var i = 0; i < 1; ++i) {
-            var firePosition = FirePoint.position;
-
-            // This calculation is necessary so the bullets don't stack on top of eachother
-            var yAxis = Player.DirectionalInput.y;
-            print("yAxis = " + yAxis);
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                yUltOffset = 0.125f;
-                // There is one single special case - when the player is facing right, and looking at 45 degrees.
-                // Coorindates must then be +, - instead of all + or all -
-                xUltOffset = 0.125f * (Player.FacingRight ? -1 : 1);
-            } else if (yAxis > 0.8) {
-                yUltOffset = 0f;
-                xUltOffset = 0.25f;
-            } else {
-                yUltOffset = 0.25f;
-                xUltOffset = 0f;
-            }
-
-            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
-            firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-            AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-            if (Mathf.Sign(shotPos.x) < 0) {
-                Vector3 theScale = projectile.transform.localScale;
-                theScale.x *= -1;
-                projectile.transform.localScale = theScale;
-            }
-
-            //Set layermask of parent (either player or baddie)
-            projectile.SetLayerMask(whatToHit);
-            projectile.gameObject.layer = LayerMask.NameToLayer(layer);
-            projectile.Damage = Damage;
-            projectile.MoveSpeed = BulletSpeed;
-            projectile.MaxLifetime = MaxLifetime;
-            projectile.Fire(shotPos, shotNormal);
+            BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+            CalculateShot();
         }
     }
 }

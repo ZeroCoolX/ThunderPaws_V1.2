@@ -87,10 +87,6 @@ public class EmissionIndex : AbstractWeapon {
             }
     }
 
-    protected override void CalculateShot(int bulletcount = 1) {
-        throw new NotImplementedException("This method also isn't needed which REALLY makes me rething extending AbstractWeapon for this class...");
-    }
-
     private void GenerateLaser() {
         Vector2 directionInput = Player.DirectionalInput;
 
@@ -161,15 +157,4 @@ public class EmissionIndex : AbstractWeapon {
             Ammo -= 1;
         }
     }
-
-    // We do not need this which makes me rethink if it should really extend AbstractWeapon
-    protected override void ApplyRecoil() {
-        throw new NotImplementedException();
-    }
-
-
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) {
-        throw new NotImplementedException();
-    }
-
 }

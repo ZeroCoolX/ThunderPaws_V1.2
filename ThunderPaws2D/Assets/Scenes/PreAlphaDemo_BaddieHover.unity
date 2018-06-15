@@ -396,7 +396,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 212144835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.036312, y: 0.93575, z: 0}
+  m_LocalPosition: {x: 1.3371735, y: -5.67425, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -915,11 +915,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -25.07
+      value: 5.0600014
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.11542821
+      value: -6.9654284
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1015,7 +1015,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 825148233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -25.09, y: 1.03, z: 0}
+  m_LocalPosition: {x: 5.04, y: -5.82, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1135,7 +1135,7 @@ Prefab:
     - target: {fileID: 114091060627946374, guid: 87f32575ecf49844a9a3712f662a2f4f,
         type: 2}
       propertyPath: PayloadItemCount
-      value: 50
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
@@ -1339,6 +1339,11 @@ Prefab:
       propertyPath: m_Name
       value: CircuitBox (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 114091060627946374, guid: 87f32575ecf49844a9a3712f662a2f4f,
+        type: 2}
+      propertyPath: PayloadItemCount
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
   m_IsPrefabParent: 0
@@ -1355,7 +1360,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -6.65
+      value: 0.69
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2400,7 +2405,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4930055791183770, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -28.79
+      value: -28.73
       objectReference: {fileID: 0}
     - target: {fileID: 4930055791183770, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2433,6 +2438,11 @@ Prefab:
     - target: {fileID: 1321417408384644, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
       propertyPath: m_Name
       value: CircuitBox (16)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091060627946374, guid: 87f32575ecf49844a9a3712f662a2f4f,
+        type: 2}
+      propertyPath: PayloadItemCount
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
@@ -2607,7 +2617,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1829760721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -16.971832, y: -5.1747417, z: 0}
+  m_LocalPosition: {x: -16.971832, y: 2.1652584, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2627,11 +2637,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -20.733486
+      value: 1.64
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.42
+      value: -7.03
       objectReference: {fileID: 0}
     - target: {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
       propertyPath: m_LocalPosition.z

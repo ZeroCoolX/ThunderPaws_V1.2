@@ -4,40 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Shotgun : AbstractWeapon {
-
     /// <summary>
-    /// How long should the shotgun blast extend
+    /// Debug only - keeps track of shot raycasts so we can print them to the screen if wanted
     /// </summary>
-    private float _rayLength = 5;
-
-    private float[] _blastRotations = new float[] { 11.25f, 5.625f, 0f, 348.75f, 354.375f };
-
     private Vector2[] _debugBlastRotations = new Vector2[7];
-
-    private bool _triggerLetGo = true;
-
     /// <summary>
-    /// Some weapons have seperate blast prefabs
+    /// The shotgun is semi-automatic - therefor the user MUST release the trigger in between shots
+    /// </summary>
+    private bool _triggerLetGo = true;
+    /// <summary>
+    /// Specific blast prefab since the gun blast is independent of the fire animation
     /// </summary>
     public Transform BlastPrefab;
-
     /// <summary>
-    /// Some weapons have seperate blast prefabs
+    /// Specific ultimate blast prefab since the gun blast is independent of the fire animation
     /// </summary>
     public Transform UltBlastPrefab;
-
     /// <summary>
     /// Explosive hairballs!
     /// </summary>
     public Transform UltBulletPrefab;
-
     /// <summary>
-    /// Sprite animatio to play when the bullet impacts
+    /// Sprite animation to play when we hit a target.
+    /// We have to specify this since we don't actually fire out any prefab bullets (in non ult mode).
     /// </summary>
     public Transform ImpactEffect;
 
     private void Update() {
-        // Get the player fire input
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
         // This checks if the player released the trigger in between shots - because the shotgun is not full auto
         if (!_triggerLetGo) {
@@ -46,10 +39,12 @@ public class Shotgun : AbstractWeapon {
             }
         }
 
+        // Degub only rendering the raycasts to see them in action
         for (var i = 1; i < _debugBlastRotations.Length; ++i) {
-            Debug.DrawRay(_debugBlastRotations[0], _debugBlastRotations[i] * _rayLength, Color.green);
+            Debug.DrawRay(_debugBlastRotations[0], _debugBlastRotations[i] * ShotgunConfig.RayLength, Color.green);
         }
 
+        // Only fire if we're not already holding the trigger
         if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
             _triggerLetGo = false;
             CalculateShot();
@@ -60,6 +55,8 @@ public class Shotgun : AbstractWeapon {
             AmmoCheck();
         }
         WeaponAnimator.SetBool("UltModeActive", UltMode);
+
+        // Temporary for now - set the damage up when ultimate is active
         if (UltMode && Damage < 100) {
             Damage = 100;
         }else {
@@ -69,6 +66,10 @@ public class Shotgun : AbstractWeapon {
         }
     }
 
+    /// <summary>
+    /// Implementation specific override.
+    /// Apply the recoil animation and reset the weapon position
+    /// </summary>
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
@@ -104,9 +105,15 @@ public class Shotgun : AbstractWeapon {
         blastInstance.GetComponent<Animator>().SetBool("Invoke", false);
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="bulletCount"></param>
     protected override void CalculateShot(int bulletCount = 1) {
         if (Time.time >= TimeToSpawnEffect) {
             Vector2 dir = Player.DirectionalInput;
+            // Preprocessing of which direction our shotgun is pointing which will modify the degrees at which
+            // the 5 raycast shotgun blasts are fired
             var preCalcYaxis = dir.y;
             if (((preCalcYaxis > 0.3 && preCalcYaxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
                 dir = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
@@ -118,18 +125,18 @@ public class Shotgun : AbstractWeapon {
             GenerateCameraShake();
             GenerateBlastEffect(dir);
 
-            // Generate 5 raycasts degrees
+            // Generate 5 raycasts at varying degrees
             // Rotation around the z axis
             var i = 1;
             var collisionMap = new Dictionary<string, Collider2D>();
-            foreach(var rotation in _blastRotations) {
+            foreach(var rotation in ShotgunConfig.BlastRotations) {
                 var finalRotation = rotation * (Player.FacingRight ? 1 : -1);
 
                 // Get the direction the player is pointing
                 Vector2 directionInput = Player.DirectionalInput;
                 // Concert the degrees to radians 
                 var rads = Mathf.Deg2Rad * finalRotation;
-                print(directionInput);
+
                 var yAxis = directionInput.y;
                 var xDir = 1.0f * (Player.FacingRight ? 1 : -1);
                 var yDir = 0f;
@@ -141,6 +148,7 @@ public class Shotgun : AbstractWeapon {
                     xDir = 0.0f * (Player.FacingRight ? 1 : -1);
                 }
 
+                // Necessary to rotate the raycast from its initial position to its desired final position
                 Vector2 rotatedDirection = new Vector2(
                     xDir*Mathf.Cos(rads) - yDir*Mathf.Sin(rads),
                     xDir*Mathf.Sin(rads) + yDir*Mathf.Cos(rads)
@@ -150,10 +158,10 @@ public class Shotgun : AbstractWeapon {
                 Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
                 _debugBlastRotations[0] = firePointPosition;
                 // Collect the hit data - distance and direction from A -> B
-                RaycastHit2D shot = Physics2D.Raycast(firePointPosition, rotatedDirection, _rayLength, WhatToHit);
+                RaycastHit2D shot = Physics2D.Raycast(firePointPosition, rotatedDirection, ShotgunConfig.RayLength, WhatToHit);
 
                 // Check if it hit anything
-                //We want to allow bullets to pass throught obstacles that the player can pass through
+                // We want to allow bullets to pass throught obstacles that the player can pass through
                 if (shot.collider != null) {
                     print("We have collided with something i: " + i);
                     Collider2D outCollider;
@@ -162,6 +170,7 @@ public class Shotgun : AbstractWeapon {
                     }
                 }
 
+                // Store the current direction in the debug array so we can print it later
                 _debugBlastRotations[i] = rotatedDirection;
                 ++i;
 
@@ -169,11 +178,6 @@ public class Shotgun : AbstractWeapon {
                     Transform bulletInstance = Instantiate(UltBulletPrefab, firePointPosition, Quaternion.identity) as Transform;
                     //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
                     var projectile = bulletInstance.GetComponent<BulletProjectile>();
-                    //if (Mathf.Sign(shot.x) < 0) {
-                    //    Vector3 theScale = projectile.transform.localScale;
-                    //    theScale.x *= -1;
-                    //    projectile.transform.localScale = theScale;
-                    //}
 
                     //Set layermask of parent (either player or baddie)
                     projectile.SetLayerMask(WhatToHit);
@@ -194,29 +198,20 @@ public class Shotgun : AbstractWeapon {
             if (HasAmmo) {
                 Ammo -= 1;
                 print("SettingAmmo");
-                GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo(Ammo);
+                GameMaster.Instance.GetPlayerStatsUi(Player.PlayerNumber).SetAmmo(Ammo);
             }else {
-                GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
+                GameMaster.Instance.GetPlayerStatsUi(Player.PlayerNumber).SetAmmo();
             }
         }
     }
 
     /// <summary>
-    /// Destroy and generate effects
+    /// Damage, Destroy and generate effects
     /// </summary>
     /// <param name="hitObject"></param>
     private void HitTarget(Collider2D hitObject) {
-        //Damage whoever we hit - or rocket jump
-        Player player;
-        if (hitObject.gameObject.tag == GameConstants.Tag_Player) {
-            Debug.Log("We hit " + hitObject.name + " and did " + Damage + " damage");
-            player = hitObject.GetComponent<Player>();
-            if (player != null) {
-                //player.DamageHealth(Damage);
-            }
-        }
         print("Hit object: " + hitObject.gameObject.tag);
-        //IF we hit a lifeform damage it - otherwise move on
+        // If we hit a lifeform damage it - otherwise move on
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();
         if (lifeform != null) {
             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
@@ -225,16 +220,16 @@ public class Shotgun : AbstractWeapon {
         GenerateEffect(hitObject.transform);
     }
 
+    /// <summary>
+    /// Play the shotgun  blast animation effect
+    /// </summary>
+    /// <param name="impactTransform"></param>
     private void GenerateEffect(Transform impactTransform) {
         // Subtract 1 from whatever the Z position is to ensure the explosion animation is played over the top
         var fixedPosition = new Vector3(impactTransform.position.x, impactTransform.position.y, impactTransform.position.z - 1);
         var clone = Instantiate(ImpactEffect, fixedPosition, impactTransform.rotation);
         clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
         clone.GetComponent<Animator>().SetBool("Invoke", true);
-    }
-
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { 
-        throw new NotImplementedException();
     }
 
 }

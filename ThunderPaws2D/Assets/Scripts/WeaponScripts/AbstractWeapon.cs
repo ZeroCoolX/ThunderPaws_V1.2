@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class AbstractWeapon : MonoBehaviour {
 
     //******************************************* Camera properties *******************************************//
-    [Header("Camera")]
     /// <summary>
     /// Reference to the camera shake script
     /// </summary>
@@ -104,12 +103,10 @@ public abstract class AbstractWeapon : MonoBehaviour {
     protected AudioManager AudioManager;
 
 
-    // Implementations must override how and when to apply recoil
-    protected abstract void ApplyRecoil();
-
-    protected abstract void CalculateShot(int bulletCount = 1);
-
-    protected abstract void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1);
+    // Implementations can override the following method but do not need to (in the case of Shotgun and EmissionIndex)
+    protected virtual void ApplyRecoil() { }
+    protected virtual void CalculateShot(int bulletCount = 1) { }
+    protected virtual void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { }
 
 
 
