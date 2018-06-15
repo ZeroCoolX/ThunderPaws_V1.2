@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class AbstractWeapon : MonoBehaviour {
 
     //******************************************* Camera properties *******************************************//
+    [Header("Camera")]
     /// <summary>
     /// Reference to the camera shake script
     /// </summary>
@@ -75,7 +76,8 @@ public abstract class AbstractWeapon : MonoBehaviour {
 
     //******************************************* Optional Projectile Properties *******************************************//
     /// <summary>
-    /// Bullet graphics
+    /// Bullet transform object for the shot.
+    /// This is set by the implementation class based off if this is a regular bullet, charged shot, ultimate...etc
     /// </summary>
     public Transform BulletPrefab;
     /// <summary>
@@ -105,9 +107,9 @@ public abstract class AbstractWeapon : MonoBehaviour {
     // Implementations must override how and when to apply recoil
     protected abstract void ApplyRecoil();
 
-    protected abstract void CalculateShot();
+    protected abstract void CalculateShot(int bulletCount = 1);
 
-    protected abstract void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f);
+    protected abstract void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1);
 
 
 

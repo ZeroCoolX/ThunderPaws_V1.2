@@ -104,7 +104,7 @@ public class Shotgun : AbstractWeapon {
         blastInstance.GetComponent<Animator>().SetBool("Invoke", false);
     }
 
-    protected override void CalculateShot() {
+    protected override void CalculateShot(int bulletCount = 1) {
         if (Time.time >= TimeToSpawnEffect) {
             Vector2 dir = Player.DirectionalInput;
             var preCalcYaxis = dir.y;
@@ -233,7 +233,7 @@ public class Shotgun : AbstractWeapon {
         clone.GetComponent<Animator>().SetBool("Invoke", true);
     }
 
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5F) {
+    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { 
         throw new NotImplementedException();
     }
 

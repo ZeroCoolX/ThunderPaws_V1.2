@@ -87,7 +87,7 @@ public class EmissionIndex : AbstractWeapon {
             }
     }
 
-    protected override void CalculateShot() {
+    protected override void CalculateShot(int bulletcount = 1) {
         throw new NotImplementedException("This method also isn't needed which REALLY makes me rething extending AbstractWeapon for this class...");
     }
 
@@ -168,7 +168,7 @@ public class EmissionIndex : AbstractWeapon {
     }
 
 
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5F) {
+    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) {
         throw new NotImplementedException();
     }
 

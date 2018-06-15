@@ -1,36 +1,30 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class FuzzBuster : AbstractWeapon {
-    /// <summary>
-    /// Indicates the player is holding down the fire button
-    /// </summary>
-    private bool _holdingFireDown = false;
-    /// <summary>
-    /// Allows me to track when the fire button is pressed to calculate if we should autofire or not
-    /// </summary>
-    private bool _fireButtonPressed = false;
-    /// <summary>
-    /// If the player is holding down the button for >= 0.5 seconds start firing automatically.
-    /// Otherwise most weapons will be fired as fast as the player can pull the trigger.
-    /// </summary>
-    private float _fireHoldthreshold = 0.5f;
+public class FuzzBuster : ProjectileWeapon {
     /// <summary>
     /// Must store the initial time the user pressed the button
     /// </summary>
     private float _initialFirePressTime;
+    /// <summary>
+    /// Struct containing manual hold calculation data
+    /// </summary>
+    private HoldingFireData _holdData;
 
     private void Update() {
         HandleShootingInput();
+
         if (HasAmmo) {
             AmmoCheck();
         }
+
         WeaponAnimator.SetBool("UltModeActive", UltMode);
     }
 
-
+    /// <summary>
+    /// Implementation specific override.
+    /// Apply the recoil animation and reset the weapon position.
+    /// Play audio
+    /// </summary>
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
@@ -46,125 +40,43 @@ public class FuzzBuster : AbstractWeapon {
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
         // Indicates the user his not pressing the trigger nor the fire key
         if (Input.GetKeyUp(InputManager.Instance.Fire)) {
-            _fireButtonPressed = false;
-            _holdingFireDown = false;
+            _holdData.TriggerPressed = false;
+            _holdData.Holding = false;
         } else if (!Input.GetKey(InputManager.Instance.Fire) && rightTrigger == 0) {
-            _fireButtonPressed = false;
-            _holdingFireDown = false;
+            _holdData.TriggerPressed = false;
+            _holdData.Holding = false;
         }
         // Indicates the user is trying to fire
         if ((Input.GetKey(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
-            if (!_fireButtonPressed) {
-                CalculateShot();
-                _fireButtonPressed = true;
-                _initialFirePressTime = Time.time + _fireHoldthreshold;
+            if (!_holdData.TriggerPressed) {
+                CalculateShot(UltMode ? 3 : 1);
+                _holdData.TriggerPressed = true;
+                _initialFirePressTime = Time.time + FuzzBusterConfig.AutoFireSpacing;
             }
             // They've been holding for longer than 0.5s so auto fire
-            _holdingFireDown = _fireButtonPressed && (Time.time > _initialFirePressTime);
+            _holdData.Holding = _holdData.TriggerPressed && (Time.time > _initialFirePressTime);
 
         }
-        if (_holdingFireDown) {
+        if (_holdData.Holding) {
             if (Time.time > TimeToFire) {
                 TimeToFire = Time.time + 0.25f;
-                CalculateShot();
+                CalculateShot(UltMode ? 3 : 1);
             }
         } 
     }
 
-    protected override void CalculateShot() {
-        Vector2 directionInput = Player.DirectionalInput;
-
-        //Store bullet origin spawn popint (A)
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
-        //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
-        //Generate bullet effect
-        if (Time.time >= TimeToSpawnEffect) {
-            //Bullet effect position data
-            Vector3 hitPosition;
-            Vector3 hitNormal;
-
-            //Precalculate so if we aren't shooting at anything at least the normal is correct
-            //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = directionInput * 50f;
-            if (shot.collider != null) {
-                //If we most likely hit something store the normal so the particles make sense when they shoot out
-                hitNormal = shot.normal;
-                //hitPosition = shot.point;
-            } else {
-                //Rediculously huge so we can use it as a sanity check for the effect
-                hitNormal = new Vector3(999, 999, 999);
-            }
-
-            var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
-            } else if (yAxis > 0.8) {
-                directionInput = Vector2.up;
-            } else {
-                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
-            }
-            //Actually instantiate the effect
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
-            GenerateCameraShake();
-            ApplyRecoil();
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            if (HasAmmo) {
-                Ammo -= 1;
-            }
-            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
-        }
-    }
-
     /// <summary>
-    /// Generate particle effect, spawn bullet, then destroy after allotted time
+    /// All the necessary data used for manually calcualting if the player is holding the fire button.
+    /// Cannot simply use .Key(up)(down) because I allow controller support  so I must detect it myself
     /// </summary>
-    /// <param name="shotPos"></param>
-    /// <param name="shotNormal"></param>
-    /// <param name="whatToHit"></param>
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
-        //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
-        var projRotation = CompensateQuaternion(FirePoint.rotation);
-        var yUltOffset = 0.25f;
-        var xUltOffset = 0.25f;
-        for (var i = 0; i < 3; ++i) {
-            var firePosition = FirePoint.position;
-
-            // This calculation is necessary so the bullets don't stack on top of eachother
-            var yAxis = Player.DirectionalInput.y;
-            print("yAxis = " + yAxis);
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                yUltOffset = 0.125f;
-                // There is one single special case - when the player is facing right, and looking at 45 degrees.
-                // Coorindates must then be +, - instead of all + or all -
-                xUltOffset = 0.125f * (Player.FacingRight ? -1 : 1);
-            } else if (yAxis > 0.8) {
-                yUltOffset = 0f;
-                xUltOffset = 0.25f;
-            } else {
-                yUltOffset = 0.25f;
-                xUltOffset = 0f;
-            }
-
-            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
-            firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(BulletPrefab, firePosition, projRotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-            AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-            if (Mathf.Sign(shotPos.x) < 0) {
-                Vector3 theScale = projectile.transform.localScale;
-                theScale.x *= -1;
-                projectile.transform.localScale = theScale;
-            }
-
-            //Set layermask of parent (either player or baddie)
-            projectile.SetLayerMask(whatToHit);
-            projectile.gameObject.layer = LayerMask.NameToLayer(layer);
-            projectile.Damage = Damage;
-            projectile.MoveSpeed = BulletSpeed;
-            projectile.MaxLifetime = MaxLifetime;
-            projectile.Fire(shotPos, shotNormal);
-            if (!ultMode) return;
-        }
+    private struct HoldingFireData {
+        /// <summary>
+        /// Indicates the trigger was depressed
+        /// </summary>
+        public bool TriggerPressed;
+        /// <summary>
+        /// Indicates the trigger is currently being held down
+        /// </summary>
+        public bool Holding;
     }
 }

@@ -115,11 +115,10 @@ MonoBehaviour:
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
-  UltBulletPrefab: {fileID: 4659474290433748, guid: 715f75d9124e71449aeb537126570544,
-    type: 2}
-  ChargeBulletPrefab: {fileID: 4659474290433748, guid: 1e09c268f42fef745888ba18526d277f,
-    type: 2}
-  _allowshooting: 1
+  BulletPrefabs:
+  - {fileID: 4659474290433748, guid: c64aa5fd98d62bf4fafc1235d1ffd227, type: 2}
+  - {fileID: 4659474290433748, guid: 1e09c268f42fef745888ba18526d277f, type: 2}
+  - {fileID: 4659474290433748, guid: 715f75d9124e71449aeb537126570544, type: 2}
 --- !u!212 &212479537771549468
 SpriteRenderer:
   m_ObjectHideFlags: 1

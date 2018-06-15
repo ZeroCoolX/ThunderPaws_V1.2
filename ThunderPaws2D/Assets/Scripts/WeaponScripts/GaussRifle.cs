@@ -3,57 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// TODO: this should astoundingly be refactored because its almost 100% copied from the FuzzBuster script
-public class GaussRifle : AbstractWeapon {
+public class GaussRifle : ProjectileWeapon {
     /// <summary>
-    /// Some weapons have specific prefabs for their ultimate bullets
+    /// List from least special to most special bullet prefabs
+    /// Access the indicies by using the BulletType enum
     /// </summary>
-    public Transform UltBulletPrefab;
+    public Transform[] BulletPrefabs;
     /// <summary>
-    /// Some weapons have specific prefabs for their alternate fires bullets
+    /// How long in seconds we want to delay trigger pulls from being registered.
+    /// This stops from spamming when in Ult mode as that turned out to be incredibly
+    /// overpowered
+    /// Only allow 1 shot every 1/2 second.
     /// </summary>
-    public Transform ChargeBulletPrefab;
-    /// <summary>
-    /// Indicates the ultimate animations have finished and we can shoot again.
-    /// This inhibits users from spamming the fire key during the ult animation
-    /// </summary>
-    public bool _allowshooting = true;
-
-    // Only allow the ultimate to be shot every half second
-    // Otherwise its SOOOOO OP
     private float _ultShotDelay = 0.5f;
+    /// <summary>
+    /// Timer which keeps track of the our delays to space out shooting by the _ultShotDelay
+    /// </summary>
     private float _timeTillUltAllowed;
     /// <summary>
-    /// Necessaary indicator for the ultMode.
-    /// Indicates the trigger was let go telling the
-    /// system we can shoot again
+    /// Struct containing manual hold calculation data
     /// </summary>
-    private bool _triggerLetGo = true;
+    private HoldingFireData _holdData;
 
     /// <summary>
-    /// Allows detection of ".KeyUp()" logic for controllers since its
-    /// an axis instead of a button
+    /// Check if we should fire any of the 3 types of bullets we can shoot
     /// </summary>
-    private float _triggerLastFrame;
-    private bool _triggerPressed;
-    private bool _holding;
-    private bool _holdingQueued;
-    private bool _ulting;
-
-
     private void Update() {
         WeaponAnimator.SetBool("FireUlt", UltMode);
         if (UltMode) {
-            if (!_ulting) {
-                //StartCoroutine(WaitThenFireUlt());
-                _ulting = true;
-                //Invoke("HardResetPlayerUlt", 0.75f);
-            }
             if(Time.time > _timeTillUltAllowed) {
                 if (Input.GetKeyDown(InputManager.Instance.Fire) || Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger) > WeaponConfig.TriggerFireThreshold) {
                     // Fire normal shot
                     print("SHOOT");
-                    //CancelInvoke("IndicateHolding");
+                    BulletPrefab = BulletPrefabs[(int)BulletType.ULT];
                     CalculateShot();
                     _timeTillUltAllowed = Time.time + _ultShotDelay;
                 }
@@ -67,122 +49,55 @@ public class GaussRifle : AbstractWeapon {
     }
 
 
+    /// <summary>
+    /// Implementation specific override.
+    /// Apply the recoil animation and reset the weapon position
+    /// </summary>
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
     }
 
-    /// <summary>
-    /// Resets the animator
-    /// </summary>
-    /// <returns></returns>
-    protected IEnumerator ResetChargeFire() {
-        yield return new WaitForSeconds(0.5f);
-        WeaponAnimator.SetBool("FireCharge", false);
-    }
-
-    // Helper to wait before firing shot
-    private IEnumerator WaitThenFireUlt() {
-        yield return new WaitForSeconds(0.5f);
-        CalculateChargeShot();
-    }
-
-    private void HardResetPlayerUlt() {
-        Player.DeactivateUltimate();
-        _ulting = false;
-        WeaponAnimator.SetBool("FireUlt", false);
-    }
-
-    private void AllowChargeShooting() {
-        _allowshooting = true;
-    }
 
     /// <summary>
-    /// Gauss Ultimate has a special different kind of bullet
-    /// that needs to be charged and then fired
+    /// Helper method which allows other logic to use a delayed setting of the _holding variable which indicates the player 
+    /// is holding the trigger.
+    /// This method can also be cancelled before executing in case the player let go before we registered it as a "hold"
     /// </summary>
-    private void CalculateChargeShot() {
-        Vector2 directionInput = Player.DirectionalInput;
-
-        //Store bullet origin spawn popint (A)
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
-        //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
-        //Generate bullet effect
-        if (Time.time >= TimeToSpawnEffect) {
-            //Bullet effect position data
-            Vector3 hitPosition;
-            Vector3 hitNormal;
-
-            //Precalculate so if we aren't shooting at anything at least the normal is correct
-            //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = directionInput * 50f;
-            if (shot.collider != null) {
-                //If we most likely hit something store the normal so the particles make sense when they shoot out
-                hitNormal = shot.normal;
-                //hitPosition = shot.point;
-            } else {
-                //Rediculously huge so we can use it as a sanity check for the effect
-                hitNormal = new Vector3(999, 999, 999);
-            }
-
-            var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
-            } else if (yAxis > 0.8) {
-                directionInput = Vector2.up;
-            } else {
-                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
-            }
-
-            //Wait for a quarter of a second for the animation to play then fire!
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, true);
-            GenerateCameraShake();
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            if (HasAmmo) {
-                Ammo -= 1;
-            }
-            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
-        }
-    }
-
     private void IndicateHolding() {
-        _holding = true;
+        _holdData.Holding = true;
     }
 
-    private void ResetHoldCharge() {
-        WeaponAnimator.SetBool("HoldCharge", false);
-    } 
-
     /// <summary>
-    /// Used to determine if the player is holding the trigger down so we shuold shoot at some fixed interval, or whether they're
+    /// Used to determine if the player is holding the trigger down so we shuold wait a small amount of time then fire a charged shot, or whether they're
     /// pressing the trigger rapid fire like and so we should fire every shot.
-    /// If we are in ultimate mode - right now just shoot three bullets for every trigger pull.
     /// </summary>
     private void HandleShootingInput() {
         // Its pretty damn different logic for KB/M vs controllers
         print("JoystickManagerController.Instance.ConnectedControllers() = " + JoystickManagerController.Instance.ConnectedControllers());
         if (JoystickManagerController.Instance.ConnectedControllers() == 0) {
             if (Input.GetKeyUp(InputManager.Instance.Fire)) {
-                if (_holding) {
+                if (_holdData.Holding) {
                     CancelInvoke("IndicateHolding");
                     // Fire awesome charge shot!
                     WeaponAnimator.SetBool("HoldCharge", false);
-                    ApplyRecoil();
-                    CalculateChargeShot();
+                    // Set the bullet to the charge shot
+                    BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
+                    CalculateShot();
                 } else {
                     // Fire normal shot
                     print("SHOOT");
                     CancelInvoke("IndicateHolding");
+                    BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
                     CalculateShot();
                 }
-                _triggerPressed = false;
-                _holding = false;
-            } else if (_holding) {
+                _holdData.TriggerPressed = false;
+                _holdData.Holding = false;
+            } else if (_holdData.Holding) {
                 WeaponAnimator.SetBool("HoldCharge", true);
             }
-            if (Input.GetKeyDown(InputManager.Instance.Fire) && !_holding) {
-                _holdingQueued = true;
+            if (Input.GetKeyDown(InputManager.Instance.Fire) && !_holdData.Holding) {
+                _holdData.HoldingQueued = true;
                 // Wait 1/10th of a second to set the holding
                 Invoke("IndicateHolding", 0.25f);
             }
@@ -190,134 +105,59 @@ public class GaussRifle : AbstractWeapon {
             var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
             // This indicates the user is pressing the trigger - must wait to determine if we are holding it 
             // or going to let it go
-            if (_holding && (rightTrigger == 0)) {
+            if (_holdData.Holding && (rightTrigger == 0)) {
                 CancelInvoke("IndicateHolding");
                 // Fire awesome charge shot!
                 WeaponAnimator.SetBool("HoldCharge", false);
-                ApplyRecoil();
-                CalculateChargeShot();
-                _holdingQueued = false;
-                _triggerPressed = false;
-                _holding = false;
-            } else if (_holding) {
+                // Set the bullet to the charge shot
+                BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
+                CalculateShot();
+                _holdData.HoldingQueued = false;
+                _holdData.TriggerPressed = false;
+                _holdData.Holding = false;
+            } else if (_holdData.Holding) {
                 print("HOLDING");
                 WeaponAnimator.SetBool("HoldCharge", true);
-                //Invoke("ResetHoldCharge", 0.25f);
             } else if (rightTrigger > WeaponConfig.TriggerFireThreshold) {
-                _triggerPressed = true;
+                _holdData.TriggerPressed = true;
             } else {
-                if (_triggerPressed) {
+                if (_holdData.TriggerPressed) {
                     // Fire normal shot
                     print("SHOOT");
                     CancelInvoke("IndicateHolding");
+                    // Set the bullet to the DEFAULT shot
+                    BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
                     CalculateShot();
                 }
-                _holdingQueued = false;
-                _triggerPressed = false;
-                _holding = false;
+                _holdData.HoldingQueued = false;
+                _holdData.TriggerPressed = false;
+                _holdData.Holding = false;
             }
-            if (_triggerPressed && !_holding && !_holdingQueued) {
-                _holdingQueued = true;
+            if (_holdData.TriggerPressed && !_holdData.Holding && !_holdData.HoldingQueued) {
+                _holdData.HoldingQueued = true;
                 // Wait 1/10th of a second to set the holding
                 Invoke("IndicateHolding", 0.25f);
             }
         }
     }
 
-    protected override void CalculateShot() {
-        Vector2 directionInput = Player.DirectionalInput;
-
-        //Store bullet origin spawn popint (A)
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
-        //Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
-        //Generate bullet effect
-        if (Time.time >= TimeToSpawnEffect) {
-            //Bullet effect position data
-            Vector3 hitPosition;
-            Vector3 hitNormal;
-
-            //Precalculate so if we aren't shooting at anything at least the normal is correct
-            //Arbitrarily laarge number so the bullet trail flys off the camera
-            hitPosition = directionInput * 50f;
-            if (shot.collider != null) {
-                //If we most likely hit something store the normal so the particles make sense when they shoot out
-                hitNormal = shot.normal;
-                //hitPosition = shot.point;
-            } else {
-                //Rediculously huge so we can use it as a sanity check for the effect
-                hitNormal = new Vector3(999, 999, 999);
-            }
-
-            var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
-            } else if (yAxis > 0.8) {
-                directionInput = Vector2.up;
-            } else {
-                directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
-            }
-            //Actually instantiate the effect
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
-            GenerateCameraShake();
-            ApplyRecoil();
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            if (HasAmmo) {
-                Ammo -= 1;
-            }
-            GameMaster.Instance.GetPlayerStatsUi(1).SetAmmo();
-        }
-    }
-
     /// <summary>
-    /// Generate particle effect, spawn bullet, then destroy after allotted time
+    /// All the necessary data used for manually calcualting if the player is holding the fire button.
+    /// Cannot simply use .Key(up)(down) because I allow controller support  so I must detect it myself
     /// </summary>
-    /// <param name="shotPos"></param>
-    /// <param name="shotNormal"></param>
-    /// <param name="whatToHit"></param>
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool chargeShot, float freeFlyDelay = 0.5f) {
-        //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
-        var projRotation = CompensateQuaternion(FirePoint.rotation);
-        var yUltOffset = 0.25f;
-        var xUltOffset = 0.25f;
-        // for (var i = 0; i < 1; ++i) {
-        var i = 0;
-            var firePosition = FirePoint.position;
-
-            // This calculation is necessary so the bullets don't stack on top of eachother
-            var yAxis = Player.DirectionalInput.y;
-            print("yAxis = " + yAxis);
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
-                yUltOffset = 0.125f;
-                // There is one single special case - when the player is facing right, and looking at 45 degrees.
-                // Coorindates must then be +, - instead of all + or all -
-                xUltOffset = 0.125f * (Player.FacingRight ? -1 : 1);
-            } else if (yAxis > 0.8) {
-                yUltOffset = 0f;
-                xUltOffset = 0.25f;
-            } else {
-                yUltOffset = 0.25f;
-                xUltOffset = 0f;
-            }
-
-            firePosition.y = FirePoint.position.y + (i > 0 ? (i % 2 == 0 ? yUltOffset : yUltOffset * -1) : 0);
-            firePosition.x = FirePoint.position.x + (i > 0 ? (i % 2 == 0 ? xUltOffset : xUltOffset * -1) : 0);
-            Transform bulletInstance = Instantiate(UltMode ? UltBulletPrefab : (chargeShot ? ChargeBulletPrefab :  BulletPrefab), firePosition, projRotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
-            AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-            if (Mathf.Sign(shotPos.x) < 0) {
-                Vector3 theScale = projectile.transform.localScale;
-                theScale.x *= -1;
-                projectile.transform.localScale = theScale;
-            }
-
-            //Set layermask of parent (either player or baddie)
-            projectile.SetLayerMask(whatToHit);
-            projectile.gameObject.layer = LayerMask.NameToLayer(layer);
-            projectile.Damage = Damage;
-            projectile.MoveSpeed = BulletSpeed;
-            projectile.MaxLifetime = MaxLifetime;
-            projectile.Fire(shotPos, shotNormal);
-        //}
+    private struct HoldingFireData {
+        /// <summary>
+        /// Indicates the trigger was depressed
+        /// </summary>
+        public bool TriggerPressed;
+        /// <summary>
+        /// Indicates the trigger is currently being held down
+        /// </summary>
+        public bool Holding;
+        /// <summary>
+        /// INdicates we have not set the _holding variable and need to is we indicate a hold is
+        /// happeneing
+        /// </summary>
+        public bool HoldingQueued;
     }
 }

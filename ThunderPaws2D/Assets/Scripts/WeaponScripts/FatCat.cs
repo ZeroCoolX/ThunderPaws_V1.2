@@ -138,7 +138,7 @@ public class FatCat : AbstractWeapon {
                 directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
             }
 
-            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, UltMode);
+            GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile);
             GenerateCameraShake();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
             if (HasAmmo) {
@@ -148,7 +148,7 @@ public class FatCat : AbstractWeapon {
         }
     }
 
-    protected override void CalculateShot() {
+    protected override void CalculateShot(int bulletCount = 1) {
         throw new NotImplementedException();
     }
 
@@ -158,7 +158,7 @@ public class FatCat : AbstractWeapon {
     /// <param name="shotPos"></param>
     /// <param name="shotNormal"></param>
     /// <param name="whatToHit"></param>
-    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, bool ultMode, float freeFlyDelay = 0.5f) {
+    protected override void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) {
         //Fire the projectile - this will travel either out of the frame or hit a target - below should instantiate and destroy immediately
         var projRotation = CompensateQuaternion(FirePoint.rotation);
         var yUltOffset = 0.25f;
@@ -200,7 +200,6 @@ public class FatCat : AbstractWeapon {
             projectile.MoveSpeed = BulletSpeed;
             projectile.MaxLifetime = MaxLifetime;
             projectile.Fire(shotPos, shotNormal);
-            if (!ultMode) return;
         }
     }
 }
