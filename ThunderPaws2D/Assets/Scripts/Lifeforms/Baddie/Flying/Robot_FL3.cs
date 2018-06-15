@@ -45,7 +45,9 @@ public class Robot_FL3 : FlyingBaddieLifeform {
 
         // Since this doesn't really tract the player nor has any homing bullets we
         // can have a much better movement bounds
-        CalculateBounds(3f, 12f);
+        if (Target != null) {
+            CalculateBounds(3f, 12f);
+        }
         FlyingPositionData.MoveSpeed = 2.5f;
 
         // TODO: this is bad - half the time TargetY is treated like an actual

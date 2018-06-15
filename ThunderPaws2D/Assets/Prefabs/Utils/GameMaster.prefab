@@ -77,7 +77,9 @@ MonoBehaviour:
   WeaponList:
   - {fileID: 4795677035519362, guid: 6c6ffa406a5c286448d15ffe54c6754a, type: 2}
   - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
-  - {fileID: 4795677035519362, guid: 39de33104479d134e851ef57b2189e8d, type: 2}
+  - {fileID: 4795677035519362, guid: b4405405e64c4bc4e910556f47971a48, type: 2}
+  - {fileID: 4795677035519362, guid: 6ed7f2a9b5161ae478f1315437fe44e0, type: 2}
+  - {fileID: 4795677035519362, guid: 7824611b3149fcd498df812d4dde6af8, type: 2}
   LastSeenInHorde: 0
   UIOverlay: {fileID: 0}
   GameOverUi: {fileID: 0}
@@ -101,7 +103,7 @@ MonoBehaviour:
   SpawnPoints:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   SpawnPointIndex: 0
-  SpawnDelay: 3
-  ShowDifficultyScreen: 1
+  ShowDifficultyScreen: 0
   AudioManager: {fileID: 0}
