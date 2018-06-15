@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 212462002033876968}
   - component: {fileID: 114761738767434084}
   - component: {fileID: 95103481590663714}
+  - component: {fileID: 114476527554363036}
+  - component: {fileID: 114294031998205662}
   m_Layer: 0
   m_Name: GaussUltDetonationEffect_Big
   m_TagString: Untagged
@@ -59,6 +61,30 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114294031998205662
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630800863283990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3684518fa8e533c49812bdf231db1b3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AoeDamageRadius: 4
+  Damage: 0
+--- !u!114 &114476527554363036
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1630800863283990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114761738767434084
 MonoBehaviour:
   m_ObjectHideFlags: 1

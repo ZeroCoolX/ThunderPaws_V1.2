@@ -21,7 +21,7 @@ public class GaussRifle : AbstractWeapon {
 
     // Only allow the ultimate to be shot every half second
     // Otherwise its SOOOOO OP
-    private float _ultShotDelay = 0.05f;
+    private float _ultShotDelay = 0.5f;
     private float _timeTillUltAllowed;
     /// <summary>
     /// Necessaary indicator for the ultMode.
@@ -49,15 +49,14 @@ public class GaussRifle : AbstractWeapon {
                 _ulting = true;
                 //Invoke("HardResetPlayerUlt", 0.75f);
             }
-            print("_timeTillUltAllowed = " + _timeTillUltAllowed + " and Time.time =" +Time.time);
             if(Time.time > _timeTillUltAllowed) {
-                if (Input.GetKeyUp(InputManager.Instance.Fire) || Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger) > WeaponConfig.TriggerFireThreshold) {
+                if (Input.GetKeyDown(InputManager.Instance.Fire) || Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger) > WeaponConfig.TriggerFireThreshold) {
                     // Fire normal shot
                     print("SHOOT");
                     //CancelInvoke("IndicateHolding");
                     CalculateShot();
+                    _timeTillUltAllowed = Time.time + _ultShotDelay;
                 }
-                _timeTillUltAllowed = Time.time + _ultShotDelay;
             }
         } else {
             HandleShootingInput();

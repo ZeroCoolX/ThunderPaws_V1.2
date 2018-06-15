@@ -16,7 +16,6 @@ public class SimpleCollider : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private bool _continuousCollision;
-
     /// <summary>
     /// Optional list of object NOT to collide with even if they're apart of the WhatToHit Layermask
     /// </summary>
@@ -86,16 +85,15 @@ public class SimpleCollider : MonoBehaviour {
             return;
         }
         if (_useCircleCollider) {
-            if (_continuousCollision) {
-                CheckForMultiCircleCollisions();
-            } else {
-                CheckForCircleCollisions();
-            }
+            CheckForMultiCircleCollisions();
         } else {
             CheckForRaycastCollisions();
         }
     }
 
+    /// <summary>
+    /// Collects all possible collisions within a radius
+    /// </summary>
     private void CheckForMultiCircleCollisions() {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius, _whatToHit);
         foreach (var collider in colliders) {
@@ -106,13 +104,6 @@ public class SimpleCollider : MonoBehaviour {
         }
     }
 
-    private void CheckForCircleCollisions() {
-        Collider2D collider = Physics2D.OverlapCircle(transform.position, _radius, _whatToHit);
-        if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
-            InvokeCollision.Invoke(transform.position, collider);
-            _hit = true;
-        }
-    }
 
     /// <summary>
     /// Check for collisions

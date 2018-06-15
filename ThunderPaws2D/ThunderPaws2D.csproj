@@ -285,6 +285,7 @@
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsUIController.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\AbstractProjectile.cs" />
+    <Compile Include="Assets\Scripts\ProjectileControllers\AoeDamageController.cs" />
     <Compile Include="Assets\Scripts\ProjectileControllers\BulletProjectile.cs" />
     <Compile Include="Assets\Scripts\Tutorials\Tutorial1Controller.cs" />
     <Compile Include="Assets\Scripts\Tutorials\Tutorial2Controller.cs" />

@@ -13,6 +13,11 @@ public abstract class AbstractProjectile : MonoBehaviour {
     public Transform ImpactEffect;
 
     /// <summary>
+    /// Some projectiles explode and cause AOE damage
+    /// </summary>
+    public SimpleCollider AoeDamageCollider;
+
+    /// <summary>
     /// How fast the bullet travels
     /// Set from the weapon calling its creation
     /// 30f is the defaualt speed if one is not set
@@ -111,11 +116,26 @@ public abstract class AbstractProjectile : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    // This is for AOE Damage
+    protected void Apply(Vector3 v, Collider2D c) {
+        var lifeform = c.transform.GetComponent<BaseLifeform>();
+        if (lifeform != null) {
+            print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+            lifeform.Damage(Damage);
+        }
+    }
+
     protected void GenerateEffect() {
         var clone = Instantiate(ImpactEffect, transform.position, transform.rotation);
         clone.GetComponent<SpriteRenderer>().sortingOrder = 2;
         clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
         clone.GetComponent<Animator>().SetBool("Invoke", true);
+        // Set the optional AOE damage controller if it has one
+        var aoe = clone.GetComponent<AoeDamageController>();
+        if(aoe != null) {
+            // AOE damage should not be 100% of the initial damage so just give off 75% of it
+            aoe.Damage = Damage * 0.75f;
+        }
         GameMaster.Instance.AudioManager.playSound("SmallExplosion");
     }
 

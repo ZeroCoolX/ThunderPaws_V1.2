@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1447213198769282}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.529, y: -4.043, z: 0}
+  m_LocalPosition: {x: -11.278027, y: -5.3418965, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,9 +56,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3, y: -0.031937122}
+  m_Offset: {x: -0.01, y: 0.06}
   serializedVersion: 2
-  m_Radius: 0.15
+  m_Radius: 0.31
 --- !u!95 &95770626432083926
 Animator:
   serializedVersion: 3
@@ -90,6 +90,7 @@ MonoBehaviour:
   ExplodeOnDeath: 1
   ImpactEffect: {fileID: 4880655000989574, guid: 3ea66033a8b650b46b0b5ae8e0803c34,
     type: 2}
+  AoeDamageCollider: {fileID: 0}
   MoveSpeed: 35
   Damage: 0
   MaxLifetime: 0.5
@@ -142,7 +143,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a4f55d9d336783d4b85720a01c0e50f0, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47767fca41f7bf24a85a25132b3ebfa1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
