@@ -103,43 +103,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// index 1 = player 2 coins per level
     /// </summary>
     private int[] _playerCoinCounts = new int[2];
-    private int _maxLives = 3;
     public int Score { get; set; }
-    private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
-    public Transform[] DifficultyObjects = new Transform[3];
-    /// <summary>
-    /// Set by the player in the menu. Default is easy
-    /// </summary>
-    public string Difficulty = GameConstants.Difficulty_Easy;
-    public void SetDifficulty() {
-        int[] values;
-        var livesAndHealth = _difficulties.TryGetValue(Difficulty.ToLower(), out values);
-        if (values == null) {
-            print("Something went wrong - using the default difficulty");
-            livesAndHealth = _difficulties.TryGetValue("easy", out values);
-        }
-        LivesManager.Lives = values[0];
-        print("Settiung heath to " + values[1]);
-        LivesManager.Health = values[1];
-
-        // Based on the difficulty selected set theit starting score
-        MaxScorePossible = values[0] == 10 ? 200 : values[0] == 5 ? 400 : 600;
-
-        var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player).GetComponent<Player>();
-        if (player == null) {
-            throw new MissingComponentException("The player is missing at the time of selecting a difficulty?!");
-        }
-        var playerStats = player.PlayerStats;
-        if (playerStats == null) {
-            throw new MissingComponentException("There are no playterstats on the player");
-        }
-        // Set the max health
-        playerStats.MaxHealth = LivesManager.Health;
-        // Set the max lives
-        _maxLives = LivesManager.Lives;
-        UIManager.Instance.GetUi("DifficultySelector").gameObject.SetActive(false);
-        PlayerHudManager.Instance.GetPlayerHud(player.GetComponent<Player>().PlayerNumber).SetLives(_maxLives);
-    }
     // WEAPON
     /// <summary>
     /// Based off the key supplied return the corresponding weapon from the map
@@ -154,6 +118,14 @@ public class GameMasterV2 : MonoBehaviour {
         }
         return weapon;
     }
+    //TODO: Must remove everything below because its terrible
+    /// <summary>
+    /// Delegate for snotifying the horde the player died, so reset the camera and kill themselves
+    /// </summary>
+    /// <param name="choice"></param>
+    public delegate void PlayerDeadResetHordeCallback();
+    public PlayerDeadResetHordeCallback OnHordeKilledPlayer;
+    public bool LastSeenInHorde = false;
     // ************************************************************ TODO: this is just for now ************************************************************ //
 
 
@@ -174,15 +146,6 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     public bool SinglePlayer { get { return Maps.PlayersPrefabMap != null && Maps.PlayersPrefabMap.Count == 1; } }
 
-
-    //TODO: Must remove everything below because its terrible
-    /// <summary>
-    /// Delegate for snotifying the horde the player died, so reset the camera and kill themselves
-    /// </summary>
-    /// <param name="choice"></param>
-    public delegate void PlayerDeadResetHordeCallback();
-    public PlayerDeadResetHordeCallback OnHordeKilledPlayer;
-    public bool LastSeenInHorde = false;
 
 
 
@@ -231,11 +194,6 @@ public class GameMasterV2 : MonoBehaviour {
     /// populate the maps
     /// </summary>
     private void BuildMaps() {
-        // Difficulty, [lives, max health]
-        _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
-        _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
-        _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
-
         // Load sprites for player animation map
         Maps.PlayerSpiteMap.Add(0, PlayerSpriteList[0]);
         Maps.PlayerSpiteMap.Add(45, PlayerSpriteList[1]);
@@ -294,6 +252,20 @@ public class GameMasterV2 : MonoBehaviour {
 
             // Push a player onto the stack indicating he is alive in the scene
             PlayersCurrentlyAlive.Push(0);
+        }
+    }
+
+    /// <summary>
+    /// Apply the difficulty by calcualting the max score possible right now (super basic and probably incorrect)
+    /// based off the difficulty which is just Health and Lives.
+    /// These are set by the DifficultyManager sometime before the level
+    /// </summary>
+    private void ApplyDifficulty() {
+        // Based on the difficulty selected set theit starting score
+        MaxScorePossible = LivesManager.Lives == 10 ? 200 : LivesManager.Lives == 5 ? 400 : 600;
+
+        foreach (var player in Maps.PlayersPrefabMap) {
+            PlayerHudManager.Instance.GetPlayerHud(player.Value.GetComponent<Player>().PlayerNumber).SetLives(LivesManager.Lives);
         }
     }
 
@@ -366,16 +338,17 @@ public class GameMasterV2 : MonoBehaviour {
             _fullRespawnOccurred = true;
             var spawn = SpawnPointManager.Instance.GetCurrentSpawn();
             var controller = spawn.GetComponent<CheckpointController>();
-            if (controller != null) {
-                if (SpawnPointManager.Instance.GetSpawnIndex() != 2) {
-                    controller.DeactivateBaddiesInCheckpoint();
-                    controller.SpawnFreshBaddiesForCheckpoint(1.5f);
-                    if (LastSeenInHorde) {
-                        OnHordeKilledPlayer.Invoke();
-                    }
-                } else {
+            if (controller == null) {
+                throw new MissingComponentException("No Checkpoint controller");
+            }
+            if (SpawnPointManager.Instance.GetSpawnIndex() != 2) {
+                controller.DeactivateBaddiesInCheckpoint();
+                controller.SpawnFreshBaddiesForCheckpoint(1.5f);
+                if (LastSeenInHorde) {
                     OnHordeKilledPlayer.Invoke();
                 }
+            } else {
+                OnHordeKilledPlayer.Invoke();
             }
             // If this is a full respawn we are respawning 1-2 players exactly at the last checkpoint
             foreach (var player in Maps.PlayersPrefabMap) {
@@ -414,15 +387,15 @@ public class GameMasterV2 : MonoBehaviour {
 
     // TODO: REFACTOR THIS OUT - IT SHOULD NOT BE IN HERE I THINK 
     public void CalculateHordeScore(int horde) {
-        //var inc = horde == 1 ? 25 : 50;
-        //if (Difficulty.ToLower().Equals(GameConstants.Difficulty_Easy)) {
-        //    inc = inc * 1;
-        //} else if (Difficulty.ToLower().Equals(GameConstants.Difficulty_Normal)) {
-        //    inc = inc * 2;
-        //} else {
-        //    inc = inc * 3;
-        //}
-        //Score += inc;
+        var inc = horde == 1 ? 25 : 50;
+        if (DifficultyManager.Instance.Difficulty.ToLower().Equals(GameConstants.Difficulty_Easy)) {
+            inc = inc * 1;
+        } else if (DifficultyManager.Instance.Difficulty.ToLower().Equals(GameConstants.Difficulty_Normal)) {
+            inc = inc * 2;
+        } else {
+            inc = inc * 3;
+        }
+        Score += inc;
     }
     // TODO: THIS AS WELL NEEDS REFACTORING
     public void GameOver() {
@@ -454,7 +427,8 @@ public class GameMasterV2 : MonoBehaviour {
         // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.F)) {
             try {
-                SetDifficulty();
+                DifficultyManager.Instance.SetDifficulty();
+                ApplyDifficulty();
             } catch (System.Exception e) {
                 print("Couldn't set difficulty");
             }

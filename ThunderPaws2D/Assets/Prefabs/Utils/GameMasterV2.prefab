@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4169245292921112}
   - component: {fileID: 114499844392596702}
+  - component: {fileID: 114638992511787690}
   m_Layer: 0
   m_Name: GameMasterV2
   m_TagString: Untagged
@@ -67,3 +68,16 @@ MonoBehaviour:
   PlayerPrefabList:
   - {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
   - {fileID: 4778167549552236, guid: 97d24a1dc827f2b488b03d9b121e4819, type: 2}
+  RemainingLives: 0
+  LastSeenInHorde: 0
+--- !u!114 &114638992511787690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13344509154c0054dbe5a1c80a1609f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

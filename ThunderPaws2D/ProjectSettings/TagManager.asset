@@ -19,6 +19,7 @@ TagManager:
   - PlayerHudManager
   - UIOverlay
   - UIManager
+  - DifficultyExit
   layers:
   - Default
   - TransparentFX
