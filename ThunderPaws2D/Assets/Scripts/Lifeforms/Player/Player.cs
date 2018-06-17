@@ -46,7 +46,7 @@ public class Player : PlayerLifeform {
     public bool FacingRight = true;
 
     /// <summary>
-    /// Quantatative data of stats. Visually the GameMaster handles that with the PlayerStatsUIController.
+    /// Quantatative data of stats. Visually the GameMasterV2 handles that with the PlayerStatsUIController.
     /// </summary>
     public PlayerStats PlayerStats;
 
@@ -104,8 +104,8 @@ public class Player : PlayerLifeform {
         if(_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
         }
-        //Add delegate for weapon switch notification from the GameMaster
-        GameMaster.Instance.OnWeaponSwitch += SwitchWeapon;
+        //Add delegate for weapon switch notification from the GameMasterV2
+        //GameMasterV2.Instance.OnWeaponSwitch += SwitchWeapon;
 
         //Setup stats
         PlayerStats = GetComponent<PlayerStats>();
@@ -114,9 +114,9 @@ public class Player : PlayerLifeform {
         }
         PlayerStats.MaxHealth = LivesManager.Health;
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
         PlayerStats.CurrentUltimate = 0;
-        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
@@ -165,7 +165,7 @@ public class Player : PlayerLifeform {
 
         if (Input.GetButtonUp(JoystickId + GameConstants.Input_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
             SwitchWeapon();
-            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_WeaponSwitch);
+            AudioManager.Instance.playSound(GameConstants.Audio_WeaponSwitch);
         }
     }
 
@@ -189,7 +189,7 @@ public class Player : PlayerLifeform {
         var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
-            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_Melee);
+            AudioManager.Instance.playSound(GameConstants.Audio_Melee);
             // Wait for half the animation to play so it looks like the object takes damage as the fist hits them instead of instantly on button press
             Invoke("OnMeleeInputDown", 0.125f);
             // After 0.25 seconds deactivate melee
@@ -334,7 +334,7 @@ public class Player : PlayerLifeform {
     /// </summary>
     /// <param name="degree"></param>
     private void DisplayCorrectSprite(int degree) {
-        transform.GetComponent<SpriteRenderer>().sprite = GameMaster.Instance.GetSpriteFromMap(degree);
+        transform.GetComponent<SpriteRenderer>().sprite = GameMasterV2.Instance.GetSpriteFromMap(degree);
     }
 
     /// <summary>
@@ -346,7 +346,7 @@ public class Player : PlayerLifeform {
         if (weaponKey != GameConstants.ObjectName_DefaultWeapon) {
             _currentWeapon.gameObject.SetActive(false);
         }
-        _currentWeapon = Instantiate(GameMaster.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
+        _currentWeapon = Instantiate(GameMasterV2.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
         _currentWeapon.gameObject.SetActive(true);
         if(_ownedWeapons.Count == 2) {
             var previousWeapon = _ownedWeapons[1];
@@ -357,7 +357,7 @@ public class Player : PlayerLifeform {
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
         try {
-            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_WeaponPickup);
+            AudioManager.Instance.playSound(GameConstants.Audio_WeaponPickup);
         }catch(System.Exception e) {
             print("Either the game master or the audiomanager doesn't exist yet");
         }
@@ -398,10 +398,10 @@ public class Player : PlayerLifeform {
     public void PickupCoin() {
         if (!PlayerStats.UltEnabled) {
             PlayerStats.CurrentUltimate += 1;
-            GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+            PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
         }
         //Right now hardcoded for player 1 coins
-        GameMaster.Instance.AddCoins(0);
+        GameMasterV2.Instance.AddCoins(0);
     }
 
     /// <summary>
@@ -423,7 +423,7 @@ public class Player : PlayerLifeform {
 
     private void DepleteUltimate() {
         --PlayerStats.CurrentUltimate;
-        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
     }
 
     /// <summary>
@@ -432,7 +432,7 @@ public class Player : PlayerLifeform {
     public void DeactivateUltimate() {
         // Since we know we're forcibly calling deactive - make sure the UI updates correctly
         PlayerStats.CurrentUltimate = 0;
-        GameMaster.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
 
         // Stop the ultimate
         PlayerStats.UltEnabled = false;
@@ -461,9 +461,9 @@ public class Player : PlayerLifeform {
     /// </summary>
     public override void Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
-        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
         if(PlayerStats.CurrentHealth <= 0) {
-            GameMaster.KillPlayer(this);
+            GameMasterV2.KillPlayer(this);
         }
     }
 
@@ -472,6 +472,6 @@ public class Player : PlayerLifeform {
     /// </summary>
     public void RegenerateAllHealth() {
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        GameMaster.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
     }
 }

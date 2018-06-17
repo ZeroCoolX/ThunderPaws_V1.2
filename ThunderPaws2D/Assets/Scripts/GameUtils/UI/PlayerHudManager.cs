@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerHudManager : MonoBehaviour {
+    public static PlayerHudManager Instance; 
     /// <summary>
     /// List containing all the HUDs of the players. Min 1, max 2
     /// </summary>
     private PlayerStatsUIController[] _playerHuds = new PlayerStatsUIController[2];
 
     private void Awake() {
+        if (Instance == null) {
+            Instance = this;
+        } else if (Instance != this) {
+            Destroy(gameObject);
+        }
+
         // Populate our HUD list
         try {
             _playerHuds[0] = transform.Find("Player1Stats").GetComponent<PlayerStatsUIController>();

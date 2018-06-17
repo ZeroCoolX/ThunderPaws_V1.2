@@ -55,7 +55,7 @@ public class BulletProjectile : AbstractProjectile {
         if (hitObject.gameObject.tag == GameConstants.Tag_Baddie) {
             print(" PLAY CUZ " + hitObject.gameObject.tag);
             var rand = UnityEngine.Random.Range(0, 9);
-            GameMaster.Instance.AudioManager.playSound(rand % 2 == 0 ? "BulletImpact1" : "BulletImpact2");
+            AudioManager.Instance.playSound(rand % 2 == 0 ? "BulletImpact1" : "BulletImpact2");
         }
         else{
             print("DONT PLAY CUZ " + hitObject.gameObject.tag);

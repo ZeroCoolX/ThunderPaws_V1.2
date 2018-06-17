@@ -176,7 +176,7 @@ public class GameMaster : MonoBehaviour {
     // Use this for initialization
     void Awake () {
         if (Instance == null) {//
-            Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();//
+            Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMasterV2).GetComponent<GameMaster>();//
         }//
 
         // PLAYER //
@@ -308,7 +308,7 @@ public class GameMaster : MonoBehaviour {
 
     // DONE //
     private void Start() {
-        AudioManager = AudioManager.instance;
+        AudioManager = AudioManager.Instance;
         if (AudioManager == null) {
             throw new MissingComponentException("No AudioManager was found");
         }
@@ -319,7 +319,7 @@ public class GameMaster : MonoBehaviour {
 
         CamShake = transform.GetComponent<CameraShake>();
         if (CamShake == null) {
-            throw new MissingReferenceException("No CameraShake found on gamemaster");
+            throw new MissingReferenceException("No CameraShake found on GameMasterV2");
         }
         //Set player stats UI reference
         _player1StatsUi = GetPlayerStatsUi(1);
@@ -593,7 +593,7 @@ public class GameMaster : MonoBehaviour {
             } catch (Exception e) {
                 print("Hit the one in a million exception. Congratulations");
                 // Its possible like the EXACT moment we try and get the player that's alive, he might die. if that happens and this throws an error just chill because
-                // as soon as he hits his "KillPlayer" logic the GameMaster will see no players left and full respawn them
+                // as soon as he hits his "KillPlayer" logic the GameMasterV2 will see no players left and full respawn them
                 yield break;
             }
         }

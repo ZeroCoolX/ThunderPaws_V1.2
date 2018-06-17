@@ -15,6 +15,11 @@ public class CheckpointController : MonoBehaviour {
     public int CheckpointSpawnIndex;
     public Transform[] CheckpointSpawns;
 
+    /// <summary>
+    /// Used to handle where to spawn the player
+    /// </summary>
+    private SpawnPointManager _spawnManager;
+
     // Use this for initialization
     void Start() {
         //Add delegate for collision detection
@@ -27,9 +32,9 @@ public class CheckpointController : MonoBehaviour {
     }
 
     public void DeactivateBaddiesInCheckpoint() {
-        //GameMaster.Instance.SpawnPointIndex -= 1;
+        //GameMasterV2.Instance.SpawnPointIndex -= 1;
         print("Destroying BADDIEDDSS" + " at Time [" + Time.time + "]");
-        if(GameMaster.Instance.SpawnPointIndex != 2) {
+        if(SpawnPointManager.Instance.GetSpawnIndex() != 2) {
             Destroy(BaddiesInCheckpointRange.gameObject);
         }
     }
@@ -40,7 +45,7 @@ public class CheckpointController : MonoBehaviour {
 
     private void Spawn() {
         BaddieSpawn = CheckpointSpawns[CheckpointSpawnIndex];
-        print("CreatingBaddies for spawn : " + gameObject.name + " with spawn index : " + GameMaster.Instance.SpawnPointIndex + " at Time [" + Time.time+"]");
+        print("CreatingBaddies for spawn : " + gameObject.name + " with spawn index : " + SpawnPointManager.Instance.GetSpawnIndex() + " at Time [" + Time.time+"]");
         BaddiesInCheckpointRange = Checkpoints[CheckpointIndex];
         var clone = (Instantiate(BaddiesInCheckpointRange, BaddieSpawn.position, BaddieSpawn.rotation) as Transform);
         BaddiesInCheckpointRange = clone;
@@ -55,8 +60,8 @@ public class CheckpointController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         // Increment spawn!
         print("Hit Checkpoint!!!!!");
-        GameMaster.Instance.SpawnPointIndex += 1;
-        if(GameMaster.Instance.SpawnPointIndex != 2) {
+        SpawnPointManager.Instance.UpdateSpawnIndex();
+        if(SpawnPointManager.Instance.GetSpawnIndex() != 2) {
             SpawnFreshBaddiesForCheckpoint();
         }
         // Refresh the players health once they hit the checkpoint

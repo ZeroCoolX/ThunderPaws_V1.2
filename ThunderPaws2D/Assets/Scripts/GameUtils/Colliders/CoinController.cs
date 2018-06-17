@@ -127,7 +127,7 @@ public class CoinController : MonoBehaviour {
     }
 
     private void FlyToUltimateMeter() {
-        var collectionPoint = GameMaster.Instance.CoinCollectionOrigin;
+        var collectionPoint = GameMasterV2.Instance.CoinCollectionOrigin;
         collectionPoint.x += _coinCollectionOffset;
         transform.position = Vector3.Lerp(transform.position, collectionPoint, 3f * Time.deltaTime);
     }
@@ -135,7 +135,7 @@ public class CoinController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         var player = c.transform.GetComponent<Player>();
         player.PickupCoin();
-        GameMaster.Instance.AudioManager.playSound("Coin");
+        AudioManager.Instance.playSound("Coin");
         //Must set the script reference so we can tell where to put the coin collection offset
         _coinCollectionOffset = player.FacingRight ? 3 : -2;
         _collected = true;

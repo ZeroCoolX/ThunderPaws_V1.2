@@ -52,7 +52,8 @@ public class ProjectileWeapon : AbstractWeapon {
             if (HasAmmo) {
                 Ammo -= 1;
             }
-            GameMaster.Instance.GetPlayerStatsUi(Player.PlayerNumber).SetAmmo();
+
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
         }
     }
 

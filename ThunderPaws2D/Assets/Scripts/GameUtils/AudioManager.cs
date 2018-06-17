@@ -42,18 +42,18 @@ public class Sound {
 
 public class AudioManager : MonoBehaviour {
 
-    public static AudioManager instance;
+    public static AudioManager Instance;
 
     [SerializeField]
     Sound[] sounds;
 
     void Awake() {
-        if (instance != null) {
-            if (instance != this) {
+        if (Instance != null) {
+            if (Instance != this) {
                 Destroy(this.gameObject);
             }
         } else {
-            instance = this;
+            Instance = this;
             DontDestroyOnLoad(this);
         }
     }

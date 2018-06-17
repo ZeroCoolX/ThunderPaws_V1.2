@@ -55,29 +55,29 @@ public class HordeController : MonoBehaviour {
 
     public bool EndGameAfter = false;
     
-    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
+    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime GameMasterV2
     public Transform GL1BaddiePrefab;
     // Indicates how many of each type of baddie is allowed on screen at any one point
     public int MaxGL1Count;
     // Keeps a count of how many baddies of this type on on screen
     private int _activeGL1Count = 0;
     
-    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
+    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime GameMasterV2
     public Transform GL2BaddiePrefab;
     public int MaxGL2Count;
     private int _activeGL2Count = 0;
     
-    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
+    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime GameMasterV2
     public Transform FL1BaddiePrefab;
     public int MaxFL1Count;
     private int _activeFL1Count = 0;
     
-    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
+    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime GameMasterV2
     public Transform FL2BaddiePrefab;
     public int MaxFL2Count;
     private int _activeFL2Count = 0;
     
-    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime gamemaster
+    // Reference to the baddie prefab - DEFINITELY TODO: add these to the runtime GameMasterV2
     public Transform FL3BaddiePrefab;
     public int MaxFL3Count;
     private int _activeFL3Count = 0;
@@ -111,7 +111,7 @@ public class HordeController : MonoBehaviour {
         if(GroundSpawns == null){
             throw new MissingComponentException("No Flying Spawns specified");
         }
-        GameMaster.Instance.OnHordeKilledPlayer += PlayerDiedReset;
+        GameMasterV2.Instance.OnHordeKilledPlayer += PlayerDiedReset;
 
         _baddieKillNumBackup = BaddiesLeftToKill;
     }
@@ -150,8 +150,8 @@ public class HordeController : MonoBehaviour {
     }
 
     private void PlayerDiedReset() {
-        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
-        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.stopSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
         PlayerDiedHack = true;
         // Inform collider to reset iteself
         Collider.Initialize(1 << 8, RadiusOfTrigger);
@@ -205,7 +205,7 @@ public class HordeController : MonoBehaviour {
         player.GetComponent<Player>().RegenerateAllHealth();
 
         // Here we should also open the path to let the player out
-        GameMaster.Instance.LastSeenInHorde = false;
+        GameMasterV2.Instance.LastSeenInHorde = false;
 
         // Then destroy the spawns, and destroy ourself
         foreach (var spawn in FlyingSpawns){
@@ -218,19 +218,19 @@ public class HordeController : MonoBehaviour {
     }
 
     private void ActivateExit() {
-        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.stopSound(GameConstants.Audio_BossMusic);
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
             // Was Horde 1
-            GameMaster.Instance.CalculateHordeScore(1);
-            GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_MainMusic);
+            GameMasterV2.Instance.CalculateHordeScore(1);
+            AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
             Destroy(gameObject);
         }else {
-            GameMaster.Instance.CalculateHordeScore(2);
+            GameMasterV2.Instance.CalculateHordeScore(2);
             print("OMG YOU COMPLETED THE GAME!!!!");
-            GameMaster.Instance.GameOver();
+            GameMasterV2.Instance.GameOver();
         }
     }
 
@@ -339,7 +339,7 @@ public class HordeController : MonoBehaviour {
     /// <param name="c"></param>
     private void Apply(Vector3 v, Collider2D c) {
         // Here we should also close the path on either side of the horde section locking the player in
-        GameMaster.Instance.LastSeenInHorde = true;
+        GameMasterV2.Instance.LastSeenInHorde = true;
 
         SetCameraTarget(transform, false, 0f);
         _spawningAllowed = true;
@@ -347,8 +347,8 @@ public class HordeController : MonoBehaviour {
             LeftBarrier.gameObject.SetActive(true);
         }
 
-        GameMaster.Instance.AudioManager.stopSound(GameConstants.Audio_MainMusic);
-        GameMaster.Instance.AudioManager.playSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.playSound(GameConstants.Audio_BossMusic);
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){

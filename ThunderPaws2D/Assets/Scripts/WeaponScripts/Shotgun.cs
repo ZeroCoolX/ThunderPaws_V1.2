@@ -198,9 +198,9 @@ public class Shotgun : AbstractWeapon {
             if (HasAmmo) {
                 Ammo -= 1;
                 print("SettingAmmo");
-                GameMaster.Instance.GetPlayerStatsUi(Player.PlayerNumber).SetAmmo(Ammo);
+                PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
             }else {
-                GameMaster.Instance.GetPlayerStatsUi(Player.PlayerNumber).SetAmmo();
+                PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
             }
         }
     }

@@ -225,7 +225,7 @@ public class BaddieLifeform : DamageableLifeform {
         } else if (gameObject.name.Contains("FL3")) {
             increment = 3;
         }
-        GameMaster.Instance.Score += increment;
+        GameMasterV2.Instance.Score += increment;
         base.InvokeDestroy();
     }
 

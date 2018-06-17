@@ -132,12 +132,12 @@ public abstract class AbstractWeapon : MonoBehaviour {
             throw new MissingComponentException("No Weaapon animator was found on the weapon");
         }
 
-        AudioManager = AudioManager.instance;
+        AudioManager = AudioManager.Instance;
         if (AudioManager == null) {
             throw new MissingComponentException("No AudioManager was found");
         }
 
-        CamShake = GameMaster.Instance.GetComponent<CameraShake>();
+        CamShake = GameMasterV2.Instance.GetComponent<CameraShake>();
         if (CamShake == null) {
             Debug.LogError("Weapon.cs: No CameraShake found on game master");
             throw new MissingComponentException();

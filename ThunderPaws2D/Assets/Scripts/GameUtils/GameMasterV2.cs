@@ -17,7 +17,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// <summary>
     /// Compile time collection of any sprites that need to be swapped out during the course of the game.
     /// These include angle specific sprites for the player, health stages...etc
-    /// Sprites set on the GameMaster object
+    /// Sprites set on the GameMasterV2 object
     /// </summary>
     public Sprite[] PlayerSpriteList;
     /// <summary>
@@ -52,18 +52,111 @@ public class GameMasterV2 : MonoBehaviour {
     /// Used to shake the screen when needed
     /// </summary>
     private CameraShake _cameraShakeManager;
+    ///// <summary>
+    ///// Used to handle where to spawn the player
+    ///// </summary>
+    //private SpawnPointManager _spawnManager;
+    ///// <summary>
+    ///// Used to access and modify the players HUD UI elements
+    ///// </summary>
+    //private PlayerHudManager _playerHudManager;
+    ///// <summary>
+    ///// Used to access all the UI elements that might exist in a scene
+    ///// </summary>
+    //private UIManager _uiManager;
+
+    // ************************************************************ TODO: this is just for now ************************************************************ //
     /// <summary>
-    /// Used to handle where to spawn the player
+    /// This is the world to screen point where any collected coin should go
     /// </summary>
-    private SpawnPointManager _spawnManager;
+    public Vector3 CoinCollectionOrigin {
+        get {
+            var collectionPoint = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+            //We dont want the exact corner, only relatively
+            //collectionPoint.x += 3;
+            return collectionPoint;
+        }
+        private set {
+            CoinCollectionOrigin = value;
+        }
+    }
     /// <summary>
-    /// Used to access and modify the players HUD UI elements
+    /// Add to the global coin count for a player
     /// </summary>
-    private PlayerHudManager _playerHudManager;
+    /// <param name="index"></param>
+    public void AddCoins(int index) {
+        ++_playerCoinCounts[index];
+    }
+
+    // PLAYER
     /// <summary>
-    /// Used to access all the UI elements that might exist in a scene
+    /// Return the current number of coins
     /// </summary>
-    private UIManager _uiManager;
+    /// <param name="index"></param>
+    /// <returns></returns>
+    public int GetCoinCount(int index) {
+        return _playerCoinCounts[index];
+    }
+    private int MaxScorePossible;
+    /// <summary>
+    /// index 0 = player 1 coins per level
+    /// index 1 = player 2 coins per level
+    /// </summary>
+    private int[] _playerCoinCounts = new int[2];
+    private int _maxLives = 3;
+    public int Score { get; set; }
+    private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
+    public Transform[] DifficultyObjects = new Transform[3];
+    /// <summary>
+    /// Set by the player in the menu. Default is easy
+    /// </summary>
+    public string Difficulty = GameConstants.Difficulty_Easy;
+    public void SetDifficulty() {
+        int[] values;
+        var livesAndHealth = _difficulties.TryGetValue(Difficulty.ToLower(), out values);
+        if (values == null) {
+            print("Something went wrong - using the default difficulty");
+            livesAndHealth = _difficulties.TryGetValue("easy", out values);
+        }
+        LivesManager.Lives = values[0];
+        print("Settiung heath to " + values[1]);
+        LivesManager.Health = values[1];
+
+        // Based on the difficulty selected set theit starting score
+        MaxScorePossible = values[0] == 10 ? 200 : values[0] == 5 ? 400 : 600;
+
+        var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player).GetComponent<Player>();
+        if (player == null) {
+            throw new MissingComponentException("The player is missing at the time of selecting a difficulty?!");
+        }
+        var playerStats = player.PlayerStats;
+        if (playerStats == null) {
+            throw new MissingComponentException("There are no playterstats on the player");
+        }
+        // Set the max health
+        playerStats.MaxHealth = LivesManager.Health;
+        // Set the max lives
+        _maxLives = LivesManager.Lives;
+        UIManager.Instance.GetUi("DifficultySelector").gameObject.SetActive(false);
+        PlayerHudManager.Instance.GetPlayerHud(player.GetComponent<Player>().PlayerNumber).SetLives(_maxLives);
+    }
+    // WEAPON
+    /// <summary>
+    /// Based off the key supplied return the corresponding weapon from the map
+    /// </summary>
+    /// <param name="weaponKey"></param>
+    /// <returns></returns>
+    public Transform GetWeaponFromMap(string weaponKey) {
+        Transform weapon;
+        Maps.WeaponMap.TryGetValue(weaponKey, out weapon);
+        if (weapon == null) {
+            weapon = WeaponList[0];
+        }
+        return weapon;
+    }
+    // ************************************************************ TODO: this is just for now ************************************************************ //
+
+
 
     /// <summary>
     /// Indicates while one player was dead and waiting to respawn - the other player died
@@ -117,18 +210,10 @@ public class GameMasterV2 : MonoBehaviour {
         _cameraShakeManager = transform.GetComponent<CameraShake>();
         if (_cameraShakeManager == null) {throw new MissingReferenceException("No CameraShake found");}
 
-        // Ensure SpawnPointManager exists
-        _spawnManager = GameObject.FindGameObjectWithTag("SpawnPointManager").GetComponent<SpawnPointManager>();
-        if (_spawnManager == null) {throw new MissingReferenceException("No Spawn manager and thus no spawn points for this scene");}
-
-        _playerHudManager = GameObject.FindGameObjectWithTag("PlayerHudManager").GetComponent<PlayerHudManager>();
-        if (_spawnManager == null) { throw new MissingReferenceException("No PlayerHudManager found in the scene"); }
-
-        _uiManager = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        if (_uiManager == null) { throw new MissingReferenceException("No UIManager found in the scene"); }
-
         // Set the mood
         SelectMusic();
+
+        SpawnPlayers();
     }
 
     /// <summary>
@@ -137,7 +222,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     private void SelectMusic() {
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu) || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("PreAlphaDemoTutorial1")) {
-            AudioManager.instance.playSound(GameConstants.Audio_MenuMusic);
+            AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
         }
     }
 
@@ -146,6 +231,11 @@ public class GameMasterV2 : MonoBehaviour {
     /// populate the maps
     /// </summary>
     private void BuildMaps() {
+        // Difficulty, [lives, max health]
+        _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
+        _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
+        _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
+
         // Load sprites for player animation map
         Maps.PlayerSpiteMap.Add(0, PlayerSpriteList[0]);
         Maps.PlayerSpiteMap.Add(45, PlayerSpriteList[1]);
@@ -169,9 +259,16 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     private void MapPlayerWithInput() {
         print("Populating Players");
-        for(var i = 0; i < JoystickManagerController.Instance.ControllerMap.Count; ++i) {
-            var prefix = "";
-
+        var prefix = "";
+        if (JoystickManagerController.Instance.ControllerMap.Count < 2) {
+            print("there was only 0-1 players in map so set player 1 and leave");
+            JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix);
+            PlayerPrefabList[0].GetComponent<Player>().JoystickId = prefix;
+            print("Set BarneyPrefab.JoystickId to " + prefix);
+            Maps.PlayersPrefabMap.Add(PlayerPrefabList[0].GetComponent<Player>().PlayerNumber, PlayerPrefabList[0]);
+            return;
+        }
+        for (var i = 0; i < JoystickManagerController.Instance.ControllerMap.Count; ++i) {
             JoystickManagerController.Instance.ControllerMap.TryGetValue(i+1, out prefix);
             PlayerPrefabList[i].GetComponent<Player>().JoystickId = prefix;
             print("Set Player "+ PlayerPrefabList[i].GetComponent<Player>().PlayerNumber + " to prefix : " + prefix);
@@ -186,14 +283,14 @@ public class GameMasterV2 : MonoBehaviour {
     private void SpawnPlayers() {
         // Spawn the allotted number of players into the room
         foreach (var player in Maps.PlayersPrefabMap) {
-            var currentSpawn = _spawnManager.GetCurrentSpawn();
+            var currentSpawn = SpawnPointManager.Instance.GetCurrentSpawn();
             var playerNum = player.Value.GetComponent<Player>().PlayerNumber;
 
             Instantiate(player.Value, currentSpawn.position, currentSpawn.rotation);
 
             print("Setting lives for player " + playerNum);
-            _playerHudManager.ActivateStatsHud(playerNum);
-            _playerHudManager.GetPlayerHud(playerNum).SetLives(RemainingLives);
+            PlayerHudManager.Instance.ActivateStatsHud(playerNum);
+            PlayerHudManager.Instance.GetPlayerHud(playerNum).SetLives(RemainingLives);
 
             // Push a player onto the stack indicating he is alive in the scene
             PlayersCurrentlyAlive.Push(0);
@@ -267,25 +364,24 @@ public class GameMasterV2 : MonoBehaviour {
         yield return new WaitForSeconds(SpawnDelay);
         if (fullRespawn) {
             _fullRespawnOccurred = true;
-            var spawn = _spawnManager.GetCurrentSpawn();
+            var spawn = SpawnPointManager.Instance.GetCurrentSpawn();
             var controller = spawn.GetComponent<CheckpointController>();
-            if (controller == null) {
-                throw new MissingComponentException("No Checkpoint controller");
-            }
-            if (_spawnManager.GetSpawnIndex() != 2) {
-                controller.DeactivateBaddiesInCheckpoint();
-                controller.SpawnFreshBaddiesForCheckpoint(1.5f);
-                if (LastSeenInHorde) {
+            if (controller != null) {
+                if (SpawnPointManager.Instance.GetSpawnIndex() != 2) {
+                    controller.DeactivateBaddiesInCheckpoint();
+                    controller.SpawnFreshBaddiesForCheckpoint(1.5f);
+                    if (LastSeenInHorde) {
+                        OnHordeKilledPlayer.Invoke();
+                    }
+                } else {
                     OnHordeKilledPlayer.Invoke();
                 }
-            } else {
-                OnHordeKilledPlayer.Invoke();
             }
             // If this is a full respawn we are respawning 1-2 players exactly at the last checkpoint
             foreach (var player in Maps.PlayersPrefabMap) {
                 // Have to subtract 1 from the player we want because 0 indexes
                 Instantiate(player.Value, spawn.position, spawn.rotation);
-                _playerHudManager.GetPlayerHud(player.Value.GetComponent<Player>().PlayerNumber).SetLives(RemainingLives);
+                PlayerHudManager.Instance.GetPlayerHud(player.Value.GetComponent<Player>().PlayerNumber).SetLives(RemainingLives);
                 // Push a player onto the stack indicating he is alive in the scene
                 PlayersCurrentlyAlive.Push(0);
             }
@@ -306,11 +402,11 @@ public class GameMasterV2 : MonoBehaviour {
                 Instantiate(player, playerStillAlive.transform.position, playerStillAlive.transform.rotation);
                 // Since both players call respawn this should be pushing 1-2 values
                 Instance.PlayersCurrentlyAlive.Push(0);
-                _playerHudManager.GetPlayerHud(player.GetComponent<Player>().PlayerNumber).SetLives(RemainingLives);
+                PlayerHudManager.Instance.GetPlayerHud(player.GetComponent<Player>().PlayerNumber).SetLives(RemainingLives);
             } catch (System.Exception e) {
                 print("Hit the one in a million exception. Congratulations");
                 // Its possible like the EXACT moment we try and get the player that's alive, he might die. if that happens and this throws an error just chill because
-                // as soon as he hits his "KillPlayer" logic the GameMaster will see no players left and full respawn them
+                // as soon as he hits his "KillPlayer" logic the GameMasterV2 will see no players left and full respawn them
                 yield break;
             }
         }
@@ -358,14 +454,14 @@ public class GameMasterV2 : MonoBehaviour {
         // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.F)) {
             try {
-                //SetDifficulty();
+                SetDifficulty();
             } catch (System.Exception e) {
                 print("Couldn't set difficulty");
             }
         }
 
         if (Input.GetKeyDown(KeyCode.B)) {
-            UIManager.Instance.GetUi("GameOver").gameObject.SetActive(!UIManager.Instance.GetUi("GameOver").gameObject.activeSelf);
+            UIManager.Instance.GetUi("InputBinding").gameObject.SetActive(!UIManager.Instance.GetUi("InputBinding").gameObject.activeSelf);
         }
 
         // Testing hack for pause

@@ -17,7 +17,7 @@ public class GameConstants {
 
     // GameTags
     public static string Tag_Player = "Player";
-    public static string Tag_GameMaster = "GAMEMASTER";
+    public static string Tag_GameMasterV2 = "GameMasterV2";
     public static string Tag_ObstacleThrough = "OBSTACLE-THROUGH";
     public static string Tag_Baddie = "Baddie";
     public static string Tag_HordeBaddie = "HordeBaddie";

@@ -28,8 +28,8 @@ public class GameOverUI : MonoBehaviour {
 
     public void Menu() {
         try {
-            GameMaster.Instance.AudioManager.stopSound("Music_Main");
-            GameMaster.Instance.AudioManager.playSound("Music_Menu");
+            AudioManager.Instance.stopSound("Music_Main");
+            AudioManager.Instance.playSound("Music_Menu");
         } catch (System.Exception e) {
             print("Don't care");
         }

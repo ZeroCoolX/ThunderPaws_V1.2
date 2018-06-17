@@ -28,6 +28,6 @@ public class DifficultyController : MonoBehaviour {
 
     private void Apply(Vector3 v, Collider2D c) {
         print("You are choosing Difficulty: " + gameObject.name);
-        GameMaster.Instance.Difficulty = gameObject.name.ToLower();
+        GameMasterV2.Instance.Difficulty = gameObject.name.ToLower();
     }
 }
