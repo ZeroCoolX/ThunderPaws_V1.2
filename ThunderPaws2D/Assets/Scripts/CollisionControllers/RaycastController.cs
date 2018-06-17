@@ -32,7 +32,6 @@ public class RaycastController : MonoBehaviour {
     /// <summary>
     /// Box collider on the object
     /// </summary>
-    [HideInInspector]
     public BoxCollider2D BoxCollider;
     /// <summary>
     /// Struct containing 4 corner raycast data

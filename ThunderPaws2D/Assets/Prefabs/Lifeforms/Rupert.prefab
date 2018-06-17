@@ -163,7 +163,7 @@ MonoBehaviour:
   VerticalRayCount: 4
   HorizontalRaySpacing: 0
   VerticalRaySpacing: 0
-  BoxCollider: {fileID: 0}
+  BoxCollider: {fileID: 61566446420051540}
   CollisionMask:
     serializedVersion: 2
     m_Bits: 50176
@@ -207,9 +207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoFallCheck: 0
-  Velocity: {x: 0, y: 0, z: 0}
   PlayerNumber: 2
-  JoystickId: 
+  JoystickId: J2-
   FacingRight: 1
   PlayerStats: {fileID: 0}
   MeleeDamage: 10
