@@ -427,10 +427,10 @@ public class GameMasterV2 : MonoBehaviour {
         // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.F)) {
             try {
-                DifficultyManager.Instance.SetDifficulty();
+
                 ApplyDifficulty();
             } catch (System.Exception e) {
-                print("Couldn't set difficulty");
+                print("Couldn't set difficulty : " + e.Message);
             }
         }
 

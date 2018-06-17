@@ -77,6 +77,25 @@ public class Player : PlayerLifeform {
     private float _rollSpeed = 6f;
 
     /// <summary>
+    /// Indicates we need to bounce back the player because they hit the baddie
+    /// </summary>
+    private bool _bounceBackActive;
+    /// <summary>
+    /// Indicates which direction we should bounce back
+    /// - 1 indicates bounce left
+    /// 1 indicates bounce right
+    /// </summary>
+    private float _bounceBackDirection;
+    /// <summary>
+    /// How hard of a bounce back occurrs when bounce back happens
+    /// </summary>
+    private float _bounceBackSpeed = 3f;
+    /// <summary>
+    /// A very small amount of damaage should be taken for colliding with a baddie
+    /// </summary>
+    private int _bounceBackDamage = 2;
+
+    /// <summary>
     /// Setup Player object.
     /// Initialize physics values
     /// </summary>
@@ -114,13 +133,15 @@ public class Player : PlayerLifeform {
         }
         PlayerStats.MaxHealth = LivesManager.Health;
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
         PlayerStats.CurrentUltimate = 0;
-        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
         _meleeLayerMask = 1 << 14;
+
+        Controller2d.NotifyCollision += BounceBack;
     }
 
     /// <summary>
@@ -134,6 +155,8 @@ public class Player : PlayerLifeform {
     }
 
     void Update() {
+        base.Update();
+
         //print("Querying for inputs with prefix : " + JoystickId);
         if (Input.GetKeyUp(KeyCode.R)) {
             HackRollReset();
@@ -145,16 +168,27 @@ public class Player : PlayerLifeform {
         if (Controller2d.Collisions.FromBelow || Controller2d.Collisions.FromAbove) {
             Velocity.y = 0;
         }
-        CalculateVelocityOffInput();
-        ApplyGravity();
-        Controller2d.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
+        if (_bounceBackActive) {
+            print("BOUNCE BACK");
+            Damage(_bounceBackDamage);
+            Velocity.x = _bounceBackSpeed *_bounceBackDirection;
+            Velocity.y = 0f;
+            transform.Translate(Velocity);
+            _bounceBackActive = false;
+        }else {
+            CalculateVelocityOffInput();
+            ApplyGravity();
+            Controller2d.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
+        }
         CalculateMovementAnimation();
         CalcualteFacingDirection();
         CalculateWeaponRotation();
 
         //Completely for testing
         if (Input.GetKeyDown(KeyCode.F)) {
-            RegenerateAllHealth();
+            PlayerStats.MaxHealth = 500;
+            PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
+            PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
         }
 
         //User is pressing the ultimate button - Inform the player
@@ -167,6 +201,19 @@ public class Player : PlayerLifeform {
             SwitchWeapon();
             AudioManager.Instance.playSound(GameConstants.Audio_WeaponSwitch);
         }
+    }
+
+    /// <summary>
+    /// Delegate method fired from CollisionController2D which indicates
+    /// the player collided with a baddie and should be damaged a little 
+    /// and bounce back
+    /// </summary>
+    /// <param name="directionFrom"></param>
+    public void BounceBack(float directionFrom) {
+        // directionFrom == -1 ? from left
+        // directionFrom != -1 ? from right
+        _bounceBackDirection = directionFrom * -1;
+        _bounceBackActive = true;
     }
 
     private void CalculateMovementAnimation() {
@@ -464,6 +511,8 @@ public class Player : PlayerLifeform {
         PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
         if(PlayerStats.CurrentHealth <= 0) {
             GameMasterV2.KillPlayer(this);
+        }else {
+            ActivateFlash();
         }
     }
 
@@ -472,6 +521,6 @@ public class Player : PlayerLifeform {
     /// </summary>
     public void RegenerateAllHealth() {
         PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
     }
 }

@@ -116,7 +116,7 @@ MonoBehaviour:
   BoxCollider: {fileID: 0}
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1280
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
 --- !u!114 &114661757419876786
@@ -134,6 +134,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 5
   Health: 10
+  Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
   PartOfHorde: 0

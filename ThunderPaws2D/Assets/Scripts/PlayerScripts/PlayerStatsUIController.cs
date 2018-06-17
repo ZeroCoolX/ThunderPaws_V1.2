@@ -96,6 +96,7 @@ public class PlayerStatsUIController : MonoBehaviour {
     }
 
     private void CheckPlayerImage(int cur) {
+        print("PLAYER IMAGE CHANGE : " + cur);
         //Safety check in casae another class - Player - calls this before its had a chance to startup
         var healthKey = cur > 50 ? 100 : cur > 25 ? 50 : 25;
         _playerImage.sprite = GameMasterV2.Instance.GetSpriteFromMap(healthKey);

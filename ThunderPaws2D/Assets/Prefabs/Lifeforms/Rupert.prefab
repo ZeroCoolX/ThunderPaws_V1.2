@@ -169,6 +169,7 @@ MonoBehaviour:
     m_Bits: 50176
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+  NotifyOnCollision: 1
 --- !u!114 &114174318653646354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -242,7 +243,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e0e98095ffaabe1488bebf1504c59f7d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

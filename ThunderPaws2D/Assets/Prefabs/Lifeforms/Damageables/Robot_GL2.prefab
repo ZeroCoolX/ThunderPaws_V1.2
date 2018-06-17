@@ -127,16 +127,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2358e3c4f5a4e1449faf195cdac4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PartOfHorde: 0
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
-  ApplyBaseMovement: 0
-  _coinsInPayload: 5
+  PayloadItemCount: 10
   Health: 15
-  Gravity: 0
-  Velocity: {x: 0, y: 0, z: 0}
+  Animator: {fileID: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
+  PartOfHorde: 0
 --- !u!114 &114801493458386830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,7 +167,7 @@ MonoBehaviour:
   BoxCollider: {fileID: 0}
   CollisionMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1280
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
 --- !u!212 &212590567790780784

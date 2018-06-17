@@ -37,6 +37,19 @@ public class CollisionController2D : RaycastController {
     /// </summary>
     public Vector2 PlayerInput;
 
+    /// <summary>
+    /// Indicates that something special aside from stopping movement should happen if we detect a collision
+    /// </summary>
+    public bool NotifyOnCollision = false;
+
+    /// <summary>
+    /// DirectionFrom indicates what side the collision happened so we know
+    /// the opposite way to bounce back the player
+    /// </summary>
+    /// <param name="directionFrom"></param>
+    public delegate void NotifyCollisionDelegate(float directionFrom);
+    public NotifyCollisionDelegate NotifyCollision;
+
     public override void Start() {
         base.Start();
         //_audioManager = AudioManager.instance;
@@ -97,6 +110,7 @@ public class CollisionController2D : RaycastController {
         //length of ray
         float rayLength = Mathf.Abs(velocity.x) + SkinWidth;
 
+        var notify = false;
         for (int i = 0; i < HorizontalRayCount; ++i) {
             //check in which direction we're moving
             //down = start bottom left, up = start top left
@@ -130,6 +144,14 @@ public class CollisionController2D : RaycastController {
 
                     //distance from us to the object <= velocity.x so set it to that
                     velocity.x = (hit.distance - SkinWidth) * directionX;
+                    print("We're touching a collider! = " + (hit.distance - SkinWidth));
+                    if (NotifyOnCollision && (hit.distance - SkinWidth) < SkinWidth) {
+                        // This indicates that a baddies collided with a player and the player should bounce back
+                        if (hit.transform.gameObject.tag == GameConstants.Tag_Baddie) {
+                            notify = true;
+                        }
+                    }
+
                     //change ray length once we hit the first thing because we shouldn't cast rays FURTHER than this min one
                     rayLength = hit.distance;
 
@@ -143,6 +165,10 @@ public class CollisionController2D : RaycastController {
                     Collisions.FromRight = (directionX == 1);
                 }
             }
+        }
+        if (notify) {
+            print("Notifying player that we collided with a baddie");
+            NotifyCollision.Invoke(directionX);
         }
     }
 
