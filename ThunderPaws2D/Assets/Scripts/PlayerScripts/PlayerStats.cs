@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class represents the actual stats for a player (Represented on screen by the PlayerStatsUiController).
+/// Each player has an instance of this class for the duration of their existence.
+/// Since they live on the player if the player dies, so do these stats.
+/// </summary>
 public class PlayerStats : MonoBehaviour {
     /// <summary>
     /// Indicates if we are int the ultimate or not

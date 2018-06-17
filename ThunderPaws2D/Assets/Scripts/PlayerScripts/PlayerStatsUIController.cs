@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// This class actuaally interacts with the UI by representing the PlayerStats on screen
+/// </summary>
 public class PlayerStatsUIController : MonoBehaviour {
     /// <summary>
     /// Image indicating player health

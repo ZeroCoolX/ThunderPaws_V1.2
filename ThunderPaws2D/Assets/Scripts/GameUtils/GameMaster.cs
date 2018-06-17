@@ -172,46 +172,58 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // DONE accpet difficuly map stuff//
     // Use this for initialization
     void Awake () {
-        if (Instance == null) {
-            Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();
-        }
+        if (Instance == null) {//
+            Instance = GameObject.FindGameObjectWithTag(GameConstants.Tag_GameMaster).GetComponent<GameMaster>();//
+        }//
 
-        if (PopulatePlayers) {
-            PopulatePlayerArray();
-        }
-        SpawnPlayers();
+        // PLAYER //
+        if (PopulatePlayers) {//
+            PopulatePlayerArray();//
+        }//
+        SpawnPlayers();//
 
+        // UI
         if (ShowDifficultyScreen) {
             DifficultyScreen.gameObject.SetActive(true);
         }
 
+        // META DATA PLAYER
         //Load sprites for player animation map
-        _playerSpiteMap.Add(0, PlayerSprites[0]);
-        _playerSpiteMap.Add(45, PlayerSprites[1]);
-        _playerSpiteMap.Add(90, PlayerSprites[2]);
+        _playerSpiteMap.Add(0, PlayerSprites[0]);//
+        _playerSpiteMap.Add(45, PlayerSprites[1]);//
+        _playerSpiteMap.Add(90, PlayerSprites[2]);//
         //Load sprites for player health UI state
-        _playerSpiteMap.Add(100, PlayerSprites[3]);
-        _playerSpiteMap.Add(50, PlayerSprites[4]);
-        _playerSpiteMap.Add(25, PlayerSprites[5]);
+        _playerSpiteMap.Add(100, PlayerSprites[3]);//
+        _playerSpiteMap.Add(50, PlayerSprites[4]);//
+        _playerSpiteMap.Add(25, PlayerSprites[5]);//
 
-        //Load weapon map
-        _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);
-        _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);
-        _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);
-        _weaponMap.Add(WeaponList[3].gameObject.name, WeaponList[3]);
-        _weaponMap.Add(WeaponList[4].gameObject.name, WeaponList[4]);
+        // WEAPONS
+        //Load weapon map/
+        //foreach(var weaponPrefab in WeaponList) {//
+        //    _weaponMap.Add(weaponPrefab.gameObject.name, weaponPrefab);//
+        //}//
+        _weaponMap.Add(WeaponList[0].gameObject.name, WeaponList[0]);//
+        _weaponMap.Add(WeaponList[1].gameObject.name, WeaponList[1]);//
+        _weaponMap.Add(WeaponList[2].gameObject.name, WeaponList[2]);//
+        _weaponMap.Add(WeaponList[3].gameObject.name, WeaponList[3]);//
+        _weaponMap.Add(WeaponList[4].gameObject.name, WeaponList[4]);//
 
+        // UI
         // Difficulty, [lives, max health]
         _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
         _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
         _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
 
+        // PLAYER
         _remainingLives = LivesManager.Lives;
         print("lives = " + LivesManager.Lives);
     }
 
+    // DONE//
+    // PLAYER BASED OFF CONTROLLER/KB INPUT
     // Based off how many joysticks are connected populate the player array
     public void PopulatePlayerArray() {
         print("Populating Player Array!");
@@ -238,9 +250,10 @@ public class GameMaster : MonoBehaviour {
         RupertPrefab.GetComponent<Player>().JoystickId = prefix;
         print("Set RupertPrefab.JoystickId to " + prefix);
         Players.Add(RupertPrefab);
-
     }
 
+    // PLAYER
+    // DONE //
     // Spawn as many players that live in the array
     public void SpawnPlayers() {
         // Spawn the allotted number of players into the room
@@ -257,6 +270,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // PLAYER (stats)
     public void SetDifficulty() {
         int[] values;
         var livesAndHealth = _difficulties.TryGetValue(Difficulty.ToLower(), out values);
@@ -292,6 +306,7 @@ public class GameMaster : MonoBehaviour {
         GetPlayerStatsUi(1).SetLives(_maxLives);
     }
 
+    // DONE //
     private void Start() {
         AudioManager = AudioManager.instance;
         if (AudioManager == null) {
@@ -329,6 +344,7 @@ public class GameMaster : MonoBehaviour {
         GetPlayerStatsUi(1).SetLives(_remainingLives);
     }
 
+    // DONE //
     private void Update() {
         // Testing hack for music on and off
         if (Input.GetKeyDown(KeyCode.F)) {
@@ -356,6 +372,8 @@ public class GameMaster : MonoBehaviour {
         //}
     }
 
+    // DONE //
+    // UI
     public void UpdateHealthUI(int player, int current, int max) {
         print("Max health is " + max);
         if (player == 1) {
@@ -371,6 +389,8 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // DONE //
+    // UI
     public void UpdateUltimateUI(int player, int current, int max) {
         if(player == 1) {
             if (_player1StatsUi == null) {
@@ -385,6 +405,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // PLAYER?
     /// <summary>
     /// Add to the global coin count for a player
     /// </summary>
@@ -393,6 +414,7 @@ public class GameMaster : MonoBehaviour {
         ++_playerCoinCounts[index];
     }
 
+    // PLAYER
     /// <summary>
     /// Return the current number of coins
     /// </summary>
@@ -402,6 +424,7 @@ public class GameMaster : MonoBehaviour {
         return _playerCoinCounts[index];
     }
 
+    // WEAPON
     /// <summary>
     /// Based off the key supplied return the corresponding weapon from the map
     /// </summary>
@@ -416,6 +439,8 @@ public class GameMaster : MonoBehaviour {
         return weapon;
     }
 
+    // PLAYER
+    // DONE //
     /// <summary>
     /// Based off a positive angle value, get the corresponding sprite from the map
     /// </summary>
@@ -431,6 +456,7 @@ public class GameMaster : MonoBehaviour {
         return sprite;
     }
 
+    // DONE //
     /// <summary>
     /// Helper to extract the player ui objects
     /// </summary>
@@ -449,6 +475,7 @@ public class GameMaster : MonoBehaviour {
         return stats;
     }
 
+    // PLAYER
     /// <summary>
     /// Decrement lives, generate particles, shake camera and destroy current player reference
     /// </summary>
@@ -478,6 +505,7 @@ public class GameMaster : MonoBehaviour {
         Instance.KillDashNine(player.gameObject, _remainingLives > 0, fullRespawn, player.PlayerNumber);
     }
 
+    // PLAYER
     /// <summary>
     /// Actual destruction of optional respawn
     /// </summary>
@@ -496,6 +524,7 @@ public class GameMaster : MonoBehaviour {
         }
     }
 
+    // DONE //
     public void CalculateHordeScore(int horde) {
         var inc = horde == 1 ? 25 : 50;
         if (Difficulty.ToLower().Equals(GameConstants.Difficulty_Easy)) {
@@ -507,7 +536,7 @@ public class GameMaster : MonoBehaviour {
         }
         Score += inc;
     }
-
+    // DONE //
     public void GameOver() {
         GameOverUi.Find(GameConstants.ObjectName_ScoreText).GetComponent<Text>().text = "Your Score: " + Score;
         GameOverUi.gameObject.SetActive(true);

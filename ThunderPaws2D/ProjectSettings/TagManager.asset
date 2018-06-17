@@ -15,6 +15,10 @@ TagManager:
   - HordeBaddie
   - Tutorial
   - StartSpawn
+  - SpawnPointManager
+  - PlayerHudManager
+  - UIOverlay
+  - UIManager
   layers:
   - Default
   - TransparentFX

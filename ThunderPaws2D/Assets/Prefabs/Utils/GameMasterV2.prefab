@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1967241870711808}
+  m_IsPrefabParent: 1
+--- !u!1 &1967241870711808
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4169245292921112}
+  - component: {fileID: 114499844392596702}
+  m_Layer: 0
+  m_Name: GameMasterV2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4169245292921112
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 5.0600014, y: -6.9654284, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114499844392596702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80e566017b241c24db300f8cf3745ec4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerSpriteList:
+  - {fileID: 21300000, guid: 7a179c8187baecb4491757cf56f2249f, type: 3}
+  - {fileID: 21300000, guid: 7a179c8187baecb4491757cf56f2249f, type: 3}
+  - {fileID: 21300000, guid: 7a179c8187baecb4491757cf56f2249f, type: 3}
+  - {fileID: 21300000, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  - {fileID: 21300002, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  - {fileID: 21300004, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  WeaponList:
+  - {fileID: 4795677035519362, guid: 6c6ffa406a5c286448d15ffe54c6754a, type: 2}
+  - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
+  - {fileID: 4795677035519362, guid: b4405405e64c4bc4e910556f47971a48, type: 2}
+  - {fileID: 4795677035519362, guid: 6ed7f2a9b5161ae478f1315437fe44e0, type: 2}
+  - {fileID: 4795677035519362, guid: 7824611b3149fcd498df812d4dde6af8, type: 2}
+  PlayerPrefabList:
+  - {fileID: 4778167549552236, guid: 0a9f5a205d30c264f9af1f908ecc403b, type: 2}
+  - {fileID: 4778167549552236, guid: 97d24a1dc827f2b488b03d9b121e4819, type: 2}
