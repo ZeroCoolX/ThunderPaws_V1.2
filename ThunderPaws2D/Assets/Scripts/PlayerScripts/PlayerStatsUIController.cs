@@ -12,6 +12,10 @@ public class PlayerStatsUIController : MonoBehaviour {
     /// </summary>
     private Image _playerImage;
     /// <summary>
+    /// Image indicating player weapon picked up
+    /// </summary>
+    private Image _weaponImage;
+    /// <summary>
     /// Rectangle that indicates health level
     /// </summary>
     [SerializeField]
@@ -74,6 +78,12 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No LivesText found");
             throw new UnassignedReferenceException();
         }
+
+        _weaponImage = transform.Find(GameConstants.ObjectName_WeaponImage).GetComponent<Image>();
+        if (_weaponImage == null) {
+            Debug.LogError("No WeaponImage found");
+            throw new UnassignedReferenceException();
+        }
     }
 
 
@@ -100,6 +110,10 @@ public class PlayerStatsUIController : MonoBehaviour {
         //Safety check in casae another class - Player - calls this before its had a chance to startup
         var healthKey = cur > 50 ? 100 : cur > 25 ? 50 : 25;
         _playerImage.sprite = GameMasterV2.Instance.GetSpriteFromMap(healthKey);
+    }
+
+    public void SetWeaponPickup(string weaponName) {
+        _weaponImage.sprite = GameMasterV2.Instance.GetWeaponSpriteFromMap(weaponName.ToLower());
     }
 
     public void SetAmmo(int ammo = -1) {

@@ -30,6 +30,7 @@ public class GameConstants {
     public static string ObjectName_WeaponAnchor = "WeaponAnchor";
     public static string ObjectName_UltimateIndicator = "UltIndicator";
     public static string ObjectName_PlayerImage = "PlayerImage";
+    public static string ObjectName_WeaponImage = "WeaponImage";
     public static string ObjectName_AmmoText = "AmmoText";
     public static string ObjectName_LivesText = "LivesText";
     public static string ObjectName_BarContainer = "BarContainer";

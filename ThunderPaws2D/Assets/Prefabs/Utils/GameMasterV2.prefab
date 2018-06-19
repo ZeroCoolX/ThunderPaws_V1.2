@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4169245292921112}
   - component: {fileID: 114499844392596702}
   - component: {fileID: 114638992511787690}
+  - component: {fileID: 114743081448887660}
   m_Layer: 0
   m_Name: GameMasterV2
   m_TagString: Untagged
@@ -59,6 +60,12 @@ MonoBehaviour:
   - {fileID: 21300000, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   - {fileID: 21300002, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
   - {fileID: 21300004, guid: e8b594bb931d4ee45939106fdf65f297, type: 3}
+  WeaponSpriteList:
+  - {fileID: 21300000, guid: 5bc63cc1f4d2bff44bdd2e57498141b4, type: 3}
+  - {fileID: 21300000, guid: e6368a2cfb56f274eb652dfc42a7e87c, type: 3}
+  - {fileID: 21300000, guid: 12bcc7c0c6a591641bed444a4b8ae450, type: 3}
+  - {fileID: 21300000, guid: 721f689430395904ca9a21c2565a603c, type: 3}
+  - {fileID: 21300000, guid: 18197f7fa6d41184dbb7f172bba4c497, type: 3}
   WeaponList:
   - {fileID: 4795677035519362, guid: 6c6ffa406a5c286448d15ffe54c6754a, type: 2}
   - {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77, type: 2}
@@ -71,6 +78,17 @@ MonoBehaviour:
   RemainingLives: 0
   LastSeenInHorde: 0
 --- !u!114 &114638992511787690
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13344509154c0054dbe5a1c80a1609f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114743081448887660
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

@@ -63,4 +63,10 @@ public class PlayerHudManager : MonoBehaviour {
         var playerHud = _playerHuds[player - 1];
         playerHud.SetUltimateStatus(current, max);
     }
+
+    public void UpdateWeaponPickup(int player, string weaponName) {
+        print("Updating weapon pickup UI to display pickedup weapon");
+        var playerHud = _playerHuds[player - 1];
+        playerHud.SetWeaponPickup(weaponName);
+    }
 }

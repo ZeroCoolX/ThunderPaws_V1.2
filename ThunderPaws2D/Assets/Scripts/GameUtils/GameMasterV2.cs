@@ -21,6 +21,11 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     public Sprite[] PlayerSpriteList;
     /// <summary>
+    /// Compile time collection of any weapon sprites
+    /// These are for indicating to the player what weapon they currently have picked u
+    /// </summary>
+    public Sprite[] WeaponSpriteList;
+    /// <summary>
     /// Compile time list of all weapon prefabs.
     /// </summary>
     public Transform[] WeaponList;
@@ -52,18 +57,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// Used to shake the screen when needed
     /// </summary>
     private CameraShake _cameraShakeManager;
-    ///// <summary>
-    ///// Used to handle where to spawn the player
-    ///// </summary>
-    //private SpawnPointManager _spawnManager;
-    ///// <summary>
-    ///// Used to access and modify the players HUD UI elements
-    ///// </summary>
-    //private PlayerHudManager _playerHudManager;
-    ///// <summary>
-    ///// Used to access all the UI elements that might exist in a scene
-    ///// </summary>
-    //private UIManager _uiManager;
+
 
     // ************************************************************ TODO: this is just for now ************************************************************ //
     /// <summary>
@@ -104,7 +98,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     private int[] _playerCoinCounts = new int[2];
     public int Score { get; set; }
-    // WEAPON
+
     /// <summary>
     /// Based off the key supplied return the corresponding weapon from the map
     /// </summary>
@@ -112,7 +106,7 @@ public class GameMasterV2 : MonoBehaviour {
     /// <returns></returns>
     public Transform GetWeaponFromMap(string weaponKey) {
         Transform weapon;
-        Maps.WeaponMap.TryGetValue(weaponKey, out weapon);
+        Maps.WeaponPrefabMap.TryGetValue(weaponKey, out weapon);
         if (weapon == null) {
             weapon = WeaponList[0];
         }
@@ -160,7 +154,8 @@ public class GameMasterV2 : MonoBehaviour {
         // Transfer all the compile time lists into maps
         Maps.PlayerSpiteMap = new Dictionary<int, Sprite>();
         Maps.PlayersPrefabMap = new Dictionary<int, Transform>();
-        Maps.WeaponMap = new Dictionary<string, Transform>();
+        Maps.WeaponSpriteMap = new Dictionary<string, Sprite>();
+        Maps.WeaponPrefabMap = new Dictionary<string, Transform>();
         BuildMaps();
 
         // Set the remaining lives
@@ -203,9 +198,14 @@ public class GameMasterV2 : MonoBehaviour {
         Maps.PlayerSpiteMap.Add(50, PlayerSpriteList[4]);
         Maps.PlayerSpiteMap.Add(25, PlayerSpriteList[5]);
 
-        // Load weapon map
+        // Load weapon sprite map
+        foreach (var weaponSprite in WeaponSpriteList) {
+            Maps.WeaponSpriteMap.Add(weaponSprite.name.Substring(weaponSprite.name.IndexOf("_")+1).ToLower(), weaponSprite);
+        }
+
+        // Load weapon prefab map
         foreach (var weaponPrefab in WeaponList) {
-            Maps.WeaponMap.Add(weaponPrefab.gameObject.name, weaponPrefab);
+            Maps.WeaponPrefabMap.Add(weaponPrefab.gameObject.name, weaponPrefab);
         }
 
         // Load Player prefab map
@@ -280,6 +280,21 @@ public class GameMasterV2 : MonoBehaviour {
         if (sprite == null) {
             print("Just informing that GetSpriteFromMap("+degreeKey+") was called and we didn't have that sprite");
             sprite = PlayerSpriteList[0];
+        }
+        return sprite;
+    }
+
+    /// <summary>
+    /// Based off a positive angle value, get the corresponding sprite from the map
+    /// </summary>
+    /// <param name="degreeKey"></param>
+    /// <returns></returns>
+    public Sprite GetWeaponSpriteFromMap(string weaponKey) {
+        Sprite sprite;
+        Maps.WeaponSpriteMap.TryGetValue(weaponKey, out sprite);
+        if (sprite == null) {
+            print("Just informing that GetWeaponSpriteFromMap(" + weaponKey + ") was called and we didn't have that sprite");
+            sprite = WeaponSpriteList[0];
         }
         return sprite;
     }
@@ -411,10 +426,14 @@ public class GameMasterV2 : MonoBehaviour {
         /// </summary>
         public Dictionary<int, Sprite> PlayerSpiteMap;
         /// <summary>
+        /// Mapped by weapon name.
+        /// </summary>
+        public Dictionary<string, Sprite> WeaponSpriteMap;
+        /// <summary>
         /// Mapped by name to weapon prefab.
         /// Actual storage since unity cannot handle public Dictionaries....
         /// </summary>
-        public Dictionary<string, Transform> WeaponMap;
+        public Dictionary<string, Transform> WeaponPrefabMap;
         /// <summary>
         /// Map holding player prefabs mapped by player number to prefab
         /// </summary>

@@ -403,6 +403,7 @@ public class Player : PlayerLifeform {
             _ownedWeapons.Add(_currentWeapon);
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
+        PlayerHudManager.Instance.UpdateWeaponPickup(PlayerNumber, weaponKey);
         try {
             AudioManager.Instance.playSound(GameConstants.Audio_WeaponPickup);
         }catch(System.Exception e) {
@@ -420,7 +421,7 @@ public class Player : PlayerLifeform {
         _currentWeapon = _ownedWeapons[0];
         _currentWeapon.position = _weaponAnchor.position;
         _currentWeapon.gameObject.SetActive(true);
-
+        PlayerHudManager.Instance.UpdateWeaponPickup(PlayerNumber, "fuzzbuster");
         if (_currentWeapon == null) {
             throw new KeyNotFoundException("ERROR: Default weapon was not found in weapon map");
         }
