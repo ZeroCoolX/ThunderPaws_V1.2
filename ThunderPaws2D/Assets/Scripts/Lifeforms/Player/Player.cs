@@ -94,6 +94,21 @@ public class Player : PlayerLifeform {
     /// A very small amount of damaage should be taken for colliding with a baddie
     /// </summary>
     private int _bounceBackDamage = 2;
+    /// <summary>
+    /// How long the player is allows to fall before they can no longer jump.
+    /// This is in here since "platform mechanics" are not the core of the game.
+    /// Shooting and chaos is - therefor I wanted to be more forgiving if the player misstimes jumps...but only up to 0.25s
+    /// </summary>
+    private float _allowedFallTime = 0.25f;
+    /// <summary>
+    /// Indicates that the forgivenness window has passed and the player is falling to his death;
+    /// </summary>
+    private float _fallDelay;
+    /// <summary>
+    /// Need this flag to indicate when the player has touched back down after jumping to ensure
+    /// there is not shenannigans in jumping in the 0-0.25s forgivenness zones
+    /// </summary>
+    private bool _jumped;
 
     /// <summary>
     /// Setup Player object.
@@ -179,6 +194,10 @@ public class Player : PlayerLifeform {
             CalculateVelocityOffInput();
             ApplyGravity();
             Controller2d.Move(Velocity * Time.deltaTime, DirectionalInput, JoystickId);
+            // Reset the jump indicator once we've made contact with the ground again
+            if (_jumped && Controller2d.Collisions.FromBelow) {
+                _jumped = false;
+            }
         }
         CalculateMovementAnimation();
         CalcualteFacingDirection();
@@ -276,11 +295,19 @@ public class Player : PlayerLifeform {
     /// Get the input from either the user 
     /// </summary>
     private void CalculateVelocityOffInput() {
-        //check if user - or NPC - is trying to jump and is standing on the ground
-        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&
-                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && Controller2d.Collisions.FromBelow) {
-            Velocity.y = MaxJumpVelocity;
+        // This allows for a very small window of jumpability when falling
+        if (!_jumped && !Controller2d.Collisions.FromBelow && Time.time >= _fallDelay) {
+            _fallDelay = Time.time + _allowedFallTime;
         }
+
+        //check if user - or NPC - is trying to jump and is standing on the ground
+        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&                          // We allow the player to jump if he's on the ground OR we're falling within 0.25 seconds
+                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && (Controller2d.Collisions.FromBelow || _fallDelay > Time.time)) {
+            Velocity.y = MaxJumpVelocity;
+            _fallDelay = 0f;
+            _jumped = true;
+        }
+
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis(JoystickId + GameConstants.Input_LTrigger);
