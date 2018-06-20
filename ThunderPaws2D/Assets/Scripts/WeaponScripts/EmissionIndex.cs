@@ -106,7 +106,7 @@ public class EmissionIndex : AbstractWeapon {
         //Store bullet origin spawn point
         Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
 
-        Vector2 target;
+        Vector2 target = Vector2.zero;
 
         // The ult mode allows the laser to always display at max length and collide with any object
         // in its path damaging any/all of them
@@ -132,28 +132,43 @@ public class EmissionIndex : AbstractWeapon {
             target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
         }else {
             // Only collect the first collision and stop the linerenderer there
-            RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
-            // We collided with something
-            if (shot.collider != null && shot.collider.tag != GameConstants.Tag_ObstacleThrough) {
-                // We're within the max distance so hit the object
-                var distanceFromTarget = Vector2.Distance(shot.collider.transform.position, FirePoint.position);
-                var endpointVector = directionInput * distanceFromTarget;
-                target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
-                if (Time.time > _timeElapsedSinceLastDamage) {
-                    _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
-                    // If we hit a lifeform damage it - otherwise move on
-                    var lifeform = shot.transform.GetComponent<BaseLifeform>();
-                    if (lifeform != null) {
-                        print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
-                        lifeform.Damage(_damagePiece);
+            RaycastHit2D[] collisions = Physics2D.RaycastAll(firePointPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
+            for (var i = 0; i < collisions.Length; ++i) {
+                var collision = collisions[i];
+                // Special short sircuit scenario where we hit something - that something was Obstacle-Through tagged, and this was NOT the only collision in the array
+                if (collision.collider != null && collision.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                    if (collisions.Length - 1 == i) {
+                        print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
+                        // We didn't hit anything so just play the non-ult max distance
+                        var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
+                        target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+                        break;
                     }
+                    continue;
                 }
-                print("Hit something so make THAT its target");
-            } else {
-                print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
-                // We didn't hit anything so just play the non-ult max distance
-                var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
-                target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+                // We collided with something
+                if (collision.collider != null) {
+                    // We're within the max distance so hit the object
+                    var distanceFromTarget = Vector2.Distance(collision.collider.transform.position, FirePoint.position);
+                    var endpointVector = directionInput * distanceFromTarget;
+                    target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+                    if (Time.time > _timeElapsedSinceLastDamage) {
+                        _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
+                        // If we hit a lifeform damage it - otherwise move on
+                        var lifeform = collision.transform.GetComponent<BaseLifeform>();
+                        if (lifeform != null) {
+                            print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+                            lifeform.Damage(_damagePiece);
+                        }
+                    }
+                    print("Hit something so make THAT its target");
+                } else {
+                    print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
+                    // We didn't hit anything so just play the non-ult max distance
+                    var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
+                    target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+                }
+                break;
             }
         }
 
