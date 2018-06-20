@@ -49,12 +49,16 @@ public class ProjectileWeapon : AbstractWeapon {
             GenerateCameraShake();
             ApplyRecoil();
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
-            if (HasAmmo) {
-                Ammo -= 1;
-                PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
-            } else {
-                PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
-            }
+            UpdateAmmo();
+        }
+    }
+
+    protected virtual void UpdateAmmo() {
+        if (HasAmmo) {
+            Ammo -= 1;
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
+        } else {
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
         }
     }
 

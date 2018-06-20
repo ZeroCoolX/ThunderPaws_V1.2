@@ -24,6 +24,10 @@ public class GaussRifle : ProjectileWeapon {
     /// Struct containing manual hold calculation data
     /// </summary>
     private HoldingFireData _holdData;
+    /// <summary>
+    /// Indicates the last shot was a charged shot so we should take 5 bullets away
+    /// </summary>
+    private bool _chargeShotFired;
 
     /// <summary>
     /// Check if we should fire any of the 3 types of bullets we can shoot
@@ -69,6 +73,18 @@ public class GaussRifle : ProjectileWeapon {
     }
 
     /// <summary>
+    /// Overriding the base ProjectileWeapons ammo update because we want to allow for charged shot to cost extra shots
+    /// </summary>
+    protected override void UpdateAmmo() {
+        if (HasAmmo) {
+            Ammo -= (_chargeShotFired ? 5 : 1);
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
+        } else {
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
+        }
+    }
+
+    /// <summary>
     /// Used to determine if the player is holding the trigger down so we shuold wait a small amount of time then fire a charged shot, or whether they're
     /// pressing the trigger rapid fire like and so we should fire every shot.
     /// </summary>
@@ -81,6 +97,7 @@ public class GaussRifle : ProjectileWeapon {
                     CancelInvoke("IndicateHolding");
                     // Fire awesome charge shot!
                     WeaponAnimator.SetBool("HoldCharge", false);
+                    _chargeShotFired = true;
                     // Set the bullet to the charge shot
                     BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
                     CalculateShot();
@@ -88,6 +105,7 @@ public class GaussRifle : ProjectileWeapon {
                     // Fire normal shot
                     print("SHOOT");
                     CancelInvoke("IndicateHolding");
+                    _chargeShotFired = false;
                     BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
                     CalculateShot();
                 }
@@ -109,6 +127,7 @@ public class GaussRifle : ProjectileWeapon {
                 CancelInvoke("IndicateHolding");
                 // Fire awesome charge shot!
                 WeaponAnimator.SetBool("HoldCharge", false);
+                _chargeShotFired = true;
                 // Set the bullet to the charge shot
                 BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
                 CalculateShot();
@@ -125,6 +144,7 @@ public class GaussRifle : ProjectileWeapon {
                     // Fire normal shot
                     print("SHOOT");
                     CancelInvoke("IndicateHolding");
+                    _chargeShotFired = false;
                     // Set the bullet to the DEFAULT shot
                     BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
                     CalculateShot();
