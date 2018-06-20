@@ -38,7 +38,6 @@ public class SimpleMover : MonoBehaviour {
     private void HoverCheck() {
         RaycastHit2D hitCheck = Physics2D.Raycast(transform.position, Vector2.down, HoverDistance, HoverOver);
         if (hitCheck.collider != null) {
-            print("WE HIT A THING!");
             _moveSpeed = 0f;
         }
     }

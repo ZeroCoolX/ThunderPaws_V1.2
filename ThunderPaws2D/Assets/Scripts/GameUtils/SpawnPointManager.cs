@@ -14,7 +14,7 @@ public class SpawnPointManager : MonoBehaviour {
     /// Indicates which spawn point the player should spawn from
     /// Used for checkpoints
     /// </summary>
-    private int _spawnPointIndex = 0;
+    private int _spawnPointIndex = -1;
 
     /// <summary>
     /// For NOW others need this.
@@ -29,7 +29,7 @@ public class SpawnPointManager : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     public Transform GetCurrentSpawn() {
-        return SpawnPoints[_spawnPointIndex];
+        return SpawnPoints[_spawnPointIndex == -1 ? 0 : _spawnPointIndex];
     }
 
     /// <summary>
@@ -47,6 +47,6 @@ public class SpawnPointManager : MonoBehaviour {
         } else {
             Instance = this;
         }
-        _spawnPointIndex = 0;
+        _spawnPointIndex = -1;
     }
 }
