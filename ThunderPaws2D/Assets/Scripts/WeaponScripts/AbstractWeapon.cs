@@ -148,7 +148,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// Check if this weapon still has ammo
     /// </summary>
     protected void AmmoCheck() {
-        if (Ammo == 0) {
+        if (Ammo <= 0) {
             Player.RemoveOtherWeapon(transform);
         }
     }

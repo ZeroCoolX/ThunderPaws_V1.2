@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 61666677018120660}
   - component: {fileID: 114541956702871684}
   - component: {fileID: 212089085880457384}
+  - component: {fileID: 114363648385021260}
   m_Layer: 14
   m_Name: WeaponSatelliteMoveable
   m_TagString: Untagged
@@ -115,6 +116,20 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114363648385021260
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1606047623427248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 0
+  AllowLifetimeWhileInvisible: 10
 --- !u!114 &114541956702871684
 MonoBehaviour:
   m_ObjectHideFlags: 1

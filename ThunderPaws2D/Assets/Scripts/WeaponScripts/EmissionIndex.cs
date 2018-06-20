@@ -19,11 +19,6 @@ public class EmissionIndex : AbstractWeapon {
     /// </summary>
     private LineRenderer _currentLaser;
     /// <summary>
-    /// We must keep a reference to the the direction input because we want the laser to 
-    /// follow the players movement
-    /// </summary>
-    private Vector2 _directionLastFrame;
-    /// <summary>
     /// How much damage we do per EmissionIndexConfig.DamageInterval of a second
     /// </summary>
     private float _damagePiece;
@@ -36,6 +31,14 @@ public class EmissionIndex : AbstractWeapon {
     /// Indicates the user is holding down the fire button
     /// </summary>
     private bool _holding;
+    /// <summary>
+    /// Only subtract ammo 5 per second
+    /// </summary>
+    private float _ammoDepleteTime;
+    /// <summary>
+    /// How long in between firings we should deplete ammo
+    /// </summary>
+    private float _ammoDepleteDelay = 1f;
 
     private void Start() {
         base.Start();
@@ -50,6 +53,10 @@ public class EmissionIndex : AbstractWeapon {
     }
 
     private void Update() {
+        if (HasAmmo) {
+            AmmoCheck();
+        }
+
         WeaponAnimator.SetBool("UltMode", UltMode);
 
         // Set the laser type based off mode
@@ -154,8 +161,10 @@ public class EmissionIndex : AbstractWeapon {
         _currentLaser.SetPosition(0, FirePoint.position);
         _currentLaser.SetPosition(1, target);
 
-        if (HasAmmo) {
-            Ammo -= 1;
+        if (Time.time >= _ammoDepleteTime) {
+            _ammoDepleteTime = Time.time + _ammoDepleteDelay;
+            Ammo -= 5;
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
         }
     }
 }

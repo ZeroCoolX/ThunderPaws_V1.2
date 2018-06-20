@@ -431,6 +431,7 @@ public class Player : PlayerLifeform {
         }
         print("Created weapon: " + _currentWeapon.gameObject.name);
         PlayerHudManager.Instance.UpdateWeaponPickup(PlayerNumber, weaponKey);
+        PlayerHudManager.Instance.GetPlayerHud(PlayerNumber).SetAmmo(_currentWeapon.GetComponent<AbstractWeapon>().Ammo);
         try {
             AudioManager.Instance.playSound(GameConstants.Audio_WeaponPickup);
         }catch(System.Exception e) {

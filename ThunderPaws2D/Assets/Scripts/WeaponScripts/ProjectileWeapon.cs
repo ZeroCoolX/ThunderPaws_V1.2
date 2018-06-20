@@ -51,13 +51,10 @@ public class ProjectileWeapon : AbstractWeapon {
             TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
             if (HasAmmo) {
                 Ammo -= 1;
-                print("SettingAmmo");
                 PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
             } else {
                 PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
             }
-
-            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
         }
     }
 
