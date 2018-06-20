@@ -134,7 +134,7 @@ public class EmissionIndex : AbstractWeapon {
             // Only collect the first collision and stop the linerenderer there
             RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
             // We collided with something
-            if (shot.collider != null) {
+            if (shot.collider != null && shot.collider.tag != GameConstants.Tag_ObstacleThrough) {
                 // We're within the max distance so hit the object
                 var distanceFromTarget = Vector2.Distance(shot.collider.transform.position, FirePoint.position);
                 var endpointVector = directionInput * distanceFromTarget;

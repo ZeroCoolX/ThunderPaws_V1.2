@@ -144,7 +144,6 @@ public class CollisionController2D : RaycastController {
 
                     //distance from us to the object <= velocity.x so set it to that
                     velocity.x = (hit.distance - SkinWidth) * directionX;
-                    print("We're touching a collider! = " + (hit.distance - SkinWidth));
                     if (NotifyOnCollision && (hit.distance - SkinWidth) < SkinWidth) {
                         // This indicates that a baddies collided with a player and the player should bounce back
                         if (hit.transform.gameObject.tag == GameConstants.Tag_Baddie) {
@@ -195,7 +194,7 @@ public class CollisionController2D : RaycastController {
             Debug.DrawRay(rayOrigin, Vector2.up * directionY * rayLength, Color.red);
             RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.up * directionY, rayLength, CollisionMask);
             if (hit) {
-                if (gameObject.tag == GameConstants.Tag_Baddie && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                if (gameObject.tag.Contains(GameConstants.Tag_Baddie) && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
                     continue;
                 }
                 //Check for one way platforms - or completely through ones
