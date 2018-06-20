@@ -116,12 +116,13 @@ MonoBehaviour:
   VerticalRayCount: 4
   HorizontalRaySpacing: 0
   VerticalRaySpacing: 0
-  BoxCollider: {fileID: 0}
+  BoxCollider: {fileID: 61970528034595748}
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
   JumpLanding: JumpLanding
   PlayerInput: {x: 0, y: 0}
+  NotifyOnCollision: 0
 --- !u!212 &212409509080490964
 SpriteRenderer:
   m_ObjectHideFlags: 1

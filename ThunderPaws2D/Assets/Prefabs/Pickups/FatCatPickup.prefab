@@ -39,6 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4817874658325376}
+  - component: {fileID: 114099212210654468}
   m_Layer: 0
   m_Name: FatCatPickup
   m_TagString: Untagged
@@ -105,6 +106,22 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114099212210654468
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1524840051530868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a9cc33ad970b6428627f9f2ceaf420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HoverOver:
+    serializedVersion: 2
+    m_Bits: 9216
+  Gravity: -2
+  HoverDistance: 2
 --- !u!114 &114298640915111556
 MonoBehaviour:
   m_ObjectHideFlags: 1

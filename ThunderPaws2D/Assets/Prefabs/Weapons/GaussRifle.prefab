@@ -106,7 +106,7 @@ MonoBehaviour:
   FireRate: 0
   FireDelay: 1
   Damage: 10
-  Ammo: 50
+  Ammo: 100
   HasAmmo: 1
   BulletPrefab: {fileID: 4659474290433748, guid: c64aa5fd98d62bf4fafc1235d1ffd227,
     type: 2}

@@ -100,20 +100,6 @@ public class GameMasterV2 : MonoBehaviour {
     public int Score { get; set; }
 
     /// <summary>
-    /// Based off the key supplied return the corresponding weapon from the map
-    /// </summary>
-    /// <param name="weaponKey"></param>
-    /// <returns></returns>
-    public Transform GetWeaponFromMap(string weaponKey) {
-        Transform weapon;
-        Maps.WeaponPrefabMap.TryGetValue(weaponKey, out weapon);
-        if (weapon == null) {
-            weapon = WeaponList[0];
-        }
-        return weapon;
-    }
-    //TODO: Must remove everything below because its terrible
-    /// <summary>
     /// Delegate for snotifying the horde the player died, so reset the camera and kill themselves
     /// </summary>
     /// <param name="choice"></param>
@@ -282,6 +268,20 @@ public class GameMasterV2 : MonoBehaviour {
             sprite = PlayerSpriteList[0];
         }
         return sprite;
+    }
+
+    /// <summary>
+    /// Based off the key supplied return the corresponding weapon from the map
+    /// </summary>
+    /// <param name="weaponKey"></param>
+    /// <returns></returns>
+    public Transform GetWeaponFromMap(string weaponKey) {
+        Transform weapon;
+        Maps.WeaponPrefabMap.TryGetValue(weaponKey, out weapon);
+        if (weapon == null) {
+            weapon = WeaponList[0];
+        }
+        return weapon;
     }
 
     /// <summary>

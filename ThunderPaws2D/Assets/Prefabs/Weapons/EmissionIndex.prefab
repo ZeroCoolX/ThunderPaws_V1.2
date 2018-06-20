@@ -137,8 +137,8 @@ MonoBehaviour:
   FireRate: 0
   FireDelay: 1
   Damage: 10
-  Ammo: 0
-  HasAmmo: 0
+  Ammo: 100
+  HasAmmo: 1
   BulletPrefab: {fileID: 0}
   BulletSpeed: 0
   MaxLifetime: 0.5

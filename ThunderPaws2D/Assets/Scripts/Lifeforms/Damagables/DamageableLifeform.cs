@@ -85,9 +85,11 @@ public class DamageableLifeform : BaseLifeform {
             pItem.gameObject.SetActive(false);
             // TODO: Allow for not just coins - currently CoinController is hardcoded
             var coinController = pItem.GetComponent<CoinController>();
-            coinController.Initialize(GenerateRandomExplosionDirection());
-            coinController.enabled = false;
-            // Add the item to the payload
+            if(coinController != null) {
+                coinController.Initialize(GenerateRandomExplosionDirection());
+                coinController.enabled = false;
+                // Add the item to the payload
+            }
             payload.Add(pItem);
         }
 
@@ -113,7 +115,9 @@ public class DamageableLifeform : BaseLifeform {
     private void Explode(List<Transform> payload) {
         // TODO: Allow for not just coins - currently CoinController is hardcoded
         foreach(var pItem in payload) {
-            pItem.GetComponent<CoinController>().enabled = true;
+            if(pItem.GetComponent<CoinController>() != null) {
+                pItem.GetComponent<CoinController>().enabled = true;
+            }
             pItem.gameObject.SetActive(true);
         }
     }

@@ -267,6 +267,7 @@
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\PlayerSpriteController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\SimpleMover.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ControllerAssignmentUI.cs" />
@@ -285,6 +286,7 @@
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\GroundBaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Robot_GL2.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\WeaponSatellite.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Base\BaseLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Damagables\DamageableLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Player\Player.cs" />

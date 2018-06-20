@@ -39,6 +39,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4817874658325376}
+  - component: {fileID: 114434702264017592}
   m_Layer: 0
   m_Name: ShotgunPickup
   m_TagString: Untagged
@@ -118,6 +119,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PickupReward: {fileID: 4837475817054676, guid: 6cde2ef570436f94983993e370f8ff77,
     type: 2}
+--- !u!114 &114434702264017592
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1524840051530868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6a9cc33ad970b6428627f9f2ceaf420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HoverOver:
+    serializedVersion: 2
+    m_Bits: 9216
+  Gravity: -2
+  HoverDistance: 2
 --- !u!114 &114565320171094902
 MonoBehaviour:
   m_ObjectHideFlags: 1
