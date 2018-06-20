@@ -337,7 +337,16 @@ public class Player : PlayerLifeform {
                 Animator.SetFloat("xVelocity", targetVelocityX);
             }
         }
-        Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        // Get the leftmost edge of the viewport 
+        var leftScreenEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
+        // Pad it to the right by 5
+        leftScreenEdge.x += 2;
+        // Ensure our players x value is to the right of that to stop backwards traveral
+        if ( ( transform.position.x - 1 <= leftScreenEdge.x ) && DirectionalInput.x < 0) {
+            Velocity.x = 0;
+        }else {
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+        }
     }
 
     /// <summary>

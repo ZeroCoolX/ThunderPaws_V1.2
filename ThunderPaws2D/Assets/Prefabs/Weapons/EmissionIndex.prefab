@@ -136,8 +136,8 @@ MonoBehaviour:
   EffectSpawnRate: 10
   FireRate: 0
   FireDelay: 1
-  Damage: 1
-  Ammo: 10000
+  Damage: 20
+  Ammo: 50
   HasAmmo: 1
   BulletPrefab: {fileID: 0}
   BulletSpeed: 0

@@ -26,10 +26,6 @@ public class CoopersLazyHack : MonoBehaviour {
         if (lifeformScript != null) {
             lifeformScript.NoFallCheck = true;
         }
-        //var playStats = c.transform.GetComponent<PlayerStats>();
-
-        //playStats.MaxHealth = 1000;
-        //playStats.CurrentHealth = playStats.MaxHealth;
 
         Camera.GetComponent<Camera2DFollow>().YPosClamp = -500f;
     }

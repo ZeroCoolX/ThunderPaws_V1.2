@@ -25,33 +25,8 @@ using UnityEngine;
                 FindPlayer();
                 return;
             }
-            //if (LockedPositionMovement) {
-            //    HandleLockedPositionMovement();
-            //} else {
-                HandleFreePositionMovement();
-           // }
+            HandleFreePositionMovement();
         }
-
-        //private void HandleLockedPositionMovement() {
-        //print("not free");
-        //    // only update lookahead pos if accelerating or changed direction
-        //    float xMoveDelta = (Target.position - LastTargetPosition).x;
-        //    bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > LookAheadMoveThreshold;
-
-        //    if (updateLookAheadTarget) {
-        //        LookAheadPos = LookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
-        //    } else {
-        //        LookAheadPos = Vector3.MoveTowards(LookAheadPos, Vector3.zero, Time.deltaTime * LookAheadReturnSpeed);
-        //    }
-
-        //    Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
-        //    // TODO: add this offset as a configurable variable
-        //    Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
-        //    newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), newPos.z);
-
-        //    transform.position = newPos;
-        //    LastTargetPosition = Target.position;
-        //}
 
         private void HandleFreePositionMovement() {
         print("free");
