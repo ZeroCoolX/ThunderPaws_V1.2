@@ -133,21 +133,19 @@ public class EmissionIndex : AbstractWeapon {
         }else {
             // Only collect the first collision and stop the linerenderer there
             RaycastHit2D[] collisions = Physics2D.RaycastAll(firePointPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
-            for (var i = 0; i < collisions.Length; ++i) {
-                var collision = collisions[i];
-                // Special short sircuit scenario where we hit something - that something was Obstacle-Through tagged, and this was NOT the only collision in the array
-                if (collision.collider != null && collision.collider.tag == GameConstants.Tag_ObstacleThrough) {
-                    if (collisions.Length - 1 == i) {
-                        print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
-                        // We didn't hit anything so just play the non-ult max distance
-                        var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
-                        target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
-                        break;
+            if (collisions.Length == 0) {
+                print("3 Didn't hit anything so just do max length in direction pointing : " + directionInput);
+                // We didn't hit anything so just play the non-ult max distance
+                var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
+                target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+            } else {
+
+                for (var i = 0; i < collisions.Length; ++i) {
+                    var collision = collisions[i];
+                    // Special short sircuit scenario where we hit something - that something was Obstacle-Through tagged, and this was NOT the only collision in the array
+                    if (collision.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                        continue;
                     }
-                    continue;
-                }
-                // We collided with something
-                if (collision.collider != null) {
                     // We're within the max distance so hit the object
                     var distanceFromTarget = Vector2.Distance(collision.collider.transform.position, FirePoint.position);
                     var endpointVector = directionInput * distanceFromTarget;
@@ -161,19 +159,19 @@ public class EmissionIndex : AbstractWeapon {
                             lifeform.Damage(_damagePiece);
                         }
                     }
-                    print("Hit something so make THAT its target");
-                } else {
-                    print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
-                    // We didn't hit anything so just play the non-ult max distance
-                    var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
-                    target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+                    print(" Hit something so make THAT its target");
                 }
-                break;
             }
         }
 
         // Set the laser properties
         _currentLaser.SetPosition(0, FirePoint.position);
+        if(target == Vector2.zero) {
+            print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
+            // We didn't hit anything so just play the non-ult max distance
+            var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
+            target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+        }
         _currentLaser.SetPosition(1, target);
 
         if (Time.time >= _ammoDepleteTime) {

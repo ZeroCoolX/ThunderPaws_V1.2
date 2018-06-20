@@ -117,9 +117,7 @@ public class PlayerStatsUIController : MonoBehaviour {
     }
 
     public void SetAmmo(int ammo = -1) {
-        print(_ammo.text);
         _ammo.text = " Ammo: " + (ammo > -1 ? ammo+"" : " infinity");
-        print(_ammo.text);
     }
 
     public void SetLives(int lives) {
