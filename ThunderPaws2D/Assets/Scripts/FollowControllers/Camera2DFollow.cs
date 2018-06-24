@@ -29,7 +29,6 @@ using UnityEngine;
         }
 
         private void HandleFreePositionMovement() {
-        print("free");
         if(!FreeMovement && Target.position.x < LastTargetPosition.x) {
             return;
         }
