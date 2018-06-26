@@ -6,18 +6,17 @@ using UnityEngine.UI;
 
 public class ControllerAssignmentUI : MonoBehaviour {
 
-    private Button _player1Button;
+    private Image _player1Icon;
     private bool player1Assigned = false;
-    private Button _player2Button;
+    private Image _player2Icon;
     private bool player2Assigned = false;
 
     private Transform ControllerConnectionWarning;
 
     private void Awake() {
-        var buttons = transform.Find("Canvas").Find("Panel");
-        _player1Button = buttons.Find("1PlayerButton").GetComponent<Button>();
-        _player2Button = buttons.Find("2PlayerButton").GetComponent<Button>();
-        ControllerConnectionWarning = buttons.Find("ControllerConnectionWarning");
+        _player1Icon = transform.Find("Player1Icon").GetComponent<Image>();
+        _player2Icon = transform.Find("Player2Icon").GetComponent<Image>();
+        ControllerConnectionWarning = transform.Find("ControllerWarning");
     }
 
     private void Update() {
@@ -59,10 +58,10 @@ public class ControllerAssignmentUI : MonoBehaviour {
 
     public void AssignController(int player) {
         if(player == 1) {
-            _player1Button.GetComponent<Image>().color = Color.green;
+            _player1Icon.color = Color.white;
             player1Assigned = true;
         } else {
-            _player2Button.GetComponent<Image>().color = Color.green;
+            _player2Icon.color = Color.white;
             player2Assigned = true;
         }
     }
