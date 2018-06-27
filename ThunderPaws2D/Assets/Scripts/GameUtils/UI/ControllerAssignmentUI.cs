@@ -13,15 +13,18 @@ public class ControllerAssignmentUI : MonoBehaviour {
 
     private Transform ControllerConnectionWarning;
 
+    private Transform DifficultyUI;
+
     private void Awake() {
         _player1Icon = transform.Find("Player1Icon").GetComponent<Image>();
         _player2Icon = transform.Find("Player2Icon").GetComponent<Image>();
         ControllerConnectionWarning = transform.Find("ControllerWarning");
+        DifficultyUI = transform.parent.Find("DifficultySelectMenu");
     }
 
     private void Update() {
         if(player1Assigned && player2Assigned) {
-            SceneManager.LoadScene("PreAlphaDemoMainMenu");
+            StartCoroutine(MoveToDifficulty());
         }
 
         if (JoystickManagerController.Instance.ConnectedControllers() < 2) {
@@ -54,6 +57,12 @@ public class ControllerAssignmentUI : MonoBehaviour {
                     AssignController(2);
                 }
             }
+    }
+
+    private IEnumerator MoveToDifficulty() {
+        yield return new WaitForSeconds(1);
+        gameObject.SetActive(false);
+        DifficultyUI.gameObject.SetActive(true);
     }
 
     public void AssignController(int player) {

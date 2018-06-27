@@ -165,9 +165,8 @@ public class GameMasterV2 : MonoBehaviour {
     /// This is very basic ATM but it is being built for the future
     /// </summary>
     private void SelectMusic() {
-        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu) || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("PreAlphaDemoTutorial1")) {
-            AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
-        }
+        AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+        AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
     }
 
     /// <summary>

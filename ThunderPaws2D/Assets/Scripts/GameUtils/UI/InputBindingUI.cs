@@ -4,8 +4,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InputBindingUI : MonoBehaviour {
-    private Transform _menuPanel;
-
     private Event _keyEvent;
 
     public Text ButtonText;
@@ -18,29 +16,27 @@ public class InputBindingUI : MonoBehaviour {
   private bool _waitingForKey;
 
     void Start() {
-        _menuPanel = transform.Find("InputBindingPanel");
         _waitingForKey = false;
 
-        for (var i = 0; i < _menuPanel.childCount; ++i) {
-            print("_menuPanel thing = " + _menuPanel.GetChild(i).name);
-            switch (_menuPanel.GetChild(i).name) {
+        for (var i = 0; i < transform.childCount; ++i) {
+            switch (transform.GetChild(i).name) {
                 case "Melee":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Melee.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Melee.ToString();
                     break;
                 case "Fire":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Fire.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Fire.ToString();
                     break;
                 case "Roll":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Roll.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Roll.ToString();
                     break;
                 case "LockMovement":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.LockMovement.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.LockMovement.ToString();
                     break;
                 case "ChangeWeapon":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.ChangeWeapon.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.ChangeWeapon.ToString();
                     break;
                 case "Ultimate":
-                    _menuPanel.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Ultimate.ToString();
+                    transform.GetChild(i).GetChild(0).GetComponent<Text>().text = InputManager.Instance.Ultimate.ToString();
                     break;
             }
         }
@@ -99,7 +95,6 @@ public class InputBindingUI : MonoBehaviour {
         _waitingForKey = true;
         yield return WaitForKeys(); // Executes endlessly until the user presses a key
         _shiftTrigger = false;
-
         switch (keyName) {
             case "Melee":
                 InputManager.Instance.Melee = _newKey;

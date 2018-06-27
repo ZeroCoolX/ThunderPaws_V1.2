@@ -271,6 +271,7 @@
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\PlayerSpriteController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\SimpleAudio.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleMover.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\DifficultyUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\GameOverUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\InputBindingUI.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\InputSelectScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\IntroScreenUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerHudManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerSelectUI.cs" />

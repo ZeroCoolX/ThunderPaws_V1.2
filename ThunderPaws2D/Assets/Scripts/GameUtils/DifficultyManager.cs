@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DifficultyManager : MonoBehaviour {
     public static DifficultyManager Instance;
@@ -14,7 +15,7 @@ public class DifficultyManager : MonoBehaviour {
     /// Its the physical objects (Bman heads) that the user interacts with in order to
     /// be able to pick a difficulty. This can/will be changed later but for its fun
     /// </summary>
-    public Transform[] DifficultyObjects = new Transform[3];
+    //public Transform[] DifficultyObjects = new Transform[3];
     /// <summary>
     /// Set by the player in the menu. Default is easy
     /// </summary>
@@ -36,12 +37,8 @@ public class DifficultyManager : MonoBehaviour {
         print("Setting heath to " + values[1]);
         LivesManager.Health = values[1];
 
-        // Clean up the visuals and open the wall to allow the player to pass
-        UIManager.Instance.GetUi("DifficultySelector").gameObject.SetActive(false);
-        GameObject.FindGameObjectWithTag("DifficultyExit").gameObject.SetActive(false);
-        foreach (var difficulty in DifficultyObjects) {
-            difficulty.gameObject.SetActive(false);
-        }
+        // Load World
+        SceneManager.LoadScene(GameConstants.Scene_LevelName_1);
     }
 
     private void Awake() {
