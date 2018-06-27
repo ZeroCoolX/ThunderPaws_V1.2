@@ -284,6 +284,7 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\InputBindingUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\InputSelectScreenManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\IntroScreenUI.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\PauseScreenUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerHudManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerSelectUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\UIManager.cs" />

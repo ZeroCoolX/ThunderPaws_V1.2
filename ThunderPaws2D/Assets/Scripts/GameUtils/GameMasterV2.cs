@@ -451,14 +451,5 @@ public class GameMasterV2 : MonoBehaviour {
                 print("Couldn't set difficulty : " + e.Message);
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.B)) {
-            UIManager.Instance.GetUi("InputBinding").gameObject.SetActive(!UIManager.Instance.GetUi("InputBinding").gameObject.activeSelf);
-        }
-
-        // Testing hack for pause
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            UIManager.Instance.GetUi("Controls").gameObject.SetActive(!UIManager.Instance.GetUi("Controls").gameObject.activeSelf);
-        }
     }
 }
