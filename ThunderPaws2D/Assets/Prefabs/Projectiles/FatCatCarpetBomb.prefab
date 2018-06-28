@@ -72,6 +72,8 @@ MonoBehaviour:
   ExplodeOnDeath: 1
   ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
     type: 2}
+  ImpactSound: FatCat_Impact
+  AoeDamageCollider: {fileID: 0}
   MoveSpeed: 15
   Damage: 0
   MaxLifetime: 10

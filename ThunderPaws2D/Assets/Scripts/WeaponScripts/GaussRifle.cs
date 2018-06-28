@@ -40,6 +40,7 @@ public class GaussRifle : ProjectileWeapon {
                     // Fire normal shot
                     print("SHOOT");
                     BulletPrefab = BulletPrefabs[(int)BulletType.ULT];
+                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
                     CalculateShot();
                     _timeTillUltAllowed = Time.time + _ultShotDelay;
                 }
@@ -100,6 +101,7 @@ public class GaussRifle : ProjectileWeapon {
                     _chargeShotFired = true;
                     // Set the bullet to the charge shot
                     BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
+                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
                     CalculateShot();
                 } else {
                     // Fire normal shot
@@ -107,6 +109,7 @@ public class GaussRifle : ProjectileWeapon {
                     CancelInvoke("IndicateHolding");
                     _chargeShotFired = false;
                     BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
                     CalculateShot();
                 }
                 _holdData.TriggerPressed = false;
@@ -130,6 +133,7 @@ public class GaussRifle : ProjectileWeapon {
                 _chargeShotFired = true;
                 // Set the bullet to the charge shot
                 BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
+                AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
                 CalculateShot();
                 _holdData.HoldingQueued = false;
                 _holdData.TriggerPressed = false;
@@ -147,6 +151,7 @@ public class GaussRifle : ProjectileWeapon {
                     _chargeShotFired = false;
                     // Set the bullet to the DEFAULT shot
                     BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
                     CalculateShot();
                 }
                 _holdData.HoldingQueued = false;

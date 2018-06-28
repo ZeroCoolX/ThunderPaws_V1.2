@@ -90,6 +90,7 @@ MonoBehaviour:
   ExplodeOnDeath: 1
   ImpactEffect: {fileID: 4880655000989574, guid: 64b473a64a62907418829d5e18bed9f6,
     type: 2}
+  ImpactSound: GaussShot_UltImpact
   AoeDamageCollider: {fileID: 0}
   MoveSpeed: 35
   Damage: 0

@@ -39,6 +39,10 @@ public class EmissionIndex : AbstractWeapon {
     /// How long in between firings we should deplete ammo
     /// </summary>
     private float _ammoDepleteDelay = 1f;
+    /// <summary>
+    /// Indicates the laser sound is already playing
+    /// </summary>
+    private bool _laserSoundPlaying = false;
 
     private void Start() {
         base.Start();
@@ -77,12 +81,18 @@ public class EmissionIndex : AbstractWeapon {
             if (!_currentLaser.enabled) {
                 _currentLaser.enabled = true;
             }
+            if (!_laserSoundPlaying) {
+                _laserSoundPlaying = true;
+                AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexShot);
+            }
             GenerateLaser();
         }
         if (Input.GetKeyUp(InputManager.Instance.Fire) || (JoystickManagerController.Instance.ConnectedControllers() > 0 && rightTrigger == 0)) {
             _holding = false;
             // Stop the laser
             _currentLaser.enabled = false;
+            _laserSoundPlaying = false;
+            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
         }
     }
 
@@ -121,6 +131,7 @@ public class EmissionIndex : AbstractWeapon {
                         var lifeform = collision.transform.GetComponent<BaseLifeform>();
                         if (lifeform != null) {
                             print("ULT MODE : hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+                            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
                             lifeform.Damage(_damagePiece);
                         }
                     }
@@ -156,6 +167,7 @@ public class EmissionIndex : AbstractWeapon {
                         var lifeform = collision.transform.GetComponent<BaseLifeform>();
                         if (lifeform != null) {
                             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+                            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
                             lifeform.Damage(_damagePiece);
                         }
                     }
@@ -179,5 +191,9 @@ public class EmissionIndex : AbstractWeapon {
             Ammo -= 5;
             PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
         }
+    }
+
+    private void OnDestroy() {
+        AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
     }
 }

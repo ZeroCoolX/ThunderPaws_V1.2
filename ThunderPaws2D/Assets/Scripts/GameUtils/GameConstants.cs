@@ -14,6 +14,17 @@ public class GameConstants {
     public static string Audio_Shotgun = "ShotgunShot";
     public static string Audio_WeaponPickup = "WeaponPickup";
     public static string Audio_Melee = "FirePunch";
+    public static string Audio_MenuButtonClick = "MenuButton_Click";
+    public static string Audi_MenuButtonNavigate = "MenuButton_Navigate";
+    public static string Audio_GaussShot = "GaussShot";
+    public static string Audio_GaussShotCharged = "GaussShot_Charged";
+    public static string Audio_FatCatShot = "FatCatShot";
+    public static string Audio_EmissionIndexShot = "EmissionIndexShot";
+    public static string Audio_EmissionIndexImpact = "EmissionIndex_Impact";
+    public static string Audio_GaussShotChargedImpact = "GaussShot_ChargedImpact";
+    public static string Audio_GaussShotImpact = "GaussShot_Impact";
+    public static string Audio_GaussShotUltImpact = "GaussShot_UltImpact";
+    public static string Audio_FatCatImpact = "FatCat_Impact";
 
     // GameTags
     public static string Tag_Player = "Player";

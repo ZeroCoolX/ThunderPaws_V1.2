@@ -157,3 +157,66 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: GaussShot
+    clip: {fileID: 8300000, guid: 3ccb4cb6a3b0feb4bbfd821005bdda01, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: GaussShot_Charged
+    clip: {fileID: 8300000, guid: 335832c51afea1d4e8e1db8db490b91b, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: FatCatShot
+    clip: {fileID: 8300000, guid: 792f40997feef4842bf531f8c0c5ef97, type: 3}
+    volume: 0.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: EmissionIndexShot
+    clip: {fileID: 8300000, guid: a10da561c185ec04cb9b4b53778ff5b4, type: 3}
+    volume: 0.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 1
+  - name: EmissionIndex_Impact
+    clip: {fileID: 8300000, guid: a2f2c79eb6c64a945a8c234af7983f29, type: 3}
+    volume: 0.3
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: GaussShot_ChargedImpact
+    clip: {fileID: 8300000, guid: 938ee034f831ecc4e9b3ed52e7ba59ef, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: FatCat_Impact
+    clip: {fileID: 8300000, guid: 224c5592b74f5894ebcd30d57de770e2, type: 3}
+    volume: 0.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: GaussShot_Impact
+    clip: {fileID: 8300000, guid: a1012b0fe6f5c6645bfb7d9b5a7f79c8, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: GaussShot_UltImpact
+    clip: {fileID: 8300000, guid: 735f1b7268168ed459f828b809a4a9e4, type: 3}
+    volume: 0.7
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0

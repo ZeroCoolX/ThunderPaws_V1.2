@@ -13,6 +13,12 @@ public abstract class AbstractProjectile : MonoBehaviour {
     public Transform ImpactEffect;
 
     /// <summary>
+    /// Optional audio to play on impact - otherwise a random of two 
+    /// default small explosion will play
+    /// </summary>
+    public string ImpactSound;
+
+    /// <summary>
     /// Some projectiles explode and cause AOE damage
     /// </summary>
     public SimpleCollider AoeDamageCollider;
@@ -136,7 +142,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
             // AOE damage should not be 100% of the initial damage so just give off 75% of it
             aoe.Damage = Damage * 0.75f;
         }
-        AudioManager.Instance.playSound("SmallExplosion");
+        AudioManager.Instance.playSound(string.IsNullOrEmpty(ImpactSound) ? "SmallExplosion" : ImpactSound);
     }
 
     protected abstract void Move();

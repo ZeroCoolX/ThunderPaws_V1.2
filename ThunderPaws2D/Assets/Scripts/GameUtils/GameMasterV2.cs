@@ -165,7 +165,11 @@ public class GameMasterV2 : MonoBehaviour {
     /// This is very basic ATM but it is being built for the future
     /// </summary>
     private void SelectMusic() {
-        AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+        try {
+            AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+        }catch(System.Exception e) {
+            print("There was no menu music to stop");
+        }
         AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
     }
 

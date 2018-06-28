@@ -75,6 +75,7 @@ public class FatCat : ProjectileWeapon {
         for (var i = 0; i < 20; ++i) {
             var pos = new Vector2(edgeVector.x - xSpacing, edgeVector.y + ySpacing);
             CreateBomb(pos);
+            AudioManager.Instance.playSound(GameConstants.Audio_FatCatShot);
             xSpacing += interval;
             ySpacing += 2;
         }
@@ -121,6 +122,7 @@ public class FatCat : ProjectileWeapon {
             // Allow the user's fire pressing to be registered in 0.35seconds
             Invoke("AllowUltShooting", 0.35f);
             BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+            AudioManager.Instance.playSound(GameConstants.Audio_FatCatShot);
             CalculateShot();
         }
     }
