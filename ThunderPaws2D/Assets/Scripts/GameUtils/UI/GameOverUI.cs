@@ -8,17 +8,8 @@ public class GameOverUI : MonoBehaviour {
     private GameObject _player;
 
     private void Update() {
-        if(_player == null) {
-            _player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-            if (_player != null) {
-                _player.transform.GetComponent<PlayerInputController>().enabled = false;
-            }
-        }
-        if (Input.GetButtonUp("J1-" + GameConstants.Input_Back)) {
-            Menu();
-        }
-        if (Input.GetButtonUp("J1-" + GameConstants.Input_Start)) {
-            Quit();
+        foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
+            player.GetComponent<PlayerInputController>().enabled = false;
         }
     }
 
@@ -28,8 +19,8 @@ public class GameOverUI : MonoBehaviour {
 
     public void Menu() {
         try {
-            AudioManager.Instance.stopSound("Music_Main");
-            AudioManager.Instance.playSound("Music_Menu");
+            AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
+            AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
         } catch (System.Exception e) {
             print("Don't care");
         }
