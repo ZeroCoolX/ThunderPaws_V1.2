@@ -143,3 +143,17 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: MenuButton_Click
+    clip: {fileID: 8300000, guid: cb57d769dcea7434d9df932cbac07b0f, type: 3}
+    volume: 0.2
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: MenuButton_Navigate
+    clip: {fileID: 8300000, guid: dd85e3e74553cdc4c815dce9d23e7df1, type: 3}
+    volume: 0.2
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0

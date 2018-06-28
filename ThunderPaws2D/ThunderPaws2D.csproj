@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.4.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -288,6 +290,7 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerHudManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerSelectUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UISoundController.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\BaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\FlyingBaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL1.cs" />

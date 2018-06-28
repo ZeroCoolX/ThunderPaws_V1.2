@@ -284,6 +284,7 @@ GameObject:
   - component: {fileID: 11837721}
   - component: {fileID: 11837720}
   - component: {fileID: 11837719}
+  - component: {fileID: 11837722}
   m_Layer: 5
   m_Name: ControlsButton
   m_TagString: Untagged
@@ -406,6 +407,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 11837717}
+--- !u!114 &11837722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 11837717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &12118696
 Prefab:
   m_ObjectHideFlags: 0
@@ -1445,6 +1458,7 @@ GameObject:
   - component: {fileID: 68435955}
   - component: {fileID: 68435954}
   - component: {fileID: 68435953}
+  - component: {fileID: 68435956}
   m_Layer: 5
   m_Name: KeyboardControls
   m_TagString: Untagged
@@ -1567,6 +1581,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 68435951}
+--- !u!114 &68435956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 68435951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &78120496
 GameObject:
   m_ObjectHideFlags: 0
@@ -4864,6 +4890,7 @@ GameObject:
   - component: {fileID: 472490555}
   - component: {fileID: 472490554}
   - component: {fileID: 472490553}
+  - component: {fileID: 472490556}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -4975,6 +5002,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472490551}
+--- !u!114 &472490556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472490551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &481386305
 GameObject:
   m_ObjectHideFlags: 0
@@ -5971,6 +6010,7 @@ GameObject:
   - component: {fileID: 626216086}
   - component: {fileID: 626216085}
   - component: {fileID: 626216084}
+  - component: {fileID: 626216087}
   m_Layer: 5
   m_Name: ResumeButton
   m_TagString: Untagged
@@ -6082,6 +6122,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 626216082}
+--- !u!114 &626216087
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 626216082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &631950292
 Prefab:
   m_ObjectHideFlags: 0
@@ -6498,6 +6550,7 @@ GameObject:
   - component: {fileID: 663005071}
   - component: {fileID: 663005070}
   - component: {fileID: 663005069}
+  - component: {fileID: 663005072}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -6620,6 +6673,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 663005067}
+--- !u!114 &663005072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 663005067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &664047608
 GameObject:
   m_ObjectHideFlags: 0
@@ -6828,6 +6893,7 @@ GameObject:
   - component: {fileID: 696846802}
   - component: {fileID: 696846801}
   - component: {fileID: 696846800}
+  - component: {fileID: 696846804}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -6950,6 +7016,18 @@ RectTransform:
   m_AnchoredPosition: {x: -463, y: 208.2}
   m_SizeDelta: {x: 173.89, y: 83.37}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &696846804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 696846799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!4 &719809846 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4653593204112304, guid: dbff2063a7bee6e4c9509932d1789ee5,
@@ -8395,6 +8473,7 @@ GameObject:
   - component: {fileID: 863420972}
   - component: {fileID: 863420971}
   - component: {fileID: 863420970}
+  - component: {fileID: 863420973}
   m_Layer: 5
   m_Name: ControllerControls
   m_TagString: Untagged
@@ -8517,6 +8596,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 863420968}
+--- !u!114 &863420973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 863420968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &868996302
 Prefab:
   m_ObjectHideFlags: 0
@@ -8596,6 +8687,7 @@ GameObject:
   - component: {fileID: 876671035}
   - component: {fileID: 876671034}
   - component: {fileID: 876671033}
+  - component: {fileID: 876671036}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -8718,6 +8810,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 876671031}
+--- !u!114 &876671036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 876671031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &884062719
 Prefab:
   m_ObjectHideFlags: 0
@@ -11593,6 +11697,7 @@ GameObject:
   - component: {fileID: 1193873233}
   - component: {fileID: 1193873232}
   - component: {fileID: 1193873231}
+  - component: {fileID: 1193873234}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -11704,6 +11809,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1193873229}
+--- !u!114 &1193873234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1193873229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &1203429088
 Prefab:
   m_ObjectHideFlags: 0
@@ -16112,6 +16229,7 @@ GameObject:
   - component: {fileID: 1654249967}
   - component: {fileID: 1654249966}
   - component: {fileID: 1654249965}
+  - component: {fileID: 1654249968}
   m_Layer: 5
   m_Name: MenuButton
   m_TagString: Untagged
@@ -16223,6 +16341,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1654249963}
+--- !u!114 &1654249968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1654249963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1001 &1659822341
 Prefab:
   m_ObjectHideFlags: 0
@@ -21156,6 +21286,7 @@ GameObject:
   - component: {fileID: 2054083023}
   - component: {fileID: 2054083022}
   - component: {fileID: 2054083021}
+  - component: {fileID: 2054083024}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -21267,6 +21398,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2054083019}
+--- !u!114 &2054083024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2054083019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &2072773471
 GameObject:
   m_ObjectHideFlags: 0
