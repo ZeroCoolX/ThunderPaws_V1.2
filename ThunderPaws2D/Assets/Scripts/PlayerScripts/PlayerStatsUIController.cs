@@ -102,13 +102,16 @@ public class PlayerStatsUIController : MonoBehaviour {
         }
         //TODO: Change color of bar over time
         _healthBarRect.localScale = new Vector3(value, _healthBarRect.localScale.y, _healthBarRect.localScale.z);
-        CheckPlayerImage(cur);
+        CheckPlayerImage(cur, max);
     }
 
-    private void CheckPlayerImage(int cur) {
+    private void CheckPlayerImage(int cur, int max) {
         print("PLAYER IMAGE CHANGE : " + cur);
         //Safety check in casae another class - Player - calls this before its had a chance to startup
-        var healthKey = cur > 50 ? 100 : cur > 25 ? 50 : 25;
+        var diff = max-cur;//100-100=0, 100-40 = 60
+        var maxHalf = max / 2;//50
+        var maxFourth = max / 4; //25
+        var healthKey = cur <= maxFourth ? 25 : cur > maxFourth & cur <= maxHalf ? 50 : 100;
         _playerImage.sprite = GameMasterV2.Instance.GetSpriteFromMap(healthKey);
     }
 

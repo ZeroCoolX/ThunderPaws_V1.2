@@ -36,7 +36,11 @@ public class SpawnPointManager : MonoBehaviour {
     /// Incrmenet the index
     /// </summary>
     public void UpdateSpawnIndex() {
-        _spawnPointIndex++;
+        if(_spawnPointIndex == -1) {
+            _spawnPointIndex = 1;
+        }else {
+            _spawnPointIndex++;
+        }
     }
 
     private void Awake() {
