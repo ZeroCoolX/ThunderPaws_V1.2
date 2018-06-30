@@ -377,7 +377,11 @@ public class Player : PlayerLifeform {
             var lifeform = raycast.collider.transform.GetComponent<DamageableLifeform>();
             if (lifeform != null && lifeform.gameObject.tag != GameConstants.Tag_Tutorial) {
                 print("hit lifeform: " + lifeform.gameObject.name + " and did " + MeleeDamage + " damage");
-                lifeform.Damage(MeleeDamage);
+                if (lifeform.Damage(MeleeDamage)) {
+                    // increment the stats for whoever shot the bullet
+                    print("Adding baddie for player  : " + PlayerNumber);
+                    GameStatsManager.Instance.AddBaddie(PlayerNumber);
+                }
             }
         }
     }

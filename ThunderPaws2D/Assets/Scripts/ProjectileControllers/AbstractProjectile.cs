@@ -45,6 +45,10 @@ public abstract class AbstractProjectile : MonoBehaviour {
     /// </summary>
     protected Vector3 TargetPos;
     /// <summary>
+    /// Allows us to collect stats about which player fired the shot so if we kill someone we can correctly add it to their kill count
+    /// </summary>
+    public int FromPlayerNumber;
+    /// <summary>
     /// POSSIBLY DEPRECATED
     /// </summary>
     protected Vector3 TargetNormal;
@@ -129,7 +133,8 @@ public abstract class AbstractProjectile : MonoBehaviour {
             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
             if (lifeform.Damage(Damage)) {
                 // increment the stats for whoever shot the bullet
-                GameStatsManager.Instance.AddBaddie(transform.parent.GetComponent<AbstractWeapon>().Player.PlayerNumber);
+                print("Adding baddie for player  : " + FromPlayerNumber);
+                GameStatsManager.Instance.AddBaddie(FromPlayerNumber);
             }
         }
     }

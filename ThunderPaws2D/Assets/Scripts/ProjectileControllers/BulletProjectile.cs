@@ -64,7 +64,11 @@ public class BulletProjectile : AbstractProjectile {
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();
         if(lifeform != null) {
             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
-            lifeform.Damage(Damage);
+            if (lifeform.Damage(Damage)) {
+                // increment the stats for whoever shot the bullet
+                print("Adding baddie for player  : " + FromPlayerNumber);
+                GameStatsManager.Instance.AddBaddie(FromPlayerNumber);
+            }
         }
         GenerateEffect();
         Destroy(gameObject);
