@@ -9,6 +9,7 @@ public class GameConstants {
     public static string Audio_MenuMusic = "Music_Menu";
     public static string Audio_MainMusic = "Music_Main";
     public static string Audio_BossMusic = "Music_Boss";
+    public static string Audio_BackstoryMusic = "Music_Backstory";
     public static string Audio_WeaponSwitch = "WeaponSwitch";
     public static string Audio_FuzzBuster = "FuzzBusterShot";
     public static string Audio_Shotgun = "ShotgunShot";
@@ -86,6 +87,7 @@ public class GameConstants {
     // Scene Name Data
     public static string Scene_LevelName_1 = "AlphaDemoLevel1";
     public static string Scene_LevelName_Menu = "AlphaDemoMainMenu";
+    public static string Scene_Backstory_Menu = "AlphaDemoBackstory";
 
     // Difficulties
     public static string Difficulty_Easy = "easy";

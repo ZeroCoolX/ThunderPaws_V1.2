@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour {
@@ -10,6 +11,8 @@ public class DialogueManager : MonoBehaviour {
 
     public Text NameText;
     public Text DialogueText;
+    public Transform DialogUi;
+    public string SceneToLoadAfter;
 
     private Queue<string> _sentences;
 
@@ -20,17 +23,20 @@ public class DialogueManager : MonoBehaviour {
         } else if (Instance != this) {
             Destroy(gameObject);
         }
+
+        _sentences = new Queue<string>();
     }
 
     // Use this for initialization
     void Start () {
-        _sentences = new Queue<string>();
 	}
 
     public void StartDialogue(Dialogue dialogue) {
         print("Starting dialogue!");
-
-        Animator.SetBool("IsOpen", true);
+        // Freeze everything in the scene
+        if(Animator != null) {
+            Animator.SetBool("IsOpen", true);
+        }
 
         NameText.text = dialogue.Name;
 
@@ -40,6 +46,14 @@ public class DialogueManager : MonoBehaviour {
         }
 
         DisplayNextSentence();
+        Invoke("StopTime", 1f);
+    }
+
+    private void StopTime() {
+        foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
+            player.GetComponent<PlayerInputController>().enabled = false;
+        }
+        Time.timeScale = 0f;
     }
 
     public void DisplayNextSentence() {
@@ -63,7 +77,21 @@ public class DialogueManager : MonoBehaviour {
 
     public void EndDialogue() {
         DialogueText.text = "...";
-        Animator.SetBool("IsOpen", false);
+        // Freeze everything in the scene
+        Time.timeScale = 1f;
+        if (Animator != null) {
+            Animator.SetBool("IsOpen", false);
+        }
+        if (!string.IsNullOrEmpty(SceneToLoadAfter)) {
+            AudioManager.Instance.stopSound(GameConstants.Audio_BackstoryMusic);
+            SceneManager.LoadScene(GameConstants.Scene_LevelName_1);
+        }
+        foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
+            player.GetComponent<PlayerInputController>().enabled = true;
+        }
         print("End of conversation");
+        if(DialogUi != null) {
+            DialogUi.gameObject.SetActive(false);
+        }
     }
 }

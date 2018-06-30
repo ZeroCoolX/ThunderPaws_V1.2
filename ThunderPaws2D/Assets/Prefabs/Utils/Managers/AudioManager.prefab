@@ -208,7 +208,7 @@ MonoBehaviour:
     loop: 0
   - name: GaussShot_Impact
     clip: {fileID: 8300000, guid: a1012b0fe6f5c6645bfb7d9b5a7f79c8, type: 3}
-    volume: 0.7
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -216,6 +216,13 @@ MonoBehaviour:
   - name: GaussShot_UltImpact
     clip: {fileID: 8300000, guid: 735f1b7268168ed459f828b809a4a9e4, type: 3}
     volume: 0.7
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: Music_Backstory
+    clip: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
+    volume: 0.3
     pitch: 1
     randomVolume: 0
     randomPitch: 0

@@ -38,7 +38,12 @@ public class DifficultyManager : MonoBehaviour {
         LivesManager.Health = values[1];
 
         // Load World
-        SceneManager.LoadScene(GameConstants.Scene_LevelName_1);
+        try {
+            AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+        }catch(System.Exception e) {
+            print("We couldn't stop the music because it wasn't playing. Move along");
+        }
+        SceneManager.LoadScene(GameConstants.Scene_Backstory_Menu);
     }
 
     private void Awake() {
