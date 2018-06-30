@@ -23,14 +23,14 @@ public class GameOverUI : MonoBehaviour {
     private void OnEnable() {
         Player1CoinText.GetComponent<TextMeshProUGUI>().text = ""+GameStatsManager.Instance.CoinsCollected(1);
         Player1BaddieText.GetComponent<TextMeshProUGUI>().text = ""+ GameStatsManager.Instance.BaddiesKilled(1);
-        Player1UltsText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.TimesDied(1);
-        Player1DiedText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.UltimatesUsed(1);
+        Player1UltsText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.UltimatesUsed(1);
+        Player1DiedText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.TimesDied(1);
         Player1TimeText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.LevelTime(1);
 
         Player2CoinText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.CoinsCollected(2);
         Player2BaddieText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.BaddiesKilled(2);
-        Player2UltsText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.TimesDied(2);
-        Player2DiedText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.UltimatesUsed(2);
+        Player2UltsText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.UltimatesUsed(2);
+        Player2DiedText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.TimesDied(2);
         Player2TimeText.GetComponent<TextMeshProUGUI>().text = "" + GameStatsManager.Instance.LevelTime(2);
     }
 
