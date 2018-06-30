@@ -37,6 +37,10 @@ public class HordeController : MonoBehaviour {
     /// Reference to the main camera
     /// </summary>
     public Transform Camera;
+    /// <summary>
+    /// Needed for the last horde
+    /// </summary>
+    public float OptionalYOffset;
 
     private float GL1SpawnRate;
     private float FL1SpawnRate;
@@ -341,7 +345,7 @@ public class HordeController : MonoBehaviour {
         // Here we should also close the path on either side of the horde section locking the player in
         GameMasterV2.Instance.LastSeenInHorde = true;
 
-        SetCameraTarget(transform, false, 0f);
+        SetCameraTarget(transform, false, OptionalYOffset);
         _spawningAllowed = true;
         if (LeftBarrier != null) {
             LeftBarrier.gameObject.SetActive(true);

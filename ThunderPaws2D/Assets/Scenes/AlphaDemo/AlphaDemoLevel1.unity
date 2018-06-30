@@ -5165,6 +5165,7 @@ MonoBehaviour:
   LeftBarrier: {fileID: 256489867}
   RightBarrier: {fileID: 942036028}
   Camera: {fileID: 899860195}
+  OptionalYOffset: 0
   BaddiesLeftToKill: 25
   EndGameAfter: 0
   GL1BaddiePrefab: {fileID: 4930055791183770, guid: fe4387c5da42b0a4e9210a1e5efd3d8a,
@@ -10880,6 +10881,7 @@ MonoBehaviour:
   LeftBarrier: {fileID: 256489867}
   RightBarrier: {fileID: 942036028}
   Camera: {fileID: 899860195}
+  OptionalYOffset: 10
   BaddiesLeftToKill: 50
   EndGameAfter: 1
   GL1BaddiePrefab: {fileID: 4930055791183770, guid: fe4387c5da42b0a4e9210a1e5efd3d8a,
