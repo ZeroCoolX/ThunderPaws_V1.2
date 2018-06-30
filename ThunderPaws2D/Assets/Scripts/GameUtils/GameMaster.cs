@@ -557,7 +557,7 @@ public class GameMaster : MonoBehaviour {
             if (controller == null) {
                 throw new MissingComponentException("No Checkpoint controller");
             }
-            if (SpawnPointIndex != 2) {
+            if (SpawnPointIndex != 3) {
                 controller.DeactivateBaddiesInCheckpoint();
                 controller.SpawnFreshBaddiesForCheckpoint(1.5f);
                 if (LastSeenInHorde) {

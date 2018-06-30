@@ -34,7 +34,7 @@ public class CheckpointController : MonoBehaviour {
     public void DeactivateBaddiesInCheckpoint() {
         //GameMasterV2.Instance.SpawnPointIndex -= 1;
         print("Destroying BADDIEDDSS" + " at Time [" + Time.time + "]");
-        if(SpawnPointManager.Instance.GetSpawnIndex() != 2) {
+        if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
             Destroy(BaddiesInCheckpointRange.gameObject);
         }
     }
@@ -61,7 +61,7 @@ public class CheckpointController : MonoBehaviour {
         // Increment spawn!
         print("Hit Checkpoint!!!!!");
         SpawnPointManager.Instance.UpdateSpawnIndex();
-        if(SpawnPointManager.Instance.GetSpawnIndex() != 2) {
+        if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
             SpawnFreshBaddiesForCheckpoint();
         }
         // Refresh the players health once they hit the checkpoint
