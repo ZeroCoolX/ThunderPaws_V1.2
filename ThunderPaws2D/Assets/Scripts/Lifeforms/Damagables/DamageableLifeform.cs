@@ -127,8 +127,9 @@ public class DamageableLifeform : BaseLifeform {
     /// Trigger flash damage animation
     /// </summary>
     /// <param name="damage"></param>
-    public override void Damage(float damage) {
+    public override bool Damage(float damage) {
         Health -= damage;
         ActivateFlash();
+        return Health <= 0;
     }
 }

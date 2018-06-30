@@ -92,7 +92,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <summary>
     /// Need a reference to the player this weapon is aattached to so we can get the direction input
     /// </summary>
-    protected Player Player;
+    public Player Player;
     /// <summary>
     /// LayuerMask indicating what to hit
     /// </summary>

@@ -237,11 +237,11 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
-    <Reference Include="TextMeshPro-2017.3-Runtime">
-      <HintPath>Assets\TextMesh Pro\Plugins\Editor DLL\TextMeshPro-2017.3-Runtime.dll</HintPath>
-    </Reference>
     <Reference Include="TextMeshPro-2017.3-Editor">
       <HintPath>Assets\TextMesh Pro\Plugins\Editor DLL\TextMeshPro-2017.3-Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="TextMeshPro-2017.3-Runtime">
+      <HintPath>Assets\TextMesh Pro\Plugins\Editor DLL\TextMeshPro-2017.3-Runtime.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -261,11 +261,13 @@
     <Compile Include="Assets\Scripts\GameUtils\Colliders\TutorialResetCollider.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CoopersLazyHack.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DeathTimer.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\DebugGameStatsController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DifficultyController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DifficultyManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMaster.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMasterV2.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\GameStatsManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\HordeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\InputManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\JoystickManagerController.cs" />

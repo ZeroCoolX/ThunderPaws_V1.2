@@ -127,7 +127,10 @@ public abstract class AbstractProjectile : MonoBehaviour {
         var lifeform = c.transform.GetComponent<BaseLifeform>();
         if (lifeform != null) {
             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
-            lifeform.Damage(Damage);
+            if (lifeform.Damage(Damage)) {
+                // increment the stats for whoever shot the bullet
+                GameStatsManager.Instance.AddBaddie(transform.parent.GetComponent<AbstractWeapon>().Player.PlayerNumber);
+            }
         }
     }
 

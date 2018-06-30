@@ -42,9 +42,11 @@ public abstract class BaseLifeform : MonoBehaviour {
     protected virtual void Move() { }
 
     /// <summary>
-    /// Base implementation is to flash the sprite
+    /// Base implementation is to flash the sprite.
+    /// Returns true if the health is less than or equal to 0
+    /// Returns false all other times
     /// </summary>
-    public abstract void Damage(float damage);
+    public abstract bool Damage(float damage);
 
     /// <summary>
     /// Assign the CollisionController2d instance attached to the lifeform

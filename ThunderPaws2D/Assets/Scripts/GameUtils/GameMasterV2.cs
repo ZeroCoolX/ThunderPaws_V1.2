@@ -74,23 +74,6 @@ public class GameMasterV2 : MonoBehaviour {
             CoinCollectionOrigin = value;
         }
     }
-    /// <summary>
-    /// Add to the global coin count for a player
-    /// </summary>
-    /// <param name="index"></param>
-    public void AddCoins(int index) {
-        ++_playerCoinCounts[index];
-    }
-
-    // PLAYER
-    /// <summary>
-    /// Return the current number of coins
-    /// </summary>
-    /// <param name="index"></param>
-    /// <returns></returns>
-    public int GetCoinCount(int index) {
-        return _playerCoinCounts[index];
-    }
     private int MaxScorePossible;
     /// <summary>
     /// index 0 = player 1 coins per level
@@ -241,6 +224,10 @@ public class GameMasterV2 : MonoBehaviour {
 
             // Push a player onto the stack indicating he is alive in the scene
             PlayersCurrentlyAlive.Push(0);
+
+            // Add the player to the game stats map
+            GameStatsManager.Instance.AddPlayerToMap(playerNum);
+            GameStatsManager.Instance.StartTimer(playerNum);
         }
     }
 
@@ -323,6 +310,8 @@ public class GameMasterV2 : MonoBehaviour {
 
         // Kill the player if necessary
         Instance.KillDashNine(player.gameObject, Instance.RemainingLives > 0, fullRespawn, player.PlayerNumber);
+        // increment the stats for whoever died
+        GameStatsManager.Instance.AddDeath(player.PlayerNumber);
     }
 
     /// <summary>

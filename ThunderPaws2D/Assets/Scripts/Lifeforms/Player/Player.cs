@@ -214,6 +214,7 @@ public class Player : PlayerLifeform {
         if ((Input.GetButtonUp(JoystickId + GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
             print("Pressing ult and we're ready!");
             ActivateUltimate();
+            GameStatsManager.Instance.AddUlt(PlayerNumber);
         }
 
         if (Input.GetButtonUp(JoystickId + GameConstants.Input_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
@@ -486,7 +487,8 @@ public class Player : PlayerLifeform {
             PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);//TODO: Hardcoded player number should be dynamic to whichever player this is
         }
         //Right now hardcoded for player 1 coins
-        GameMasterV2.Instance.AddCoins(0);
+        print("Adding coin!");
+        GameStatsManager.Instance.AddCoin(PlayerNumber);
     }
 
     /// <summary>
@@ -544,7 +546,7 @@ public class Player : PlayerLifeform {
     /// <summary>
     /// Player takes damage and updates the status
     /// </summary>
-    public override void Damage(float dmg) {
+    public override bool Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
         PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
         if(PlayerStats.CurrentHealth <= 0) {
@@ -552,6 +554,7 @@ public class Player : PlayerLifeform {
         }else {
             ActivateFlash();
         }
+        return false;
     }
 
     /// <summary>

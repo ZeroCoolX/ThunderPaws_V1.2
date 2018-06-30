@@ -132,7 +132,10 @@ public class EmissionIndex : AbstractWeapon {
                         if (lifeform != null) {
                             print("ULT MODE : hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
                             AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
-                            lifeform.Damage(_damagePiece);
+                            if (lifeform.Damage(_damagePiece)) {
+                                // increment the stats for whoever shot the bullet
+                                GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
+                            }
                         }
                     }
                 }
@@ -168,7 +171,10 @@ public class EmissionIndex : AbstractWeapon {
                         if (lifeform != null) {
                             print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
                             AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
-                            lifeform.Damage(_damagePiece);
+                            if (lifeform.Damage(_damagePiece)) {
+                                // increment the stats for whoever shot the bullet
+                                GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
+                            }
                         }
                     }
                     print(" Hit something so make THAT its target");

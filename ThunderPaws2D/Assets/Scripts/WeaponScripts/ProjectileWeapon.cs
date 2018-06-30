@@ -112,6 +112,7 @@ public class ProjectileWeapon : AbstractWeapon {
             }
 
             //Set layermask of parent (either player or baddie)
+            projectile.transform.parent = transform;
             projectile.SetLayerMask(whatToHit);
             projectile.gameObject.layer = LayerMask.NameToLayer(layer);
             projectile.Damage = Damage;
