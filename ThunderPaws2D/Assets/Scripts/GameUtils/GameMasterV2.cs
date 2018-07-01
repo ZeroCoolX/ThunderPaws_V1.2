@@ -113,13 +113,16 @@ public class GameMasterV2 : MonoBehaviour {
 
 
     private void Awake() {
+        Debug.Log("PANCAKES");
         // Ensure the object persists through the lifetime of the game
         if (Instance == null) {
             Instance = this;
         } else if (Instance != this) {
             Destroy(gameObject);
         }
+    }
 
+    private void Start() {
         // Transfer all the compile time lists into maps
         Maps.PlayerSpiteMap = new Dictionary<int, Sprite>();
         Maps.PlayersPrefabMap = new Dictionary<int, Transform>();
@@ -130,9 +133,7 @@ public class GameMasterV2 : MonoBehaviour {
         // Set the remaining lives
         RemainingLives = LivesManager.Lives == 0 ? 99 : LivesManager.Lives;
         print("Remaining lives : " + RemainingLives);
-    }
 
-    private void Start() {
         // Ensure the CameraShake manager exists
         _cameraShakeManager = transform.GetComponent<CameraShake>();
         if (_cameraShakeManager == null) {throw new MissingReferenceException("No CameraShake found");}

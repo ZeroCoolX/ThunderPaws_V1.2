@@ -21,8 +21,8 @@ public class InputManager : MonoBehaviour {
         // Assign keycodes to default
         Melee = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Melee", "RightShift"));
         Fire = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Fire", "Return"));
-        Roll = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Roll", "RightControl"));
-        LockMovement = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LockMovement", "LeftShift"));
+        Roll = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Roll", "LeftShift"));
+        LockMovement = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("LockMovement", "RightControl"));
         ChangeWeapon = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("ChangeWeapon", "UpArrow"));
         Ultimate = (KeyCode)System.Enum.Parse(typeof(KeyCode), PlayerPrefs.GetString("Ultimate", "Q"));
     }

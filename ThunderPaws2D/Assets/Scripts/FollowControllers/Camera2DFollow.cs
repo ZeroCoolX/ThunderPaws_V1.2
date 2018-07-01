@@ -45,7 +45,7 @@ using UnityEngine;
             Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
             aheadTargetPos.y += YOffset;
             Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
-            newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), newPos.z);
+            newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), -50f);
             transform.position = newPos;
 
             LastTargetPosition = Target.position;

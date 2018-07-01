@@ -252,7 +252,7 @@ public class Player : PlayerLifeform {
         var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
             _rollActive = true;
-            Invoke("DeactivateRollTrigger", 0.25f);
+            Invoke("DeactivateRollTrigger", 0.5f);
         }
         // Indicates we are melee'ing
         var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
@@ -546,7 +546,9 @@ public class Player : PlayerLifeform {
     /// Helper method that ensures the player cannot walk during the melee animation
     /// </summary>
     private void DeactivateRollTrigger() {
-        _rollActive = false;
+        if(!(Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll))) {
+            _rollActive = false;
+        }
     }
 
     /// <summary>

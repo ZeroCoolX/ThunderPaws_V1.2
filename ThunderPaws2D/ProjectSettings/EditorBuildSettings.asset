@@ -6,41 +6,17 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoIntroScreen.unity
-    guid: 6f1efda36d3290b4cb622a05258bf150
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoMainMenu.unity
-    guid: ba86f4fd960afd144af31c3496446c52
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoLevel1.unity
-    guid: cca889fd25e3b854192aa1469cc1eab5
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoTutorial1.unity
-    guid: 66c658029f4f6304bb762ad836fe5d90
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoTutorial2.unity
-    guid: 056eac9c137a9d44db629e48a61fe8ad
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoTutorial3.unity
-    guid: 8d29434f7f94a6a45b934b5cb9eb67b9
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoTutorial4.unity
-    guid: 236c68b2cbf26c048b2615401045517f
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoTutorial5.unity
-    guid: 827aa713da28d3e4892757df86414721
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoPlayerSelect.unity
-    guid: 4f8104932cde14441af80a1e86b5177c
-  - enabled: 1
-    path: Assets/Scenes/PreAlphaDemo/PreAlphaDemoControllerAssignment.unity
-    guid: c1ecd9ad289f93d4d9817e77a5238330
-  - enabled: 1
     path: Assets/Scenes/AlphaDemo/AlphaDemoMainMenu.unity
     guid: 97f8ce594f38ff3408e16205bc6744fb
   - enabled: 1
-    path: Assets/Scenes/AlphaDemo/AlphaDemoLevel1.unity
-    guid: 5b389f3120f16dd40854ae0b68b1617f
-  - enabled: 1
     path: Assets/Scenes/AlphaDemo/AlphaDemoBackstory.unity
     guid: 4dd1c8c0d6123af4cb4bb817d41fb469
+  - enabled: 1
+    path: Assets/Scenes/AlphaDemo/AlphaDemoLevel1.unity
+    guid: 5b389f3120f16dd40854ae0b68b1617f
+  - enabled: 0
+    path: Assets/Scenes/Development/LeastObjectsPossible.unity
+    guid: 159ea0f2d1b57e74f960dbde06304838
+  - enabled: 0
+    path: Assets/Scenes/TroubleShootingBug.unity
+    guid: e58c0a8c861d653469f134517c026d3b

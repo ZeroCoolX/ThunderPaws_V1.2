@@ -6,7 +6,7 @@ using UnityEngine;
 public class JoystickManagerController : MonoBehaviour{
     public static JoystickManagerController Instance;
 
-    void Awake() {
+    private void Awake() {
         if (Instance != null) {
             if (Instance != this) {
                 Destroy(this.gameObject);
@@ -16,7 +16,6 @@ public class JoystickManagerController : MonoBehaviour{
             DontDestroyOnLoad(this);
         }
     }
-
 
     public static bool ControllersConnected = false;
 
