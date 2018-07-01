@@ -247,10 +247,12 @@ public class Player : PlayerLifeform {
         var jumping = yVelocity > 0 && !crouch;
         // Indicates we are on the descent
         var falling = !jumping && !Controller2d.Collisions.FromBelow;
+
         // Indicates we are rolling
         var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _rollActive;
         if(rolling && !_rollActive) {
             _rollActive = true;
+            Invoke("DeactivateRollTrigger", 0.25f);
         }
         // Indicates we are melee'ing
         var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
