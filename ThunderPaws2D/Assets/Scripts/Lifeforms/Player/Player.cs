@@ -67,6 +67,7 @@ public class Player : PlayerLifeform {
     /// </summary>
     public float MeleeDamage = 10f;
 
+    private float _rollResetDelay;
     /// <summary>
     /// Indicates we are rolling
     /// </summary>
@@ -252,7 +253,7 @@ public class Player : PlayerLifeform {
         var falling = !jumping && !Controller2d.Collisions.FromBelow;
 
         // Indicates we are rolling
-        var rolling = ((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _rollActive;
+        var rolling = (Time.time > _rollResetDelay) && (((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _rollActive);
         if(rolling && !_rollActive) {
             _rollActive = true;
             Invoke("DeactivateRollTrigger", 0.5f);
@@ -487,6 +488,7 @@ public class Player : PlayerLifeform {
             _currentWeapon = _ownedWeapons[Mathf.Abs(-1 + index)];
             //Have to set the rotation of what the weapon was like before switching
             _currentWeapon.gameObject.SetActive(true);
+            PlayerHudManager.Instance.GetPlayerHud(PlayerNumber).SetAmmo(_currentWeapon.GetComponent<AbstractWeapon>().Ammo);
         }
     }
 
@@ -552,6 +554,7 @@ public class Player : PlayerLifeform {
         if(!(Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll))) {
             _rollActive = false;
         }
+        _rollResetDelay = Time.time + 0.1f;
     }
 
     private void DeactivateBounceBackTrigger() {
