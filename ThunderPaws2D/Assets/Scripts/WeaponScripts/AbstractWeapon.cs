@@ -18,15 +18,9 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// </summary>
     public float CamShakeLength = 0.1f;
 
-
-    //******************************************* Animation Properties *******************************************//
-    /// <summary>
-    /// Weapon for the weapon
-    /// </summary>
     protected Animator WeaponAnimator;
 
 
-    //******************************************* Weapon Properties *******************************************//
     /// <summary>
     /// Graphics spawning: delay from spawning
     /// </summary>
@@ -60,6 +54,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// Every weapon aside from the default one has ammo that runs out eventually
     /// </summary>
     public int Ammo;
+    public int MaxAmmo;
 
 
     //******************************************* Triggers *******************************************//
@@ -142,6 +137,12 @@ public abstract class AbstractWeapon : MonoBehaviour {
             Debug.LogError("Weapon.cs: No CameraShake found on game master");
             throw new MissingComponentException();
         }
+
+        MaxAmmo = Ammo;
+    }
+
+    public void FillAmmoFromUlt() {
+        Ammo = MaxAmmo;
     }
 
     /// <summary>

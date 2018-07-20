@@ -509,6 +509,7 @@ public class Player : PlayerLifeform {
     private void ActivateUltimate() {
         //Player has activated the ultimatet! (Pressed Y)
         if (!PlayerStats.UltEnabled) {
+            _currentWeapon.GetComponent<AbstractWeapon>().FillAmmoFromUlt();
             PlayerStats.UltEnabled = true;
             PlayerStats.UltReady = false;
             foreach(var weapon in _ownedWeapons) {
