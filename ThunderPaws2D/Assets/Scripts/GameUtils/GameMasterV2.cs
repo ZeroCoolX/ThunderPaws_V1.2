@@ -113,7 +113,6 @@ public class GameMasterV2 : MonoBehaviour {
 
 
     private void Awake() {
-        Debug.Log("PANCAKES");
         // Ensure the object persists through the lifetime of the game
         if (Instance == null) {
             Instance = this;

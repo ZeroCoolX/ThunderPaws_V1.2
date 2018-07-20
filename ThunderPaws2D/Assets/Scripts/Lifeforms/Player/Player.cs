@@ -89,7 +89,7 @@ public class Player : PlayerLifeform {
     /// <summary>
     /// How hard of a bounce back occurrs when bounce back happens
     /// </summary>
-    private float _bounceBackSpeed = 3f;
+    private float _bounceBackSpeed = 20;
     /// <summary>
     /// A very small amount of damaage should be taken for colliding with a baddie
     /// </summary>
@@ -186,10 +186,13 @@ public class Player : PlayerLifeform {
         if (_bounceBackActive) {
             print("BOUNCE BACK");
             Damage(_bounceBackDamage);
-            Velocity.x = _bounceBackSpeed *_bounceBackDirection;
             Velocity.y = 0f;
-            transform.Translate(Velocity);
-            _bounceBackActive = false;
+            print("Direction : " + DirectionalInput);
+            print("Moving player in x direction: " + (_bounceBackSpeed * _bounceBackDirection));
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, (_bounceBackSpeed * _bounceBackDirection), ref VelocityXSmoothing, 0.1f);
+            transform.Translate(Velocity * Time.deltaTime);
+            //Controller2d.Move(Velocity * Time.deltaTime, (_bounceBackDirection < 0 ? Vector3.left : Vector3.right), JoystickId);
+            Invoke("DeactivateBounceBackTrigger", 0.1f);
         }else {
             CalculateVelocityOffInput();
             ApplyGravity();
@@ -549,6 +552,10 @@ public class Player : PlayerLifeform {
         if(!(Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll))) {
             _rollActive = false;
         }
+    }
+
+    private void DeactivateBounceBackTrigger() {
+         _bounceBackActive = false;
     }
 
     /// <summary>

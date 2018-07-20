@@ -106,7 +106,6 @@ public class PlayerStatsUIController : MonoBehaviour {
     }
 
     private void CheckPlayerImage(int cur, int max) {
-        print("PLAYER IMAGE CHANGE : " + cur);
         //Safety check in casae another class - Player - calls this before its had a chance to startup
         var diff = max-cur;//100-100=0, 100-40 = 60
         var maxHalf = max / 2;//50
