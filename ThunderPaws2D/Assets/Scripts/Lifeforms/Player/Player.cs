@@ -67,6 +67,7 @@ public class Player : PlayerLifeform {
     /// </summary>
     public float MeleeDamage = 10f;
 
+    private float _maxTimeBetweenRoll = 0.1f;
     private float _rollResetDelay;
     /// <summary>
     /// Indicates we are rolling
@@ -554,7 +555,7 @@ public class Player : PlayerLifeform {
         if(!(Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll))) {
             _rollActive = false;
         }
-        _rollResetDelay = Time.time + 0.1f;
+        _rollResetDelay = Time.time + _maxTimeBetweenRoll;
     }
 
     private void DeactivateBounceBackTrigger() {

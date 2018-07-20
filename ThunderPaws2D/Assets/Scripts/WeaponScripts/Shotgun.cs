@@ -29,6 +29,9 @@ public class Shotgun : AbstractWeapon {
     /// We have to specify this since we don't actually fire out any prefab bullets (in non ult mode).
     /// </summary>
     public Transform ImpactEffect;
+    private float _maxShotDelay;
+    private float _maxTimeBetweenShots = 0.2f;
+
 
     private void Update() {
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
@@ -45,7 +48,8 @@ public class Shotgun : AbstractWeapon {
         }
 
         // Only fire if we're not already holding the trigger
-        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
+        if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold) && Time.time > _maxShotDelay) {
+            _maxShotDelay = Time.time + _maxTimeBetweenShots;
             _triggerLetGo = false;
             CalculateShot();
             ApplyRecoil();

@@ -43,6 +43,8 @@ public class EmissionIndex : AbstractWeapon {
     /// Indicates the laser sound is already playing
     /// </summary>
     private bool _laserSoundPlaying = false;
+    private float _maxTimeBetweenShots = 0.1f;
+    private float _maxShotDelay;
 
     private void Start() {
         base.Start();

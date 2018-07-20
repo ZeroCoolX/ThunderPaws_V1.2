@@ -28,6 +28,8 @@ public class GaussRifle : ProjectileWeapon {
     /// Indicates the last shot was a charged shot so we should take 5 bullets away
     /// </summary>
     private bool _chargeShotFired;
+    private float _maxShotDelay;
+    private float _maxTimeBetweenShots = 0.1f;
 
     /// <summary>
     /// Check if we should fire any of the 3 types of bullets we can shoot
@@ -104,13 +106,16 @@ public class GaussRifle : ProjectileWeapon {
                     AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
                     CalculateShot();
                 } else {
-                    // Fire normal shot
-                    print("SHOOT");
-                    CancelInvoke("IndicateHolding");
-                    _chargeShotFired = false;
-                    BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
-                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
-                    CalculateShot();
+                    if (Time.time > _maxShotDelay) {
+                        _maxShotDelay = Time.time + _maxTimeBetweenShots;
+                        // Fire normal shot
+                        print("SHOOT");
+                        CancelInvoke("IndicateHolding");
+                        _chargeShotFired = false;
+                        BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+                        AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
+                        CalculateShot();
+                    }
                 }
                 _holdData.TriggerPressed = false;
                 _holdData.Holding = false;
@@ -145,14 +150,17 @@ public class GaussRifle : ProjectileWeapon {
                 _holdData.TriggerPressed = true;
             } else {
                 if (_holdData.TriggerPressed) {
-                    // Fire normal shot
-                    print("SHOOT");
-                    CancelInvoke("IndicateHolding");
-                    _chargeShotFired = false;
-                    // Set the bullet to the DEFAULT shot
-                    BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
-                    AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
-                    CalculateShot();
+                    if (Time.time > _maxShotDelay) {
+                        _maxShotDelay = Time.time + _maxTimeBetweenShots;
+                        // Fire normal shot
+                        print("SHOOT");
+                        CancelInvoke("IndicateHolding");
+                        _chargeShotFired = false;
+                        // Set the bullet to the DEFAULT shot
+                        BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
+                        AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
+                        CalculateShot();
+                    }
                 }
                 _holdData.HoldingQueued = false;
                 _holdData.TriggerPressed = false;

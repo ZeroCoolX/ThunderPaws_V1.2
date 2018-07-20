@@ -1,14 +1,11 @@
 ﻿using UnityEngine;
 
 public class FuzzBuster : ProjectileWeapon {
-    /// <summary>
-    /// Must store the initial time the user pressed the button
-    /// </summary>
     private float _initialFirePressTime;
-    /// <summary>
-    /// Struct containing manual hold calculation data
-    /// </summary>
     private HoldingFireData _holdData;
+    private float _maxTimeBetweenShots = 0.1f;
+    private float _maxShotDelay;
+
 
     private void Update() {
         HandleShootingInput();
@@ -48,7 +45,8 @@ public class FuzzBuster : ProjectileWeapon {
         }
         // Indicates the user is trying to fire
         if ((Input.GetKey(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold)) {
-            if (!_holdData.TriggerPressed) {
+            if (!_holdData.TriggerPressed && Time.time > _maxShotDelay) {
+                _maxShotDelay = Time.time + _maxTimeBetweenShots;
                 CalculateShot(UltMode ? 3 : 1);
                 _holdData.TriggerPressed = true;
                 _initialFirePressTime = Time.time + FuzzBusterConfig.AutoFireSpacing;
