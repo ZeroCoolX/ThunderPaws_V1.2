@@ -6,7 +6,6 @@ using UnityEngine;
 public class EmissionIndex : AbstractWeapon {
     /// <summary>
     /// Reference to the LineRenderer that is actually our visual laser.
-    /// Set on the object publicly
     /// </summary>
     public LineRenderer Laser;
     /// <summary>
@@ -27,10 +26,7 @@ public class EmissionIndex : AbstractWeapon {
     /// It looks cooler than solid white continuous damage
     /// </summary>
     private float _timeElapsedSinceLastDamage;
-    /// <summary>
-    /// Indicates the user is holding down the fire button
-    /// </summary>
-    private bool _holding;
+    private bool _holdingDownFire;
     /// <summary>
     /// Only subtract ammo 5 per second
     /// </summary>
@@ -43,15 +39,13 @@ public class EmissionIndex : AbstractWeapon {
     /// Indicates the laser sound is already playing
     /// </summary>
     private bool _laserSoundPlaying = false;
-    private float _maxTimeBetweenShots = 0.1f;
-    private float _maxShotDelay;
+    private float _damageModifier = 10f;
 
     private void Start() {
         base.Start();
         // Calculate damage per interval
-        _damagePiece = Damage / 10f;
+        _damagePiece = Damage / _damageModifier;
 
-        // Ensure there is a seperate Ultimate line renderer
         _ultLaser = transform.Find("UltLaser").GetComponent<LineRenderer>();
         if(_ultLaser == null) {
             throw new MissingComponentException("There was no ult laser found on this weapon");
@@ -60,7 +54,7 @@ public class EmissionIndex : AbstractWeapon {
 
     private void Update() {
         if (HasAmmo) {
-            AmmoCheck();
+            CheckAmmo();
         }
 
         WeaponAnimator.SetBool("UltMode", UltMode);
@@ -75,10 +69,10 @@ public class EmissionIndex : AbstractWeapon {
             _currentLaser = Laser;
         }
 
-        // Player is holding the fire button
+        // Check if player is holding the fire button
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
-        if (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold || _holding) {
-            _holding = true;
+        if (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold || _holdingDownFire) {
+            _holdingDownFire = true;
             // Player the laser
             if (!_currentLaser.enabled) {
                 _currentLaser.enabled = true;
@@ -90,7 +84,7 @@ public class EmissionIndex : AbstractWeapon {
             GenerateLaser();
         }
         if (Input.GetKeyUp(InputManager.Instance.Fire) || (JoystickManagerController.Instance.ConnectedControllers() > 0 && rightTrigger == 0)) {
-            _holding = false;
+            _holdingDownFire = false;
             // Stop the laser
             _currentLaser.enabled = false;
             _laserSoundPlaying = false;

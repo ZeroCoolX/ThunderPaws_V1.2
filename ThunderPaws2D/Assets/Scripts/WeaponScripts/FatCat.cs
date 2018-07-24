@@ -30,7 +30,7 @@ public class FatCat : ProjectileWeapon {
             HandleShootingInput();
         }
         if (HasAmmo) {
-            AmmoCheck();
+            CheckAmmo();
         }
     }
 

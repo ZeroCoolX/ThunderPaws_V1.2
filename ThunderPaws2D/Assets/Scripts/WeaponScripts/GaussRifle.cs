@@ -51,7 +51,7 @@ public class GaussRifle : ProjectileWeapon {
             HandleShootingInput();
         }
         if (HasAmmo) {
-            AmmoCheck();
+            CheckAmmo();
         }
     }
 

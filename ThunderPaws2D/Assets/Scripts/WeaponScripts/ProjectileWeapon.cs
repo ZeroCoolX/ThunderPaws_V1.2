@@ -20,7 +20,7 @@ public class ProjectileWeapon : AbstractWeapon {
         // Collect the hit data - distance and direction from A -> B
         RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
         // Generate bullet effect
-        if (Time.time >= TimeToSpawnEffect) {
+        if (Time.time >= ShotEffectDelay) {
             // Bullet effect position data
             Vector3 hitPosition;
             Vector3 hitNormal;
@@ -48,7 +48,7 @@ public class ProjectileWeapon : AbstractWeapon {
             GenerateShot(directionInput, hitNormal, WhatToHit, GameConstants.Layer_PlayerProjectile, bulletCount);
             GenerateCameraShake();
             ApplyRecoil();
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
+            ShotEffectDelay = Time.time + 1 / ShotEffectSpawnRate;
             UpdateAmmo();
         }
     }

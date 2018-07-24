@@ -56,7 +56,7 @@ public class Shotgun : AbstractWeapon {
             AudioManager.playSound(GameConstants.Audio_Shotgun);
         }
         if (HasAmmo) {
-            AmmoCheck();
+            CheckAmmo();
         }
         WeaponAnimator.SetBool("UltModeActive", UltMode);
 
@@ -114,7 +114,7 @@ public class Shotgun : AbstractWeapon {
     /// </summary>
     /// <param name="bulletCount"></param>
     protected override void CalculateShot(int bulletCount = 1) {
-        if (Time.time >= TimeToSpawnEffect) {
+        if (Time.time >= ShotEffectDelay) {
             Vector2 dir = Player.DirectionalInput;
             // Preprocessing of which direction our shotgun is pointing which will modify the degrees at which
             // the 5 raycast shotgun blasts are fired
@@ -198,7 +198,7 @@ public class Shotgun : AbstractWeapon {
                 HitTarget(collider.Value);
             }
 
-            TimeToSpawnEffect = Time.time + 1 / EffectSpawnRate;
+            ShotEffectDelay = Time.time + 1 / ShotEffectSpawnRate;
             if (HasAmmo) {
                 Ammo -= 1;
                 print("SettingAmmo");

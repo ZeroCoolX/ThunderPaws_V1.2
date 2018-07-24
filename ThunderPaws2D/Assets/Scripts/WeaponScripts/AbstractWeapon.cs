@@ -3,98 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class AbstractWeapon : MonoBehaviour {
-
-    //******************************************* Camera properties *******************************************//
-    /// <summary>
-    /// Reference to the camera shake script
-    /// </summary>
-    protected CameraShake CamShake;
-    /// <summary>
-    /// Amount to shake camera by
-    /// </summary>
+    [Header("Camera Properties")]
     public float CamShakeAmount = 0.025f;
-    /// <summary>
-    /// Length of time to shake camera
-    /// </summary>
     public float CamShakeLength = 0.1f;
+    protected CameraShake CamShake;
 
+    [Header("Fire Effect Properties")]
+    public float ShotEffectDelay = 0f;
+    public float ShotEffectSpawnRate = 10f;
     protected Animator WeaponAnimator;
 
-
-    /// <summary>
-    /// Graphics spawning: delay from spawning
-    /// </summary>
-    public float TimeToSpawnEffect = 0f;
-    /// <summary>
-    /// Rate at which the effect should spawn
-    /// </summary>
-    public float EffectSpawnRate = 10f;
-    /// <summary>
-    /// Delay between firing
-    /// </summary>
-    protected float TimeToFire = 0f;
-    /// <summary>
-    /// Position where the bullet will spawn
-    /// </summary>
-    protected Transform FirePoint { get; private set; }
-    /// <summary>
-    /// How fast the weapon can shoot per second in addition to the first click
-    /// </summary>
+    [Header("Fire Properties")]
     public float FireRate = 0f;
-    /// <summary>
-    /// Value to add onto the current time.
-    /// Default value of 1
-    /// </summary>
     public float FireDelay = 1;
-    /// <summary>
-    /// How much damage it does
-    /// </summary>
+    protected float TimeToFire = 0f;
+    protected Transform FirePoint { get; private set; }
+
+    [Header("Weapon Properties")]
     public int Damage;
-    /// <summary>
-    /// Every weapon aside from the default one has ammo that runs out eventually
-    /// </summary>
     public int Ammo;
     public int MaxAmmo;
-
-
-    //******************************************* Triggers *******************************************//
-    /// <summary>
-    /// Indicates if this weapon has ammo. All weapons have a finite amount of ammo except the default weapon
-    /// </summary>
     public bool HasAmmo;
-    /// <summary>
-    /// Indicates the weapon is in Ultimate Mode!
-    /// </summary>
     public bool UltMode { get; set; }
-
-
-    //******************************************* Optional Projectile Properties *******************************************//
-    /// <summary>
-    /// Bullet transform object for the shot.
-    /// This is set by the implementation class based off if this is a regular bullet, charged shot, ultimate...etc
-    /// </summary>
-    public Transform BulletPrefab;
-    /// <summary>
-    /// Optionally set param to indicate How fast the bullet travels
-    /// </summary>
     public float BulletSpeed;
-    /// <summary>
-    /// Optionally set parameter to indicate how long we want the bullet to stay alive. For shotguns we want this to be halved
-    /// </summary>
     public float MaxLifetime = 0.5f;
 
-    //******************************************* Extra Properties *******************************************//
-    /// <summary>
-    /// Need a reference to the player this weapon is aattached to so we can get the direction input
-    /// </summary>
+    [Header("Prefabs")]
+    public Transform BulletPrefab;
     public Player Player;
-    /// <summary>
-    /// LayuerMask indicating what to hit
-    /// </summary>
     public LayerMask WhatToHit;
-    /// <summary>
-    /// Reference to the audio manager
-    /// </summary>
     protected AudioManager AudioManager;
 
 
@@ -104,10 +41,6 @@ public abstract class AbstractWeapon : MonoBehaviour {
     protected virtual void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { }
 
 
-
-    /// <summary>
-    /// Setup the weapon
-    /// </summary>
     protected void Start() {
         // Get the player this weapon is attached to
         Player = transform.parent.parent.GetComponent<Player>();
@@ -121,7 +54,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
             Debug.LogError("AbstractWeapon.cs: No firePoint found");
             throw new UnassignedReferenceException();
         }
-        // Every weapon has its own animator
+
         WeaponAnimator = transform.GetComponent<Animator>();
         if (WeaponAnimator == null) {
             throw new MissingComponentException("No Weaapon animator was found on the weapon");
@@ -145,19 +78,15 @@ public abstract class AbstractWeapon : MonoBehaviour {
         Ammo = MaxAmmo;
     }
 
-    /// <summary>
-    /// Check if this weapon still has ammo
-    /// </summary>
-    protected void AmmoCheck() {
+    protected void CheckAmmo() {
         if (Ammo <= 0) {
             Player.RemoveOtherWeapon(transform);
         }
     }
 
     /// <summary>
-    /// Resets the animator
+    /// Resets the animator between each fire animation (kickback)
     /// </summary>
-    /// <returns></returns>
     protected IEnumerator ResetWeaponPosition() {
         yield return new WaitForSeconds(0f);
         WeaponAnimator.SetBool("ApplyRecoil", false);
@@ -166,13 +95,11 @@ public abstract class AbstractWeapon : MonoBehaviour {
     /// <summary>
     /// Special case handling for negative rotataion neeeded. Only time its needed is for the -45degree shot
     /// </summary>
-    /// <param name="rot"></param>
-    /// <returns></returns>
-    protected Quaternion CompensateQuaternion(Quaternion rot) {
-        if ((int)(rot.z * 10) == -3) {
-            return rot;
+    protected Quaternion CompensateQuaternion(Quaternion rotation) {
+        if ((int)(rotation.z * 10) == -3) {
+            return rotation;
         }
-        return new Quaternion(Mathf.Abs(rot.x), Mathf.Abs(rot.y), Mathf.Abs(rot.z), rot.w);
+        return new Quaternion(Mathf.Abs(rotation.x), Mathf.Abs(rotation.y), Mathf.Abs(rotation.z), rotation.w);
     }
 
     protected void GenerateCameraShake() {

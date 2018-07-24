@@ -11,7 +11,7 @@ public class FuzzBuster : ProjectileWeapon {
         HandleShootingInput();
 
         if (HasAmmo) {
-            AmmoCheck();
+            CheckAmmo();
         }
 
         WeaponAnimator.SetBool("UltModeActive", UltMode);
