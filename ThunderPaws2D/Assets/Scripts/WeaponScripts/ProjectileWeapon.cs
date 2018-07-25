@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class ProjectileWeapon : AbstractWeapon {
     /// <summary>
-    /// In case the bullet has multiple bullet types, we can store them in an array and access them
-    /// knowing exactly which index holds which type
+    /// Int value on the type indicates the index within an array to where that particular prefab lives
     /// </summary>
     protected enum BulletType { DEFAULT = 0, CHARGED = 1, ULT = 2 };
 
@@ -50,15 +49,6 @@ public class ProjectileWeapon : AbstractWeapon {
             ApplyRecoil();
             ShotEffectDelay = Time.time + 1 / ShotEffectSpawnRate;
             UpdateAmmo();
-        }
-    }
-
-    protected virtual void UpdateAmmo() {
-        if (HasAmmo) {
-            Ammo -= 1;
-            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
-        } else {
-            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
         }
     }
 
@@ -122,8 +112,16 @@ public class ProjectileWeapon : AbstractWeapon {
         }
     }
 
-
     protected override void ApplyRecoil() {
         throw new NotImplementedException();
+    }
+
+    protected virtual void UpdateAmmo() {
+        if (HasAmmo) {
+            Ammo -= 1;
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
+        } else {
+            PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo();
+        }
     }
 }
