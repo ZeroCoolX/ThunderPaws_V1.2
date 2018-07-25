@@ -4,50 +4,36 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EmissionIndex : AbstractWeapon {
-    /// <summary>
-    /// Reference to the LineRenderer that is actually our visual laser.
-    /// </summary>
+    [Header("Line Renderer")]
     public LineRenderer Laser;
-    /// <summary>
-    /// Reference to the LineRendere for the ultimate which is initated at
-    /// runtime
-    /// </summary>
     private LineRenderer _ultLaser;
-    /// <summary>
-    /// Holds the prefab for the current laser (default or ult)
-    /// </summary>
     private LineRenderer _currentLaser;
+
     /// <summary>
-    /// How much damage we do per EmissionIndexConfig.DamageInterval of a second
+    /// This represents the actual amount of damage we take away from the object we hit's health
     /// </summary>
     private float _damagePiece;
+    private float _damageRate = 10f;
+    
     /// <summary>
-    /// Allows for intermitten damaging of object so they flicker.
-    /// It looks cooler than solid white continuous damage
+    /// Allows for intermitten damaging of object so they flicker. It looks cooler than solid white continuous damage
     /// </summary>
     private float _timeElapsedSinceLastDamage;
     private bool _holdingDownFire;
-    /// <summary>
-    /// Only subtract ammo 5 per second
-    /// </summary>
-    private float _ammoDepleteTime;
-    /// <summary>
-    /// How long in between firings we should deplete ammo
-    /// </summary>
-    private float _ammoDepleteDelay = 1f;
-    /// <summary>
-    /// Indicates the laser sound is already playing
-    /// </summary>
-    private bool _laserSoundPlaying = false;
-    private float _damageModifier = 10f;
 
-    private void Start() {
+    private float _ammoDepleteTime;
+    private float _ammoDepleteDelay = 1f;
+
+    private bool _laserSoundPlaying = false;
+
+    private new void Start() {
         base.Start();
+
         // Calculate damage per interval
-        _damagePiece = Damage / _damageModifier;
+        _damagePiece = Damage / _damageRate;
 
         _ultLaser = transform.Find("UltLaser").GetComponent<LineRenderer>();
-        if(_ultLaser == null) {
+        if (_ultLaser == null) {
             throw new MissingComponentException("There was no ult laser found on this weapon");
         }
     }
@@ -59,7 +45,22 @@ public class EmissionIndex : AbstractWeapon {
 
         WeaponAnimator.SetBool("UltMode", UltMode);
 
-        // Set the laser type based off mode
+        ResolveLaserType();
+
+        var fireButton = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
+        if (Input.GetKeyDown(InputManager.Instance.Fire) || fireButton > WeaponConfig.TriggerFireThreshold || _holdingDownFire) {
+            PrepareLaser();
+            GenerateLaser();
+        }
+        if (Input.GetKeyUp(InputManager.Instance.Fire) || (JoystickManagerController.Instance.ConnectedControllers() > 0 && fireButton == 0)) {
+            _holdingDownFire = false;
+            _currentLaser.enabled = false;
+            _laserSoundPlaying = false;
+            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+        }
+    }
+
+    private void ResolveLaserType() {
         if (UltMode) {
             _currentLaser = _ultLaser;
         } else {
@@ -68,28 +69,106 @@ public class EmissionIndex : AbstractWeapon {
             }
             _currentLaser = Laser;
         }
+    }
 
+    private void HandleShootingInput(float fireButton) {
         // Check if player is holding the fire button
-        var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
-        if (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold || _holdingDownFire) {
-            _holdingDownFire = true;
-            // Player the laser
-            if (!_currentLaser.enabled) {
-                _currentLaser.enabled = true;
-            }
-            if (!_laserSoundPlaying) {
-                _laserSoundPlaying = true;
-                AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexShot);
-            }
+        if (Input.GetKeyDown(InputManager.Instance.Fire) || fireButton > WeaponConfig.TriggerFireThreshold || _holdingDownFire) {
+            PrepareLaser();
             GenerateLaser();
         }
-        if (Input.GetKeyUp(InputManager.Instance.Fire) || (JoystickManagerController.Instance.ConnectedControllers() > 0 && rightTrigger == 0)) {
-            _holdingDownFire = false;
-            // Stop the laser
-            _currentLaser.enabled = false;
-            _laserSoundPlaying = false;
-            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+    }
+
+    private void PrepareLaser() {
+        _holdingDownFire = true;
+        if (!_currentLaser.enabled) {
+            _currentLaser.enabled = true;
         }
+        if (!_laserSoundPlaying) {
+            _laserSoundPlaying = true;
+            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexShot);
+        }
+    }
+
+    private bool PointingWeaponAtAngle(float yAxis) {
+        return ((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f));
+    }
+
+    /// <summary>
+    /// The ult mode allows the laser to always display at max length and collide with any object in its path damaging any/all of them
+    /// </summary>
+    private Vector2 GenerateUltLaser(Vector2 directionInput) {
+        Vector2 target = Vector2.zero;
+        Vector2 bulletOriginPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
+
+        RaycastHit2D[] collisions = Physics2D.RaycastAll(bulletOriginPosition, directionInput, EmissionIndexConfig.MaxUltLaserLength, WhatToHit);
+        if (collisions.Length > 0) {
+            if (Time.time > _timeElapsedSinceLastDamage) {
+                _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
+                foreach (var collision in collisions) {
+                    CollideWithLifeform(collision);
+                }
+            }
+        }
+
+        // Ult mode dictates we always display the max distance
+        var endpointVector = directionInput * EmissionIndexConfig.MaxUltLaserLength;
+        target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+
+        return target;
+    }
+
+    private void CollideWithLifeform(RaycastHit2D collision) {
+        var lifeform = collision.transform.GetComponent<BaseLifeform>();
+        if (lifeform != null) {
+            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
+
+            if (lifeform.Damage(_damagePiece)) {
+                GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
+            }
+        }
+    }
+
+    /// <summary>
+    /// The default laser will stop at any obstacle or baddie it hits.
+    /// It can go through OBSTACLE-THROUGH tagged objects however so a collection of
+    /// everything the raycast hits is still needed - only we stop processing the hits after the first instance
+    /// of something either an Object or we can hit
+    /// </summary>
+    /// <returns></returns>
+    private Vector2 GenerateDefaultLaser(Vector2 directionInput) {
+        Vector2 target = Vector2.zero;
+        Vector2 bulletOriginPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
+
+        // Only collect the first collision and stop the linerenderer there
+        RaycastHit2D[] collisions = Physics2D.RaycastAll(bulletOriginPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
+        if (collisions.Length == 0) {
+            // We didn't hit anything so just play the non-ult max distance line renderer
+            var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
+            target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+        } else {
+            // Indexed for loop is used instead of a foreach loop because we MUST gaurentee the order from first hit to last
+            // Foreach loops do not gaurentee order
+            for (var i = 0; i < collisions.Length; ++i) {
+                var collision = collisions[i];
+                
+                // Special short circuit scenario where we hit something - that something was Obstacle-Through tagged, and this was NOT the only collision in the array
+                if (collision.collider.tag == GameConstants.Tag_ObstacleThrough) {
+                    continue;
+                }
+
+                var distanceFromTarget = Vector2.Distance(collision.collider.transform.position, FirePoint.position);
+                var endpointVector = directionInput * distanceFromTarget;
+                target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+
+                if (Time.time > _timeElapsedSinceLastDamage) {
+                    _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
+                    CollideWithLifeform(collision);
+                }
+            }
+        }
+
+        return target;
     }
 
     /// <summary>
@@ -100,102 +179,48 @@ public class EmissionIndex : AbstractWeapon {
         Vector2 directionInput = Player.DirectionalInput;
 
         // DirectionInput compensations
-        var yAxis = directionInput.y;
-        if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
+        if (PointingWeaponAtAngle(directionInput.y)) {
             directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
-        } else if (yAxis > 0.8) {
+        } // Player is pointing up enough to consider it straight up
+        else if (directionInput.y > 0.8) {
             directionInput = Vector2.up;
         } else {
             directionInput = Player.FacingRight ? Vector2.right : Vector2.left;
         }
 
-        //Store bullet origin spawn point
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
-
         Vector2 target = Vector2.zero;
 
-        // The ult mode allows the laser to always display at max length and collide with any object
-        // in its path damaging any/all of them
         if (UltMode) {
-            //Collect the hit data - distance and direction from A -> B
-            RaycastHit2D[] collisions = Physics2D.RaycastAll(firePointPosition, directionInput, EmissionIndexConfig.MaxUltLaserLength, WhatToHit);
-            if (collisions.Length > 0) {
-                if (Time.time > _timeElapsedSinceLastDamage) {
-                    _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
-                    foreach (var collision in collisions) {
-                        // If we hit a lifeform damage it - otherwise move on
-                        var lifeform = collision.transform.GetComponent<BaseLifeform>();
-                        if (lifeform != null) {
-                            print("ULT MODE : hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
-                            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
-                            if (lifeform.Damage(_damagePiece)) {
-                                // increment the stats for whoever shot the bullet
-                                GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
-                            }
-                        }
-                    }
-                }
-            }
-            print("ULT MODE : Didn't hit anything so just do max length in direction pointing : " + directionInput);
-            // Ult mode dictates we always display the max distance
-            var endpointVector = directionInput * EmissionIndexConfig.MaxUltLaserLength;
-            target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
+            target = GenerateUltLaser(directionInput);
         }else {
-            // Only collect the first collision and stop the linerenderer there
-            RaycastHit2D[] collisions = Physics2D.RaycastAll(firePointPosition, directionInput, EmissionIndexConfig.MaxLaserLength, WhatToHit);
-            if (collisions.Length == 0) {
-                print("3 Didn't hit anything so just do max length in direction pointing : " + directionInput);
-                // We didn't hit anything so just play the non-ult max distance
-                var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
-                target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
-            } else {
-
-                for (var i = 0; i < collisions.Length; ++i) {
-                    var collision = collisions[i];
-                    // Special short sircuit scenario where we hit something - that something was Obstacle-Through tagged, and this was NOT the only collision in the array
-                    if (collision.collider.tag == GameConstants.Tag_ObstacleThrough) {
-                        continue;
-                    }
-                    // We're within the max distance so hit the object
-                    var distanceFromTarget = Vector2.Distance(collision.collider.transform.position, FirePoint.position);
-                    var endpointVector = directionInput * distanceFromTarget;
-                    target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
-                    if (Time.time > _timeElapsedSinceLastDamage) {
-                        _timeElapsedSinceLastDamage = Time.time + EmissionIndexConfig.DamageInterval;
-                        // If we hit a lifeform damage it - otherwise move on
-                        var lifeform = collision.transform.GetComponent<BaseLifeform>();
-                        if (lifeform != null) {
-                            print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
-                            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
-                            if (lifeform.Damage(_damagePiece)) {
-                                // increment the stats for whoever shot the bullet
-                                GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
-                            }
-                        }
-                    }
-                    print(" Hit something so make THAT its target");
-                }
-            }
+            target = GenerateDefaultLaser(directionInput);
         }
 
-        // Set the laser properties
+        // Set the laser start and endpoint
         _currentLaser.SetPosition(0, FirePoint.position);
         if(target == Vector2.zero) {
-            print("Didn't hit anything so just do max length in direction pointing : " + directionInput);
             // We didn't hit anything so just play the non-ult max distance
             var endpointVector = directionInput * EmissionIndexConfig.MaxLaserLength;
             target = FirePoint.position + new Vector3(endpointVector.x, endpointVector.y, 0f);
         }
         _currentLaser.SetPosition(1, target);
 
+        UpdateAmmo();
+    }
+
+    private void UpdateAmmo() {
         if (Time.time >= _ammoDepleteTime) {
             _ammoDepleteTime = Time.time + _ammoDepleteDelay;
-            Ammo -= 5;
+            Ammo -= 3;
             PlayerHudManager.Instance.GetPlayerHud(Player.PlayerNumber).SetAmmo(Ammo);
         }
     }
 
     private void OnDestroy() {
-        AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+        try {
+            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+        }catch(Exception e) {
+            print("Failed to stop laser sounds because the object was already destroyed.");
+        }
     }
 }
