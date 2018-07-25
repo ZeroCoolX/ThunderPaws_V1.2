@@ -35,6 +35,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     protected AudioManager AudioManager;
 
 
+
     /// <summary>
     /// When the player gets their ultimate we want to refil their ammo as a reward
     /// </summary>
@@ -77,7 +78,6 @@ public abstract class AbstractWeapon : MonoBehaviour {
 
         MaxAmmo = Ammo;
     }
-
 
     protected void Start() {
         Setup();

@@ -8,6 +8,7 @@ public class FuzzBuster : ProjectileWeapon {
     private float _maxShotDelay = 0;
 
 
+
     private void Update() {
         HandleShootingInput();
         if (HasAmmo) {

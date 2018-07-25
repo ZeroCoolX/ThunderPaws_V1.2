@@ -26,6 +26,8 @@ public class EmissionIndex : AbstractWeapon {
 
     private bool _laserSoundPlaying = false;
 
+
+
     private new void Start() {
         base.Start();
 

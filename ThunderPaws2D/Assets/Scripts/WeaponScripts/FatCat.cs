@@ -5,22 +5,18 @@ using UnityEngine;
 
 public class FatCat : ProjectileWeapon {
     /// <summary>
-    /// List from least special to most special bullet prefabs
-    /// Access the indicies by using the BulletType enum
+    /// List from least special to most special bullet prefabs. Access the indicies by using the BulletType enum
     /// </summary>
     public Transform[] BulletPrefabs;
-    /// <summary>
-    /// Indicates the ultimate animations have finished and we can shoot again.
-    /// This inhibits users from spamming the fire key during the ult animation
-    /// </summary>
+
     private bool _allowshooting = true;
-    /// <summary>
-    /// Necessaary indicator for the ultMode.
-    /// Indicates the trigger was let go telling the
-    /// system we can shoot again
-    /// </summary>
     private bool _triggerLetGo = true;
 
+
+    protected override void ApplyRecoil() {
+        WeaponAnimator.SetBool("ApplyRecoil", true);
+        StartCoroutine(ResetWeaponPosition());
+    }
 
     private void Update() {
         if (UltMode) {
@@ -34,19 +30,11 @@ public class FatCat : ProjectileWeapon {
         }
     }
 
-    /// <summary>
-    /// Implementation specific override.
-    /// Apply the recoil animation and reset the weapon position
-    /// </summary>
-    protected override void ApplyRecoil() {
-        WeaponAnimator.SetBool("ApplyRecoil", true);
-        StartCoroutine(ResetWeaponPosition());
-    }
 
     /// <summary>
     /// Helper method that allows for delayed setting of the variable which
     /// indicates we can shoot. This creates a delay effect when shooting so you can't
-    /// spawm 1000 rockets per second
+    /// spam 1000 rockets per second
     /// </summary>
     private void AllowUltShooting() {
         _allowshooting = true;
@@ -57,8 +45,7 @@ public class FatCat : ProjectileWeapon {
     /// scene making it look like a plane flew over the top and dropped a line of bombs
     /// </summary>
     private void MakeCarpetBomb() {
-        // Use the top right corner to determine the screen width in world points 
-        // so we know where to spawn the bombs
+        // Use the top right corner to determine the screen width in world points so we know where to spawn the bombs
         Vector2 topRightCorner = new Vector2(1, 1);
         Vector2 edgeVector = Camera.main.ViewportToWorldPoint(topRightCorner);
         float width = edgeVector.x * 2;
@@ -71,7 +58,6 @@ public class FatCat : ProjectileWeapon {
         var xSpacing = 0f;
         var ySpacing = 0f;
 
-        // Create and drop the bombs
         for (var i = 0; i < 20; ++i) {
             var pos = new Vector2(edgeVector.x - xSpacing, edgeVector.y + ySpacing);
             CreateBomb(pos);
@@ -85,12 +71,9 @@ public class FatCat : ProjectileWeapon {
     /// Helper method to create an individual bomb which is apart of the carpet bombing run.
     /// Sets all the needed values
     /// </summary>
-    /// <param name="position"></param>
     private void CreateBomb(Vector2 position) {
         Transform bulletInstance = Instantiate(BulletPrefabs[(int)BulletType.ULT], position, Quaternion.identity) as Transform;
-        //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = bulletInstance.GetComponent<BulletProjectile>();
-        //Set layermask of parent (either player or baddie)
         projectile.SetLayerMask(WhatToHit);
         projectile.gameObject.layer = LayerMask.NameToLayer(GameConstants.Layer_PlayerProjectile);
         projectile.Damage = Damage;
@@ -99,16 +82,9 @@ public class FatCat : ProjectileWeapon {
         projectile.Fire(Vector2.down, Vector2.up);
     }
 
-    /// <summary>
-    /// Gauss Ultimate requires a special shooting mode.
-    /// Instead of continuously shooting aws fast as the use pulls the trigger it 
-    /// it charges a shot and shoots it as soon as they let go
-    /// </summary>
     private void HandleShootingInput() {
-        // Get the player fire input
         var rightTrigger = Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger);
 
-        // This checks if the player released the trigger in between shots - because this ultimate is not full auto
         if (!_triggerLetGo) {
             if (rightTrigger <= WeaponConfig.TriggerFireThreshold && !Input.GetKey(InputManager.Instance.Fire)) {
                 _triggerLetGo = true;

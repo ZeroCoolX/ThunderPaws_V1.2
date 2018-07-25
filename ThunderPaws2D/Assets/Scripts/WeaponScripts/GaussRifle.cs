@@ -39,6 +39,7 @@ public class GaussRifle : ProjectileWeapon {
     private HoldingFireData _holdData;
 
 
+
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
