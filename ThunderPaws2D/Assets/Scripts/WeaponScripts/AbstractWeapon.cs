@@ -35,20 +35,24 @@ public abstract class AbstractWeapon : MonoBehaviour {
     protected AudioManager AudioManager;
 
 
-    // Implementations can override the following method but do not need to (in the case of Shotgun and EmissionIndex)
+    /// <summary>
+    /// When the player gets their ultimate we want to refil their ammo as a reward
+    /// </summary>
+    public void FillAmmoFromUlt() {
+        Ammo = MaxAmmo;
+    }
+
+    // Implementations can override the following methods but do not need to (in the case of Shotgun and EmissionIndex)
     protected virtual void ApplyRecoil() { }
     protected virtual void CalculateShot(int bulletCount = 1) { }
     protected virtual void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { }
 
-
-    protected void Start() {
-        // Get the player this weapon is attached to
+    private void Setup() {
         Player = transform.parent.parent.GetComponent<Player>();
         if (Player == null) {
             throw new MissingComponentException("This is massively bad... No Player.cs found on the Player");
         }
 
-        // Find the fire point - where the bullet origin will be
         FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (FirePoint == null) {
             Debug.LogError("AbstractWeapon.cs: No firePoint found");
@@ -74,8 +78,9 @@ public abstract class AbstractWeapon : MonoBehaviour {
         MaxAmmo = Ammo;
     }
 
-    public void FillAmmoFromUlt() {
-        Ammo = MaxAmmo;
+
+    protected void Start() {
+        Setup();
     }
 
     protected void CheckAmmo() {
