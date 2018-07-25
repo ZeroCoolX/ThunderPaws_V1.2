@@ -13,11 +13,10 @@ public class ProjectileWeapon : AbstractWeapon {
     /// </summary>
     protected override void FireShot(int bulletCount = 1) {
         Vector2 directionInput = Player.DirectionalInput;
-
-        // Store bullet origin spawn popint (A)
-        Vector2 firePointPosition = new Vector2(FirePoint.position.x, FirePoint.position.y);
+        Vector2 bulletOriginPoitsion = new Vector2(FirePoint.position.x, FirePoint.position.y);
         // Collect the hit data - distance and direction from A -> B
-        RaycastHit2D shot = Physics2D.Raycast(firePointPosition, directionInput, 100, WhatToHit);
+        RaycastHit2D shot = Physics2D.Raycast(bulletOriginPoitsion, directionInput, 100, WhatToHit);
+
         // Generate bullet effect
         if (Time.time >= ShotEffectDelay) {
             // Bullet effect position data
@@ -36,7 +35,7 @@ public class ProjectileWeapon : AbstractWeapon {
             }
 
             var yAxis = directionInput.y;
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
+            if (PointingWeaponAtAngle(yAxis)) {
                 directionInput = (Vector2.up + (Player.FacingRight ? Vector2.right : Vector2.left)).normalized;
             } else if (yAxis > 0.8) {
                 directionInput = Vector2.up;
@@ -74,8 +73,7 @@ public class ProjectileWeapon : AbstractWeapon {
 
             // This calculation is necessary so the bullets don't stack on top of eachother
             var yAxis = Player.DirectionalInput.y;
-            print("yAxis = " + yAxis);
-            if (((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f))) {
+            if (PointingWeaponAtAngle(yAxis)) {
                 yOffset = 0.125f;
                 // There is one single special case - when the player is facing right, and looking at 45 degrees.
                 // Coorindates must then be +, - instead of all + or all -
@@ -112,8 +110,13 @@ public class ProjectileWeapon : AbstractWeapon {
         }
     }
 
+    private bool PointingWeaponAtAngle(float yAxis) {
+        return ((yAxis > 0.3 && yAxis < 0.8)) || (Player.DirectionalInput == new Vector2(1f, 1f) || Player.DirectionalInput == new Vector2(-1f, 1f));
+    }
+
+    // This might not be needed..
     protected override void ApplyRecoil() {
-        throw new NotImplementedException();
+        throw new NotImplementedException("All Implementations must override this with custom logic");
     }
 
     protected virtual void UpdateAmmo() {
