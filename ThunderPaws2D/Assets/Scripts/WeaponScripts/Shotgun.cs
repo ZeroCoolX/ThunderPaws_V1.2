@@ -51,7 +51,7 @@ public class Shotgun : AbstractWeapon {
         if (_triggerLetGo && (Input.GetKeyDown(InputManager.Instance.Fire) || rightTrigger > WeaponConfig.TriggerFireThreshold) && Time.time > _maxShotDelay) {
             _maxShotDelay = Time.time + _maxTimeBetweenShots;
             _triggerLetGo = false;
-            CalculateShot();
+            FireShot();
             ApplyRecoil();
             AudioManager.playSound(GameConstants.Audio_Shotgun);
         }
@@ -113,7 +113,7 @@ public class Shotgun : AbstractWeapon {
     /// 
     /// </summary>
     /// <param name="bulletCount"></param>
-    protected override void CalculateShot(int bulletCount = 1) {
+    protected override void FireShot(int bulletCount = 1) {
         if (Time.time >= ShotEffectDelay) {
             Vector2 dir = Player.DirectionalInput;
             // Preprocessing of which direction our shotgun is pointing which will modify the degrees at which

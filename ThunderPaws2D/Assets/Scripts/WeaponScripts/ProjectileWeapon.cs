@@ -12,7 +12,7 @@ public class ProjectileWeapon : AbstractWeapon {
     /// Calculate all the necessary pieces of a gunshot.
     /// Direction going, normal, what layer its in, who it should hit.
     /// </summary>
-    protected override void CalculateShot(int bulletCount = 1) {
+    protected override void FireShot(int bulletCount = 1) {
         Vector2 directionInput = Player.DirectionalInput;
 
         // Store bullet origin spawn popint (A)

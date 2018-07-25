@@ -44,7 +44,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
 
     // Implementations can override the following methods but do not need to (in the case of Shotgun and EmissionIndex)
     protected virtual void ApplyRecoil() { }
-    protected virtual void CalculateShot(int bulletCount = 1) { }
+    protected virtual void FireShot(int bulletCount = 1) { }
     protected virtual void GenerateShot(Vector3 shotPos, Vector3 shotNormal, LayerMask whatToHit, string layer, int bulletCount = 1) { }
 
     private void Setup() {

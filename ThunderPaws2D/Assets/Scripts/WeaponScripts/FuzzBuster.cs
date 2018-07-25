@@ -44,21 +44,21 @@ public class FuzzBuster : ProjectileWeapon {
         }
 
         if (_holdData.HoldingDownTrigger) {
-            FireHoldAutoShot();
+            FireHoldShot();
         } 
     }
 
     private void FireSingleShot() {
         _maxShotDelay = Time.time + _maxTimeBetweenShots;
-        CalculateShot(UltMode ? 3 : 1);
+        FireShot(UltMode ? 3 : 1);
         _holdData.TriggerPressed = true;
         _initialFirePressTime = Time.time + FuzzBusterConfig.AutoFireSpacing;
     }
 
-    private void FireHoldAutoShot() {
+    private void FireHoldShot() {
         if (Time.time > TimeToFire) {
             TimeToFire = Time.time + 0.25f;
-            CalculateShot(UltMode ? 3 : 1);
+            FireShot(UltMode ? 3 : 1);
         }
     }
 

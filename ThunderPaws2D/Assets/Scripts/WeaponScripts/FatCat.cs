@@ -123,7 +123,7 @@ public class FatCat : ProjectileWeapon {
             Invoke("AllowUltShooting", 0.35f);
             BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
             AudioManager.Instance.playSound(GameConstants.Audio_FatCatShot);
-            CalculateShot();
+            FireShot();
         }
     }
 }
