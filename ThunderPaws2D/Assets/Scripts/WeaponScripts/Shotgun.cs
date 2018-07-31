@@ -208,7 +208,6 @@ public class Shotgun : AbstractWeapon {
         projectile.Damage = Damage;
         projectile.MoveSpeed = (UnityEngine.Random.Range(12, 20));
         projectile.MaxLifetime = MaxLifetime;
-        projectile.OptionalGravity = -25.08f;
         projectile.Fire(rotatedDirection, rotatedDirection.normalized);
     }
 
