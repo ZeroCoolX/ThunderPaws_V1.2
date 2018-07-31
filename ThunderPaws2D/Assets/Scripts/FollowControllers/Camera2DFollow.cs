@@ -1,8 +1,8 @@
 ﻿using System;
 using UnityEngine;
 public class Camera2DFollow : FollowBase {
+    public float VerticalOffset = 5f;
     public bool FreeMovement = true;
-    public float YOffset = 5f;
 
     private float _currentXOffset;
     private const float _bottomYThreshold = -19;
@@ -39,9 +39,9 @@ public class Camera2DFollow : FollowBase {
         }
 
         Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
-        aheadTargetPos.y += YOffset;
+        aheadTargetPos.y += VerticalOffset;
         Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref CurrentVelocity, Dampening);
-        newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YPosClamp, Mathf.Infinity), -50f);
+        newPos = new Vector3(newPos.x, Mathf.Clamp(newPos.y, YCameraPosClamp, Mathf.Infinity), -50f);
         transform.position = newPos;
 
         LastTargetPosition = Target.position;

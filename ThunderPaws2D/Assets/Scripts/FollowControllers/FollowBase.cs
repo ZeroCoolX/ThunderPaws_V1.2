@@ -7,7 +7,7 @@ public class FollowBase : MonoBehaviour {
     /// <summary>
     /// Threshold of camera movement down
     /// </summary>
-    public float YPosClamp = -19;
+    public float YCameraPosClamp = -19;
     /// <summary>
     /// Buffer for position dampeneing so movment is not sudden and jerky
     /// </summary>

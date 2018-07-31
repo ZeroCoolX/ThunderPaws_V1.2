@@ -27,6 +27,6 @@ public class CoopersLazyHack : MonoBehaviour {
             lifeformScript.NoFallCheck = true;
         }
 
-        Camera.GetComponent<Camera2DFollow>().YPosClamp = -500f;
+        Camera.GetComponent<Camera2DFollow>().YCameraPosClamp = -500f;
     }
 }
