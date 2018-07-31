@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowBase : MonoBehaviour {
-
-    /// <summary>
-    /// What to follows
-    /// </summary>
     public Transform Target { get; set; }
+    /// <summary>
+    /// Threshold of camera movement down
+    /// </summary>
+    public float YPosClamp = -19;
     /// <summary>
     /// Buffer for position dampeneing so movment is not sudden and jerky
     /// </summary>
@@ -24,9 +24,6 @@ public class FollowBase : MonoBehaviour {
     /// Determines if we should be looking for the target or wheather we're in a close enough range
     /// </summary>
     protected float LookAheadMoveThreshold = 0.1f;
-    //Threshold of camera movement down
-    public float YPosClamp = -19;
-
     protected float OffsetZ;
     /// <summary>
     /// Indicates offset from the moddle based on facing/moving direction
@@ -38,8 +35,9 @@ public class FollowBase : MonoBehaviour {
 
     private float nextTimeToSearch = 0f;
     private float searchDelay = 0.25f;
-
     private string _searchName;
+
+
 
     protected void InitializeSearchName(string target) {
         _searchName = target;
@@ -58,17 +56,13 @@ public class FollowBase : MonoBehaviour {
     protected void FindPlayer() {
         if (nextTimeToSearch <= Time.time) {
             GameObject searchResult = GameObject.FindGameObjectWithTag(_searchName);
-            //var baddieActivator = gameObject.GetComponent<BaddieActivator>();
             if (searchResult != null) {
                 if (!searchResult.GetComponent<BaddieActivator>().enabled) {
-                    // Activaate in 1 second
+                    // Activate in 1 second
                     Invoke("DelayedActivate", 1);
                 }
                 Target = searchResult.transform;
                 nextTimeToSearch = Time.time + searchDelay;
-            }else {
-                //gameObject.GetComponent<BaddieActivator>().enabled = false;
-                //gameObject.GetComponent<SimpleCollider>().enabled = false;
             }
         }
     }

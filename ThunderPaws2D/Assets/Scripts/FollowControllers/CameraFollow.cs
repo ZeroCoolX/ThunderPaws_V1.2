@@ -2,33 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollow : MonoBehaviour { 
-    // Who we are tracking - in the future change this to be an array since there could be two players
-    private Transform _target;
-
-    // This allows us to only search for the player every so often instead of every frame
-    private float _nextTimeToSearch = 0f;
-    // Wait half a second to search for the player 
-    private float _searchDelay = 0.5f;
-
-    // Necessary to keep the camera zoomed out and not right on top of the target
-    private float zOffset = -1;
-
+public class CameraFollow : MonoBehaviour {
     // 1 - FM (Free Movement)
     // 2 - FFM (Fixed Free Movement)
     // 3 - FFP (Forced Forward Progression)
     // Default = 1;
     public int MovementMode = 1;
 
-
-    // Necessary for FFM or FFP
-    // This is the origin of the fixewd camera for where all boundaries are calculated off
+    private Transform _target;
+    private float _nextTimeToSearch = 0f;
+    private float _searchForTargetDelay = 0.5f;
+    /// <summary>
+    /// Necessary to keep the camera zoomed out and not right on top of the target
+    /// </summary>
+    private float zOffset = -1;
+    /// <summary>
+    /// Necessary for FFM or FFP
+    /// This is the origin of the fixewd camera for where all boundaries are calculated off
+    /// </summary>
     private Vector3 _fixedOrigin;
-    // How far right or left the camera can deviate from the origin point
+    /// <summary>
+    /// How far right or left the camera can deviate from the origin point
+    /// </summary>
     private float _allowedHorizontalMovement = 5f;
-    // Need to store the last position we were in for boundary reasons
+    /// <summary>
+    /// Need to store the last position we were in for boundary reasons
+    /// </summary>
     private Vector3 _lastPosition;
-    // Indicates 1/4 the camera width
     private float xOffset;
 
 
@@ -53,7 +53,7 @@ public class CameraFollow : MonoBehaviour {
             GameObject searchResult = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
             if (searchResult != null) {
                 _target = searchResult.transform;
-                _nextTimeToSearch = Time.time + _searchDelay;
+                _nextTimeToSearch = Time.time + _searchForTargetDelay;
             }
         }
     }
