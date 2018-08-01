@@ -1,97 +1,71 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Class specifically for Player Lifeforms.
 /// </summary>
 public abstract class PlayerLifeform : BaseLifeform {
-    // TODO: Take this out but im so lazy
     public bool NoFallCheck = false;
-    /// <summary>
-    /// How fast the Lifeform moves
-    /// </summary>
-    protected float MoveSpeed;
-    /// <summary>
-    /// Min height Lifeform can jump
-    /// </summary>
-    protected float MinJumpHeight;
-    /// <summary>
-    /// Max height Lifeform can jump
-    /// </summary>
-    protected float MaxJumpHeight;
-    /// <summary>
-    /// How long it takes to reach JumpHeight
-    /// </summary>
-    protected float TimeToJumpApex;
-    /// <summary>
-    /// Used for dampening movenents
-    /// </summary>
-    protected float AccelerationTimeAirborne;
-    /// <summary>
-    /// Used for dampening movement
-    /// </summary>
-    protected float AccelerationTimeGrounded;
 
-    /// <summary>
-    /// Indicates how far we can fall without dying
-    /// </summary>
     protected float FallDeathHeight = -18;
-    /// <summary>
-    /// Calculated based off gravity and jump constraints and player input (max)
-    /// </summary>
-    protected float MaxJumpVelocity;
-    /// <summary>
-    /// Calculated based off gravity and jump constraints and player input (min)
-    /// </summary>
-    protected float MinJumpVelocity;
-
-    /// <summary>
-    /// Just used as a reference for the Mathf.SmoothDamp function
-    /// </summary>
     protected float VelocityXSmoothing;
-
-
-    /// <summary>
-    /// Every lifeform has at lesat 1 animation thats needed
-    /// </summary>
     protected Animator Animator;
+
+    protected struct MovementData {
+        public float MoveSpeed;
+        public float MaxJumpHeight;
+        public float MinJumpHeight;
+        public float MaxJumpVelocity;
+        public float MinJumpVelocity;
+        public float TimeToJumpApex;
+        public float AccelerationTimeAirborne;
+        public float AccelerationTimeGrounded;
+    }
+    protected MovementData MoveData;
 
 
     /// <summary>
     /// Set all constant physics values
     /// Calculate dynamic values like Gravity and JumpVelocity
     /// </summary>
-    /// <param name="moveSpeed"></param>
-    /// <param name="jumpHeight"></param>
-    /// <param name="timeToJumpApex"></param>
-    /// <param name="accelerationTimeAirborne"></param>
-    /// <param name="accelerationTimeGrounded"></param>
     protected void InitializePhysicsValues(float moveSpeed, float maxJumpHeight, float minJumpHeight, float timeToJumpApex, float accelerationTimeAirborne, float accelerationTimeGrounded, float gravity = -1) {
-        MoveSpeed = moveSpeed;
-        MinJumpHeight = minJumpHeight;
-        MaxJumpHeight = maxJumpHeight;
-        TimeToJumpApex = timeToJumpApex;
-        AccelerationTimeAirborne = accelerationTimeAirborne;
-        AccelerationTimeGrounded = accelerationTimeGrounded;
-        //Phsyics controller used for all collision detection
+        MoveData = new MovementData {
+            MoveSpeed = moveSpeed,
+            MinJumpHeight = minJumpHeight,
+            MaxJumpHeight = maxJumpHeight,
+            TimeToJumpApex = timeToJumpApex,
+            AccelerationTimeAirborne = accelerationTimeAirborne,
+            AccelerationTimeGrounded = accelerationTimeGrounded
+        };
+
+        SetupComponents();
+        CalculateGravity(gravity);
+        CalculateJumpVelocities(minJumpHeight, maxJumpHeight);
+
+        print("Gravity: " + Gravity + "\n Jump Velocity: " + MoveData.MaxJumpVelocity);
+    }
+
+    private void SetupComponents() {
         Controller2d = GetComponent<CollisionController2D>();
-        //Calculate gravity and jump velocity
+        if (Controller2d == null) {
+            throw new MissingComponentException("Player is missing a CollisionController2D");
+        }
+        Animator = GetComponent<Animator>();
+        if (Animator == null) {
+            throw new MissingComponentException("Player is missing an Animator");
+        }
+    }
+
+    private void CalculateGravity(float gravity) {
         if (gravity == -1) {
-            // originally 2
-            Gravity = -(2.5f * MaxJumpHeight) / Mathf.Pow(TimeToJumpApex, 2);
+            Gravity = -(2.5f * MoveData.MaxJumpHeight) / Mathf.Pow(MoveData.TimeToJumpApex, 2);
         } else {
             Gravity = gravity;
         }
-        MaxJumpVelocity = Mathf.Abs(Gravity) * TimeToJumpApex;
-        MinJumpVelocity = (maxJumpHeight == minJumpHeight ? MaxJumpVelocity : Mathf.Sqrt(2 * Mathf.Abs(Gravity) * minJumpHeight));
-        print("Gravity: " + Gravity + "\n Jump Velocity: " + MaxJumpVelocity);
+    }
 
-        // Set the animator
-        Animator = GetComponent<Animator>();
-        if(Animator == null) {
-            print("Animator was not set - however this is allowed for not : just logging for notice purposes");
-        }
+    private void CalculateJumpVelocities(float minJumpHeight, float maxJumpHeight) {
+        MoveData.MaxJumpVelocity = Mathf.Abs(Gravity) * MoveData.TimeToJumpApex;
+        MoveData.MinJumpVelocity = (maxJumpHeight == minJumpHeight ? MoveData.MaxJumpVelocity : Mathf.Sqrt(2 * Mathf.Abs(Gravity) * minJumpHeight));
     }
 
     protected void FallCheck() {

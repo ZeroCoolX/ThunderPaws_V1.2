@@ -311,7 +311,7 @@ public class Player : PlayerLifeform {
         //check if user - or NPC - is trying to jump and is standing on the ground
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&                          // We allow the player to jump if he's on the ground OR we're falling within 0.25 seconds
                 (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && (Controller2d.Collisions.FromBelow || _fallDelay > Time.time)) {
-            Velocity.y = MaxJumpVelocity;
+            Velocity.y = MoveData.MaxJumpVelocity;
             _fallDelay = 0f;
             _jumped = true;
         }
@@ -326,9 +326,9 @@ public class Player : PlayerLifeform {
                 // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
                 // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
                 if (DirectionalInput.x != 0f && _rollActive) {
-                    targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
+                    targetVelocityX = (_rollSpeed + MoveData.MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
                 } else {
-                    targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+                    targetVelocityX = DirectionalInput.x * (MoveData.MoveSpeed + (_rollActive ? _rollSpeed : 0f));
                 }
                 // Set the animator
                 Animator.SetFloat("xVelocity", targetVelocityX);
@@ -337,9 +337,9 @@ public class Player : PlayerLifeform {
                 // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
                 // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
                 if (DirectionalInput.x != 0f && _rollActive) {
-                    targetVelocityX = (_rollSpeed + MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
+                    targetVelocityX = (_rollSpeed + MoveData.MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
                 } else {
-                    targetVelocityX = DirectionalInput.x * (MoveSpeed + (_rollActive ? _rollSpeed : 0f));
+                    targetVelocityX = DirectionalInput.x * (MoveData.MoveSpeed + (_rollActive ? _rollSpeed : 0f));
                 }
                 // Set the animator
                 Animator.SetFloat("xVelocity", targetVelocityX);
@@ -353,7 +353,7 @@ public class Player : PlayerLifeform {
         if ( ( transform.position.x - 1 <= leftScreenEdge.x ) && DirectionalInput.x < 0) {
             Velocity.x = 0;
         }else {
-            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? AccelerationTimeGrounded : AccelerationTimeAirborne);
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? MoveData.AccelerationTimeGrounded : MoveData.AccelerationTimeAirborne);
         }
     }
 
@@ -362,8 +362,8 @@ public class Player : PlayerLifeform {
     /// </summary>
     public void OnJumpInputUp() {
         if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S))) {
-            if (Velocity.y > MinJumpVelocity) {
-                Velocity.y = MinJumpVelocity;
+            if (Velocity.y > MoveData.MinJumpVelocity) {
+                Velocity.y = MoveData.MinJumpVelocity;
             }
         }
     }
