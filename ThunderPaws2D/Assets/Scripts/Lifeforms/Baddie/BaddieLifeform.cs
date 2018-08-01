@@ -7,69 +7,52 @@ using UnityEngine;
 /// Class specifically for Baddie lifeform types.
 /// </summary>
 public class BaddieLifeform : DamageableLifeform {
-    /// <summary>
-    /// If needed extendors can store an animator
-    /// </summary>
+
     public Animator Animator;
-    
-    /// <summary>
-    /// Set on the prefab in Unity - Cannot be within struct
-    /// </summary>
     public Transform BulletPrefab;
-    /// <summary>
-    /// Holds all necessary data for what to shoot, where to fire from, and what to hit
-    /// </summary>
-    protected ProjectileModel ProjectileData;
-
-    /// <summary>
-    /// List of all possible players this baddie could potentially target.
-    /// </summary>
-    // Most often this will be 0-1 (dead or alive single player).
-    // However for co-op if one player dies that was this target, it needs 
-    // shift to the next available target
-    protected List<Transform> Targets = new List<Transform>();
-    /// <summary>
-    /// The specific player this baddie is targeting
-    /// </summary>
-    protected Transform Target;
-
     /// <summary>
     /// Indicates this baddie is part of the horde and should inform 
     /// the HordeController of its death
     /// </summary>
     public bool PartOfHorde = false;
-
     /// <summary>
-    /// Indicates if the lifeform is facing right.
-    /// Used to determine the correct sprite showing
-    /// </summary>
-    protected bool FacingRight = false;
-
-    // Delegates
-    /// <summary>
-    /// Delegate for informing the HordeController of our death
-    /// so it can appropriately update its counts
-    /// </summary>
-    /// <param name="baddie">
-    /// GameObject.name of the baddie that died
+    /// Delegate for informing the HordeController of our death so it can appropriately update its counts
     /// </param>
     public delegate void InvokeHordeUpdateDelegate(string baddie);
     public InvokeHordeUpdateDelegate InvokeHordeUpdate;
 
+    /// <summary>
+    /// List of all possible players this baddie could potentially target.
+    /// Most often this will be 0-1 (dead or alive single player).
+    /// However for co-op if one player dies that was this target, it needs to
+    /// shift to the next available target
+    /// </summary>
+    protected List<Transform> Targets = new List<Transform>();
+    protected Transform Target;
+    protected bool FacingRight = false;
+
+    private const int PLAYER_LAYER = 8;
+    private const int OBSTACLE_LAYER = 10;
+    private const float TARGET_FIND_DELAY = 10f;
+
+    protected struct ProjectileModel {
+        public Transform FirePoint;
+        public LayerMask WhatToHit;
+    }
+    protected ProjectileModel ProjectileData;
+
     protected void Start() {
-        // Ensure there is a BulletPrefab attached
         if (BulletPrefab == null) {
             throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.BulletPrefab");
         }
 
         ProjectileData.FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
-        // Ensure we found a firepoint
         if (ProjectileData.FirePoint == null) {
             throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.FirePoint");
         }
 
         // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
-        AssignLayermask(8, 10);
+        AssignLayermask(PLAYER_LAYER, OBSTACLE_LAYER);
 
         FindPlayers();
         if (Target == null) {
@@ -77,12 +60,6 @@ public class BaddieLifeform : DamageableLifeform {
         }
     }
 
-    /// <summary>
-    /// Assigns the layermask of what this Baddie should collide with
-    /// </summary>
-    /// <param name="layers">
-    /// 1-many int values representing layermasks which get "or"ed together
-    /// </param>
     protected void AssignLayermask(params int[] layers) {
         LayerMask layerMask = 0;
         // This should grow the layermask "or"ing as many times as we need for example
@@ -93,14 +70,12 @@ public class BaddieLifeform : DamageableLifeform {
             layerMask = layerMask | (1 << layer);
         }
         // Set the layermasks
-        //var playerLayer = 1 << 8;
-        //var obstacleLayer = 1 << 10;
         ProjectileData.WhatToHit = layerMask;
     }
 
     /// <summary>
     /// Check if we are out of targets.
-    /// Find new tragets if necessary.
+    /// Find new targets if necessary.
     /// Assign specific target if necessary :
     ///     Previous target died but there is another player in the workd
     /// </summary>
@@ -111,7 +86,7 @@ public class BaddieLifeform : DamageableLifeform {
         } else if (Targets.Contains(null)) {
             Targets = Targets.Where(target => target != null).ToList();
             // The max spawn time is 10 seconds so in 10 seconds search again for a player
-            Invoke("FindPlayers", 10f);
+            Invoke("FindPlayers", TARGET_FIND_DELAY);
         }
 
         if (Target == null) {
@@ -149,19 +124,21 @@ public class BaddieLifeform : DamageableLifeform {
         } else if (Targets.Count == 1) {
             Target = Targets.FirstOrDefault();
         } else {
-            // Choose a random player
-            var targets = Targets.Where(t => t != null).ToArray();
-            var index = Random.Range(0, targets.Length - 1);
-            Target = targets[index];
+            ChooseRandomTarget();
         }
         print("New Target found. Adding target reference : " + Target.gameObject.name);
     }
 
+    private void ChooseRandomTarget() {
+        var targets = Targets.Where(t => t != null).ToArray();
+        var index = Random.Range(0, targets.Length - 1);
+        Target = targets[index];
+    }
+
     /// <summary>
-    /// based off where the player is in relation to this baddie
+    /// Based off where the player is in relation to this baddie
     /// we can tell which direction we should be facing.
     /// </summary>
-    /// <param name="directionToTarget"></param>
     protected void CalculateFacingDirection(float directionToTarget) {
         if (directionToTarget == 0 || Mathf.Sign(transform.localScale.x) == Mathf.Sign(directionToTarget)) { return; }
 
@@ -173,25 +150,10 @@ public class BaddieLifeform : DamageableLifeform {
         transform.localScale = theScale;
     }
 
-    /// <summary>
-    /// Overridden Method.
-    /// Move the baddie based off velocity.
-    /// </summary>
     protected override void Move() {
         Controller2d.Move(Velocity * Time.deltaTime);
     }
 
-    /// <summary>
-    /// Destroy the baddie.
-    /// </summary>
-    /// <param name="invokeDelegate">
-    /// Determines whether we inform anyone else of our death.
-    /// Used primarily for baddies in a Horde to inform the HordeManager
-    /// of the death
-    /// </param>
-    /// <param name="deathOffset">
-    /// Allows optional delayed destruction
-    /// </param>
     public void DestroyBaddie(bool invokeDelegate, float deathOffset = 0f) {
         if (invokeDelegate) {
             InvokeHordeUpdate.Invoke(gameObject.name);
@@ -199,20 +161,17 @@ public class BaddieLifeform : DamageableLifeform {
         Invoke("InvokeDestroy", deathOffset);
     }
 
-    /// <summary>
-    /// Overridden method.
-    /// Destroy the baddie based off if they're apart of the horde or not.
-    /// </summary>
     protected override void PreDestroy() {
         DestroyBaddie(PartOfHorde);
     }
 
-    /// <summary>
-    /// Overridden method. 
-    /// Before calling the base destruction logic calculate the score
-    /// of the player killing this baddie
-    /// </summary>
     protected override void InvokeDestroy() {
+        var increment = CalculateDeathScore();
+        GameMasterV2.Instance.Score += increment;
+        base.InvokeDestroy();
+    }
+
+    private int CalculateDeathScore() {
         var increment = 0;
         if (gameObject.name.Contains("GL1")) {
             increment = 1;
@@ -225,16 +184,6 @@ public class BaddieLifeform : DamageableLifeform {
         } else if (gameObject.name.Contains("FL3")) {
             increment = 3;
         }
-        GameMasterV2.Instance.Score += increment;
-        base.InvokeDestroy();
-    }
-
-    /// <summary>
-    /// Contains all properties needed to use projectiles.
-    /// Where to shoot it, and what to hit
-    /// </summary>
-    protected struct ProjectileModel {
-        public Transform FirePoint;
-        public LayerMask WhatToHit;
+        return increment;
     }
 }

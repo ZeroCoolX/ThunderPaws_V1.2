@@ -69,11 +69,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a13c65db58e35974681efa83fc3ca16a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ImpactEffect: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
+  ExplodeOnDeath: 0
+  AoeDamageCollider: {fileID: 0}
+  ImpactEffectPrefab: {fileID: 4880655000989574, guid: cb305be4c60f00b4583e66194389bafb,
     type: 2}
+  ImpactSound: 
   MoveSpeed: 10
   Damage: 15
   MaxLifetime: 10
+  FromPlayerNumber: 0
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
