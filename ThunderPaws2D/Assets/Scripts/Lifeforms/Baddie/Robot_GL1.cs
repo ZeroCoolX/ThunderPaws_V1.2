@@ -18,10 +18,6 @@ public class Robot_GL1 : GroundBaddieLifeform {
     /// </summary>
     private float _alertTimeThreshold = -1f;
 
-    // These are the baddie specific values for properties that live on the parents
-    // This could be extracted out into configs but I don't mind them living here
-    // They're just used for initializing the property values that live on the 
-    // parent classes
     private const float GRAVITY = -25.08f;
     private const float HEALTH = 5f;
     private const float SHOT_DELAY = 3f;

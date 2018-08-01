@@ -4,19 +4,17 @@ using UnityEngine;
 
 public class WeaponSatellite : DamageableLifeform {
     /// <summary>
-    /// List of possible pikcup options that drop when this baddie is destroyed
-    /// </summary>
-    public Transform[] PickupOptions;
-    /// <summary>
-    /// How fast the baddie moves
-    /// </summary>
-    private float _moveSpeed = 2f;
-    /// <summary>
     /// Indicates which direction to move since these are stupid and only move in one direction
     /// </summary>
+    [Header("Movement Properties")]
     public bool MoveLeft;
+    [Header("Payload Properties")]
+    public Transform[] PickupOptions;
 
-	// Use this for initialization
+    private float _moveSpeed = 2f;
+
+    private const int PAYLOAD_ITEM_COUNT = 1;
+
 	void Start () {
         Gravity = 0;
         Health = 30;
@@ -24,8 +22,7 @@ public class WeaponSatellite : DamageableLifeform {
         // Set the facing direction and movespeed
         CalculateFacingDirection();
 
-        PayloadItemCount = 1;
-        // Se the payload content to be a random weapon pickup
+        PayloadItemCount = PAYLOAD_ITEM_COUNT;
         PayloadContent = RandomlySelectPayload();
     }
 
@@ -52,9 +49,6 @@ public class WeaponSatellite : DamageableLifeform {
         Controller2d.Move(Velocity * Time.deltaTime);
     }
 
-    /// <summary>
-    /// bBased off MoveLeft bool set at compile time make the baddie face correctly
-    /// </summary>
     private void CalculateFacingDirection() {
         if (MoveLeft) {
             _moveSpeed *= -1;

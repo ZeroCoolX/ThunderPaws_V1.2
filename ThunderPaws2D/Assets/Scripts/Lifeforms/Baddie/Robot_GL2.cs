@@ -4,31 +4,24 @@ using System.Linq;
 using UnityEngine;
 
 public class Robot_GL2 : GroundBaddieLifeform {
-    // These are the baddie specific values for properties that live on the parents
-    // This could be extracted out into configs but I don't mind them living here
-    // They're just used for initializing the property values that live on the 
-    // parent classes
-    private readonly float _gravity = -25.08f;
-    private readonly float _health = 15f;
-    private readonly float _shotDelay = 2f;
-    private readonly float _visionLength = 20f;
-    private readonly string _attackAnimation = "ChargeAndFire";
+
+    private const float GRAVITY = -25.08f;
+    private const float HEALTH = 15f;
+    private const float SHOT_DELAY = 2f;
+    private const float VISION_LENGTH = 20f;
+    private const string ATTACK_ANIMATION = "ChargeAndFire";
 
     public void Start() {
         base.Start();
         
-        // Set baddie specific data
-        GroundPositionData.ShotDelay = _shotDelay;
+        GroundPositionData.ShotDelay = SHOT_DELAY;
         GroundPositionData.FireDelay = 0.5f;
-        VisionRayLength = _visionLength;
-        Gravity = _gravity;
-        Health = _health;
+        VisionRayLength = VISION_LENGTH;
+        Gravity = GRAVITY;
+        Health = HEALTH;
 
-        // Optional animation to play when atacking
-        OptionalAttackAnimation = _attackAnimation;
+        OptionalAttackAnimation = ATTACK_ANIMATION;
 
-        // This baddie has an animation to play to therefor we set the Animator
-        // Not all baddies have an Animator
         Animator = transform.GetComponent<Animator>();
         if(Animator == null) {
             throw new MissingComponentException("There is no animator on this baddie");
@@ -53,5 +46,7 @@ public class Robot_GL2 : GroundBaddieLifeform {
         if (hCollider.collider != null) {
             HandleCollision();
         }
+
+        ApplyGravity();
     }
 }
