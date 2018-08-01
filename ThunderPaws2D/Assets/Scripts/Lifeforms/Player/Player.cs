@@ -14,26 +14,7 @@ public class Player : PlayerLifeform {
     /// </summary>
     public string JoystickId;
 
-    /// <summary>
-    /// Currently equipped weapon
-    /// </summary>
-    private Transform _currentWeapon;
-    
-    /// <summary>
-    /// List of weapons currently owned by the player.
-    /// There will always be either 1 or 2. No more, no less
-    /// </summary>
-    private List<Transform> _ownedWeapons = new List<Transform>();
-
-    /// <summary>
-    /// This is where we create our weapons
-    /// </summary>
-    private Transform _weaponAnchor;
-
-    /// <summary>
-    /// Reference to the weapon anchor animator to play idle, crouch, and melee animations
-    /// </summary>
-    private Animator _weaponAnchorAnimator;
+    private PlayerWeaponManager _weaponManager;
 
     /// <summary>
     /// Reference to user input either from a keyboard or controller
@@ -130,18 +111,11 @@ public class Player : PlayerLifeform {
         //Set all physics values  - originally 3 and 1
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
 
-        _weaponAnchor = transform.Find(GameConstants.ObjectName_WeaponAnchor);
-        _weaponAnchorAnimator = _weaponAnchor.GetComponent<Animator>();
-        if(_weaponAnchorAnimator == null) {
-            throw new MissingComponentException("The weapon anchor is missing an animator.");
+        _weaponManager = transform.GetComponent<PlayerWeaponManager>();
+        if(_weaponManager == null) {
+            throw new MissingComponentException("No PlayerWeaponManager found on Player object");
         }
-        CreateAndEquipWeapon(GameConstants.ObjectName_DefaultWeapon);
-
-        if(_currentWeapon == null) {
-            throw new MissingComponentException("There was no weapon attached to the Player");
-        }
-        //Add delegate for weapon switch notification from the GameMasterV2
-        //GameMasterV2.Instance.OnWeaponSwitch += SwitchWeapon;
+        _weaponManager.InitializeWeapon(PlayerNumber, transform.Find(GameConstants.ObjectName_WeaponAnchor));
 
         //Setup stats
         PlayerStats = GetComponent<PlayerStats>();
@@ -218,14 +192,19 @@ public class Player : PlayerLifeform {
         //User is pressing the ultimate button - Inform the player
         if ((Input.GetButtonUp(JoystickId + GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
             print("Pressing ult and we're ready!");
-            ActivateUltimate();
+            if (!PlayerStats.UltEnabled) {
+                ActivateUltimate();
+            }
             GameStatsManager.Instance.AddUlt(PlayerNumber);
         }
 
         if (Input.GetButtonUp(JoystickId + GameConstants.Input_LBumper) || Input.GetKeyUp(InputManager.Instance.ChangeWeapon)) {
-            SwitchWeapon();
-            AudioManager.Instance.playSound(GameConstants.Audio_WeaponSwitch);
+            _weaponManager.SwitchWeapon();
         }
+    }
+
+    public void ApplyWeaponPickup(string weaponkey) {
+        _weaponManager.CreateAndEquipWeapon(weaponkey);
     }
 
     /// <summary>
@@ -281,7 +260,7 @@ public class Player : PlayerLifeform {
             Animator.SetFloat("xVelocity", finalXVelocity);
 
             // Also inform the weapon animator that we are crouching
-            _weaponAnchorAnimator.SetBool("Crouch", crouch);
+            _weaponManager.AnimateWeapon("Crouch", crouch);
             if (crouch || _rollActive) {
                 Controller2d.BoxCollider.size = new Vector2(Controller2d.BoxCollider.size.x, GameConstants.Data_PlayerCrouchSize);
                 Controller2d.BoxCollider.offset = new Vector2(Controller2d.BoxCollider.offset.x, GameConstants.Data_PlayerCrouchY);
@@ -292,11 +271,11 @@ public class Player : PlayerLifeform {
 
             // We want to hold still if any movement (even just pointing ad different angles) is happeneing
             var holdStill = (Input.GetKey(InputManager.Instance.LockMovement) || Input.GetAxis(JoystickId + GameConstants.Input_LTrigger) >= 1 || finalXVelocity > 0 || crouch || jumping || falling || _meleeActive);
-            _weaponAnchorAnimator.SetBool("HoldStill", holdStill);
+            _weaponManager.AnimateWeapon("HoldStill", holdStill);
         }
 
         // Set the weapons inactive if either the roll or melee animation is playing
-        _currentWeapon.gameObject.SetActive(!_rollActive && !_meleeActive);
+        _weaponManager.ToggleWeaponActiveStatus(!_rollActive && !_meleeActive);
     }
 
     /// <summary>
@@ -418,7 +397,7 @@ public class Player : PlayerLifeform {
         }else if (yAxis > 0.8) {
             rotation = 90 * (FacingRight ? 1 : -1);
         }
-        _weaponAnchor.rotation = Quaternion.Euler(0f, 0f, rotation);
+        _weaponManager.SetWeaponRotation(Quaternion.Euler(0f, 0f, rotation));
 
         int degree = (int)Mathf.Abs(rotation);
         DisplayCorrectSprite(degree);
@@ -432,65 +411,8 @@ public class Player : PlayerLifeform {
         transform.GetComponent<SpriteRenderer>().sprite = GameMasterV2.Instance.GetSpriteFromMap(degree);
     }
 
-    /// <summary>
-    /// Creates a new instance of the weapon and equips it. This is used for picking up the weapons on map
-    /// If a special weapon is already equipped this weapon should remove that weapon and take its place
-    /// </summary>
-    /// <param name="weaponKey"></param>
-    public void CreateAndEquipWeapon(string weaponKey) {
-        if (weaponKey != GameConstants.ObjectName_DefaultWeapon) {
-            _currentWeapon.gameObject.SetActive(false);
-        }
-        _currentWeapon = Instantiate(GameMasterV2.Instance.GetWeaponFromMap(weaponKey), _weaponAnchor.position, _weaponAnchor.rotation, _weaponAnchor);
-        _currentWeapon.gameObject.SetActive(true);
-        if(_ownedWeapons.Count == 2) {
-            var previousWeapon = _ownedWeapons[1];
-            Destroy(previousWeapon.gameObject);
-            _ownedWeapons[1] = _currentWeapon;
-        }else {
-            _ownedWeapons.Add(_currentWeapon);
-        }
-        print("Created weapon: " + _currentWeapon.gameObject.name);
-        PlayerHudManager.Instance.UpdateWeaponPickup(PlayerNumber, weaponKey);
-        PlayerHudManager.Instance.GetPlayerHud(PlayerNumber).SetAmmo(_currentWeapon.GetComponent<AbstractWeapon>().Ammo);
-        try {
-            AudioManager.Instance.playSound(GameConstants.Audio_WeaponPickup);
-        }catch(System.Exception e) {
-            print("Either the game master or the audiomanager doesn't exist yet");
-        }
-    }
-
-    /// <summary>
-    /// Indicates that the currently equipped weapon is out of ammo, should be removed from the players weapon list, and the defaault weapon ceaated if it doesn't exist and equipped
-    /// </summary>
-    /// <param name="weapon"></param>
     public void RemoveOtherWeapon(Transform weapon) {
-        _ownedWeapons.Remove(weapon);
-        Destroy(_currentWeapon.gameObject);
-        _currentWeapon = _ownedWeapons[0];
-        _currentWeapon.position = _weaponAnchor.position;
-        _currentWeapon.gameObject.SetActive(true);
-        PlayerHudManager.Instance.UpdateWeaponPickup(PlayerNumber, "fuzzbuster");
-        if (_currentWeapon == null) {
-            throw new KeyNotFoundException("ERROR: Default weapon was not found in weapon map");
-        }
-    }
-
-    /// <summary>
-    /// Switch current weapon to the other one if there is on.
-    /// There is only 1 or 2 weapons so this is an easy calculation
-    /// </summary>
-    private void SwitchWeapon() {
-        if(_ownedWeapons.Count > 1) {
-            var rotation = _currentWeapon.rotation;
-            _currentWeapon.gameObject.SetActive(false);
-            //0 is default, 1 is other weapon
-            var index = _ownedWeapons.IndexOf(_currentWeapon);
-            _currentWeapon = _ownedWeapons[Mathf.Abs(-1 + index)];
-            //Have to set the rotation of what the weapon was like before switching
-            _currentWeapon.gameObject.SetActive(true);
-            PlayerHudManager.Instance.GetPlayerHud(PlayerNumber).SetAmmo(_currentWeapon.GetComponent<AbstractWeapon>().Ammo);
-        }
+        _weaponManager.RemoveOtherWeapon(weapon);
     }
 
     public void PickupCoin() {
@@ -507,18 +429,14 @@ public class Player : PlayerLifeform {
     ///  Enable/disable UltMode on all weapons owned   
     /// </summary>
     private void ActivateUltimate() {
-        //Player has activated the ultimatet! (Pressed Y)
-        if (!PlayerStats.UltEnabled) {
-            _currentWeapon.GetComponent<AbstractWeapon>().FillAmmoFromUlt();
-            PlayerStats.UltEnabled = true;
-            PlayerStats.UltReady = false;
-            foreach(var weapon in _ownedWeapons) {
-                weapon.GetComponent<AbstractWeapon>().UltMode = true;
-            }
-            InvokeRepeating("DepleteUltimate", 0, 0.07f);//100 max. 10 items a second = 1 item 1/10th of a second
-            //After 10 seconds deactivate ultimate
-            Invoke("DeactivateUltimate", 7f);
-        }
+        _weaponManager.ToggleUltimateForAllWeapons(true);
+
+        PlayerStats.UltEnabled = true;
+        PlayerStats.UltReady = false;
+
+        InvokeRepeating("DepleteUltimate", 0, 0.07f);
+        // After 10 seconds deactivate ultimate
+        Invoke("DeactivateUltimate", 7f);
     }
 
     private void DepleteUltimate() {
@@ -536,9 +454,7 @@ public class Player : PlayerLifeform {
 
         // Stop the ultimate
         PlayerStats.UltEnabled = false;
-        foreach (var weapon in _ownedWeapons) {
-            weapon.GetComponent<AbstractWeapon>().UltMode = false;
-        }
+        _weaponManager.ToggleUltimateForAllWeapons(false);
         CancelInvoke("DepleteUltimate");
     }
 

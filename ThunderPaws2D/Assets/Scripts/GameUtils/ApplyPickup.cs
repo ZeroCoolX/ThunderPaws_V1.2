@@ -26,7 +26,7 @@ public class ApplyPickup : MonoBehaviour {
 	
 	private void Apply(Vector3 v, Collider2D c) {
         var player = c.transform.GetComponent<Player>();
-        player.CreateAndEquipWeapon(PickupReward.gameObject.name);
+        player.ApplyWeaponPickup(PickupReward.gameObject.name);
         Destroy(gameObject);
     }
 }

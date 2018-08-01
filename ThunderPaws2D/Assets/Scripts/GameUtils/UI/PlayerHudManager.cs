@@ -47,7 +47,6 @@ public class PlayerHudManager : MonoBehaviour {
     /// <param name="current"></param>
     /// <param name="max"></param>
     public void UpdateHealthUI(int player, int current, int max) {
-        print("Updating health : "+current+ "/" + max);
         var playerHud = _playerHuds[player-1];
         playerHud.SetHealthStatus(current, max);
     }
@@ -59,7 +58,6 @@ public class PlayerHudManager : MonoBehaviour {
     /// <param name="current"></param>
     /// <param name="max"></param>
     public void UpdateUltimateUI(int player, int current, int max) {
-        print("Updating ultimate : " + current + "/" + max);
         var playerHud = _playerHuds[player - 1];
         playerHud.SetUltimateStatus(current, max);
     }

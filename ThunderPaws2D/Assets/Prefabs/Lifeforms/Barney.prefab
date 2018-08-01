@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 95689846243776832}
   - component: {fileID: 114834322300645876}
   - component: {fileID: 114174318653646354}
+  - component: {fileID: 114102050316462756}
   m_Layer: 8
   m_Name: Barney
   m_TagString: Player
@@ -148,6 +149,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88f969871bfa6640aef75498a8c0a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114102050316462756
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93b6632436effaa45aa8ef87c020d780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114118023174978558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -167,8 +179,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 50176
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 1
 --- !u!114 &114174318653646354
 MonoBehaviour:
