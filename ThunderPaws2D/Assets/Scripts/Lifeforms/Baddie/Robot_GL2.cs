@@ -44,7 +44,7 @@ public class Robot_GL2 : GroundBaddieLifeform {
         // Check if we can shoot at the target
         var hCollider = FireRaycast();
         if (hCollider.collider != null) {
-            HandleCollision();
+            HaltAndFire();
         }
 
         ApplyGravity();

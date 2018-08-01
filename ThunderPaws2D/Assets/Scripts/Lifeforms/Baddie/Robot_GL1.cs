@@ -55,7 +55,7 @@ public class Robot_GL1 : GroundBaddieLifeform {
         var hCollider = FireRaycast();
         if (hCollider.collider != null) {
             _alertTimeThreshold = LedgeBound ? Time.time + 1f : 0f;
-            HandleCollision();
+            HaltAndFire();
         }
 
         if (LedgeBound) {
