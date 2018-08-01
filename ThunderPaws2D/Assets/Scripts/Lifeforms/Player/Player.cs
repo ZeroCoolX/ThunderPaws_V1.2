@@ -13,19 +13,16 @@ public class Player : PlayerLifeform {
     /// How we can identify which controller we need to query for input
     /// </summary>
     public string JoystickId;
-
-    private PlayerWeaponManager _weaponManager;
-
     /// <summary>
     /// Reference to user input either from a keyboard or controller
     /// </summary>
     public Vector2 DirectionalInput { get; set; }
-
     /// <summary>
     /// Indicates player is facing right
     /// </summary>
     public bool FacingRight = true;
 
+    private PlayerWeaponManager _weaponManager;
     /// <summary>
     /// Quantatative data of stats. Visually the GameMasterV2 handles that with the PlayerStatsUIController.
     /// </summary>
@@ -98,35 +95,10 @@ public class Player : PlayerLifeform {
     /// Initialize physics values
     /// </summary>
     void Start() {
-
-        if(PlayerNumber == 0 || PlayerNumber > 2) {
-            PlayerNumber = 1;
-            //throw new Exception("Somehow the player was either not set or too high with PlayerNumber of " + PlayerNumber);
-        }
-
-        if (string.IsNullOrEmpty(JoystickId)) {
-            JoystickId = "J1-";
-        }
-
-        //Set all physics values  - originally 3 and 1
+        SetupPlayerIdentification();
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
-
-        _weaponManager = transform.GetComponent<PlayerWeaponManager>();
-        if(_weaponManager == null) {
-            throw new MissingComponentException("No PlayerWeaponManager found on Player object");
-        }
-        _weaponManager.InitializeWeapon(PlayerNumber, transform.Find(GameConstants.ObjectName_WeaponAnchor));
-
-        //Setup stats
-        PlayerStats = GetComponent<PlayerStats>();
-        if(PlayerStats == null) {
-            throw new MissingComponentException("No player stats found on the Player");
-        }
-        PlayerStats.MaxHealth = LivesManager.Health;
-        PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
-        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
-        PlayerStats.CurrentUltimate = 0;
-        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+        SetupWeapons();
+        SetupPlayerStats();
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
@@ -135,11 +107,35 @@ public class Player : PlayerLifeform {
         Controller2d.NotifyCollision += BounceBack;
     }
 
-    /// <summary>
-    /// This is strictly used for testing
-    /// </summary>
-    public Transform[] ShowroomSpawns = new Transform[4];
-    private int spawnIndex = -1;
+    private void SetupPlayerIdentification() {
+        if (PlayerNumber == 0 || PlayerNumber > 2) {
+            PlayerNumber = 1;
+        }
+
+        if (string.IsNullOrEmpty(JoystickId)) {
+            JoystickId = "J1-";
+        }
+    }
+
+    private void SetupWeapons() {
+        _weaponManager = transform.GetComponent<PlayerWeaponManager>();
+        if (_weaponManager == null) {
+            throw new MissingComponentException("No PlayerWeaponManager found on Player object");
+        }
+        _weaponManager.InitializeWeapon(PlayerNumber, transform.Find(GameConstants.ObjectName_WeaponAnchor));
+    }
+
+    private void SetupPlayerStats() {
+        PlayerStats = GetComponent<PlayerStats>();
+        if (PlayerStats == null) {
+            throw new MissingComponentException("No player stats found on the Player");
+        }
+        PlayerStats.MaxHealth = LivesManager.Health;
+        PlayerStats.CurrentHealth = PlayerStats.MaxHealth;
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
+        PlayerStats.CurrentUltimate = 0;
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+    }
 
     private void HackRollReset() {
         _rollActive = false;
@@ -167,7 +163,6 @@ public class Player : PlayerLifeform {
             print("Moving player in x direction: " + (_bounceBackSpeed * _bounceBackDirection));
             Velocity.x = Mathf.SmoothDamp(Velocity.x, (_bounceBackSpeed * _bounceBackDirection), ref VelocityXSmoothing, 0.1f);
             transform.Translate(Velocity * Time.deltaTime);
-            //Controller2d.Move(Velocity * Time.deltaTime, (_bounceBackDirection < 0 ? Vector3.left : Vector3.right), JoystickId);
             Invoke("DeactivateBounceBackTrigger", 0.1f);
         }else {
             CalculateVelocityOffInput();
@@ -282,37 +277,41 @@ public class Player : PlayerLifeform {
     /// Get the input from either the user 
     /// </summary>
     private void CalculateVelocityOffInput() {
+        CalculateJumpVelocity();
+        float targetVelocityX = CalculateHorizontalVelocity();
+        if (BackwardsLevelProgressionAttempted()) {
+            Velocity.x = 0;
+        }else {
+            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? MoveData.AccelerationTimeGrounded : MoveData.AccelerationTimeAirborne);
+        }
+    }
+
+    private void CalculateJumpVelocity() {
         // This allows for a very small window of jumpability when falling
         if (!_jumped && !Controller2d.Collisions.FromBelow && Time.time >= _fallDelay) {
             _fallDelay = Time.time + _allowedFallTime;
         }
 
-        //check if user - or NPC - is trying to jump and is standing on the ground
-        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) &&                          // We allow the player to jump if he's on the ground OR we're falling within 0.25 seconds
-                (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && (Controller2d.Collisions.FromBelow || _fallDelay > Time.time)) {
+        // Check if user is trying to jump and is standing on the ground
+        // We allow the player to jump if he's on the ground OR we're falling within 0.25 seconds
+        if (!(DirectionalInput.y < -0.25 || Input.GetKey(KeyCode.S)) && 
+            (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(JoystickId + GameConstants.Input_Jump)) && 
+            (Controller2d.Collisions.FromBelow || _fallDelay > Time.time)) {
+
             Velocity.y = MoveData.MaxJumpVelocity;
             _fallDelay = 0f;
             _jumped = true;
         }
+    }
 
+    private float CalculateHorizontalVelocity() {
         var yAxis = DirectionalInput.y;
         float targetVelocityX = 0f;
         var leftTrigger = Input.GetAxis(JoystickId + GameConstants.Input_LTrigger);
         var leftCtrl = Input.GetKey(InputManager.Instance.LockMovement);
         // Only set the movement speed if we're not holding L trigger, not looking straight up, not crouching, and not melee'ing
-        if (!leftCtrl && leftTrigger < 1  && !_meleeActive) {
-            if(DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f)) {
-                // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
-                // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
-                if (DirectionalInput.x != 0f && _rollActive) {
-                    targetVelocityX = (_rollSpeed + MoveData.MoveSpeed) * (Mathf.Sign(DirectionalInput.x) > 0 ? 1 : -1);
-                } else {
-                    targetVelocityX = DirectionalInput.x * (MoveData.MoveSpeed + (_rollActive ? _rollSpeed : 0f));
-                }
-                // Set the animator
-                Animator.SetFloat("xVelocity", targetVelocityX);
-            }
-            else if ((yAxis <= 0.8 && yAxis > -0.25)) {
+        if (!leftCtrl && leftTrigger < 1 && !_meleeActive) {
+            if (DirectionalInput == new Vector2(1f, 1f) || DirectionalInput == new Vector2(-1f, 1f) || (yAxis <= 0.8 && yAxis > -0.25)) {
                 // We have to handle the case of rolling so that different amounts on the x axis dont effect the roll speed
                 // The roll speed should be a constant instead of relative to how far the user if pushing the joystick
                 if (DirectionalInput.x != 0f && _rollActive) {
@@ -324,16 +323,16 @@ public class Player : PlayerLifeform {
                 Animator.SetFloat("xVelocity", targetVelocityX);
             }
         }
+        return targetVelocityX;
+    }
+
+    private bool BackwardsLevelProgressionAttempted() {
         // Get the leftmost edge of the viewport 
         var leftScreenEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         // Pad it to the right by 5
         leftScreenEdge.x += 2;
         // Ensure our players x value is to the right of that to stop backwards traveral
-        if ( ( transform.position.x - 1 <= leftScreenEdge.x ) && DirectionalInput.x < 0) {
-            Velocity.x = 0;
-        }else {
-            Velocity.x = Mathf.SmoothDamp(Velocity.x, targetVelocityX, ref VelocityXSmoothing, Controller2d.Collisions.FromBelow ? MoveData.AccelerationTimeGrounded : MoveData.AccelerationTimeAirborne);
-        }
+        return ((transform.position.x - 1 <= leftScreenEdge.x) && DirectionalInput.x < 0);
     }
 
     /// <summary>
