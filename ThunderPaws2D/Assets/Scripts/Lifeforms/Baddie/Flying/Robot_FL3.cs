@@ -28,47 +28,42 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     };
 
     /// <summary>
-    /// FL3 specific metadata.
-    /// Holds all necessary information for attack modes, movement, bounds..etc
+    /// Each Flying baddie has their own implementation of the ActionData struct
+    /// FL3 Specifc data.
+    /// Encapsultes all the data needed for actions like attacking, and moving both vertical and horizontal
     /// </summary>
+    private struct ActionData {
+        public float HorizontalMoveSpeed;
+        public float TimeToFire;
+        public float MoveDuration;
+        public int AngleIndex;
+        public bool FiringAttack;
+        /// <summary>
+        /// Indicates if its a left, or right starting spiral - or a whole circle
+        /// 1  = counter clockwise
+        /// -1 = clockwise
+        /// 0  = whole 
+        /// </summary>
+        public int AttackMode;
+    }
     private ActionData _actionData;
 
-    /// <summary>
-    /// Find the player and begin tracking
-    /// </summary>
+    private const float DELAY_BETWEEN_SHOT = 5f;
+    private const float MIN_DISTANCE_FROM_TARGET = 3f;
+    private const float MAX_DISTANCE_FROM_TARGET = 12f;
+
     private void Start() {
         base.Start();
 
-        // Initialize necessary action properties
         _actionData.FiringAttack = false;
-        _actionData.TimeToFire = Time.time + 5f;
+        _actionData.TimeToFire = Time.time + DELAY_BETWEEN_SHOT;
 
-        // Since this doesn't really tract the player nor has any homing bullets we
-        // can have a much better movement bounds
         if (Target != null) {
-            CalculateBounds(3f, 12f);
+            CalculateBounds(MIN_DISTANCE_FROM_TARGET, MAX_DISTANCE_FROM_TARGET);
         }
         FlyingPositionData.MoveSpeed = 2.5f;
 
-        // TODO: this is bad - half the time TargetY is treated like an actual
-        // coordinate point in space, and the other half its treated strictly 
-        // as a -1 or 1 vertical direction indicator
         FlyingPositionData.TargetYDirection = ChooseRandomHeight();
-    }
-
-    /// <summary>
-    /// Just a useful helper method to see where exactly the bounds are.
-    /// Uncomment this from the Update method if you want to see the bounds for a specific baddie
-    /// </summary>
-    private void ShowVerticalBounds() {
-        var minLine = new Vector3(Target.position.x, FlyingPositionData.MinY, transform.position.z);
-        Debug.DrawRay(minLine, Vector2.right * 50f, Color.green);
-        Debug.DrawRay(minLine, Vector2.left * 50f, Color.green);
-        print("   minLine = " + minLine);
-        var maxLine = new Vector3(Target.position.x, FlyingPositionData.MaxY, transform.position.z);
-        Debug.DrawRay(maxLine, Vector2.right * 50f, Color.red);
-        Debug.DrawRay(maxLine, Vector2.left * 50f, Color.red);
-        print("maxLine = " + maxLine);
     }
 
     /// <summary>
@@ -80,9 +75,6 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private void Update() {
         base.Update();
 
-        //ShowVerticalBounds();
-
-        // Make sure the target exists
         if (!CheckTargetsExist()) {
             return;
         }
@@ -100,13 +92,11 @@ public class Robot_FL3 : FlyingBaddieLifeform {
             CalculateMovementDirection();
         }
 
-        // Ensure we're within bounds
         MaxBoundsCheck();
 
         Move();
         // Just useful for debugging
         Debug.DrawRay(transform.position, (Target.position - transform.position), Color.red);
-
         CalculateFire();
     }
 
@@ -118,21 +108,11 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private void CalculateFire() {
         if (Time.time > _actionData.TimeToFire && !_actionData.FiringAttack) {
             _actionData.FiringAttack = true;
-            // Wait 2 - 5 seconds in between each shot
             _actionData.TimeToFire = Time.time + Random.Range(2,6);
+
             // Generate a random attack to keep this baddie unpredictable
             _actionData.AttackMode = DetermineRandomAttackMode();
-            if(_actionData.AttackMode == 0) {
-                FireWhole();
-            }else {
-                var fireTime = 0.05f;
-                // Either start at the front or end of the array to easily generate clockwise or counter clockwise animation effect
-                _actionData.AngleIndex =  (_actionData.AttackMode > 0 ? 0 : _raycastAngles.Length-1);
-                for (var i = 0; i < _raycastAngles.Length; ++i) {
-                    Invoke("Fire", fireTime);
-                    fireTime += 0.05f;
-                }
-            }
+            FireBasedOffPattern();
         }
     }
 
@@ -140,17 +120,36 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     /// 0 = Whole 360 Attack
     /// 1 or -1 are a counter or clockwise spiral attack
     /// </summary>
-    /// <returns></returns>
     private int DetermineRandomAttackMode() {
         var rf1 = (int)Random.Range(0, 8);
+        // 1/4th chance to Whole 360 attack
         if(rf1 == 0 || rf1 == 7) {
             return 0;
         }else {
+            // 50 / 50 for counter vs clockwise
             if(rf1 % 2 == 0) {
                 return -1;
             }else {
                 return 1;
             }
+        }
+    }
+
+    private void FireBasedOffPattern() {
+            if(_actionData.AttackMode == 0) {
+                FireWhole();
+            }else {
+                FireSpiral();
+            }
+    }
+
+    private void FireSpiral() {
+        var fireTime = 0.05f;
+        // Either start at the front or end of the array to easily generate clockwise or counter clockwise animation effect
+        _actionData.AngleIndex = (_actionData.AttackMode > 0 ? 0 : _raycastAngles.Length - 1);
+        for (var i = 0; i < _raycastAngles.Length; ++i) {
+            Invoke("Fire", fireTime);
+            fireTime += 0.05f;
         }
     }
 
@@ -160,10 +159,10 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private void FireWhole() {
         foreach(var angle in _raycastAngles) {
             Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-            //Set layermask of parent (either player or baddie)
+            // Set layermask of parent (either player or baddie)
             projectile.SetLayerMask(ProjectileData.WhatToHit);
             projectile.Damage = 5;
             projectile.MoveSpeed = 12;
@@ -181,10 +180,10 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private void Fire() {
         try {
             Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-            //Set layermask of parent (either player or baddie)
+            // Set layermask of parent (either player or baddie)
             projectile.SetLayerMask(ProjectileData.WhatToHit);
             projectile.Damage = 5;
             projectile.MoveSpeed = 12;
@@ -201,13 +200,9 @@ public class Robot_FL3 : FlyingBaddieLifeform {
         }
     }
     
-    /// <summary>
-    /// Set the Velocity x and y values to the generated vertical and horizontal movespeed this frame
-    /// </summary>
     private void CalculateVelocity() {
         Velocity.x = Mathf.SmoothDamp(Velocity.x, _actionData.HorizontalMoveSpeed, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
         if (Time.time > _actionData.MoveDuration) {
-            // random time between 2 and 5 seconds!
             _actionData.MoveDuration = Time.time + Random.Range(1f, 4f);
             CalculateVerticalThreshold();
         }
@@ -215,24 +210,17 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     }
 
     /// <summary>
-    /// Similar to FL2 - allows for "dodge" like motion but also tries to stay
-    /// relatively over the player.
+    /// Similar to FL2 - allows for "dodge" like motion but also tries to stay relatively over the player.
     /// </summary>
     private void CalculateMovementDirection() {
-        // We are either directly above or within the 45degree angle of the player and should move!
-
-        // Right now move between 1 and 3 seconds
         _actionData.MoveDuration = Time.time + (Random.Range(1f, 4f));
-
-        // -1 = move left 
-        // 1 = move right
-        var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
 
         // pos = we are on players right
         // neg = we are on players left
+        var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
         var rf2 = Mathf.Sign(transform.position.x - Target.position.x);
-
         var rf3 = 0f;
+
         if (rf1 < 0 && rf2 < 0) {
             // If we should move left, and are already left of player we should have a 75% change of moving right
             // 25% chance to keep moving left
@@ -251,37 +239,17 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     }
 
     /// <summary>
-    /// Each Flying baddie has their own implementation of the ActionData struct
-    /// FL3 Specifc data.
-    /// Encapsultes all the data needed for actions like attacking, and moving both vertical and horizontal
+    /// Just a useful helper method to see where exactly the bounds are.
+    /// Uncomment this from the Update method if you want to see the bounds for a specific baddie
     /// </summary>
-    private struct ActionData {
-        /// <summary>
-        /// Stores the value of the horizontal movement this iteration of movement
-        /// </summary>
-        public float HorizontalMoveSpeed;
-        /// <summary>
-        /// Delay in between initiating Fire() attack
-        /// </summary>
-        public float TimeToFire;
-        /// <summary>
-        /// Indicates how long to move for
-        /// </summary>
-        public float MoveDuration;
-        /// <summary>
-        /// Indicates what index to fire at
-        /// </summary>
-        public int AngleIndex;
-        /// <summary>
-        /// Indicates we're attacking the player and thus should stop moving
-        /// </summary>
-        public bool FiringAttack;
-        /// <summary>
-        /// Indicates if its a left, or right starting spiral - or a whole circle
-        /// 1  = counter clockwise
-        /// -1  = clockwise
-        /// 0 = whole 
-        /// </summary>
-        public int AttackMode;
+    private void ShowVerticalBounds() {
+        var minLine = new Vector3(Target.position.x, FlyingPositionData.MinY, transform.position.z);
+        Debug.DrawRay(minLine, Vector2.right * 50f, Color.green);
+        Debug.DrawRay(minLine, Vector2.left * 50f, Color.green);
+        print("minLine = " + minLine);
+        var maxLine = new Vector3(Target.position.x, FlyingPositionData.MaxY, transform.position.z);
+        Debug.DrawRay(maxLine, Vector2.right * 50f, Color.red);
+        Debug.DrawRay(maxLine, Vector2.left * 50f, Color.red);
+        print("maxLine = " + maxLine);
     }
 }
