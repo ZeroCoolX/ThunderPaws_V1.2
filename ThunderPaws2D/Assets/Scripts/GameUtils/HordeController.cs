@@ -154,8 +154,8 @@ public class HordeController : MonoBehaviour {
     }
 
     private void PlayerDiedReset() {
-        AudioManager.Instance.stopSound(GameConstants.Audio_BossMusic);
-        AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.StopSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
         PlayerDiedHack = true;
         // Inform collider to reset iteself
         Collider.Initialize(1 << 8, RadiusOfTrigger);
@@ -222,14 +222,14 @@ public class HordeController : MonoBehaviour {
     }
 
     private void ActivateExit() {
-        AudioManager.Instance.stopSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.StopSound(GameConstants.Audio_BossMusic);
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
             // Was Horde 1
             GameMasterV2.Instance.CalculateHordeScore(1);
-            AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
+            AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
             Destroy(gameObject);
         }else {
             GameMasterV2.Instance.CalculateHordeScore(2);
@@ -351,8 +351,8 @@ public class HordeController : MonoBehaviour {
             LeftBarrier.gameObject.SetActive(true);
         }
 
-        AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
-        AudioManager.Instance.playSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.StopSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_BossMusic);
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){

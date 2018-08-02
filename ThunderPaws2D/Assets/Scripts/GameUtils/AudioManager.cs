@@ -28,14 +28,14 @@ public class Sound {
         source.loop = loop;
     }
 
-    //randomize for variance
-    public void play() {
+    // Randomize for variance
+    public void Play() {
         source.volume = volume * 1 + Random.Range(-randomVolume / 2f, randomVolume / 2);
         source.pitch = pitch * 1 + Random.Range(-randomPitch / 2f, randomPitch / 2);
         source.Play();
     }
 
-    public void stop() {
+    public void Stop() {
         source.Stop();
     }
 }
@@ -66,24 +66,21 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void playSound(string _name) {
+    public void PlaySound(string _name) {
         for (int i = 0; i < sounds.Length; ++i) {
             if (sounds[i].name == _name) {
-                //found the sound, now play it!
-                sounds[i].play();
+                sounds[i].Play();
                 return;
             }
         }
 
-        //no sounds with _name
-        Debug.LogWarning("AudioManager: Sound " + _name + " not found in sounds array");
+        print("AudioManager: Sound " + _name + " not found in sounds array");
     }
 
-    public void stopSound(string _name) {
+    public void StopSound(string _name) {
         for (int i = 0; i < sounds.Length; ++i) {
             if (sounds[i].name == _name) {
-                //found the sound, now play it!
-                sounds[i].stop();
+                sounds[i].Stop();
                 return;
             }
         }

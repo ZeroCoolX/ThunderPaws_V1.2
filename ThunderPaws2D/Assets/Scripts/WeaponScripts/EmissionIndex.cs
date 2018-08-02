@@ -58,7 +58,7 @@ public class EmissionIndex : AbstractWeapon {
             _holdingDownFire = false;
             _currentLaser.enabled = false;
             _laserSoundPlaying = false;
-            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+            AudioManager.Instance.StopSound(GameConstants.Audio_EmissionIndexShot);
         }
     }
 
@@ -88,7 +88,7 @@ public class EmissionIndex : AbstractWeapon {
         }
         if (!_laserSoundPlaying) {
             _laserSoundPlaying = true;
-            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexShot);
+            AudioManager.Instance.PlaySound(GameConstants.Audio_EmissionIndexShot);
         }
     }
 
@@ -123,7 +123,7 @@ public class EmissionIndex : AbstractWeapon {
     private void CollideWithLifeform(RaycastHit2D collision) {
         var lifeform = collision.transform.GetComponent<BaseLifeform>();
         if (lifeform != null) {
-            AudioManager.Instance.playSound(GameConstants.Audio_EmissionIndexImpact);
+            AudioManager.Instance.PlaySound(GameConstants.Audio_EmissionIndexImpact);
 
             if (lifeform.Damage(_damagePiece)) {
                 GameStatsManager.Instance.AddBaddie(Player.PlayerNumber);
@@ -220,7 +220,7 @@ public class EmissionIndex : AbstractWeapon {
 
     private void OnDestroy() {
         try {
-            AudioManager.Instance.stopSound(GameConstants.Audio_EmissionIndexShot);
+            AudioManager.Instance.StopSound(GameConstants.Audio_EmissionIndexShot);
         }catch(Exception e) {
             print("Failed to stop laser sounds because the object was already destroyed.");
         }

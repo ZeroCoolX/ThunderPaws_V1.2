@@ -35,7 +35,7 @@ public class DialogueManager : MonoBehaviour {
             Animator.SetBool("IsOpen", false);
         }
         if (!string.IsNullOrEmpty(SceneToLoadAfter)) {
-            AudioManager.Instance.stopSound(GameConstants.Audio_BackstoryMusic);
+            AudioManager.Instance.StopSound(GameConstants.Audio_BackstoryMusic);
             SceneManager.LoadScene(GameConstants.Scene_LevelName_1);
         }
         foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {

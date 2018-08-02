@@ -3,10 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CheckpointController : MonoBehaviour {
-    /// <summary>
-    /// Necessary for collisions
-    /// </summary>
-    private SimpleCollider Collider;
     public Transform BaddiesInCheckpointRange;
     public Transform BaddieSpawn;
     public string BaddieCheckpointName;
@@ -15,25 +11,27 @@ public class CheckpointController : MonoBehaviour {
     public int CheckpointSpawnIndex;
     public Transform[] CheckpointSpawns;
 
-    /// <summary>
-    /// Used to handle where to spawn the player
-    /// </summary>
+    private SimpleCollider Collider;
     private SpawnPointManager _spawnManager;
 
-    // Use this for initialization
+    private const int PLAYER_LAYER = 8;
+    private const int COLLISION_RADIUS = 8;
+
     void Start() {
-        //Add delegate for collision detection
+        SetupCollisionDelegate();
+    }
+
+    private void SetupCollisionDelegate() {
         Collider = GetComponent<SimpleCollider>();
         if (Collider == null) {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 8, 8);
+        Collider.Initialize(1 << PLAYER_LAYER, COLLISION_RADIUS);
     }
 
     public void DeactivateBaddiesInCheckpoint() {
-        //GameMasterV2.Instance.SpawnPointIndex -= 1;
-        print("Destroying BADDIEDDSS" + " at Time [" + Time.time + "]");
+        print("Destroying Baddies" + " at Time [" + Time.time + "]");
         if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
             Destroy(BaddiesInCheckpointRange.gameObject);
         }
@@ -45,21 +43,14 @@ public class CheckpointController : MonoBehaviour {
 
     private void Spawn() {
         BaddieSpawn = CheckpointSpawns[CheckpointSpawnIndex];
-        print("CreatingBaddies for spawn : " + gameObject.name + " with spawn index : " + SpawnPointManager.Instance.GetSpawnIndex() + " at Time [" + Time.time+"]");
+        print("Creating Baddies for spawn : " + gameObject.name + " with spawn index : " + SpawnPointManager.Instance.GetSpawnIndex() + " at Time [" + Time.time+"]");
         BaddiesInCheckpointRange = Checkpoints[CheckpointIndex];
         var clone = (Instantiate(BaddiesInCheckpointRange, BaddieSpawn.position, BaddieSpawn.rotation) as Transform);
         BaddiesInCheckpointRange = clone;
     }
 
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 8);
-    //}
-
-
     private void Apply(Vector3 v, Collider2D c) {
-        // Increment spawn!
-        print("Hit Checkpoint!!!!!");
+        print("Checkpoint activated");
         SpawnPointManager.Instance.UpdateSpawnIndex();
         if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
             SpawnFreshBaddiesForCheckpoint();

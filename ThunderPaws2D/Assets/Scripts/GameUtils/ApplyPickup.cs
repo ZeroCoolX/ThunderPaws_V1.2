@@ -3,25 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ApplyPickup : MonoBehaviour {
-    /// <summary>
-    /// This is what get spawned when the pickup collides with the player
-    /// </summary>
     public Transform PickupReward;
 
-    /// <summary>
-    /// Necessary for collisions
-    /// </summary>
     private SimpleCollider Collider;
 
-	// Use this for initialization
+    private const int PLAYER_LAYER = 8;
+
 	void Start () {
-        //Add delegate for collision detection
+        // Add delegate for collision detection
         Collider = GetComponent<SimpleCollider>();
         if (Collider == null) {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 8);
+        Collider.Initialize(1 << PLAYER_LAYER);
     }
 	
 	private void Apply(Vector3 v, Collider2D c) {

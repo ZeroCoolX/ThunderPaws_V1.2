@@ -63,7 +63,7 @@ public class Shotgun : AbstractWeapon {
             _triggerLetGo = false;
             FireShot();
             ApplyRecoil();
-            AudioManager.playSound(GameConstants.Audio_Shotgun);
+            AudioManager.PlaySound(GameConstants.Audio_Shotgun);
         }
     }
 

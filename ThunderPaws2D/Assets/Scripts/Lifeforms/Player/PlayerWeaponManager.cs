@@ -110,7 +110,7 @@ public class PlayerWeaponManager : MonoBehaviour {
 
     private void PlayWeaponSoundEffect(string soundEffect) {
         try {
-            AudioManager.Instance.playSound(soundEffect);
+            AudioManager.Instance.PlaySound(soundEffect);
         } catch (System.Exception e) {
             print("Either the game master or the audiomanager doesn't exist yet");
         }

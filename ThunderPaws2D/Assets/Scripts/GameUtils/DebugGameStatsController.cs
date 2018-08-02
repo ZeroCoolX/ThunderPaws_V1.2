@@ -18,12 +18,10 @@ public class DebugGameStatsController : MonoBehaviour {
     public Text Player2TimeText;
 
 
-    // Use this for initialization
     void Start () {
 		
 	}
 	
-	// Update is called once per frame
 	void Update () {
         Player1CoinText.text = "Coins Collected: " + GameStatsManager.Instance.CoinsCollected(1);
         Player1BaddieText.text = "Baddies Killed: " + GameStatsManager.Instance.BaddiesKilled(1);

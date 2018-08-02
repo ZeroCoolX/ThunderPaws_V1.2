@@ -39,7 +39,7 @@ public class DifficultyManager : MonoBehaviour {
 
         // Load World
         try {
-            AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+            AudioManager.Instance.StopSound(GameConstants.Audio_MenuMusic);
         }catch(System.Exception e) {
             print("We couldn't stop the music because it wasn't playing. Move along");
         }

@@ -149,11 +149,11 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     private void SelectMusic() {
         try {
-            AudioManager.Instance.stopSound(GameConstants.Audio_MenuMusic);
+            AudioManager.Instance.StopSound(GameConstants.Audio_MenuMusic);
         }catch(System.Exception e) {
             print("There was no menu music to stop");
         }
-        AudioManager.Instance.playSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
     }
 
     /// <summary>

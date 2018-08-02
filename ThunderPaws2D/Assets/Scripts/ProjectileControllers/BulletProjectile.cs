@@ -23,7 +23,7 @@ public class BulletProjectile : AbstractProjectile {
         print("Hit object: " + hitObject.gameObject.tag);
         if (hitObject.gameObject.tag == GameConstants.Tag_Baddie) {
             var rand = UnityEngine.Random.Range(0, 9);
-            AudioManager.Instance.playSound(rand % 2 == 0 ? "BulletImpact1" : "BulletImpact2");
+            AudioManager.Instance.PlaySound(rand % 2 == 0 ? "BulletImpact1" : "BulletImpact2");
         }
         // If we hit a lifeform damage it - otherwise move on
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();

@@ -6,9 +6,7 @@ public class DeathTimer : MonoBehaviour {
 
     public float TimeToLive = 0f;
 
-    // Use this for initialization
     void Start() {
-        // test to see 
         Invoke("DestroyThis", TimeToLive);
     }
 

@@ -314,7 +314,7 @@ public class GameMaster : MonoBehaviour {
         }
 
         if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName(GameConstants.Scene_LevelName_Menu) || SceneManager.GetActiveScene() == SceneManager.GetSceneByName("PreAlphaDemoTutorial1")) {
-            AudioManager.playSound(GameConstants.Audio_MenuMusic);
+            AudioManager.PlaySound(GameConstants.Audio_MenuMusic);
         }
 
         CamShake = transform.GetComponent<CameraShake>();

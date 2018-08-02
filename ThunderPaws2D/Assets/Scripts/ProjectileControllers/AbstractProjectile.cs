@@ -92,7 +92,7 @@ public abstract class AbstractProjectile : MonoBehaviour {
             // AOE damage should not be 100% of the initial damage so just give off 75% of it
             aoe.Damage = Damage * 0.75f;
         }
-        AudioManager.Instance.playSound(string.IsNullOrEmpty(ImpactSound) ? "SmallExplosion" : ImpactSound);
+        AudioManager.Instance.PlaySound(string.IsNullOrEmpty(ImpactSound) ? "SmallExplosion" : ImpactSound);
     }
 
     protected abstract void Move();

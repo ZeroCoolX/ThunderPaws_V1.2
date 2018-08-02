@@ -28,8 +28,8 @@ public class PauseScreenUI : MonoBehaviour {
     }
 
     public void Menu() {
-        AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
-        AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
+        AudioManager.Instance.StopSound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_MenuMusic);
         SceneManager.LoadScene("AlphaDemoMainMenu");
         Time.timeScale = 1f;
     }

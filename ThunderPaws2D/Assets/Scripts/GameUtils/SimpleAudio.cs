@@ -12,7 +12,7 @@ public class SimpleAudio : MonoBehaviour {
     private void Update() {
         if (_queryAudio) {
             try {
-                AudioManager.Instance.playSound(PlayOnStart);
+                AudioManager.Instance.PlaySound(PlayOnStart);
                 _queryAudio = false;
             } catch (System.Exception e) {
                 print("SimpleAudio was unable to play the audio clip : " + PlayOnStart + "\n Error message: " + e.Message);

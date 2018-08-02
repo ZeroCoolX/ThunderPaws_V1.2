@@ -289,7 +289,7 @@ public class Player : PlayerLifeform {
         var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
         if(melee && !_meleeActive) {
             _meleeActive = true;
-            AudioManager.Instance.playSound(GameConstants.Audio_Melee);
+            AudioManager.Instance.PlaySound(GameConstants.Audio_Melee);
             // Wait for half the animation to play so it looks like the object takes damage as the fist hits them instead of instantly on button press
             Invoke("OnMeleeInputDown", 0.125f);
             // After 0.25 seconds deactivate melee

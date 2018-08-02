@@ -47,8 +47,8 @@ public class GameOverUI : MonoBehaviour {
 
     public void Menu() {
         try {
-            AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
-            AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
+            AudioManager.Instance.StopSound(GameConstants.Audio_MainMusic);
+            AudioManager.Instance.PlaySound(GameConstants.Audio_MenuMusic);
         } catch (System.Exception e) {
             print("AudoManager failed attempting to switch music. Just continue on");
         }

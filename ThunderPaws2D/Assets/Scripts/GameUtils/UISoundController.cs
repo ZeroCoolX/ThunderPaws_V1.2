@@ -17,7 +17,7 @@ public class UISoundController : MonoBehaviour {
     private void Update() {
         if(JoystickManagerController.Instance.ConnectedControllers() == 0) {
             if (Input.GetButtonDown("Universal_Vertical") || Input.GetButtonDown("Universal_Horizontal")) {
-                AudioManager.Instance.playSound("MenuButton_Navigate");
+                AudioManager.Instance.PlaySound("MenuButton_Navigate");
             }
         }else {
             if (!_joystickReset) {
@@ -28,13 +28,13 @@ public class UISoundController : MonoBehaviour {
                 if (_joystickReset) {
                     _joystickReset = false;
                     print("playing sound");
-                    AudioManager.Instance.playSound("MenuButton_Navigate");
+                    AudioManager.Instance.PlaySound("MenuButton_Navigate");
                 }
             }
         }
     }
 
     void PlaySound() {
-        AudioManager.Instance.playSound(SoundName);
+        AudioManager.Instance.PlaySound(SoundName);
     }
 }

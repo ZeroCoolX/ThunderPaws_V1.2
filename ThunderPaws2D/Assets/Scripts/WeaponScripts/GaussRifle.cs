@@ -72,7 +72,7 @@ public class GaussRifle : ProjectileWeapon {
         if (Time.time > _timeTillUltAllowed) {
             if (Input.GetKeyDown(InputManager.Instance.Fire) || Input.GetAxis(Player.JoystickId + GameConstants.Input_RTrigger) > WeaponConfig.TriggerFireThreshold) {
                 BulletPrefab = BulletPrefabs[(int)BulletType.ULT];
-                AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
+                AudioManager.Instance.PlaySound(GameConstants.Audio_GaussShotCharged);
                 FireShot();
                 _timeTillUltAllowed = Time.time + _ultShotDelay;
             }
@@ -129,7 +129,7 @@ public class GaussRifle : ProjectileWeapon {
         WeaponAnimator.SetBool("HoldCharge", false);
         _chargeShotFired = true;
         BulletPrefab = BulletPrefabs[(int)BulletType.CHARGED];
-        AudioManager.Instance.playSound(GameConstants.Audio_GaussShotCharged);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_GaussShotCharged);
     }
 
     private void PrepareSingleShot() {
@@ -137,7 +137,7 @@ public class GaussRifle : ProjectileWeapon {
         CancelInvoke("InvokeHolding");
         _chargeShotFired = false;
         BulletPrefab = BulletPrefabs[(int)BulletType.DEFAULT];
-        AudioManager.Instance.playSound(GameConstants.Audio_GaussShot);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_GaussShot);
     }
 
     private void FireUsingController() {

@@ -20,7 +20,7 @@ public class FuzzBuster : ProjectileWeapon {
     protected override void ApplyRecoil() {
         WeaponAnimator.SetBool("ApplyRecoil", true);
         StartCoroutine(ResetWeaponPosition());
-        AudioManager.playSound(GameConstants.Audio_FuzzBuster);
+        AudioManager.PlaySound(GameConstants.Audio_FuzzBuster);
     }
 
     /// <summary>
