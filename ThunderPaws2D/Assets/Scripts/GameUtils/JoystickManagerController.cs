@@ -35,7 +35,6 @@ public class JoystickManagerController : MonoBehaviour{
                 if (singlePlayer) {
                     return;
                 }
-                print("player 2 exists");
                 player = 2;
             }
             print("Mapping joystick " + "J" + (i + 1) + "- to Player " + player);

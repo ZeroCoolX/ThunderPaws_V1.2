@@ -51,7 +51,7 @@ public class CheckpointController : MonoBehaviour {
 
     private void Apply(Vector3 v, Collider2D c) {
         print("Checkpoint activated");
-        SpawnPointManager.Instance.UpdateSpawnIndex();
+        SpawnPointManager.Instance.IncrementSpawnIndex();
         if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
             SpawnFreshBaddiesForCheckpoint();
         }

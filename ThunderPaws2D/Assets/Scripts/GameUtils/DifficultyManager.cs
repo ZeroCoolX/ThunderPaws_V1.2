@@ -5,21 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class DifficultyManager : MonoBehaviour {
     public static DifficultyManager Instance;
-
-    /// <summary>
-    /// Map that contains the different levels
-    /// </summary>
-    private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
-    /// <summary>
-    /// This is really just fluff.
-    /// Its the physical objects (Bman heads) that the user interacts with in order to
-    /// be able to pick a difficulty. This can/will be changed later but for its fun
-    /// </summary>
-    //public Transform[] DifficultyObjects = new Transform[3];
-    /// <summary>
-    /// Set by the player in the menu. Default is easy
-    /// </summary>
     public string Difficulty = GameConstants.Difficulty_Easy;
+
+    private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
+
+
 
     /// <summary>
     /// Store the difficulty by way of  Health and Lives in the 
@@ -37,7 +27,6 @@ public class DifficultyManager : MonoBehaviour {
         print("Setting heath to " + values[1]);
         LivesManager.Health = values[1];
 
-        // Load World
         try {
             AudioManager.Instance.StopSound(GameConstants.Audio_MenuMusic);
         }catch(System.Exception e) {
@@ -55,7 +44,7 @@ public class DifficultyManager : MonoBehaviour {
             Instance = this;
         }
 
-        // Difficulty, [lives, max health]
+        // Pre-store difficulties
         _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
         _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
         _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });

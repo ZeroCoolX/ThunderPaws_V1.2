@@ -7,12 +7,18 @@ using UnityEngine;
 /// <summary>
 /// Holds all the stats per level.
 /// This object will only persist inside this level. 
-/// Going back to the outside menu willdetroy this object similar to how the GameMaster is handled
+/// Going back to the outside menu will destroy this object similar to how the GameMaster is handled
 /// </summary>
 public class GameStatsManager : MonoBehaviour {
-
     public static GameStatsManager Instance;
 
+    private struct GameStats {
+        public int CoinsCollected;
+        public int BaddiesKilled;
+        public int UltimatesUsed;
+        public int TimesDied;
+        public Stopwatch LevelTimer;
+    }
     private Dictionary<int, GameStats>_playerGameStatsMap = new Dictionary<int, GameStats>();
 
     void Awake() {
@@ -26,7 +32,6 @@ public class GameStatsManager : MonoBehaviour {
     }
 
     public void AddPlayerToMap(int player) {
-        print("added player " + player + " to stats map");
         _playerGameStatsMap.Add(player, new GameStats());
     }
 
@@ -127,14 +132,6 @@ public class GameStatsManager : MonoBehaviour {
             return string.Format("{0:00}:{1:00}", stats.LevelTimer.Elapsed.Minutes, stats.LevelTimer.Elapsed.Seconds);
         }
         return "...";
-    }
-
-    private struct GameStats {
-        public int CoinsCollected;
-        public int BaddiesKilled;
-        public int UltimatesUsed;
-        public int TimesDied;
-        public Stopwatch LevelTimer;
     }
 
 }

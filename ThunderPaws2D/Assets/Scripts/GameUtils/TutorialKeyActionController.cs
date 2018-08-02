@@ -5,18 +5,15 @@ using UnityEngine;
 public class TutorialKeyActionController : MonoBehaviour {
 
     public string InputListener;
-    private int successIndicator = 0;
-
-    private SpriteRenderer _spriteRenderer;
-
-    private bool _complete = false;
-
     public Sprite[] Sprites = new Sprite[2];
-
     public TutorialControllerBase Controller;
 
+    private int successIndicator = 0;
+    private SpriteRenderer _spriteRenderer;
+    private bool _complete = false;
 
-    // Use this for initialization
+
+
     void Start () {
         _spriteRenderer = transform.GetComponent<SpriteRenderer>();
         if (_spriteRenderer == null) {

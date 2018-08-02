@@ -4,11 +4,28 @@ using System.Linq;
 using UnityEngine;
 
 public class HordeController : MonoBehaviour {
+    //TODO: After the art arrives this will need to be more generic
+    /// <summary>
+    /// Reference to the left wall we activate to lock the player in duing a horde session
+    /// </summary>
+    public Transform LeftBarrier;
+    //TODO: After the art arrives this will need to be more generic
+    /// <summary>
+    /// Reference to the right wall we activate to lock the player in duing a horde session
+    /// </summary>
+    public Transform RightBarrier;
+    private SimpleCollider Collider;
+    public Transform Camera;
+    public float OptionalYOffset;    
+    /// <summary>
+    /// Total baddies left to kill before player can move on
+    /// </summary>
+    public int BaddiesLeftToKill = 25;
+
     /// <summary>
     /// Indicates if we should start spawning enemies or not
     /// </summary>
     private bool _spawningAllowed = false;
-    
     /// <summary>
     /// How long we should wait in between spawning more baddies.
     /// We don't want to immedately spawn replacement baddies everytime one dies. (once a frame)
@@ -20,28 +37,6 @@ public class HordeController : MonoBehaviour {
     /// </summary>
     private float _spawnWaitTime;
 
-    /// <summary>
-    /// Reference to the left wall we activate to lock the player in duing a horde session
-    /// </summary>
-    public Transform LeftBarrier;
-    /// <summary>
-    /// Reference to the right wall we activate to lock the player in duing a horde session
-    /// </summary>
-    public Transform RightBarrier;
-    
-    /// <summary>
-    /// Necessary for collisions
-    /// </summary>
-    private SimpleCollider Collider;
-    /// <summary>
-    /// Reference to the main camera
-    /// </summary>
-    public Transform Camera;
-    /// <summary>
-    /// Needed for the last horde
-    /// </summary>
-    public float OptionalYOffset;
-
     private float GL1SpawnRate;
     private float FL1SpawnRate;
     private float FL2SpawnRate;
@@ -49,11 +44,6 @@ public class HordeController : MonoBehaviour {
 
     // Reference to all the currently active baddies so we can stop them all, kill them all
     private Dictionary<string, Transform> ActiveHordeBaddieCache = new Dictionary<string, Transform>();
-    
-    /// <summary>
-    /// Total baddies left to kill before player can move on
-    /// </summary>
-    public int BaddiesLeftToKill = 25;
 
     private int _baddieKillNumBackup;
 
@@ -300,7 +290,7 @@ public class HordeController : MonoBehaviour {
     private void SpawnFlyingBaddies(){
         var rand = (int)Random.Range(0, 10);
         if (Time.time > FL1SpawnRate && _activeFL1Count < MaxFL1Count){
-            // WAit between 1 and 4 seconds to spawn new badddies
+            // Wait between 1 and 4 seconds to spawn new badddies
             FL1SpawnRate = Time.time + Random.Range(1, 5);
             InstantiateBaddies("FL1-", (MaxFL1Count - _activeFL1Count), MaxFL1Count, FL1BaddiePrefab, FlyingSpawns[rand <= 3 ? 0 : 1].position, false);
             _activeFL1Count = MaxFL1Count;
@@ -323,10 +313,6 @@ public class HordeController : MonoBehaviour {
             InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 0 : 1].position, false, (rand % 2 != 0) ? -1 : 1);
             _activeGL1Count = MaxGL1Count;
         }
-        //if (_activeGL2Count < MaxGL2Count) {
-        //    InstantiateBaddies("GL2-", (MaxGL2Count - _activeGL2Count), MaxGL2Count, GL2BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 1 : 0].position, false);
-        //    _activeGL2Count = MaxGL2Count;
-        //}
     }
 
 
@@ -339,8 +325,6 @@ public class HordeController : MonoBehaviour {
     /// The Player has walked into the horde zone.
     /// Active the baddie spawners!
     /// </summary>
-    /// <param name="v"></param>
-    /// <param name="c"></param>
     private void Apply(Vector3 v, Collider2D c) {
         // Here we should also close the path on either side of the horde section locking the player in
         GameMasterV2.Instance.LastSeenInHorde = true;

@@ -3,29 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// PRETTY SURE THIS IS ALSO DEPRECATED
+/// </summary>
 public class MenuController : MonoBehaviour {
 
-    /// <summary>
-    /// Necessary for collisions
-    /// </summary>
     private SimpleCollider Collider;
 
-    // Use this for initialization
+    private const int PLAYER_LAYER = 8;
+
     void Start() {
-        //Add delegate for collision detection
+        // Add delegate for collision detection
         Collider = GetComponent<SimpleCollider>();
         if (Collider == null) {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 8, 3);
+        Collider.Initialize(1 << PLAYER_LAYER, 3);
     }
-
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 3);
-    //}
-
 
     private void Apply(Vector3 v, Collider2D c) {
         SceneManager.LoadScene(GameConstants.Scene_LevelName_1);

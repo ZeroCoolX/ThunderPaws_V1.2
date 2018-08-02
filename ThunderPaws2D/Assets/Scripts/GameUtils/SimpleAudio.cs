@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// THIS CLASS IS PROBABLY DEPRECATED AND UNUSED
+/// </summary>
 public class SimpleAudio : MonoBehaviour {
 
     [SerializeField]

@@ -18,16 +18,16 @@ public class LifetimeController : MonoBehaviour {
     /// How long we should wait when it becomes invisible to kill it
     /// </summary>
     public float AllowLifetimeWhileInvisible = 10f;
-    /// <summary>
-    /// Indicates how far this can fall before it diesaaa
-    /// </summary>
+
     private float FallDeathHeight = -19;
+
+
+
     /// <summary>
     /// Once the bullet leaves the Cameras viewport destroy it
     /// </summary>
     void OnBecameInvisible() {
         _seenRecently = false;
-        //print(gameObject.name + " has become invisible. Waiting " + AllowLifetimeWhileInvisible + " seconds to kill him");
         Invoke("Kill", (KillImmediatelyOnInvisible ? 0f : AllowLifetimeWhileInvisible));
     }
 
@@ -52,7 +52,6 @@ public class LifetimeController : MonoBehaviour {
     }
 
     protected void FallCheck() {
-        // This is a super dumb hack to allow baddies to spawn in the last room because im so worn out I want to finish this
         if (transform.position.y <= FallDeathHeight && transform.position.y > -40f) {
             // Ensure nothing can survive
             var damageable = gameObject.GetComponent<DamageableLifeform>();

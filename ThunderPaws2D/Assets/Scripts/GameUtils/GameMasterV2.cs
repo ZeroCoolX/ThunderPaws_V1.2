@@ -332,13 +332,6 @@ public class GameMasterV2 : MonoBehaviour {
         }
     }
 
-    // TODO: This needs to be wildly refactored because it has logic speicifc to literally the demo
-    /// <summary>
-    /// Respawn player
-    /// </summary>
-    /// <returns></returns>
-    // fullRespawn = true indicates there are no more players on the field
-    // fullRespawn = false indicates we're in co-op mode and only one of the players has died
     private IEnumerator RespawnPlayer(int playerToRespawn, bool fullRespawn) {
         yield return new WaitForSeconds(SpawnDelay);
         if (fullRespawn) {

@@ -4,14 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DifficultyController : MonoBehaviour {
-    /// <summary>
-    /// Necessary for collisions
-    /// </summary>
+
     private SimpleCollider Collider;
 
-    // Use this for initialization
     void Start() {
-        //Add delegate for collision detection
+        // Add delegate for collision detection
         Collider = GetComponent<SimpleCollider>();
         if (Collider == null) {
             throw new MissingComponentException("No collider for this object");
@@ -27,7 +24,6 @@ public class DifficultyController : MonoBehaviour {
 
 
     private void Apply(Vector3 v, Collider2D c) {
-        print("You are choosing Difficulty: " + gameObject.name);
         DifficultyManager.Instance.Difficulty = gameObject.name.ToLower();
     }
 }
