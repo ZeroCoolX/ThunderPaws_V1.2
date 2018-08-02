@@ -13,7 +13,6 @@ public class InputSelectScreenManager : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     void Update () {
 		if(_keyboardButton != null) {
             if(JoystickManagerController.Instance.ConnectedControllers() != 0) {

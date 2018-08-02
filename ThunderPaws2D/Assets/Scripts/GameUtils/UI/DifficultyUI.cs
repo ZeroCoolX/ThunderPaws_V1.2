@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// MARKED FOR DEPRECATION / REMOVAL
+/// </summary>
 public class DifficultyUI : MonoBehaviour {
-
+    // Im fairly cetain this is deprecated
     public void Update() {
-       // text.text = "Difficulty: " + DifficultyManager.Instance.Difficulty + "\n" + (diff.ToLower() == "easy" ? "10 lives (500 health)" : (diff.ToLower() == "normal" ? "5 lives (250 health)" : "3 lives (100 health)"));
     }
 
 	public void SelectDifficulty(string diff) {

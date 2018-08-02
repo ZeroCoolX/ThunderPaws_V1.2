@@ -4,16 +4,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class InputBindingUI : MonoBehaviour {
-    private Event _keyEvent;
-
     public Text ButtonText;
 
+    private Event _userPressedKey;
     private KeyCode _newKey;
-
     private bool _shiftTrigger = false;
-
-
-  private bool _waitingForKey;
+    private bool _waitingForKey;
 
     void Start() {
         _waitingForKey = false;
@@ -43,35 +39,35 @@ public class InputBindingUI : MonoBehaviour {
     }
 
     void OnGUI() {
-        // _keyEvent dictates what key our user is pressing by using Event.current to detect the current event
-        _keyEvent = Event.current;
-        if (_keyEvent.shift) {// we check with Event if shift is down
-            if (Input.GetKey(KeyCode.LeftShift)) {   // we check with input witch shift is down
-                // Execute if a button gets pressed
-                if (_waitingForKey) {
-                    _newKey = KeyCode.LeftShift; // Assigns _newKey to the key the user presses
-                    _waitingForKey = false;
-                    _shiftTrigger = true;
-                }
-            } else if (Input.GetKey(KeyCode.RightShift)) {// we check with input witch shift is down
-                // Execute if a button gets pressed
-                if (_waitingForKey) {
-                    _newKey = KeyCode.RightShift; // Assigns _newKey to the key the user presses
-                    _waitingForKey = false;
-                    _shiftTrigger = true;
-                }
-            }
-        }else {
-            // Execute if a button gets pressed
-            if (_keyEvent.isKey && _waitingForKey) {
-                _newKey = _keyEvent.keyCode; // Assigns _newKey to the key the user presses
+        _userPressedKey = Event.current;
+        if (_userPressedKey.shift) {
+            HandleShiftSpecialCase();
+        } else {
+            if (_userPressedKey.isKey && _waitingForKey) {
+                _newKey = _userPressedKey.keyCode;
                 _waitingForKey = false;
             }
         }
-
-
     }
 
+    /// <summary>
+    /// The Shift keys are special because they don't actually have a value for keycode on the keyEvent.
+    /// </summary>
+    private void HandleShiftSpecialCase() {
+        if (Input.GetKey(KeyCode.LeftShift)) {
+            if (_waitingForKey) {
+                _newKey = KeyCode.LeftShift;
+                _waitingForKey = false;
+                _shiftTrigger = true;
+            }
+        } else if (Input.GetKey(KeyCode.RightShift)) {
+            if (_waitingForKey) {
+                _newKey = KeyCode.RightShift;
+                _waitingForKey = false;
+                _shiftTrigger = true;
+            }
+        }
+    }
 
     public void StartAssignment(string keyName) {
         if (!_waitingForKey) {
@@ -83,56 +79,49 @@ public class InputBindingUI : MonoBehaviour {
         ButtonText = text;
     }
 
-
     public IEnumerator WaitForKeys() {
-        while (!_keyEvent.isKey && !_shiftTrigger) {
+        while (!_userPressedKey.isKey && !_shiftTrigger) {
             yield return null;
         }
     }
 
-
     public IEnumerator AssignKey(string keyName) {
         _waitingForKey = true;
-        yield return WaitForKeys(); // Executes endlessly until the user presses a key
+        yield return WaitForKeys();
         _shiftTrigger = false;
         switch (keyName) {
             case "Melee":
                 InputManager.Instance.Melee = _newKey;
                 ButtonText.text = InputManager.Instance.Melee.ToString();
-                PlayerPrefs.SetString("Melee", InputManager.Instance.Melee.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("Melee", InputManager.Instance.Melee.ToString());
                 break;
             case "Fire":
                 InputManager.Instance.Fire = _newKey;
                 ButtonText.text = InputManager.Instance.Fire.ToString();
-                PlayerPrefs.SetString("Fire", InputManager.Instance.Fire.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("Fire", InputManager.Instance.Fire.ToString());
                 break;
             case "Roll":
                 InputManager.Instance.Roll = _newKey;
                 ButtonText.text = InputManager.Instance.Roll.ToString();
-                PlayerPrefs.SetString("Roll", InputManager.Instance.Roll.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("Roll", InputManager.Instance.Roll.ToString());
                 break;
             case "LockMovement":
                 InputManager.Instance.LockMovement = _newKey;
                 ButtonText.text = InputManager.Instance.LockMovement.ToString();
-                PlayerPrefs.SetString("LockMovement", InputManager.Instance.LockMovement.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("LockMovement", InputManager.Instance.LockMovement.ToString());
                 break;
             case "ChangeWeapon":
                 InputManager.Instance.ChangeWeapon = _newKey;
                 ButtonText.text = InputManager.Instance.ChangeWeapon.ToString();
-                PlayerPrefs.SetString("ChangeWeapon", InputManager.Instance.ChangeWeapon.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("ChangeWeapon", InputManager.Instance.ChangeWeapon.ToString());
                 break;
             case "Ultimate":
                 InputManager.Instance.Ultimate = _newKey;
                 ButtonText.text = InputManager.Instance.Ultimate.ToString();
-                PlayerPrefs.SetString("Ultimate", InputManager.Instance.Ultimate.ToString()); // Save the new key to player prefs
+                PlayerPrefs.SetString("Ultimate", InputManager.Instance.Ultimate.ToString());
                 break;
         }
         EventSystem.current.SetSelectedGameObject(null);
         yield return null;
-
     }
-
-
-
-
 }

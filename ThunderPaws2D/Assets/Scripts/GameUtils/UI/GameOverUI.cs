@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class GameOverUI : MonoBehaviour {
 
-    private GameObject _player;
     public Transform Player1CoinText;
     public Transform Player1BaddieText;
     public Transform Player1UltsText;
@@ -19,6 +18,8 @@ public class GameOverUI : MonoBehaviour {
     public Transform Player2UltsText;
     public Transform Player2DiedText;
     public Transform Player2TimeText;
+
+    private GameObject _player;
 
     private void OnEnable() {
         Player1CoinText.GetComponent<TextMeshProUGUI>().text = ""+GameStatsManager.Instance.CoinsCollected(1);
@@ -49,7 +50,7 @@ public class GameOverUI : MonoBehaviour {
             AudioManager.Instance.stopSound(GameConstants.Audio_MainMusic);
             AudioManager.Instance.playSound(GameConstants.Audio_MenuMusic);
         } catch (System.Exception e) {
-            print("Don't care");
+            print("AudoManager failed attempting to switch music. Just continue on");
         }
         SceneManager.LoadScene(GameConstants.Scene_LevelName_Menu);
     }

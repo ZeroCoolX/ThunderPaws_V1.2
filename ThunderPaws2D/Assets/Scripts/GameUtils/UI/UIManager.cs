@@ -16,7 +16,6 @@ public class UIManager : MonoBehaviour {
         }
     }
 
-    // Use this for initialization
     void Start () {
         var ui = GameObject.FindGameObjectWithTag("UIOverlay");
 

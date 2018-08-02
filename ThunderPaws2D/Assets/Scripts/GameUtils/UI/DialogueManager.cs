@@ -27,54 +27,6 @@ public class DialogueManager : MonoBehaviour {
         _sentences = new Queue<string>();
     }
 
-    // Use this for initialization
-    void Start () {
-	}
-
-    public void StartDialogue(Dialogue dialogue) {
-        print("Starting dialogue!");
-        // Freeze everything in the scene
-        if(Animator != null) {
-            Animator.SetBool("IsOpen", true);
-        }
-
-        NameText.text = dialogue.Name;
-
-        _sentences.Clear();
-        foreach(var sentence in dialogue.Sentences) {
-            _sentences.Enqueue(sentence);
-        }
-
-        DisplayNextSentence();
-        Invoke("StopTime", 1f);
-    }
-
-    private void StopTime() {
-        foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
-            player.GetComponent<PlayerInputController>().enabled = false;
-        }
-        Time.timeScale = 0f;
-    }
-
-    public void DisplayNextSentence() {
-        if(_sentences.Count == 0) {
-            EndDialogue();
-            return;
-        }
-        var curSentence = _sentences.Dequeue();
-        StopAllCoroutines();
-        StartCoroutine(TypeSentence(curSentence));
-
-    }
-
-    IEnumerator TypeSentence(string sentence) {
-        DialogueText.text = "";
-        foreach(var letter in sentence.ToCharArray()) {
-            DialogueText.text += letter;
-            yield return null;
-        }
-    }
-
     public void EndDialogue() {
         DialogueText.text = "...";
         // Freeze everything in the scene
@@ -90,8 +42,50 @@ public class DialogueManager : MonoBehaviour {
             player.GetComponent<PlayerInputController>().enabled = true;
         }
         print("End of conversation");
-        if(DialogUi != null) {
+        if (DialogUi != null) {
             DialogUi.gameObject.SetActive(false);
         }
+    }
+
+    public void StartDialogue(Dialogue dialogue) {
+        if(Animator != null) {
+            Animator.SetBool("IsOpen", true);
+        }
+
+        NameText.text = dialogue.Name;
+
+        _sentences.Clear();
+        foreach(var sentence in dialogue.Sentences) {
+            _sentences.Enqueue(sentence);
+        }
+
+        DisplayNextSentence();
+        Invoke("StopTime", 1f);
+    }
+
+    public void DisplayNextSentence() {
+        if (_sentences.Count == 0) {
+            EndDialogue();
+            return;
+        }
+        var curSentence = _sentences.Dequeue();
+        StopAllCoroutines();
+        StartCoroutine(TypeSentence(curSentence));
+
+    }
+
+    private IEnumerator TypeSentence(string sentence) {
+        DialogueText.text = "";
+        foreach (var letter in sentence.ToCharArray()) {
+            DialogueText.text += letter;
+            yield return null;
+        }
+    }
+
+    private void StopTime() {
+        foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
+            player.GetComponent<PlayerInputController>().enabled = false;
+        }
+        Time.timeScale = 0f;
     }
 }

@@ -12,7 +12,7 @@ public class PlayerSelectUI : MonoBehaviour {
             JoystickManagerController.Instance.ControllerMap.Add(1, "J1-");
         }else {
             // If the user has > 0 controllers connected only get the first one. 
-            // Its on them to figure out which controller I secretly assigned xD
+            // Its on them to figure out which controller I secretly assigned as player 1 xD
             JoystickManagerController.Instance.CollectControllers(true);
         }
         SceneManager.LoadScene("PreAlphaDemoMainMenu");

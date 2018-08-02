@@ -15,6 +15,18 @@ public class ControllerAssignmentUI : MonoBehaviour {
 
     private Transform DifficultyUI;
 
+
+
+    public void AssignController(int player) {
+        if (player == 1) {
+            _player1Icon.color = Color.white;
+            player1Assigned = true;
+        } else {
+            _player2Icon.color = Color.white;
+            player2Assigned = true;
+        }
+    }
+
     private void Awake() {
         _player1Icon = transform.Find("Player1Icon").GetComponent<Image>();
         _player2Icon = transform.Find("Player2Icon").GetComponent<Image>();
@@ -39,24 +51,17 @@ public class ControllerAssignmentUI : MonoBehaviour {
             }
         }
 
-            string prefix = "";
-            // Check if player 1 has pressed the button yet
-            if (JoystickManagerController.Instance.ControllerMap.TryGetValue(1, out prefix)) {
-                //print("Player 1 looking for joystick : " + prefix);
-                if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
-                   // print("player 1 pressed a!!!!");
-                    AssignController(1);
-                }
-            }
+        CheckForButtonPress(1);
+        CheckForButtonPress(2);
+    }
 
-            // Check if player 2 has pressed the button yet
-            if (JoystickManagerController.Instance.ControllerMap.TryGetValue(2, out prefix)) {
-                //print("Player 2 looking for joystick : " + prefix);
-                if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
-                    //print("player 2 pressed a!!!!");
-                    AssignController(2);
-                }
+    private void CheckForButtonPress(int player) {
+        string prefix = "";
+        if (JoystickManagerController.Instance.ControllerMap.TryGetValue(player, out prefix)) {
+            if (Input.GetButtonUp(prefix + GameConstants.Input_Jump)) {
+                AssignController(player);
             }
+        }
     }
 
     private IEnumerator MoveToDifficulty() {
@@ -64,15 +69,4 @@ public class ControllerAssignmentUI : MonoBehaviour {
         gameObject.SetActive(false);
         DifficultyUI.gameObject.SetActive(true);
     }
-
-    public void AssignController(int player) {
-        if(player == 1) {
-            _player1Icon.color = Color.white;
-            player1Assigned = true;
-        } else {
-            _player2Icon.color = Color.white;
-            player2Assigned = true;
-        }
-    }
-
 }
