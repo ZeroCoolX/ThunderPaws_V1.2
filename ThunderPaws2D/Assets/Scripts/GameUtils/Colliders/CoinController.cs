@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CoinController : MonoBehaviour {
+    public float MaxLifetime = 10f;
 
     /// <summary>
     /// Necessary for collisions to the player. Allows player to pick this up
@@ -12,61 +13,36 @@ public class CoinController : MonoBehaviour {
     /// Necessary for ground and environment collisions
     /// </summary>
     private CollisionController2D _controller;
-    /// <summary>
-    /// Animator reference to play shrinking animation
-    /// </summary>
-    private Animator _shrinkAnimator;
-    /// <summary>
-    /// How fast we're moving
-    /// </summary>
     private Vector3 _velocity;
-    /// <summary>
-    /// Gravity of coin
-    /// </summary>
     private float _coinGravity = -25.08f;
-    /// <summary>
-    /// Maximum movement speed
-    /// </summary>
     private float _maxMoveSpeed = 6f;
-    /// <summary>
-    /// Max time in seconds this object can stay alive
-    /// </summary>
-    public float MaxLifetime = 10f;
     /// <summary>
     /// Indicates we're sitting on the ground
     /// </summary>
     private bool _landed = false;
     /// <summary>
-    /// Indicates we've turned off physics and collision and instead
+    /// Indicates we've turned off physics and collisions
     /// </summary>
     private bool _collected = false;
     /// <summary>
     /// Either negative or positive offset for the collection point based off which direction the player is moving
     /// </summary>
     private int _coinCollectionOffset = 1;
-    /// <summary>
-    /// Min bounce values
-    /// </summary>
+    private Animator _shrinkAnimator;
+
     private Vector2 _bounceMin = new Vector2(0.25f, 7f);
-    /// <summary>
-    /// Max bounce values
-    /// </summary>
     private Vector2 _bounceMax = new Vector2(0.6f, 15f);
-    /// <summary>
-    /// Generated randomly for a cool effect
-    /// </summary>
     private Vector2 _totalBounceEffect;
 
-    /// <summary>
-    /// Optional method to pass in a start velocity for the coin
-    /// </summary>
+    private const int PLAYER_LAYER = 8;
+
+
     public void Initialize(Vector2 initalVelocity) {
         _velocity = initalVelocity;
     }
 
-    // Use this for initialization
     void Start() {
-        SetupCoinCollider();
+        AddCollisionDelegate();
         _controller = GetComponent<CollisionController2D>();
         _shrinkAnimator = GetComponent<Animator>();
         //Just a failsafe so the animator is disabled by default
@@ -76,19 +52,17 @@ public class CoinController : MonoBehaviour {
         //Generate how much this particular coin will move around when it contacts surfaces
         GenerateBounceEffectValues();
 
-        //Begin lifetime countdown
+        // Begin lifetime countdown
         Invoke("MaxLifeExceededDestroy", MaxLifetime);
     }
 
-    private void SetupCoinCollider() {
-        //Add delegate for collision detection
+    private void AddCollisionDelegate() {
         CoinCollider = transform.Find(GameConstants.ObjectName_Pickup).GetComponent<SimpleCollider>();
         if (CoinCollider == null) {
             throw new MissingComponentException("No collider for the coin object");
         }
         CoinCollider.InvokeCollision += Apply;
-        //PLAYER
-        CoinCollider.Initialize(1 << 8);
+        CoinCollider.Initialize(1 << PLAYER_LAYER);
     }
 
     void Update() {
@@ -99,7 +73,7 @@ public class CoinController : MonoBehaviour {
             FlyToUltimateMeter();
             return;
         }
-        //Do not accumulate gravity if colliding with anythig vertical
+
         if (_controller.Collisions.FromBelow || _controller.Collisions.FromAbove) {
             CalculateBounce();
         }
@@ -107,6 +81,10 @@ public class CoinController : MonoBehaviour {
         _controller.Move(_velocity * Time.deltaTime, Vector2.zero);
     }
 
+    /// <summary>
+    /// Everytime the coin collides with the ground we send it vertically in the opposite direction.
+    /// Each time it hits the ground we half the speed of the last time so it eventually stops, thus creating a bounce effect
+    /// </summary>
     private void CalculateBounce() {
         if (_totalBounceEffect.y > 0) {
             _totalBounceEffect.y = _totalBounceEffect.y / 2;
@@ -136,7 +114,7 @@ public class CoinController : MonoBehaviour {
         var player = c.transform.GetComponent<Player>();
         player.PickupCoin();
         AudioManager.Instance.playSound("Coin");
-        //Must set the script reference so we can tell where to put the coin collection offset
+        // Must set the script reference so we can tell where to put the coin collection offset
         _coinCollectionOffset = player.FacingRight ? 3 : -2;
         _collected = true;
         _shrinkAnimator.enabled = true;
@@ -144,8 +122,8 @@ public class CoinController : MonoBehaviour {
     }
 
     /// <summary>
-    /// Bullets have a killswitch where they get destroyed no maatter what after x seconds.
-    /// This helps cleanup any "stuck" bullets for whatever reason - I've seen a bullet here or there and not sure why at the moment
+    /// Pickupable have a killswitch where they get destroyed no maatter what after x seconds.
+    /// This helps cleanup any "stuck" objects for whatever reason
     /// </summary>
     protected void MaxLifeExceededDestroy() {
         DestroyCoin();

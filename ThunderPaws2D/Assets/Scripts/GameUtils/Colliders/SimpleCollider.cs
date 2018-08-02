@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleCollider : MonoBehaviour {
+    public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
+    public InvokeCollisionDelegate InvokeCollision;
+
     /// <summary>
     /// Indicates if we use base raycasts or Circle colliders
     /// </summary>
@@ -17,37 +20,16 @@ public class SimpleCollider : MonoBehaviour {
     /// <returns></returns>
     private bool _continuousCollision;
     /// <summary>
-    /// Optional list of object NOT to collide with even if they're apart of the WhatToHit Layermask
+    /// Optional list of objects NOT to collide with even if they're apart of the WhatToHit Layermask
     /// </summary>
     private List<string> _expemptFromCollision = new List<string>();
-    /// <summary>
-    /// Indicates what to collide with.
-    /// Defaults to the Player layer
-    /// </summary>
-    private LayerMask _whatToHit;
-    /// <summary>
-    /// In what direction should we raycast
-    /// </summary>
-    private Vector2 _targetDirection;
-    /// <summary>
-    /// If we know the targets position this is used for super small raycast double check
-    /// </summary>
-    private Vector3 _targetPos;
-    /// <summary>
-    /// If set this is how fasat we're moving
-    /// </summary>
-    private float _moveSpeed;
-    /// <summary>
-    /// If set this is how far our we raycast
-    /// </summary>
-    private float _raycastLength;
-    /// <summary>
-    /// Flag so it won't run any Update frames if we hit something because we're about to be destroyed
-    /// </summary>
-    private bool _hit = false;
 
-    public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
-    public InvokeCollisionDelegate InvokeCollision;
+    private LayerMask _whatToHit;
+    private Vector2 _targetDirection;
+    private Vector3 _targetPos;
+    private float _moveSpeed;
+    private float _raycastLength;
+    private bool _hit = false;
 
     public void Initialize(LayerMask whatToHit, float radius = 0f, bool continuousCollision = false) {
         _useCircleCollider = true;
@@ -79,7 +61,6 @@ public class SimpleCollider : MonoBehaviour {
         }
     }
 	
-	// Update is called once per frame
 	void Update () {
         if (!_continuousCollision && _hit) {
             return;
@@ -91,9 +72,6 @@ public class SimpleCollider : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Collects all possible collisions within a radius
-    /// </summary>
     private void CheckForMultiCircleCollisions() {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius, _whatToHit);
         foreach (var collider in colliders) {
@@ -104,35 +82,34 @@ public class SimpleCollider : MonoBehaviour {
         }
     }
 
-
-    /// <summary>
-    /// Check for collisions
-    /// </summary>
     private void CheckForRaycastCollisions() {
-        //Raycast to check if we could potentially the target
+        // Raycast to check if we could potentially the target
         RaycastHit2D possibleHit = Physics2D.Raycast(transform.position, _targetDirection);
         if (possibleHit.collider != null) {
-            //Mini raycast to check handle ellusive targets
             RaycastHit2D distCheck = Physics2D.Raycast(transform.position, _targetDirection, _raycastLength, _whatToHit);
-            //We want to allow bullets to pass throught obstacles that the player can pass through
-            if (distCheck.collider != null && !_expemptFromCollision.Contains(distCheck.collider.gameObject.tag)) { 
+
+            if (ContactHasBeenMade(distCheck)) { 
                 InvokeCollision.Invoke(transform.position, distCheck.collider);
                 _hit = true;
             }
 
-            //Last check is simplest check
+            // Last check is necessary as an extra mini raycast check to handle pinpoint precision collisions which feels better in game when dodging
             Vector3 dir = _targetPos - transform.position;
             float distanceThisFrame = _moveSpeed * Time.deltaTime;
-            //Length of dir is distance to target. if thats less than distancethisframe we've already hit the target
+            // Length of dir is distance to target. if thats less than distancethisframe we've already hit the target
             if (dir.magnitude <= distanceThisFrame) {
-                //Make sure the player didn't dodge out of the way
+                // Make sure the target didn't dodge out of the way
                 distCheck = Physics2D.Raycast(transform.position, _targetDirection, _raycastLength, _whatToHit);
-                //We want to allow bullets to pass throught obstacles that the player can pass through
-                if (distCheck.collider != null  && !_expemptFromCollision.Contains(distCheck.collider.gameObject.tag)) {
+
+                if (ContactHasBeenMade(distCheck)) {
                         InvokeCollision.Invoke(transform.position, distCheck.collider);
                     _hit = true;
                 }
             }
         }
+    }
+
+    private bool ContactHasBeenMade(RaycastHit2D raycast) {
+        return raycast.collider != null && !_expemptFromCollision.Contains(raycast.collider.gameObject.tag);
     }
 }
