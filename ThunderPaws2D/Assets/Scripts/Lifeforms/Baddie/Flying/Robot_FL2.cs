@@ -5,20 +5,31 @@ using UnityEngine;
 
 public class Robot_FL2 : FlyingBaddieLifeform {
     /// <summary>
-    /// Struct that holds all data necessary to the actions this baddie can perform.
-    /// Horizontal move speed, time between firing, and how long to move in certain directions
+    /// Each Flying baddie has their own implementation of the ActionData struct
+    /// FL2 Specifc data.
+    /// Encapsultes all the data needed for actions like attacking, and moving both vertical and horizontal
     /// </summary>
+    private struct ActionData {
+        public float HorizontalMoveSpeed;
+        public float TimeToFire;
+        public float MoveDuration;
+    }
     private ActionData _actionData;
+
     /// <summary>
-    /// References to wheree to fire the raycast angles
+    /// References to where to fire the raycast angles
     /// -45degree down, 90degree down, 45degree down
     /// </summary>
-    private readonly Vector2[] _raycastAngles = new Vector2[] { new Vector2(-1, -1), Vector2.down, new Vector2(1, -1) };
+    private readonly Vector2[] _raycastAngles = new Vector2[] {
+        new Vector2(-1, -1),
+        Vector2.down,
+        new Vector2(1, -1)
+    };
+
+    private const int PLAYER_LAYER = 8;
 
 
-    /// <summary>
-    /// Find the player and begin tracking
-    /// </summary>
+
     private void Start() {
         base.Start();
 
@@ -28,9 +39,6 @@ public class Robot_FL2 : FlyingBaddieLifeform {
 
         FlyingPositionData.MoveSpeed = 3.5f;
 
-        // TODO: this is bad - half the time TargetY is treated like an actual
-        // coordinate point in space, and the other half its treated strictly 
-        // as a -1 or 1 vertical direction indicator
         FlyingPositionData.TargetYDirection = ChooseRandomHeight();
 
         _actionData.TimeToFire = Time.time + 1f;
@@ -45,17 +53,14 @@ public class Robot_FL2 : FlyingBaddieLifeform {
     private void Update() {
         base.Update();
 
-        // Make sure the target exists
         if (!CheckTargetsExist()) {
             return;
         }
 
-        // Ensure we're within bounds
         MaxBoundsCheck();
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - Target.position.x;
-        // Face that direction
         CalculateFacingDirection(directionToTarget);
 
         // Collect distance from this to target
@@ -89,17 +94,13 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         }
     }
 
-    /// <summary>
-    /// Create a bullet prefab and send set the appropriate
-    /// properties so that it fires.
-    /// </summary>
     private void Fire() {
         try {
             Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
-            //Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
+            // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
             AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
-            //Set layermask of parent (either player or baddie)
+            // Set layermask of parent (either player or baddie)
             projectile.SetLayerMask(ProjectileData.WhatToHit);
             projectile.Damage = 5;
             projectile.MoveSpeed = 10;
@@ -110,18 +111,10 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         }
     }
 
-    /// <summary>
-    /// Helper method which returns true if the distance between the player and 
-    /// targets .Y positional element > 0
-    /// </summary>
-    /// <returns></returns>
     private bool StillAbovePlayerCheck() {
         return Mathf.Sign(transform.position.y - Target.position.y) > 0;
     }
 
-    /// <summary>
-    /// Calculate velocity both horizontal and vertical
-    /// </summary>
     private void CalculateVelocity() {
         Velocity.x = Mathf.SmoothDamp(Velocity.x, _actionData.HorizontalMoveSpeed, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
         CalculateVerticalThreshold();
@@ -132,65 +125,43 @@ public class Robot_FL2 : FlyingBaddieLifeform {
     /// Determine where to move if the target is within the angled sightlines.
     /// Angled sightlines : +-45 degrees and directly under.
     /// </summary>
-    /// <param name="rayLength">
-    /// Distance from this to target
-    /// </param>
     private void CalculateAngleCollisions(float rayLength) {
-        var targetLayer = 1 << 8;
+        var targetLayer = 1 << PLAYER_LAYER;
         foreach (var angle in _raycastAngles) {
             Debug.DrawRay(transform.position, angle * rayLength, Color.green);
             RaycastHit2D collisionCheck = Physics2D.Raycast(transform.position, angle, rayLength, targetLayer);
             if(collisionCheck.collider != null) {
-                // We are either directly above or within the 45degree angle of the player and should move!
-
-                // Right now move between 1 and 3 seconds
-                _actionData.MoveDuration = Time.time + (Random.Range(1, 4));
-
-                // -1 = move left 
-                // 1 = move right
-                var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
-
-                // pos = we are on players right
-                // neg = we are on players left
-                var rf2 = Mathf.Sign(transform.position.x - Target.position.x);
-
-                var rf3 = 0f;
-                if (rf1 < 0 && rf2 < 0 ){
-                    // If we should move left, and are already left of player we should have a 75% change of moving right
-                    // 25% chance to keep moving left
-                    rf3 = ((Random.Range(2, 11) % 6 == 0) ? -1 : 1);
-                } else if(rf1 > 0 && rf2 > 0) {
-                    // If we should move right, and are already right of player we should have a 75% change of moving left
-                    // 25% chance to keep moving right
-                    rf3 = ((Random.Range(2, 11) % 6 == 0) ? 1 : -1);
-                }else {
-                    // Otherwise, we're on the opposite side of the player from where we're about to move so do that
-                    rf3 = rf1;
-                }
-
-                _actionData.HorizontalMoveSpeed = FlyingPositionData.MoveSpeed * rf3;
-                CalculateVerticalThreshold();
+                EvadeTarget();
             }
         }
     }
 
     /// <summary>
-    /// Each Flying baddie has their own implementation of the ActionData struct
-    /// FL2 Specifc data.
-    /// Encapsultes all the data needed for actions like attacking, and moving both vertical and horizontal
+    /// We are either directly above or within the 45degree angle of the player and should move!
     /// </summary>
-    private struct ActionData {
-        /// <summary>
-        /// Stores the value of the horizontal movement this iteration of movement
-        /// </summary>
-        public float HorizontalMoveSpeed;
-        /// <summary>
-        /// Delay in between initiating Fire() attack
-        /// </summary>
-        public float TimeToFire;
-        /// <summary>
-        /// Indicates how long to move for
-        /// </summary>
-        public float MoveDuration;
+    private void EvadeTarget() {
+        _actionData.MoveDuration = Time.time + (Random.Range(1, 4));
+
+        // pos = we are on players right
+        // neg = we are on players left
+        var rf1 = ((Random.Range(2, 11) % 2 == 0) ? -1 : 1);
+        var rf2 = Mathf.Sign(transform.position.x - Target.position.x);
+        var rf3 = 0f;
+
+        if (rf1 < 0 && rf2 < 0) {
+            // If we should move left, and are already left of player we should have a 75% change of moving right
+            // 25% chance to keep moving left
+            rf3 = ((Random.Range(2, 11) % 6 == 0) ? -1 : 1);
+        } else if (rf1 > 0 && rf2 > 0) {
+            // If we should move right, and are already right of player we should have a 75% change of moving left
+            // 25% chance to keep moving right
+            rf3 = ((Random.Range(2, 11) % 6 == 0) ? 1 : -1);
+        } else {
+            // Otherwise, we're on the opposite side of the player from where we're about to move so do that
+            rf3 = rf1;
+        }
+
+        _actionData.HorizontalMoveSpeed = FlyingPositionData.MoveSpeed * rf3;
+        CalculateVerticalThreshold();
     }
 }
