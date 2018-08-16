@@ -85,7 +85,7 @@ public class GameConstants {
     public static float Data_SightDistance = 15f;
 
     // Scene Name Data
-    public static string Scene_LevelName_1 = "AlphaDemoLevel1";
+    public static string Scene_LevelName_1 = "AlphaArtDemoLevel1";
     public static string Scene_LevelName_Menu = "AlphaDemoMainMenu";
     public static string Scene_Backstory_Menu = "AlphaDemoBackstory";
 
