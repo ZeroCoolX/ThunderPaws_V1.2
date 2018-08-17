@@ -295,11 +295,11 @@ public class Player : PlayerLifeform {
             // After 0.25 seconds deactivate melee
             Invoke("DeactivateMeleeTrigger", 0.25f);
         }
-
-        PlayMovementAnimations(jumping, falling, crouch, melee, rolling, xVelocity);
-
+      
         // Set the weapons inactive if either the roll or melee animation is playing
-        _weaponManager.ToggleWeaponActiveStatus(!_actionMovement.RollActive && !_meleeActive);
+       // _weaponManager.ToggleWeaponActiveStatus(!_actionMovement.RollActive && !_meleeActive);
+
+        PlayMovementAnimations(jumping, falling, crouch, melee, _actionMovement.RollActive, xVelocity);
     }
 
     private void PlayMovementAnimations(bool jumping, bool falling, bool crouch, bool melee, bool rolling, float xVelocity) {
@@ -309,6 +309,9 @@ public class Player : PlayerLifeform {
             Animator.SetBool("Crouching", crouch);
             Animator.SetBool("Melee", melee);
             Animator.SetBool("Roll", rolling);
+            print("Rolling = " + rolling);
+            _weaponManager.ToggleWeaponActiveStatus(!rolling && !melee);
+
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards
             var finalXVelocity = Math.Abs(xVelocity) * VelocityBasedOffInput(crouch, jumping, falling);
             Animator.SetFloat("xVelocity", finalXVelocity);

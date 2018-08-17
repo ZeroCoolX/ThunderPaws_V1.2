@@ -2550,7 +2550,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1869959576089368}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 559.62, y: -4.31, z: -1}
+  m_LocalPosition: {x: 559.62, y: -3.694, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4743001189076276}
@@ -2632,7 +2632,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1107159107423686}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 655.64, y: 8.66, z: -1}
+  m_LocalPosition: {x: 655.64, y: 10.712, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4063958590435366}
@@ -2660,7 +2660,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1258188636172782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 409.78, y: -6.55, z: -1}
+  m_LocalPosition: {x: 409.78, y: -6.681, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4720384083613406}
@@ -2714,7 +2714,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1298442725550758}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 667.12006, y: 5.61, z: -1}
+  m_LocalPosition: {x: 674.43, y: 9.51, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4740543999838014}
@@ -2742,7 +2742,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1706897785297200}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 445.43, y: -4.44, z: -1}
+  m_LocalPosition: {x: 445.43, y: -3.73, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4787500694053522}
@@ -2822,7 +2822,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797051582277332}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 601.67, y: -1.64, z: -1}
+  m_LocalPosition: {x: 603.351, y: -0.697, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4296372007618268}
@@ -2888,7 +2888,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1253295579863826}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 565.12, y: -4.31, z: -1}
+  m_LocalPosition: {x: 565.12, y: -3.731, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4853293986040510}
@@ -2916,7 +2916,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977529488041322}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 441.47, y: 2.08, z: -1}
+  m_LocalPosition: {x: 441.47, y: 2.892, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4525365579061760}
@@ -3039,7 +3039,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1897425490481862}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 440.5359, y: -15.248955, z: 0}
+  m_LocalPosition: {x: 441.148, y: -15.654, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4421693845202456}
@@ -3053,7 +3053,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1393421036513028}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 435.96, y: 2.77, z: -1}
+  m_LocalPosition: {x: 435.667, y: 2.77, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -3066,7 +3066,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1652262067059566}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 518.48, y: -1.87, z: -1}
+  m_LocalPosition: {x: 518.48, y: -0.702, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4932637248602310}
@@ -3094,7 +3094,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1159524519632296}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 666.31, y: 8.27, z: -1}
+  m_LocalPosition: {x: 666.43, y: 8.27, z: -1}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -3173,7 +3173,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1811519683359628}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 638.18, y: 7.03, z: -1}
+  m_LocalPosition: {x: 638.18, y: 7.52, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4399697789486618}
@@ -3255,7 +3255,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840988733799710}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 436.94, y: 4.73, z: -1}
+  m_LocalPosition: {x: 436.416, y: 5.016, z: -1}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -3334,7 +3334,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1394013093938360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 595.82, y: -4.31, z: -1}
+  m_LocalPosition: {x: 595.82, y: -3.731, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4008375553526516}
@@ -3348,7 +3348,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1844467623182744}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 521.55, y: -1.8, z: -1}
+  m_LocalPosition: {x: 521.55, y: -0.922, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4610050659738042}
@@ -3455,7 +3455,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1365047362574280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 679.14, y: 0.8, z: -1}
+  m_LocalPosition: {x: 679.14, y: 1.052, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4466735191123938}
@@ -3522,7 +3522,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1884680724004470}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 660.23, y: 0.75, z: -1}
+  m_LocalPosition: {x: 660.23, y: 1.264, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4754783330396070}
@@ -3564,7 +3564,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1067944161793292}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 665.54, y: 5.65, z: -1}
+  m_LocalPosition: {x: 665.574, y: 5.65, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -3677,7 +3677,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1977085536060438}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 486.03, y: -7.75, z: -1}
+  m_LocalPosition: {x: 486.03, y: -7.46, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -3768,7 +3768,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1989572016654626}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 652.81, y: 0.75, z: -1}
+  m_LocalPosition: {x: 652.81, y: 1.264, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4839986047897076}
@@ -3796,7 +3796,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1318696456311412}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 435.96, y: 6.49, z: -1}
+  m_LocalPosition: {x: 435.65, y: 7.05, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -4063,7 +4063,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1286802941666444}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 521.43, y: -7.12, z: -1}
+  m_LocalPosition: {x: 521.43, y: -6.728, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4319365912487664}
@@ -4090,7 +4090,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1518407241214998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 483.22952, y: 1.8378028, z: 0}
+  m_LocalPosition: {x: 483.22952, y: 2.257, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4389651764164846}
@@ -4131,7 +4131,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1172045970758088}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 665.54, y: 10.88, z: -1}
+  m_LocalPosition: {x: 665.581, y: 10.88, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -4144,7 +4144,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1896640960574092}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 448.46, y: -2.12, z: -1}
+  m_LocalPosition: {x: 448.46, y: -0.915, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4366438113579290}
@@ -4171,7 +4171,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1341825496853762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 627.23, y: 8.55, z: -1}
+  m_LocalPosition: {x: 627.23, y: 10.165, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4181604061194306}
@@ -4185,7 +4185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1519390237326400}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 475.98, y: -1.25, z: -1}
+  m_LocalPosition: {x: 474.671, y: -1.25, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4621142803002110}
@@ -4199,7 +4199,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1780952638261166}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 573.71, y: -4.31, z: -1}
+  m_LocalPosition: {x: 573.71, y: -3.712, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4117045160425426}
@@ -4253,7 +4253,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1036671341778822}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 440.45, y: -15.72, z: -1}
+  m_LocalPosition: {x: 441.151, y: -16.462, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -4266,7 +4266,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1837286141234320}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 508.86, y: -7.02, z: -1}
+  m_LocalPosition: {x: 508.86, y: -6.758, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4287409505398214}
@@ -4280,7 +4280,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459668599496906}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 589.8, y: -4.31, z: -1}
+  m_LocalPosition: {x: 589.8, y: -3.722, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4525788949988770}
@@ -4320,7 +4320,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1410645010457624}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 584.55, y: -3.96, z: -1}
+  m_LocalPosition: {x: 584.55, y: -3.717, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4984091056255124}
@@ -4334,7 +4334,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1168043260827542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 496.34, y: -1.35, z: -1}
+  m_LocalPosition: {x: 495.952, y: -1.35, z: -1}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4571207305315942}
@@ -4361,7 +4361,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1408788321612206}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 516.69, y: -4.49, z: -1}
+  m_LocalPosition: {x: 516.69, y: -3.715, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4040551181946030}
@@ -6870,10 +6870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6890,10 +6890,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -6932,8 +6932,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114024422260590664
 MonoBehaviour:
@@ -6954,8 +6952,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114027447238427180
 MonoBehaviour:
@@ -6990,8 +6986,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114028386950759880
 MonoBehaviour:
@@ -7012,8 +7006,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114035210353931952
 MonoBehaviour:
@@ -7026,10 +7018,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7054,8 +7046,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114052766598404534
 MonoBehaviour:
@@ -7076,8 +7066,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114054699551008868
 MonoBehaviour:
@@ -7098,8 +7086,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114060531940855148
 MonoBehaviour:
@@ -7112,10 +7098,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114068570746285284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7135,8 +7121,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114077542537302938
 MonoBehaviour:
@@ -7149,10 +7133,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -7197,10 +7181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7217,10 +7201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7251,10 +7235,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114106128227561420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7266,10 +7250,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -7286,10 +7270,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -7356,8 +7340,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114134739697302434
 MonoBehaviour:
@@ -7384,10 +7366,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2358e3c4f5a4e1449faf195cdac4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
@@ -7403,10 +7385,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7423,10 +7405,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2358e3c4f5a4e1449faf195cdac4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
@@ -7442,10 +7424,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -7476,9 +7458,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f202098e751f64a81df42877eda5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 30
   PayloadContent: {fileID: 0}
   PayloadItemCount: 1
-  Health: 30
+  MoveLeft: 1
   PickupOptions:
   - {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
   - {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
@@ -7486,7 +7469,6 @@ MonoBehaviour:
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
   - {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
-  MoveLeft: 1
 --- !u!114 &114165333888585104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7520,8 +7502,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114170954505472426
 MonoBehaviour:
@@ -7534,10 +7514,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -7554,10 +7534,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7574,10 +7554,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114174554330711134
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7597,8 +7577,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114193092956079428
 MonoBehaviour:
@@ -7633,8 +7611,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114208371001091370
 MonoBehaviour:
@@ -7647,10 +7623,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -7689,8 +7665,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114222666503046906
 MonoBehaviour:
@@ -7717,10 +7691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -7737,10 +7711,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -7757,10 +7731,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -7777,10 +7751,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -7805,8 +7779,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114238018519013706
 MonoBehaviour:
@@ -7841,8 +7813,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114243795801693526
 MonoBehaviour:
@@ -7883,10 +7853,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114260273824700966
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7906,8 +7876,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114262071415420164
 MonoBehaviour:
@@ -7934,9 +7902,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f202098e751f64a81df42877eda5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 30
   PayloadContent: {fileID: 0}
   PayloadItemCount: 1
-  Health: 30
+  MoveLeft: 1
   PickupOptions:
   - {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
   - {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
@@ -7944,7 +7913,6 @@ MonoBehaviour:
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
   - {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
-  MoveLeft: 1
 --- !u!114 &114276553535843610
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7956,10 +7924,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -7998,8 +7966,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114288337691651026
 MonoBehaviour:
@@ -8020,8 +7986,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114290057513627236
 MonoBehaviour:
@@ -8042,8 +8006,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114290390455649066
 MonoBehaviour:
@@ -8106,8 +8068,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114309678197588920
 MonoBehaviour:
@@ -8142,8 +8102,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114311552054337476
 MonoBehaviour:
@@ -8178,8 +8136,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114312860696020356
 MonoBehaviour:
@@ -8200,8 +8156,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114319938550846330
 MonoBehaviour:
@@ -8222,8 +8176,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114332613298701612
 MonoBehaviour:
@@ -8236,10 +8188,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114333958505357860
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8251,10 +8203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8293,8 +8245,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114357443787459104
 MonoBehaviour:
@@ -8307,10 +8257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -8355,10 +8305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -8383,8 +8333,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114382132370491044
 MonoBehaviour:
@@ -8397,10 +8345,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8439,8 +8387,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114390338652391712
 MonoBehaviour:
@@ -8453,10 +8399,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8473,10 +8419,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8493,10 +8439,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -8521,8 +8467,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114401970778728694
 MonoBehaviour:
@@ -8557,8 +8501,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114409567114872790
 MonoBehaviour:
@@ -8579,8 +8521,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114437431791065330
 MonoBehaviour:
@@ -8601,8 +8541,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114451105676603234
 MonoBehaviour:
@@ -8623,8 +8561,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114459671642953808
 MonoBehaviour:
@@ -8637,10 +8573,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8665,8 +8601,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114467372611181362
 MonoBehaviour:
@@ -8679,10 +8613,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8738,10 +8672,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8758,10 +8692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -8792,10 +8726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8833,8 +8767,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114506294082509478
 MonoBehaviour:
@@ -8847,10 +8779,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8881,10 +8813,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114519419943984208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8924,9 +8856,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f202098e751f64a81df42877eda5c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 30
   PayloadContent: {fileID: 0}
   PayloadItemCount: 1
-  Health: 30
+  MoveLeft: 1
   PickupOptions:
   - {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
   - {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
@@ -8934,7 +8867,6 @@ MonoBehaviour:
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
   - {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
-  MoveLeft: 1
 --- !u!114 &114532920300283636
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8954,8 +8886,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114533843278040616
 MonoBehaviour:
@@ -8968,10 +8898,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -8988,10 +8918,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -9016,8 +8946,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114578183742729358
 MonoBehaviour:
@@ -9038,8 +8966,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114586760694615868
 MonoBehaviour:
@@ -9074,8 +9000,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114600822915122118
 MonoBehaviour:
@@ -9138,8 +9062,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114616020641288504
 MonoBehaviour:
@@ -9152,10 +9074,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114618420032158478
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9167,10 +9089,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9187,10 +9109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 20
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 20
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9215,8 +9137,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114623798829282706
 MonoBehaviour:
@@ -9237,8 +9157,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114626337203683864
 MonoBehaviour:
@@ -9275,8 +9193,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114627816399651620
 MonoBehaviour:
@@ -9289,10 +9205,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9323,10 +9239,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9357,10 +9273,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -9377,10 +9293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9405,8 +9321,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114662764624965906
 MonoBehaviour:
@@ -9419,10 +9333,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2358e3c4f5a4e1449faf195cdac4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
@@ -9466,10 +9380,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114669508907233418
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9489,8 +9403,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114673760179030854
 MonoBehaviour:
@@ -9511,8 +9423,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114680680613227518
 MonoBehaviour:
@@ -9525,10 +9435,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2358e3c4f5a4e1449faf195cdac4669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
@@ -9558,10 +9468,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9600,8 +9510,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114720083941051850
 MonoBehaviour:
@@ -9636,8 +9544,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114733202237720044
 MonoBehaviour:
@@ -9658,8 +9564,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114739065554358064
 MonoBehaviour:
@@ -9694,8 +9598,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114760919224180870
 MonoBehaviour:
@@ -9722,10 +9624,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -9764,8 +9666,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114778904072745306
 MonoBehaviour:
@@ -9786,8 +9686,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114782869790108762
 MonoBehaviour:
@@ -9800,10 +9698,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -9828,8 +9726,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114790818186410110
 MonoBehaviour:
@@ -9850,8 +9746,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114800270425434984
 MonoBehaviour:
@@ -9864,10 +9758,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114800623893201372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9887,8 +9781,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114805856023347054
 MonoBehaviour:
@@ -9909,8 +9801,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114806126936498954
 MonoBehaviour:
@@ -9937,10 +9827,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -9965,8 +9855,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114820395899698856
 MonoBehaviour:
@@ -10001,8 +9889,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114827476330145884
 MonoBehaviour:
@@ -10023,8 +9909,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114835437018478184
 MonoBehaviour:
@@ -10045,8 +9929,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114841652361621700
 MonoBehaviour:
@@ -10081,8 +9963,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114847660719922706
 MonoBehaviour:
@@ -10103,8 +9983,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114850603502300268
 MonoBehaviour:
@@ -10125,8 +10003,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114850748382890222
 MonoBehaviour:
@@ -10147,8 +10023,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114854745790995912
 MonoBehaviour:
@@ -10175,10 +10049,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10203,8 +10077,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114869619560985716
 MonoBehaviour:
@@ -10217,10 +10089,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -10245,8 +10117,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114876269357834810
 MonoBehaviour:
@@ -10259,10 +10129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10293,10 +10163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 25
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
@@ -10313,10 +10183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 460a374e317a6ad4dbb53c6eae718bef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 7
-  Health: 15
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10333,10 +10203,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10367,10 +10237,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -10387,10 +10257,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114908718197602738
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10402,10 +10272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -10444,8 +10314,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114916460267636772
 MonoBehaviour:
@@ -10458,10 +10326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10492,10 +10360,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 15
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114920787633562286
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10507,10 +10375,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b2df835b2c46354596198acd635cea4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 5
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 3
-  Health: 5
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
@@ -10535,8 +10403,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114934287303413348
 MonoBehaviour:
@@ -10557,8 +10423,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114939377544098234
 MonoBehaviour:
@@ -10585,10 +10449,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -10627,8 +10491,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114963549446334664
 MonoBehaviour:
@@ -10663,8 +10525,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114971804828312968
 MonoBehaviour:
@@ -10699,8 +10559,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114977353883968146
 MonoBehaviour:
@@ -10713,10 +10571,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfa66b19885e644c98613eb4fb4c6ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 10
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 10
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
@@ -10755,8 +10613,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!114 &114999900945479676
 MonoBehaviour:
@@ -10777,8 +10633,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!212 &212053307972973224
 SpriteRenderer:
