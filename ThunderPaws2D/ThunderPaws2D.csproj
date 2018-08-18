@@ -265,6 +265,10 @@
     <Compile Include="Assets\Scripts\GameUtils\LifetimeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\Parallax\ConstantParallax.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\Parallax\IndependentParallax.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\Parallax\Parallaxing.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\Parallax\RelativeParallax.cs" />
     <Compile Include="Assets\Scripts\GameUtils\PlayerSpriteController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleAudio.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleMover.cs" />
