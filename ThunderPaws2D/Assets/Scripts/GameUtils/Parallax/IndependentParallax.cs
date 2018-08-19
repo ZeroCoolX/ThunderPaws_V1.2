@@ -19,10 +19,6 @@ public class IndependentParallax : Parallaxing {
     void Start() {
         // The previous frame had the current frames camera position
         _previousCamPosition = _mainCamera.position;
-
-      //  for (int i = 0; i < Backgrounds.Length; ++i) {
-      //      ParallaxScales[i] = Backgrounds[i].position.z;
-     //   }
     }
 
     // This should only be done for the relative backgrounds

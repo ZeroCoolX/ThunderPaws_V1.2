@@ -34,22 +34,19 @@ public class ConstantParallax : Parallaxing {
 
             // Set a targert X position which is the current position plus the parallax
             float parallax = (_previousCamPosition.x - _mainCamera.position.x) * -1;
-            print("Parallax = " + parallax);
             float backgroundTargetPosX = Backgrounds[i].position.x + parallax;
-            /*ParallaxScales[i] -*/
             if (Mathf.Abs(parallax) <= 0.001f) {
                 backgroundTargetPosX += ParallaxScales[i];
                 // Create a target position which is the background's current position with it's target x position
                 Vector3 backgroundTargetPosition = new Vector3(backgroundTargetPosX, Backgrounds[i].position.y, Backgrounds[i].position.z);
                 Backgrounds[i].position = Vector3.Lerp(Backgrounds[i].position, backgroundTargetPosition, Smoothing * Time.deltaTime);
             } else {
+                //TODO: When the player is moving - the sky backgrounds do not have the individual scales applied. they move together.
                 // Create a target position which is the background's current position with it's target x position
                 Vector3 backgroundTargetPosition = new Vector3(backgroundTargetPosX, Backgrounds[i].position.y, Backgrounds[i].position.z);
                 // Also add for the Y because I WILL be moving up and down a lot
 
                 // Fade between the backgrounds current position and the target position
-                // Fade between the backgrounds current position and the target position
-                //Backgrounds[i].position = backgroundTargetPosition;
                 Backgrounds[i].position = Vector3.Lerp(Backgrounds[i].position, backgroundTargetPosition, 1f - Math.Abs(parallax));
             }
         }
