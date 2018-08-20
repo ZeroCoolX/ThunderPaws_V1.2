@@ -28,10 +28,10 @@ public class RelativeParallax : Parallaxing {
 
     // This should only be done for the relative backgrounds
     void Update() {
-        ApplyRelativeParallax();
+        ApplyParallax();
     }
 
-    protected override void ApplyRelativeParallax() {
+    protected override void ApplyParallax() {
         for (int i = 0; i < Backgrounds.Length; ++i) {
             // The parallax is the opposite of the camera movement because the previous frame multiplied by the scale
             float parallax = (_previousCamPosition.x - _mainCamera.position.x) * ParallaxScales[i];

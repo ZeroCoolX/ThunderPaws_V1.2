@@ -14,5 +14,5 @@ public abstract class Parallaxing : MonoBehaviour {
         ParallaxScales = new float[Backgrounds.Length];
     }
 
-    protected abstract void ApplyRelativeParallax();
+    protected abstract void ApplyParallax();
 }

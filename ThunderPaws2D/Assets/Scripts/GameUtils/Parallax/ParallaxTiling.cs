@@ -50,14 +50,7 @@ public class ParallaxTiling : MonoBehaviour {
                 LeftBuddy = GenerateBuddy(-1);
                 _hasALeftBuddy = true;
             }
-        }/*else if(_hasALeftBuddy && _hasARightBuddy){
-            // Checking is we can see the edge of the element
-            if (_mainCam.transform.position.x - camHorizontalExtent >= _myTransform.position.x + (_spriteWidth / 2)) {
-                Destroy(gameObject);
-            } else if (_mainCam.transform.position.x + camHorizontalExtent <= _myTransform.position.x - (_spriteWidth / 2)) {
-                Destroy(gameObject);
-            }
-        }*/
+        }
 
         var camLeftEdge = _mainCam.transform.position.x - camHorizontalExtent; // C
         var camRightEdge = _mainCam.transform.position.x + camHorizontalExtent; // D
