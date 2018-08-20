@@ -12,6 +12,9 @@ public class ParallaxTiling : MonoBehaviour {
     private bool _hasARightBuddy = false;
     private bool _hasALeftBuddy = false;
 
+    public Transform LeftBuddy;
+    public Transform RightBuddy;
+
     private float _spriteWidth;
     private Camera _mainCam;
     private Transform _myTransform; // Is this really a performance boost?
@@ -41,10 +44,10 @@ public class ParallaxTiling : MonoBehaviour {
         if (!_hasALeftBuddy || !_hasARightBuddy) {
             // Checking is we can see the edge of the element
             if((_mainCam.transform.position.x >= edgeVisiblePositionRight - _buddyIndicatorZone) && !_hasARightBuddy){
-                GenerateBuddy(1);
+                RightBuddy = GenerateBuddy(1);
                 _hasARightBuddy = true;
-            }else if (_mainCam.transform.position.x <= edgeVisiblePositionLeft + _buddyIndicatorZone && !_hasALeftBuddy) {
-                GenerateBuddy(-1);
+            } else if (_mainCam.transform.position.x <= edgeVisiblePositionLeft + _buddyIndicatorZone && !_hasALeftBuddy) {
+                LeftBuddy = GenerateBuddy(-1);
                 _hasALeftBuddy = true;
             }
         }/*else if(_hasALeftBuddy && _hasARightBuddy){
@@ -55,17 +58,53 @@ public class ParallaxTiling : MonoBehaviour {
                 Destroy(gameObject);
             }
         }*/
+
+        var camLeftEdge = _mainCam.transform.position.x - camHorizontalExtent; // C
+        var camRightEdge = _mainCam.transform.position.x + camHorizontalExtent; // D
+        float parallaxLeftEdge = _myTransform.position.x - (_spriteWidth / 2);// + camHorizontalExtent; // A
+        float parallaxRightEdge = _myTransform.position.x + (_spriteWidth / 2);// - camHorizontalExtent; // B
+
+        if(parallaxRightEdge + _buddyIndicatorZone < camLeftEdge) {
+            // Delete ittself and all the left buddies
+            DeleteBuddyThenSelf(transform, -1);
+        } else if(parallaxLeftEdge - _buddyIndicatorZone > camRightEdge) {
+            // Delete itself and all the right baddies
+            DeleteBuddyThenSelf(transform, 1);
+        }        
 	}
 
-    private void GenerateBuddy(int onRightOrLeft) {
+    private void DeleteBuddyThenSelf(Transform buddy, int direction) {
+        if(buddy == null) {
+            return;
+        }
+        if(direction < 0) {
+            // Left buddies
+            DeleteBuddyThenSelf(buddy.GetComponent<ParallaxTiling>().LeftBuddy, -1);
+            buddy.GetComponent<ParallaxTiling>().RightBuddy.GetComponent<ParallaxTiling>()._hasALeftBuddy = false;
+            Destroy(buddy.gameObject);
+            return;
+        } else {
+            // Right buddies
+            DeleteBuddyThenSelf(buddy.GetComponent<ParallaxTiling>().RightBuddy, 1);
+            buddy.GetComponent<ParallaxTiling>().LeftBuddy.GetComponent<ParallaxTiling>()._hasARightBuddy = false;
+            Destroy(buddy.gameObject);
+            return;
+        }
+    }
+
+    private Transform GenerateBuddy(int onRightOrLeft) {
         Vector3 newPostion = new Vector3(_myTransform.position.x + _spriteWidth * onRightOrLeft, _myTransform.position.y, _myTransform.position.z);
         Transform buddy = Instantiate(_myTransform, newPostion, _myTransform.rotation) as Transform;
 
         buddy.parent = _myTransform.parent;
         if(onRightOrLeft > 0) {
             buddy.GetComponent<ParallaxTiling>()._hasALeftBuddy = true;
+            buddy.GetComponent<ParallaxTiling>().LeftBuddy = _myTransform;
         }else {
             buddy.GetComponent<ParallaxTiling>()._hasARightBuddy = true;
+            buddy.GetComponent<ParallaxTiling>().RightBuddy = _myTransform;
         }
+
+        return buddy;
     }
 }
