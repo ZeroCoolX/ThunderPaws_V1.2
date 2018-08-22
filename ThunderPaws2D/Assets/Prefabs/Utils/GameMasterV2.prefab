@@ -21,6 +21,9 @@ GameObject:
   - component: {fileID: 4169245292921112}
   - component: {fileID: 114499844392596702}
   - component: {fileID: 114638992511787690}
+  - component: {fileID: 114852513686145684}
+  - component: {fileID: 114858295429786058}
+  - component: {fileID: 114407717002881314}
   m_Layer: 0
   m_Name: GameMasterV2
   m_TagString: Untagged
@@ -41,6 +44,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114407717002881314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 691a4bc845fbf5a4ebc61ddb3d5a3d58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Backgrounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  Smoothing: 1
 --- !u!114 &114499844392596702
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -87,3 +105,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13344509154c0054dbe5a1c80a1609f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114852513686145684
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39f5746662fa0c74e8b2e98b5df3d4ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Backgrounds:
+  - {fileID: 0}
+  Smoothing: 1
+--- !u!114 &114858295429786058
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1967241870711808}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 249d995b80e0c8d44aa8bd1125f32c5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Backgrounds:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  Smoothing: 1
+  ParentContainer: {fileID: 0}
