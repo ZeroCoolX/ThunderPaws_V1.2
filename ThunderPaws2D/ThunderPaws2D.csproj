@@ -237,6 +237,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\Internal\VectorSwizzleExtensions.cs" />
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\PixelPerfectCamera.cs" />
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\PixelSnap.cs" />
+    <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
@@ -363,6 +369,8 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\PixelPerfectCamera\README.txt" />
+    <None Include="Assets\PixelPerfectCamera\background_art_license.txt" />
     <None Include="Assets\Shaders\DefaultColorFlash.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />

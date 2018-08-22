@@ -32,11 +32,11 @@ public class Camera2DFollow : FollowBase {
         float xMoveDelta = (Target.position - LastTargetPosition).x;
         bool updateLookAheadTarget = Mathf.Abs(xMoveDelta) > LookAheadMoveThreshold;
 
-        if (updateLookAheadTarget) {
-            LookAheadPos = LookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
-        } else {
+       // if (updateLookAheadTarget) {
+       //     LookAheadPos = LookAheadFactor * Vector3.right * Mathf.Sign(xMoveDelta);
+       // } else {
             LookAheadPos = Vector3.MoveTowards(LookAheadPos, Vector3.zero, Time.deltaTime * LookAheadReturnSpeed);
-        }
+       // }
 
         Vector3 aheadTargetPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
         aheadTargetPos.y += VerticalOffset;

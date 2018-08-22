@@ -6,9 +6,7 @@ using UnityEngine;
 public class IndependentParallax : Parallaxing {
     private Transform _mainCamera;
     private Vector3 _previousCamPosition;
-    // 1 is same speed as the player
-    // 0.5 is half the speed of the player..etc
-    private float _scaleFactor = 0.5f;
+    private float _moveSpeed = 0.05f;
 
     protected new void Awake() {
         base.Awake();
@@ -19,6 +17,9 @@ public class IndependentParallax : Parallaxing {
     void Start() {
         // The previous frame had the current frames camera position
         _previousCamPosition = _mainCamera.position;
+        for (int i = 0; i < Backgrounds.Length; ++i) {
+            ParallaxScales[i] = _moveSpeed;
+        }
     }
 
     // This should only be done for the relative backgrounds
@@ -30,6 +31,7 @@ public class IndependentParallax : Parallaxing {
         for (int i = 0; i < Backgrounds.Length; ++i) {
             // The parallax is the opposite of the camera movement because the previous frame multiplied by the scale
             float parallax = (_previousCamPosition.x - _mainCamera.position.x) * -1;
+
             // Set a targert X position which is the current position plus the parallax
             float backgroundTargetPosX = Backgrounds[i].position.x + parallax;
 
@@ -38,7 +40,7 @@ public class IndependentParallax : Parallaxing {
             // Also add for the Y because I WILL be moving up and down a lot
 
             // Fade between the backgrounds current position and the target position
-            Backgrounds[i].position =  Vector3.Lerp(Backgrounds[i].position, backgroundTargetPosition, Smoothing);
+            Backgrounds[i].position = Vector3.Lerp(Backgrounds[i].position, backgroundTargetPosition, 1f - Mathf.Abs(ParallaxScales[i]));
         }
 
         // Set the previous cam position to the cams position

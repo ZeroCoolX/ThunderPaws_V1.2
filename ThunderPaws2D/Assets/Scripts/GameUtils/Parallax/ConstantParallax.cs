@@ -9,6 +9,8 @@ public class ConstantParallax : Parallaxing {
     private Transform _mainCamera;
     private Vector3 _previousCamPosition;
 
+    public Transform ParentContainer;
+
     protected new void Awake() {
         base.Awake();
         _mainCamera = Camera.main.transform;
@@ -19,11 +21,12 @@ public class ConstantParallax : Parallaxing {
         // The previous frame had the current frames camera position
         _previousCamPosition = _mainCamera.position;
         for (int i = 0; i < Backgrounds.Length; ++i) {
-            ParallaxScales[i] = _moveSpeed * -1;
+            ParallaxScales[i] = _moveSpeed * -1f;
             _moveSpeed += _scaleFactor;
         }
     }
 
+    // This should only be done for the relative backgrounds
     void Update() {
         ApplyParallax();
     }
@@ -52,8 +55,8 @@ public class ConstantParallax : Parallaxing {
                 Backgrounds[i].position = Vector3.Lerp(Backgrounds[i].position, backgroundTargetPosition, (1f - (Mathf.Abs(parallax) + ParallaxScales[i])) * Time.deltaTime);
             }
         }
-
         // Set the previous cam position to the cams position
         _previousCamPosition = _mainCamera.position;
+        ParentContainer.position = new Vector3(_mainCamera.position.x, ParentContainer.position.y, ParentContainer.position.z);
     }
 }
