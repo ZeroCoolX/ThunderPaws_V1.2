@@ -11,7 +11,8 @@ public class FollowBase : MonoBehaviour {
     /// <summary>
     /// Buffer for position dampeneing so movment is not sudden and jerky
     /// </summary>
-    protected float Dampening = 0.125f;
+    protected float HorizontalDampening = 0.125f;
+    protected float VerticalDampening = 0.25f;
     /// <summary>
     /// How far to look ahead from our current position
     /// </summary>

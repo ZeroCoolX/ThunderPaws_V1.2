@@ -9,7 +9,7 @@ public class RelativeParallax : Parallaxing {
     private Vector3 _previousCamPosition;
     // 1 is same speed as the player
     // 0.5 is half the speed of the player..etc
-    private float _scaleFactor = 0.5f;
+    private float _scaleFactor = 2f;
 
     protected new void Awake() {
         base.Awake();
