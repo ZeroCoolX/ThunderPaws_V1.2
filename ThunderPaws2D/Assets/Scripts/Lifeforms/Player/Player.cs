@@ -124,7 +124,7 @@ public class Player : PlayerLifeform {
     }
 
     private void SetupActionMovement() {
-        _actionMovement.MaxTimeBetweenRoll = 0.1f;
+        _actionMovement.MaxTimeBetweenRoll = 0.3f;
         _actionMovement.RollResetDelay = 0f;
         _actionMovement.RollActive = false;
         _actionMovement.RollSpeed = 6f;
@@ -280,10 +280,10 @@ public class Player : PlayerLifeform {
         var jumping = yVelocity > 0 && !crouch;
         var falling = !jumping && !Controller2d.Collisions.FromBelow;
 
-        var rolling = (Time.time > _actionMovement.RollResetDelay) && (((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow) || _actionMovement.RollActive);
+        var rolling = (Time.time > _actionMovement.RollResetDelay) && (((Input.GetKeyDown(InputManager.Instance.Roll) || Input.GetButtonDown(JoystickId + GameConstants.Input_Roll)) && Controller2d.Collisions.FromBelow));
         if(rolling && !_actionMovement.RollActive) {
             _actionMovement.RollActive = true;
-            Invoke("DeactivateRollTrigger", 0.5f);
+            Invoke("DeactivateRollTrigger", 0.25f);
         }
 
         var melee = ((Input.GetKeyDown(InputManager.Instance.Melee) || Input.GetButtonDown(JoystickId + GameConstants.Input_Melee)) && Controller2d.Collisions.FromBelow) || _meleeActive;
@@ -308,7 +308,9 @@ public class Player : PlayerLifeform {
             Animator.SetBool("Falling", falling);
             Animator.SetBool("Crouching", crouch);
             Animator.SetBool("Melee", melee);
+           //if(Animator.GetBool("Roll") == true ^ rolling) {
             Animator.SetBool("Roll", rolling);
+            //}
             print("Rolling = " + rolling);
             _weaponManager.ToggleWeaponActiveStatus(!rolling && !melee);
 
