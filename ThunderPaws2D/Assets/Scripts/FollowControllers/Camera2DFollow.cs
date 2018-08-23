@@ -55,11 +55,10 @@ public class Camera2DFollow : FollowBase {
         Vector3 tempPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
         Vector3 aheadTargetPos = new Vector3(tempPos.x, 1, tempPos.z);
         if (TooFarFromOrigin()) {
-            print("TooFarFromOrigin");
             aheadTargetPos.y = tempPos.y;
             aheadTargetPos.y += HordeVerticalOffset;
+
         } else {
-            print("Not too faar from origin");
             aheadTargetPos.y = _originPoint;
             aheadTargetPos.y += VerticalOffset;
         }

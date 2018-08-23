@@ -155,6 +155,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0a2955ab8a2e2ee429a2a06b6afd2c04, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &276441134 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4928787954033600, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &279537524
 Prefab:
   m_ObjectHideFlags: 0
@@ -239,6 +244,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2079f77c9ad511646b0666254b6e3a28, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &373434245 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4689978988678966, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &392595310
 Prefab:
   m_ObjectHideFlags: 0
@@ -327,6 +337,16 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &551045222 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4867678115829250, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
+--- !u!4 &581421748 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4145966407706696, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &591410614
 Prefab:
   m_ObjectHideFlags: 0
@@ -6455,11 +6475,21 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224475948529413614, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
     type: 2}
   m_PrefabInternal: {fileID: 1479065954}
+--- !u!4 &828936517 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4222415039826544, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!4 &899860195 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4577878596718628, guid: b5b78d19197b71542b140f3c4ac5bafe,
     type: 2}
   m_PrefabInternal: {fileID: 1488562060}
+--- !u!4 &928796394 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4344063678916522, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &962822945
 Prefab:
   m_ObjectHideFlags: 0
@@ -6580,6 +6610,11 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 975881883}
+--- !u!4 &999334217 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4905957209752692, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &1065363453
 Prefab:
   m_ObjectHideFlags: 0
@@ -6626,6 +6661,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87f32575ecf49844a9a3712f662a2f4f, type: 2}
   m_IsPrefabParent: 0
+--- !u!4 &1104571190 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4549301045028032, guid: 2079f77c9ad511646b0666254b6e3a28,
+    type: 2}
+  m_PrefabInternal: {fileID: 327377285}
 --- !u!1001 &1123223420
 Prefab:
   m_ObjectHideFlags: 0
@@ -7583,42 +7623,42 @@ Prefab:
         type: 2}
       propertyPath: Backgrounds.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 551045222}
     - target: {fileID: 114858295429786058, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 581421748}
     - target: {fileID: 114858295429786058, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 928796394}
     - target: {fileID: 114858295429786058, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 828936517}
     - target: {fileID: 114858295429786058, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[3]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 373434245}
     - target: {fileID: 114858295429786058, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: ParentContainer
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 999334217}
     - target: {fileID: 114407717002881314, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1104571190}
     - target: {fileID: 114407717002881314, guid: d31a4c98cd670bd44b79736b1ba9f224,
         type: 2}
       propertyPath: Backgrounds.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 276441134}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d31a4c98cd670bd44b79736b1ba9f224, type: 2}
   m_IsPrefabParent: 0
