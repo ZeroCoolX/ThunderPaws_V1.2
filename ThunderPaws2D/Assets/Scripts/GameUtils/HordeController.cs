@@ -342,7 +342,7 @@ public class HordeController : MonoBehaviour {
     private void SetCameraTarget(Transform target, bool activator, float yOffset){
         var camFollow = Camera.GetComponent<Camera2DFollow>();
         camFollow.Target = target;
-        camFollow.VerticalOffset = yOffset;
+        camFollow.HordeVerticalOffset = yOffset;
         // Disable the simple collider and activator as well. Not that this is necessary but why leave it running.
         if(target.gameObject.tag == GameConstants.Tag_Player) {
             target.GetComponent<BaddieActivator>().enabled = activator;
