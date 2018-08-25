@@ -27,10 +27,11 @@ public class Camera2DFollow : FollowBase {
     }
 
     private bool TooFarFromOrigin() {
-        if(Mathf.Sign(_originPoint) == Mathf.Sign(Target.position.y)) {
-            return Mathf.Abs(_originPoint - Target.position.y) > 5;
+
+        if (Mathf.Sign(_originPoint) == Mathf.Sign(Target.position.y)) {
+            return Mathf.Abs(_originPoint - Target.position.y) > ((Target.position.y > _originPoint) ? 5 : 1.5);
         } else {
-            return (Mathf.Abs(_originPoint) + Mathf.Abs(Target.position.y)) > 5;
+            return (Mathf.Abs(_originPoint) + Mathf.Abs(Target.position.y)) > ((Target.position.y > _originPoint) ? 5 : 1.5);
         }
     }
 
