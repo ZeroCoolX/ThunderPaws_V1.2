@@ -23,3 +23,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel1.unity
     guid: f4558a6aa5a7d8f42950513c429c8d5d
+  - enabled: 1
+    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel2.unity
+    guid: 7f6e6e355e9a8994da03b5810690b3e8
