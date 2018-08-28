@@ -6,7 +6,7 @@ using UnityEngine;
 public class IndependentParallax : Parallaxing {
     private Transform _mainCamera;
     private Vector3 _previousCamPosition;
-    private float _moveSpeed = 0.05f;
+    public float MoveSpeed;// = 0.05f;
 
     protected new void Awake() {
         base.Awake();
@@ -18,7 +18,7 @@ public class IndependentParallax : Parallaxing {
         // The previous frame had the current frames camera position
         _previousCamPosition = _mainCamera.position;
         for (int i = 0; i < Backgrounds.Length; ++i) {
-            ParallaxScales[i] = _moveSpeed;
+            ParallaxScales[i] = MoveSpeed;
         }
     }
 
