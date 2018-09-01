@@ -53,7 +53,7 @@ public class Camera2DFollow : FollowBase {
 
        LookAheadPos = Vector3.MoveTowards(LookAheadPos, Vector3.zero, Time.deltaTime * LookAheadReturnSpeed);
 
-        Vector3 tempPos = Target.position + LookAheadPos + Vector3.forward * OffsetZ;
+        Vector3 tempPos = Target.position/* + LookAheadPos*/ + Vector3.forward * OffsetZ;
         Vector3 aheadTargetPos = new Vector3(tempPos.x, 1, tempPos.z);
         if (TooFarFromOrigin()) {
             aheadTargetPos.y = tempPos.y;
