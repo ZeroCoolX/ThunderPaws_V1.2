@@ -227,3 +227,17 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: S1L1
+    clip: {fileID: 8300000, guid: 34b144dcb9296204c9ee1b24d92c3c35, type: 3}
+    volume: 0.25
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: S1L2
+    clip: {fileID: 8300000, guid: ad40e9418839c88409aaf28f8405cf88, type: 3}
+    volume: 0.25
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0

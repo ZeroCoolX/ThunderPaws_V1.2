@@ -35,6 +35,7 @@ public class MazeSpawnPoint : MonoBehaviour {
         clone.GetComponent<SpriteRenderer>().color = Color.red;
         clone.GetComponent<Robot_GL1>().Health = 100;
         clone.GetComponent<Robot_GL1>().LedgeBound = true;
+        clone.GetComponent<LifetimeController>().enabled = false;
         clone.GetComponent<Robot_GL1>().enabled = true;
     }
 

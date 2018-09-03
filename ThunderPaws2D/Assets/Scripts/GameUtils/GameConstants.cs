@@ -7,7 +7,7 @@ public class GameConstants {
     // Audio file names
 	public static string Audio_JumpLanding = "JumpLanding";
     public static string Audio_MenuMusic = "Music_Menu";
-    public static string Audio_MainMusic = "Music_Main";
+    public static string Audio_MainMusic = "S1L2";//"Music_Main";
     public static string Audio_BossMusic = "Music_Boss";
     public static string Audio_BackstoryMusic = "Music_Backstory";
     public static string Audio_WeaponSwitch = "WeaponSwitch";
@@ -26,6 +26,9 @@ public class GameConstants {
     public static string Audio_GaussShotImpact = "GaussShot_Impact";
     public static string Audio_GaussShotUltImpact = "GaussShot_UltImpact";
     public static string Audio_FatCatImpact = "FatCat_Impact";
+    // Level audio
+    public static string Audio_Levels_Stage1Level1 = "S1L1";
+    public static string Audio_Levels_Stage1Level2 = "S1L2";
 
     // GameTags
     public static string Tag_Player = "Player";

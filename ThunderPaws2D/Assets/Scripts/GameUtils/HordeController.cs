@@ -296,12 +296,12 @@ public class HordeController : MonoBehaviour {
             _activeFL1Count = MaxFL1Count;
         }
         if (Time.time > FL2SpawnRate && _activeFL2Count < MaxFL2Count) {
-            FL2SpawnRate = Time.time + Random.Range(3, 6);
+            FL2SpawnRate = Time.time + Random.Range(2, 6);
             InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[rand > 3 && rand <= 5 ? 1 : 2].position, false);
             _activeFL2Count = MaxFL2Count;
         }
         if (Time.time > FL1SpawnRate && _activeFL3Count < MaxFL3Count) {
-            FL3SpawnRate = Time.time + Random.Range(3, 10);
+            FL3SpawnRate = Time.time + Random.Range(3, 8);
             InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), MaxFL3Count, FL3BaddiePrefab, FlyingSpawns[rand > 6 ? 2 : 0].position, false);
             _activeFL3Count = MaxFL3Count;
         }

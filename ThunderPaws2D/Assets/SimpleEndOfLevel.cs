@@ -26,6 +26,10 @@ public class SimpleEndOfLevel : MonoBehaviour {
         }
     }
 
+    private void EndLevel() {
+        GameMasterV2.Instance.GameOver();
+    }
+
     private void Apply(Vector3 v, Collider2D c) {
         // Lock Camera
         Camera.GetComponent<Camera2DFollow>().Target = transform;
@@ -36,6 +40,8 @@ public class SimpleEndOfLevel : MonoBehaviour {
         c.transform.GetComponent<Player>().enabled = false;
         _player = c.transform;
         _beginMovement = true;
+
+        Invoke("EndLevel", 2.5f);
         //Move player out of frame then show game over screen
 
     }

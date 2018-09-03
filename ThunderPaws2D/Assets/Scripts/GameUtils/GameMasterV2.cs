@@ -153,7 +153,7 @@ public class GameMasterV2 : MonoBehaviour {
         }catch(System.Exception e) {
             print("There was no menu music to stop");
         }
-        AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_Levels_Stage1Level2);
     }
 
     /// <summary>
