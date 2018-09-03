@@ -31,6 +31,10 @@ public abstract class BaseLifeform : MonoBehaviour {
         }
     }
 
+    public CollisionController2D Get2DController() {
+        return Controller2d;
+    }
+
     protected void Update() {
         if (_useFlashDamage) {
             GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0.8f);

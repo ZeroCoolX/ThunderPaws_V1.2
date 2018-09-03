@@ -47,6 +47,9 @@ public class Player : PlayerLifeform {
     private ActionMovementData _actionMovement;
 
 
+    public Vector3 GetCurrentVelocity() {
+        return Velocity;
+    }
 
     public override bool Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
