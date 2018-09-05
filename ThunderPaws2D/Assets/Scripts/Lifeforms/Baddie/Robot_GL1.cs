@@ -19,7 +19,6 @@ public class Robot_GL1 : GroundBaddieLifeform {
     private float _alertTimeThreshold = -1f;
 
     private const float GRAVITY = -25.08f;
-    private const float HEALTH = 5f;
     private const float SHOT_DELAY = 3f;
     private const int MOVE_SPEED = 5;
     private const float VISION_LENGTH = 10f;
@@ -38,7 +37,6 @@ public class Robot_GL1 : GroundBaddieLifeform {
         GroundPositionData.FireDelay = 1f;
         VisionRayLength = VISION_LENGTH;
         Gravity = GRAVITY;
-        Health = HEALTH;
     }
 
     public void Update() {

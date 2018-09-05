@@ -153,7 +153,8 @@ public class GameMasterV2 : MonoBehaviour {
         }catch(System.Exception e) {
             print("There was no menu music to stop");
         }
-        AudioManager.Instance.PlaySound(GameConstants.Audio_Levels_Stage1Level2);
+        // Audio files correspond exactly to level names for ease
+        AudioManager.Instance.PlaySound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
     }
 
     /// <summary>
@@ -399,8 +400,8 @@ public class GameMasterV2 : MonoBehaviour {
     }
     // TODO: THIS AS WELL NEEDS REFACTORING
     public void GameOver() {
-        //UIManager.Instance.GetUi("GameOver").Find(GameConstants.ObjectName_ScoreText).GetComponent<Text>().text = "Your Score: " + Score;
         UIManager.Instance.GetUi("GameOver").gameObject.SetActive(true);
+        AudioManager.Instance.PlaySound(GameConstants.Audio_LevelClear);
     }
 
 

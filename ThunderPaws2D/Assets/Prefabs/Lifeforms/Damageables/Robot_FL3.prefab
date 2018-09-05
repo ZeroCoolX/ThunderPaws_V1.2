@@ -117,8 +117,7 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1280
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
+  NotifyOnCollision: 0
 --- !u!114 &114492731381480572
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -130,10 +129,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae660eb8ceeb0cf4e8c35d46e02142b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 40
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
-  Health: 25
   Animator: {fileID: 0}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}

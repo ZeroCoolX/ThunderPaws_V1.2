@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DifficultyManager : MonoBehaviour {
     public static DifficultyManager Instance;
     public string Difficulty = GameConstants.Difficulty_Easy;
-    public string LevelToPlay;
+    public int LevelToPlay;
 
     private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
 
@@ -34,11 +34,11 @@ public class DifficultyManager : MonoBehaviour {
             print("We couldn't stop the music because it wasn't playing. Move along");
         }
         print("Beginning level : " + LevelToPlay);
-        if(string.IsNullOrEmpty(LevelToPlay) || "S1L1".Equals(LevelToPlay)) {
+        if(LevelToPlay == 11) {
             SceneManager.LoadScene(GameConstants.Scene_Backstory_Menu);
         }
         else{
-            SceneManager.LoadScene(LevelToPlay);
+            SceneManager.LoadScene(GameConstants.GetLevel(LevelToPlay));
         }
     }
 

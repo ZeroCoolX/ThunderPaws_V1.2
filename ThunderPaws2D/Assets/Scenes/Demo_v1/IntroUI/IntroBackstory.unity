@@ -695,7 +695,7 @@ Prefab:
     - target: {fileID: 114975997920759814, guid: ad3f2c3533bf50d4b8a3cadee26d543b,
         type: 2}
       propertyPath: SceneToLoadAfter
-      value: S1L1
+      value: 11
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad3f2c3533bf50d4b8a3cadee26d543b, type: 2}

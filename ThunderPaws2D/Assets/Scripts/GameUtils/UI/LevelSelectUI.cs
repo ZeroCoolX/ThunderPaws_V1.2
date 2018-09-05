@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelectUI : MonoBehaviour {
 
-	public void SelectLevel(string level) {
-        DifficultyManager.Instance.LevelToPlay = GameConstants.GetLevel(level);
+	public void SelectLevel(int level) {
+        DifficultyManager.Instance.LevelToPlay = level;
     }
 }

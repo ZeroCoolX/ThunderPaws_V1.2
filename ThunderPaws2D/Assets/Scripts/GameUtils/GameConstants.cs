@@ -10,6 +10,7 @@ public class GameConstants {
     public static string Audio_MainMusic = "S1L2";//"Music_Main";
     public static string Audio_BossMusic = "Music_Boss";
     public static string Audio_BackstoryMusic = "Music_Backstory";
+    public static string Audio_LevelClear = "LevelClear";
     public static string Audio_WeaponSwitch = "WeaponSwitch";
     public static string Audio_FuzzBuster = "FuzzBusterShot";
     public static string Audio_Shotgun = "ShotgunShot";
@@ -26,9 +27,14 @@ public class GameConstants {
     public static string Audio_GaussShotImpact = "GaussShot_Impact";
     public static string Audio_GaussShotUltImpact = "GaussShot_UltImpact";
     public static string Audio_FatCatImpact = "FatCat_Impact";
-    // Level audio
-    public static string Audio_Levels_Stage1Level1 = "S1L1";
-    public static string Audio_Levels_Stage1Level2 = "S1L2";
+    // Level + (H)orde  audio
+    public static string S1L1 = "S1L1";
+    public static string S1L1H = "S1L1H";
+    public static string S1L2 = "S1L2";
+    public static string S1L2H = "S1L2H";
+    public static string S1L3 = "S1L3";
+    public static string S1L3H = "S1L3H";
+    public static string S1L4 = "S1L4";
 
     // GameTags
     public static string Tag_Player = "Player";
@@ -89,8 +95,8 @@ public class GameConstants {
 
     // Scene Name Data
     public static string Scene_LevelName_1 = "AlphaArtDemoLevel1";
-    public static string Scene_LevelName_Menu = "AlphaDemoMainMenu";
-    public static string Scene_Backstory_Menu = "AlphaDemoBackstory";
+    public static string Scene_LevelName_Menu = "MainMenu";
+    public static string Scene_Backstory_Menu = "IntroBackstory";
 
     // Difficulties
     public static string Difficulty_Easy = "easy";
@@ -99,30 +105,30 @@ public class GameConstants {
 
 
     // Stages and Levels
-    private static Dictionary<string, string> _stageLevels = new Dictionary<string, string>() {
-        {"S1L1","AlphaArtDemoLevel1"},
-        {"S1L2","AlphaArtDemoLevel2"},
-        {"S1L3",""},
-        {"S1L4",""},
-        {"S2L1",""},
-        {"S2L2",""},
-        {"S2L3",""},
-        {"S2L4",""},
-        {"S3L1",""},
-        {"S3L2",""},
-        {"S3L3",""},
-        {"S3L4",""},
-        {"S4L1",""},
-        {"S4L2",""},
-        {"S4L3",""},
-        {"S4L4",""},
+    private static Dictionary<int, string> _stageLevels = new Dictionary<int, string>() {
+        {11,"S1L1"},
+        {12,"S1L2"},
+        {13,""},
+        {14,""},
+        {21,""},
+        {22,""},
+        {23,""},
+        {24,""},
+        {31,""},
+        {32,""},
+        {33,""},
+        {34,""},
+        {41,""},
+        {42,""},
+        {43,""},
+        {44,""},
     };
-    public static string GetLevel(string key) {
+    public static string GetLevel(int key) {
         string level = "";
         _stageLevels.TryGetValue(key, out level);
         if (string.IsNullOrEmpty(level)) {
             Debug.LogError("Error retrieving level : " + key + " playing level 1 instead");
-            level = "AlphaArtDemoLevel1";
+            level = "S1L1";
         }
         return level;
     }

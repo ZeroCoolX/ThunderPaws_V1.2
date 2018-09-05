@@ -42,6 +42,9 @@ public class HordeController : MonoBehaviour {
     private float FL2SpawnRate;
     private float FL3SpawnRate;
 
+    private string _levelAudio;
+
+
     // Reference to all the currently active baddies so we can stop them all, kill them all
     private Dictionary<string, Transform> ActiveHordeBaddieCache = new Dictionary<string, Transform>();
 
@@ -91,6 +94,8 @@ public class HordeController : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        _levelAudio = GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay);
+
         //Add delegate for collision detection
         Collider = GetComponent<SimpleCollider>();
         if (Collider == null) {
@@ -144,8 +149,8 @@ public class HordeController : MonoBehaviour {
     }
 
     private void PlayerDiedReset() {
-        AudioManager.Instance.StopSound(GameConstants.Audio_BossMusic);
-        AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
+        AudioManager.Instance.StopSound(_levelAudio+"H");
+        AudioManager.Instance.PlaySound(_levelAudio);
         PlayerDiedHack = true;
         // Inform collider to reset iteself
         Collider.Initialize(1 << 8, RadiusOfTrigger);
@@ -212,14 +217,14 @@ public class HordeController : MonoBehaviour {
     }
 
     private void ActivateExit() {
-        AudioManager.Instance.StopSound(GameConstants.Audio_BossMusic);
+        AudioManager.Instance.StopSound(_levelAudio+"H");
         if (RightBarrier != null) {
             RightBarrier.gameObject.SetActive(false);
         }
         if (!EndGameAfter) {
             // Was Horde 1
             GameMasterV2.Instance.CalculateHordeScore(1);
-            AudioManager.Instance.PlaySound(GameConstants.Audio_MainMusic);
+            AudioManager.Instance.PlaySound(_levelAudio);
             Destroy(gameObject);
         }else {
             GameMasterV2.Instance.CalculateHordeScore(2);
@@ -296,7 +301,7 @@ public class HordeController : MonoBehaviour {
             _activeFL1Count = MaxFL1Count;
         }
         if (Time.time > FL2SpawnRate && _activeFL2Count < MaxFL2Count) {
-            FL2SpawnRate = Time.time + Random.Range(2, 6);
+            FL2SpawnRate = Time.time + Random.Range(1, 3);
             InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[rand > 3 && rand <= 5 ? 1 : 2].position, false);
             _activeFL2Count = MaxFL2Count;
         }
@@ -334,9 +339,9 @@ public class HordeController : MonoBehaviour {
         if (LeftBarrier != null) {
             LeftBarrier.gameObject.SetActive(true);
         }
-
-        AudioManager.Instance.StopSound(GameConstants.Audio_MainMusic);
-        AudioManager.Instance.PlaySound(GameConstants.Audio_BossMusic);
+        //        AudioManager.Instance.PlaySound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
+        AudioManager.Instance.StopSound(_levelAudio);
+        AudioManager.Instance.PlaySound(_levelAudio+"H");
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){

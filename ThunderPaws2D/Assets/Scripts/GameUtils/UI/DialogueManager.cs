@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour {
     public Text NameText;
     public Text DialogueText;
     public Transform DialogUi;
-    public string SceneToLoadAfter;
+    public int SceneToLoadAfter;
 
     private Queue<string> _sentences;
 
@@ -34,7 +34,7 @@ public class DialogueManager : MonoBehaviour {
         if (Animator != null) {
             Animator.SetBool("IsOpen", false);
         }
-        if (!string.IsNullOrEmpty(SceneToLoadAfter)) {
+        if (SceneToLoadAfter > 0) {
             AudioManager.Instance.StopSound(GameConstants.Audio_BackstoryMusic);
             SceneManager.LoadScene(GameConstants.GetLevel(SceneToLoadAfter));
         }
