@@ -97,4 +97,34 @@ public class GameConstants {
     public static string Difficulty_Normal = "normal";
     public static string Difficulty_Hard = "hard";
 
+
+    // Stages and Levels
+    private static Dictionary<string, string> _stageLevels = new Dictionary<string, string>() {
+        {"S1L1","AlphaArtDemoLevel1"},
+        {"S1L2","AlphaArtDemoLevel2"},
+        {"S1L3",""},
+        {"S1L4",""},
+        {"S2L1",""},
+        {"S2L2",""},
+        {"S2L3",""},
+        {"S2L4",""},
+        {"S3L1",""},
+        {"S3L2",""},
+        {"S3L3",""},
+        {"S3L4",""},
+        {"S4L1",""},
+        {"S4L2",""},
+        {"S4L3",""},
+        {"S4L4",""},
+    };
+    public static string GetLevel(string key) {
+        string level = "";
+        _stageLevels.TryGetValue(key, out level);
+        if (string.IsNullOrEmpty(level)) {
+            Debug.LogError("Error retrieving level : " + key + " playing level 1 instead");
+            level = "AlphaArtDemoLevel1";
+        }
+        return level;
+    }
+
 }

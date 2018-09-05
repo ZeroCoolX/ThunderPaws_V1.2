@@ -36,7 +36,7 @@ public class DialogueManager : MonoBehaviour {
         }
         if (!string.IsNullOrEmpty(SceneToLoadAfter)) {
             AudioManager.Instance.StopSound(GameConstants.Audio_BackstoryMusic);
-            SceneManager.LoadScene(SceneToLoadAfter);
+            SceneManager.LoadScene(GameConstants.GetLevel(SceneToLoadAfter));
         }
         foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
             player.GetComponent<PlayerInputController>().enabled = true;

@@ -17,12 +17,21 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Development/LeastObjectsPossible.unity
     guid: 159ea0f2d1b57e74f960dbde06304838
-  - enabled: 0
-    path: Assets/Scenes/TroubleShootingBug.unity
-    guid: e58c0a8c861d653469f134517c026d3b
   - enabled: 1
     path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel1.unity
     guid: f4558a6aa5a7d8f42950513c429c8d5d
   - enabled: 1
     path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel2.unity
     guid: 7f6e6e355e9a8994da03b5810690b3e8
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/IntroUI/IntroBackstory.unity
+    guid: 52b447c1e14e4ea40a0b7c11f73b6497
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/Stage1/S1L2.unity
+    guid: 7b25eb28ef95ccc4285f4ba1609a01bb
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/IntroUI/MainMenu.unity
+    guid: 99ac049e2671e6142b410ed75a512ccf
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/Stage1/S1L1.unity
+    guid: 6b8d8628c7ed6cf4aaf85cf79b13f5eb
