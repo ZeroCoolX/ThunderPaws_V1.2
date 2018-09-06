@@ -154,7 +154,12 @@ public class GameMasterV2 : MonoBehaviour {
             print("There was no menu music to stop");
         }
         // Audio files correspond exactly to level names for ease
-        AudioManager.Instance.PlaySound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
+        if(DifficultyManager.Instance != null) {
+            print("playing music " + DifficultyManager.Instance.LevelToPlay);
+            AudioManager.Instance.PlaySound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
+        }else {
+            print("DifficultyManager is null?!");
+        }
     }
 
     /// <summary>

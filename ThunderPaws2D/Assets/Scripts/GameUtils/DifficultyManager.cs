@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 public class DifficultyManager : MonoBehaviour {
     public static DifficultyManager Instance;
     public string Difficulty = GameConstants.Difficulty_Easy;
-    public int LevelToPlay;
+    public int LevelToPlay = 0;
 
     private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
 
@@ -43,12 +43,11 @@ public class DifficultyManager : MonoBehaviour {
     }
 
     private void Awake() {
-        if (Instance != null) {
-            if (Instance != this) {
-                Destroy(this.gameObject);
-            }
-        } else {
+        if (Instance == null) {
+            DontDestroyOnLoad(gameObject);
             Instance = this;
+        } else if (Instance != this) {
+            Destroy(gameObject);
         }
 
         // Pre-store difficulties
