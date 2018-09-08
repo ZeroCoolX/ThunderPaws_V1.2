@@ -108,7 +108,7 @@ public class GameConstants {
     private static Dictionary<int, string> _stageLevels = new Dictionary<int, string>() {
         {11,"S1L1"},
         {12,"S1L2"},
-        {13,""},
+        {13,"AlphaArtDemoLevel3"},
         {14,""},
         {21,""},
         {22,""},
