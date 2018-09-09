@@ -42,6 +42,10 @@ public class CheckpointController : MonoBehaviour {
     }
 
     private void Spawn() {
+        // Only spawn if we can
+        if(CheckpointSpawnIndex == CheckpointSpawns.Length) {
+            return;
+        }
         BaddieSpawn = CheckpointSpawns[CheckpointSpawnIndex];
         print("Creating Baddies for spawn : " + gameObject.name + " with spawn index : " + SpawnPointManager.Instance.GetSpawnIndex() + " at Time [" + Time.time+"]");
         BaddiesInCheckpointRange = Checkpoints[CheckpointIndex];
@@ -52,9 +56,7 @@ public class CheckpointController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         print("Checkpoint activated");
         SpawnPointManager.Instance.IncrementSpawnIndex();
-        if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
-            SpawnFreshBaddiesForCheckpoint();
-        }
+        SpawnFreshBaddiesForCheckpoint();
         // Refresh the players health once they hit the checkpoint
         c.transform.GetComponent<Player>().RegenerateAllHealth();
     }

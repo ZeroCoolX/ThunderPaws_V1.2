@@ -247,14 +247,14 @@ MonoBehaviour:
     pitch: 1
     randomVolume: 0
     randomPitch: 0
-    loop: 0
+    loop: 1
   - name: S1L2H
     clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
     volume: 1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
-    loop: 0
+    loop: 1
   - name: LevelClear
     clip: {fileID: 8300000, guid: 131a6318c78a4e0499102a54ccbc95ab, type: 3}
     volume: 1
@@ -262,3 +262,17 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: S1L3
+    clip: {fileID: 8300000, guid: 350de8f885e4ce24ea16190fd5937b59, type: 3}
+    volume: 0.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 1
+  - name: S1L3H
+    clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 1

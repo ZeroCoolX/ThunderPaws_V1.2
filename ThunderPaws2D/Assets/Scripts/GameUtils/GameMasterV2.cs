@@ -405,6 +405,7 @@ public class GameMasterV2 : MonoBehaviour {
     }
     // TODO: THIS AS WELL NEEDS REFACTORING
     public void GameOver() {
+        AudioManager.Instance.StopSound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
         UIManager.Instance.GetUi("GameOver").gameObject.SetActive(true);
         AudioManager.Instance.PlaySound(GameConstants.Audio_LevelClear);
     }
