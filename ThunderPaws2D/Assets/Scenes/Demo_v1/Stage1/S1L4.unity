@@ -1042,6 +1042,79 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 908224954}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!1 &854142151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 854142153}
+  - component: {fileID: 854142152}
+  m_Layer: 0
+  m_Name: New Piskel (16)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!212 &854142152
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 854142151}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: d84df12fd32febd449f5e5c4c8804f28, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 7.5, y: 7.5}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+--- !u!4 &854142153
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 854142151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 7.1978106, y: -3.8876336, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &899860195 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4577878596718628, guid: b5b78d19197b71542b140f3c4ac5bafe,
@@ -1389,24 +1462,23 @@ Prefab:
     - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
       propertyPath: Dialog.Sentences.Array.data[0]
-      value: Our plan was to use the cover of darkness to sneak into the capitol once
-        the sun set...
+      value: I should have known the Thunderpaws would try and dissrupt our plans
+        for revenge.
       objectReference: {fileID: 0}
     - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
       propertyPath: Dialog.Sentences.Array.data[1]
-      value: However unfotunately for us evil never sleeps...
+      value: However, sorry to dissappoint...
       objectReference: {fileID: 0}
     - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
       propertyPath: Dialog.Sentences.Array.data[2]
-      value: Therefor we must take them head on and punch a hole right through their
-        final defenses!
+      value: But your little heroic adventure ends now.
       objectReference: {fileID: 0}
     - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
       propertyPath: Dialog.Sentences.Array.data[3]
-      value: Hold on just a bit longer paws! For the glory of paw kind!!
+      value: Prepare to be pounded into furballs!
       objectReference: {fileID: 0}
     - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
         type: 2}
@@ -1430,6 +1502,20 @@ Prefab:
         type: 2}
       propertyPath: Dialog.Sentences.Array.data[7]
       value: Now, lock and load Thunderpaws we got a world to save!
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+        type: 2}
+      propertyPath: DialogueDelay
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1406968678485344, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114449539689516054, guid: 3dde2a337a5f9d84bbf235803a7d3c8e,
+        type: 2}
+      propertyPath: Dialog.Name
+      value: Mausu Gang Boss (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dde2a337a5f9d84bbf235803a7d3c8e, type: 2}
@@ -1776,11 +1862,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4447121832273732, guid: 176345b7bcd727643be9a1e49d27c62a, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -26.09
+      value: -24.96
       objectReference: {fileID: 0}
     - target: {fileID: 4447121832273732, guid: 176345b7bcd727643be9a1e49d27c62a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 2.34
+      value: 2.61
       objectReference: {fileID: 0}
     - target: {fileID: 4447121832273732, guid: 176345b7bcd727643be9a1e49d27c62a, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2252,11 +2338,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4852928135144062, guid: 7b61caa33126cea4a8dff1e120b784a1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -26.31
+      value: -24.44
       objectReference: {fileID: 0}
     - target: {fileID: 4852928135144062, guid: 7b61caa33126cea4a8dff1e120b784a1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 1.48
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 4852928135144062, guid: 7b61caa33126cea4a8dff1e120b784a1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -2281,6 +2367,11 @@ Prefab:
     - target: {fileID: 4852928135144062, guid: 7b61caa33126cea4a8dff1e120b784a1, type: 2}
       propertyPath: m_RootOrder
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 114198021347972954, guid: 7b61caa33126cea4a8dff1e120b784a1,
+        type: 2}
+      propertyPath: MoveForSeconds
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7b61caa33126cea4a8dff1e120b784a1, type: 2}
@@ -3176,7 +3267,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2090467788}
   - component: {fileID: 2090467790}
-  - component: {fileID: 2090467789}
   m_Layer: 0
   m_Name: Foreground
   m_TagString: Untagged
@@ -3197,19 +3287,6 @@ Transform:
   m_Father: {fileID: 135211338}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2090467789
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2090467787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e9d4686dbd5ab440b92614d02233ec4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LeftBuddy: {fileID: 0}
-  RightBuddy: {fileID: 0}
 --- !u!212 &2090467790
 SpriteRenderer:
   m_ObjectHideFlags: 0

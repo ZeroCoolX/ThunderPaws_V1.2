@@ -24,6 +24,7 @@ public class SimplePlayerMover : MonoBehaviour {
         foreach (var player in Players) {
             player.transform.GetComponent<PlayerInputController>().enabled = false;
             player.transform.GetComponent<Player>().DirectionalInput = new Vector2(1f, 0f);
+            player.transform.GetComponent<Player>().AllowBackwardsProgression = true;
         }
         Invoke("StopMovement", MoveForSeconds);
     }

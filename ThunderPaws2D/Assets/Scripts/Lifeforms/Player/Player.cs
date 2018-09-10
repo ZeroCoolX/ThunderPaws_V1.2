@@ -11,6 +11,7 @@ public class Player : PlayerLifeform {
     /// </summary>
     public string JoystickId;
     public Vector2 DirectionalInput { get; set; }
+    public bool AllowBackwardsProgression { get; set; }
     public bool FacingRight = true;
 
     private float _meleeDamage = 10f;
@@ -254,6 +255,9 @@ public class Player : PlayerLifeform {
     }
 
     private bool BackwardsLevelProgressionAttempted() {
+        if (AllowBackwardsProgression) {
+            return false;
+        }
         // Get the leftmost edge of the viewport and pad it
         var leftScreenEdge = Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0));
         leftScreenEdge.x += 2;

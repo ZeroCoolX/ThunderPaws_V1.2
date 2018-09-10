@@ -237,7 +237,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BossController.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Internal\VectorSwizzleExtensions.cs" />
@@ -252,6 +251,7 @@
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
     <Compile Include="Assets\Scripts\GameUtils\AudioManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BaddieActivator.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\BossController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CheckpointController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Colliders\CoinController.cs" />
