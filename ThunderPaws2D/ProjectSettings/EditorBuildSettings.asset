@@ -30,6 +30,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Demo_v1/Stage1/S1L2.unity
     guid: 7b25eb28ef95ccc4285f4ba1609a01bb
   - enabled: 1
+    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel4.unity
+    guid: 459be233c604ce64d9735074540dd621
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/Stage1/S1L4.unity
+    guid: 03469bc7f4e93394d9806c63b1eca459
+  - enabled: 1
     path: Assets/Scenes/Demo_v1/IntroUI/MainMenu.unity
     guid: 99ac049e2671e6142b410ed75a512ccf
   - enabled: 1

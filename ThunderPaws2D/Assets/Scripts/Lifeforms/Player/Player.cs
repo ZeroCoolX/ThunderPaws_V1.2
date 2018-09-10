@@ -51,6 +51,10 @@ public class Player : PlayerLifeform {
         return Velocity;
     }
 
+    public float GetCurrentGravity() {
+        return Gravity;
+    }
+
     public override bool Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
         PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this

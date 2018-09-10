@@ -20,6 +20,7 @@ TagManager:
   - UIOverlay
   - UIManager
   - DifficultyExit
+  - BossCameraTarget
   layers:
   - Default
   - TransparentFX

@@ -237,6 +237,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BossController.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Internal\VectorSwizzleExtensions.cs" />
@@ -281,6 +282,7 @@
     <Compile Include="Assets\Scripts\GameUtils\SimpleAudio.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleEndOfLevel.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleMover.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\SimplePlayerMover.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ControllerAssignmentUI.cs" />
