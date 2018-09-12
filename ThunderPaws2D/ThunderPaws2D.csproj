@@ -373,6 +373,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\VerticalHeavyAttack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\PixelPerfectCamera\README.txt" />
