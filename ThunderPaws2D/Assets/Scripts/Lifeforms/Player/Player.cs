@@ -319,10 +319,7 @@ public class Player : PlayerLifeform {
             Animator.SetBool("Falling", falling);
             Animator.SetBool("Crouching", crouch);
             Animator.SetBool("Melee", melee);
-           //if(Animator.GetBool("Roll") == true ^ rolling) {
             Animator.SetBool("Roll", rolling);
-            //}
-            print("Rolling = " + rolling);
             _weaponManager.ToggleWeaponActiveStatus(!rolling && !melee);
 
             // The only time we want to be playing the run animation is if we are grounded, not holding the left trigger (or left ctrl), and not crouching nor pointing exactly upwards

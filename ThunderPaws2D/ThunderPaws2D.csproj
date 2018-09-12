@@ -301,6 +301,7 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\UIManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UISoundController.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\BaddieLifeform.cs" />
+    <Compile Include="Assets\Scripts\Lifeforms\Baddie\Boss\BaddieBoss.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\FlyingBaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL1.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Flying\Robot_FL2.cs" />
