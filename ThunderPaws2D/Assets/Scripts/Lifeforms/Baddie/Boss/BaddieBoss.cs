@@ -7,9 +7,10 @@ public class BaddieBoss : BaddieLifeform {
 
     [Header("Play Vertical Attack")]
     public bool Vattack = false;
-    private bool _vAttackInitiated;
+    private bool _vAttackInitiated = false;
     [Header("Play Horizontal Attack")]
-    public bool Hattack;
+    public bool Hattack = false;
+    private bool _hAttackInitiated = false;
 
     private float smoothTime = 1F;
     private float yVelocity = 0.3F;
@@ -21,10 +22,13 @@ public class BaddieBoss : BaddieLifeform {
 
     public delegate void VerticalHeavyAttackDelegate();
     public VerticalHeavyAttackDelegate PlayVerticalHeavyAttack;
+
+    public delegate void HorizontalHeavyAttackDelegate();
+    public HorizontalHeavyAttackDelegate PlayHorizontalHeavyAttack;
+
     public Transform GetTarget() {
         return Target;
     }
-
 
     private new void Start() {
         base.Start();
@@ -33,17 +37,19 @@ public class BaddieBoss : BaddieLifeform {
         _moveTrigger = Time.time + _delayBetweenMoves;
 
         transform.GetComponent<VerticalHeavyAttack>().OnComplete += ResumeBasicAttack;
+        transform.GetComponent<HorizontalHeavyAttack>().OnComplete += ResumeBasicAttack;
     }
 
     private void ResumeBasicAttack() {
         Vattack = false;
         _vAttackInitiated = false;
+        Hattack = false;
+        _hAttackInitiated = false;
     }
 
     // Update is called once per frame
     private new void Update() {
         base.Update();
-
         if (!CheckTargetsExist()) {
             return;
         }
@@ -60,18 +66,18 @@ public class BaddieBoss : BaddieLifeform {
             return;
         }
 
-        //if (Hattack) {
-        //    var rand = Random.Range(0, 2);
-        //    _currentAttackPoint = Attack3Points[rand].position;
-        //    CalculateVelocity();
-        //    return;
-        //}
+        if (Hattack && !_hAttackInitiated) {
+            _hAttackInitiated = true;
+            PlayHorizontalHeavyAttack.Invoke();
+        }
+        if (_hAttackInitiated) {
+            return;
+        }
 
         if (Time.time > _moveTrigger) {
             RandomlySelectAttackPoint();
             _moveTrigger = Time.time + _delayBetweenMoves;
         }
-        print("Vector3.Distance(" + transform.position + ", " + _currentAttackPoint + ") = ");
         CalculateVelocity();
     }
 
@@ -83,12 +89,6 @@ public class BaddieBoss : BaddieLifeform {
 
     private void RandomlySelectAttackPoint() {
         var rand = Random.Range(0, 5);
-        print("Selecting random point: " + Attack1Points[rand].gameObject.name);
         _currentAttackPoint = Attack1Points[rand].position;
     }
-
-    private void VerticalHeavyAttack() {
-
-    }
-
 }

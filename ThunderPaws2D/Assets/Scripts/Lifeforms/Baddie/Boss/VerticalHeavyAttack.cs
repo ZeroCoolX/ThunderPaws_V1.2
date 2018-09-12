@@ -43,7 +43,9 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
     private void ResetState() {
         _attack = false;
+        smoothTime = 1f;
         _smashLocked = false;
+        MovementIndicator.GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         _attackState = AttackState.DEFAULT;
     }
 
@@ -68,7 +70,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                     _smashLocked = true;
                 }
                 smoothTime = 0.3f;
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 1f));
+                StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.1f));
                 break;
             case AttackState.PAUSE:
                 Flash();

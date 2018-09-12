@@ -1242,7 +1242,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 324638060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.54, y: -3.14, z: 11.639185}
+  m_LocalPosition: {x: 13.54, y: -3.14, z: 11.639185}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1639,6 +1639,7 @@ GameObject:
   - component: {fileID: 492183907}
   - component: {fileID: 492183906}
   - component: {fileID: 492183908}
+  - component: {fileID: 492183909}
   m_Layer: 14
   m_Name: Temp_Boss
   m_TagString: Untagged
@@ -1657,7 +1658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14e00ab40a3252346813ab69ad37f825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 1
+  Health: 1000
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 10
@@ -1687,7 +1688,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e0e98095ffaabe1488bebf1504c59f7d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1789,6 +1790,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AttackPoint: {fileID: 1972510368}
   MovementIndicator: {fileID: 1319926400}
+--- !u!114 &492183909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 492183902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 118ac343a344e5c4999b19a628fc3b62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttackPoints:
+  - {fileID: 324638062}
+  - {fileID: 380661269}
 --- !u!1 &512415585
 GameObject:
   m_ObjectHideFlags: 0
@@ -5598,7 +5613,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 13.541667
+      value: 7.760417
       objectReference: {fileID: 0}
     - target: {fileID: 212996950197282144, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
