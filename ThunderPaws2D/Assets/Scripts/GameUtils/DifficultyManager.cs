@@ -10,7 +10,14 @@ public class DifficultyManager : MonoBehaviour {
 
     private Dictionary<string, int[]> _difficulties = new Dictionary<string, int[]>();
 
+    private SceneLoader _sceneLoader;
 
+    private void Start() {
+        var loader = GameObject.Find("SceneLoader");
+        if (loader != null) {
+            _sceneLoader = loader.GetComponent<SceneLoader>();
+        }
+    }
 
     /// <summary>
     /// Store the difficulty by way of  Health and Lives in the 
@@ -28,17 +35,20 @@ public class DifficultyManager : MonoBehaviour {
         print("Setting heath to " + values[1]);
         LivesManager.Health = values[1];
 
-        try {
-            AudioManager.Instance.StopSound(GameConstants.Audio_MenuMusic);
-        }catch(System.Exception e) {
-            print("We couldn't stop the music because it wasn't playing. Move along");
-        }
         print("Beginning level : " + LevelToPlay);
         if(LevelToPlay == 11) {
             SceneManager.LoadScene(GameConstants.Scene_Backstory_Menu);
         }
         else{
-            SceneManager.LoadScene(GameConstants.GetLevel(LevelToPlay));
+            if (LevelToPlay > 0) {
+                if (_sceneLoader != null) {
+                    print("Loading scene async");
+                    _sceneLoader.LoadScene(GameConstants.GetLevel(LevelToPlay), GameConstants.Audio_MenuMusic);
+                } else {
+                    print("Loading scene");
+                    SceneManager.LoadScene(GameConstants.GetLevel(LevelToPlay));
+                }
+            }
         }
     }
 

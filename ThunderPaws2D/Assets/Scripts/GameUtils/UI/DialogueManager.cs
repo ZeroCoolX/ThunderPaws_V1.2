@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class DialogueManager : MonoBehaviour {
     public static DialogueManager Instance;
 
+    private SceneLoader _sceneLoader;
+
     public Animator Animator;
 
     public Text NameText;
@@ -27,6 +29,13 @@ public class DialogueManager : MonoBehaviour {
         _sentences = new Queue<string>();
     }
 
+    private void Start() {
+        var loader = GameObject.Find("SceneLoader");
+        if (loader != null) {
+            _sceneLoader = loader.GetComponent<SceneLoader>();
+        }
+    }
+
     public void EndDialogue() {
         DialogueText.text = "...";
         // Freeze everything in the scene
@@ -34,16 +43,23 @@ public class DialogueManager : MonoBehaviour {
         if (Animator != null) {
             Animator.SetBool("IsOpen", false);
         }
-        if (SceneToLoadAfter > 0) {
-            AudioManager.Instance.StopSound(GameConstants.Audio_BackstoryMusic);
-            SceneManager.LoadScene(GameConstants.GetLevel(SceneToLoadAfter));
-        }
+
         foreach (var player in GameObject.FindGameObjectsWithTag(GameConstants.Tag_Player)) {
             player.GetComponent<PlayerInputController>().enabled = true;
         }
         print("End of conversation");
         if (DialogUi != null) {
             DialogUi.gameObject.SetActive(false);
+        }
+
+        if (SceneToLoadAfter > 0) {
+            if (_sceneLoader != null) {
+                print("Loading scene async");
+                _sceneLoader.LoadScene(GameConstants.GetLevel(SceneToLoadAfter), GameConstants.Audio_BackstoryMusic);
+            } else {
+                print("Loading scene");
+                 SceneManager.LoadScene(GameConstants.GetLevel(SceneToLoadAfter));
+            }
         }
     }
 

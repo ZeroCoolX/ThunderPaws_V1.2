@@ -21,6 +21,7 @@ TagManager:
   - UIManager
   - DifficultyExit
   - BossCameraTarget
+  - SCENELOADER
   layers:
   - Default
   - TransparentFX
