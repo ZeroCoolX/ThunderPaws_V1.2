@@ -38,14 +38,6 @@ public class FlyingBaddieLifeform : BaddieLifeform {
         }
     }
 
-    private void InitiateAttack() {
-        Animator.SetBool("Attack", true);
-    }
-
-    private void ResetAttack() {
-        Animator.SetBool("Attack", false);
-    }
-
     protected float ChooseRandomHeight() {
         return Random.Range(FlyingPositionData.MinY, FlyingPositionData.MaxY);
     }

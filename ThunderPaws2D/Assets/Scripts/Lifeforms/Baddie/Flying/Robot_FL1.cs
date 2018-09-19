@@ -89,14 +89,6 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         _actionData.BombDropInitiated = false;
     }
 
-    private void InitiateAttack() {
-        Animator.SetBool("Attack", true);
-    }
-
-    private void ResetAttack() {
-        Animator.SetBool("Attack", false);
-    }
-
     private void DropBomb() {
         CheckForOverPlayerShortCircuit();
 

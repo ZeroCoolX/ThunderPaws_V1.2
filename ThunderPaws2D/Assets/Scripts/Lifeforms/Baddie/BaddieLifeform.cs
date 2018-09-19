@@ -150,6 +150,14 @@ public class BaddieLifeform : DamageableLifeform {
         transform.localScale = theScale;
     }
 
+    protected void InitiateAttack() {
+        Animator.SetBool("Attack", true);
+    }
+
+    protected void ResetAttack() {
+        Animator.SetBool("Attack", false);
+    }
+
     protected override void Move() {
         Animator.SetFloat("Velocity", Mathf.Abs(Velocity.x));
         Controller2d.Move(Velocity * Time.deltaTime);

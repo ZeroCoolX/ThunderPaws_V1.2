@@ -88,9 +88,11 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         if(Time.time > _actionData.TimeToFire && Vector2.Distance(transform.position, Target.position) <= GameConstants.Data_SightDistance) {
             // Wait 0.05 seconds in between each shot
             _actionData.TimeToFire = Time.time + 3f;
+            Invoke("InitiateAttack", 0.1f);
             Invoke("Fire", 0.1f);
-            Invoke("Fire", 0.15f);
-            Invoke("Fire", 0.2f);
+            Invoke("Fire", 0.25f);
+            Invoke("Fire", 0.4f);
+            Invoke("ResetAttack", 0.5f);
         }
     }
 

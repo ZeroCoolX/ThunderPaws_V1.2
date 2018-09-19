@@ -63,14 +63,6 @@ public class GroundBaddieLifeform : BaddieLifeform {
         return Physics2D.Raycast(ProjectileData.FirePoint.position, FacingRight ? Vector2.right : Vector2.left, VisionRayLength, targetLayer);
     }
 
-    private void InitiateAttack() {
-        Animator.SetBool("Attack", true);
-    }
-
-    private void ResetAttack() {
-        Animator.SetBool("Attack", false);
-    }
-
     protected void Fire() {
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
         // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
