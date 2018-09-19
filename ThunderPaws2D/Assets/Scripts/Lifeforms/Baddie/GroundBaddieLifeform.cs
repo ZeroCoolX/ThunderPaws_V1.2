@@ -49,13 +49,6 @@ public class GroundBaddieLifeform : BaddieLifeform {
             GroundPositionData.TimeStopped = Time.time + GroundPositionData.MaxStopSeconds;
             GroundPositionData.TimeSinceLastFire = Time.time + GroundPositionData.ShotDelay;
             Velocity.x = 0f;
-            //if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
-            //    try {
-            //        Animator.SetBool(OptionalAttackAnimation, true);
-            //    }catch(Exception e) {
-            //        print("Failed assigning animation value : " + OptionalAttackAnimation);
-            //    }
-            //}
             Invoke("Fire", GroundPositionData.FireDelay);
             Invoke("InitiateAttack", GroundPositionData.FireAnimationDelay);
         }
@@ -89,13 +82,5 @@ public class GroundBaddieLifeform : BaddieLifeform {
         projectile.MaxLifetime = 10;
         projectile.Fire((FacingRight ? Vector2.right : Vector2.left), Vector2.up);
         Invoke("ResetAttack", 0.5f);
-        //if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
-        //    try {
-        //        // After the fire has occurred stop the attack animation
-        //        Animator.SetBool(OptionalAttackAnimation, false);
-        //    } catch (Exception e) {
-        //        print("Failed assigning animation value to false : " + OptionalAttackAnimation);
-        //    }
-        //}
     }
 }

@@ -89,8 +89,18 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         _actionData.BombDropInitiated = false;
     }
 
+    private void InitiateAttack() {
+        Animator.SetBool("Attack", true);
+    }
+
+    private void ResetAttack() {
+        Animator.SetBool("Attack", false);
+    }
+
     private void DropBomb() {
         CheckForOverPlayerShortCircuit();
+
+        InitiateAttack();
 
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
         // Parent the bomb to who shot it so we know what to hit (parents LayerMask whatToHit)
@@ -104,6 +114,7 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         projectile.Fire(Vector2.down, (FacingRight ? Vector2.right : Vector2.left));
 
         Invoke("ResetBombDrop", 0.5f);
+        Invoke("ResetAttack", 0.5f);
     }
 
     private void CheckForOverPlayerShortCircuit() {
