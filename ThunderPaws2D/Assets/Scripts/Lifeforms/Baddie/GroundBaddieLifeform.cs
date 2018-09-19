@@ -24,6 +24,7 @@ public class GroundBaddieLifeform : BaddieLifeform {
     protected struct GroundPositionModel {
         public float ShotDelay;
         public float FireDelay;
+        public float FireAnimationDelay;
         public float TimeSinceLastFire;
         public float TimeStopped;
         public float MaxStopSeconds;
@@ -48,15 +49,15 @@ public class GroundBaddieLifeform : BaddieLifeform {
             GroundPositionData.TimeStopped = Time.time + GroundPositionData.MaxStopSeconds;
             GroundPositionData.TimeSinceLastFire = Time.time + GroundPositionData.ShotDelay;
             Velocity.x = 0f;
-            if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
-                try {
-                    Animator.SetBool(OptionalAttackAnimation, true);
-                }catch(Exception e) {
-                    print("Failed assigning animation value : " + OptionalAttackAnimation);
-                }
-            }
+            //if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
+            //    try {
+            //        Animator.SetBool(OptionalAttackAnimation, true);
+            //    }catch(Exception e) {
+            //        print("Failed assigning animation value : " + OptionalAttackAnimation);
+            //    }
+            //}
             Invoke("Fire", GroundPositionData.FireDelay);
-            Invoke("InitiateAttack", GroundPositionData.FireDelay-0.3f);
+            Invoke("InitiateAttack", GroundPositionData.FireAnimationDelay);
         }
     }
 
@@ -78,7 +79,6 @@ public class GroundBaddieLifeform : BaddieLifeform {
     }
 
     protected void Fire() {
-        Invoke("ResetAttack", 0.5f);
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
         // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
@@ -86,16 +86,16 @@ public class GroundBaddieLifeform : BaddieLifeform {
         // Set layermask of parent (either player or baddie)
         projectile.SetLayerMask(ProjectileData.WhatToHit);
         projectile.Damage = 5;
-        projectile.MoveSpeed = 15;
         projectile.MaxLifetime = 10;
         projectile.Fire((FacingRight ? Vector2.right : Vector2.left), Vector2.up);
-        if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
-            try {
-                // After the fire has occurred stop the attack animation
-                Animator.SetBool(OptionalAttackAnimation, false);
-            } catch (Exception e) {
-                print("Failed assigning animation value to false : " + OptionalAttackAnimation);
-            }
-        }
+        Invoke("ResetAttack", 0.5f);
+        //if (Animator != null && !string.IsNullOrEmpty(OptionalAttackAnimation)) {
+        //    try {
+        //        // After the fire has occurred stop the attack animation
+        //        Animator.SetBool(OptionalAttackAnimation, false);
+        //    } catch (Exception e) {
+        //        print("Failed assigning animation value to false : " + OptionalAttackAnimation);
+        //    }
+        //}
     }
 }

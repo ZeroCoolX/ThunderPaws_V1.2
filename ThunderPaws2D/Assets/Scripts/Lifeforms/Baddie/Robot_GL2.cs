@@ -8,6 +8,8 @@ public class Robot_GL2 : GroundBaddieLifeform {
     private const float GRAVITY = -25.08f;
     private const float HEALTH = 15f;
     private const float SHOT_DELAY = 2f;
+    private const float FIRE_DELAY = 0.5f;
+    private const float FIRE_ANIMATION_DELAY = 0.15f;
     private const float VISION_LENGTH = 20f;
     private const string ATTACK_ANIMATION = "ChargeAndFire";
 
@@ -15,7 +17,8 @@ public class Robot_GL2 : GroundBaddieLifeform {
         base.Start();
         
         GroundPositionData.ShotDelay = SHOT_DELAY;
-        GroundPositionData.FireDelay = 0.5f;
+        GroundPositionData.FireDelay = FIRE_DELAY;
+        GroundPositionData.FireAnimationDelay = FIRE_ANIMATION_DELAY;
         VisionRayLength = VISION_LENGTH;
         Gravity = GRAVITY;
         Health = HEALTH;

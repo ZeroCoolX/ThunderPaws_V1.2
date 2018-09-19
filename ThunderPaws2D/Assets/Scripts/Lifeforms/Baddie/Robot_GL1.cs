@@ -22,6 +22,8 @@ public class Robot_GL1 : GroundBaddieLifeform {
 
     private const float GRAVITY = -25.08f;
     private const float SHOT_DELAY = 3f;
+    private const float FIRE_DELAY = 1f;
+    private const float FIRE_ANIMATION_DELAY = 0.27f;
     private const int MOVE_SPEED = 5;
     private const float VISION_LENGTH = 10f;
     private const float MAX_STOP_SECONDS = 2f;
@@ -34,9 +36,10 @@ public class Robot_GL1 : GroundBaddieLifeform {
         // Set baddie specific data
         GroundPositionData.ShotDelay = SHOT_DELAY;
         GroundPositionData.MoveSpeed = MOVE_SPEED;
+        GroundPositionData.FireAnimationDelay = FIRE_ANIMATION_DELAY;
         GroundPositionData.MoveDirection = Vector2.left;
         GroundPositionData.MaxStopSeconds = MAX_STOP_SECONDS;
-        GroundPositionData.FireDelay = 1f;
+        GroundPositionData.FireDelay = FIRE_DELAY;
         VisionRayLength = VISION_LENGTH;
         Gravity = GRAVITY;
     }
