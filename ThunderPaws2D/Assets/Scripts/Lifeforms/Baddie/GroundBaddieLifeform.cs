@@ -56,6 +56,7 @@ public class GroundBaddieLifeform : BaddieLifeform {
                 }
             }
             Invoke("Fire", GroundPositionData.FireDelay);
+            Invoke("InitiateAttack", GroundPositionData.FireDelay-0.3f);
         }
     }
 
@@ -68,7 +69,16 @@ public class GroundBaddieLifeform : BaddieLifeform {
         return Physics2D.Raycast(ProjectileData.FirePoint.position, FacingRight ? Vector2.right : Vector2.left, VisionRayLength, targetLayer);
     }
 
+    private void InitiateAttack() {
+        Animator.SetBool("Attack", true);
+    }
+
+    private void ResetAttack() {
+        Animator.SetBool("Attack", false);
+    }
+
     protected void Fire() {
+        Invoke("ResetAttack", 0.5f);
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
         // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();

@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Robot_GL1 : GroundBaddieLifeform {
 
+    public Animator DustTrailAnimator;
+
     [Header("Ledge Bound Properties")]
 
     public bool LedgeBound = false;
@@ -75,7 +77,7 @@ public class Robot_GL1 : GroundBaddieLifeform {
                 CalculateVelocity();
             }
         }
-
+        DustTrailAnimator.SetFloat("Velocity", Mathf.Abs(Velocity.x));
         Move();
     }
 

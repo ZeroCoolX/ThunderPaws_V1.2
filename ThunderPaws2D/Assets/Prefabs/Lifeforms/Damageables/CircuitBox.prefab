@@ -97,10 +97,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 223b84e8d2e26b4469eed3778241c321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Health: 16
   PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
     type: 2}
   PayloadItemCount: 5
-  Health: 15
 --- !u!114 &114439827158824670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,8 +120,6 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
   NotifyOnCollision: 0
 --- !u!212 &212409509080490964
 SpriteRenderer:
