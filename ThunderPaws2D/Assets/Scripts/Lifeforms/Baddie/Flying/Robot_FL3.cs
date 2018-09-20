@@ -136,11 +136,13 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     }
 
     private void FireBasedOffPattern() {
-            if(_actionData.AttackMode == 0) {
+        InitiateAttack();
+        if (_actionData.AttackMode == 0) {
                 FireWhole();
             }else {
                 FireSpiral();
             }
+        Invoke("ResetAttack", 1f);
     }
 
     private void FireSpiral() {
