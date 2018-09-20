@@ -5700,7 +5700,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3085668, y: -0.093342066}
+  m_Offset: {x: 0.07249498, y: -0.053996444}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -5711,7 +5711,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4020743, y: 1.8041587}
+  m_Size: {x: 1.9299307, y: 1.7254674}
   m_EdgeRadius: 0
 --- !u!61 &61138588610921312
 BoxCollider2D:
@@ -6200,7 +6200,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3085668, y: -0.093342066}
+  m_Offset: {x: 0.07305956, y: -0.055357695}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -6211,7 +6211,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4020743, y: 1.8041587}
+  m_Size: {x: 1.9310598, y: 1.72819}
   m_EdgeRadius: 0
 --- !u!61 &61340740726238146
 BoxCollider2D:
@@ -7150,7 +7150,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3085668, y: -0.093342066}
+  m_Offset: {x: 0.086082935, y: -0.051624537}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7161,7 +7161,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4020743, y: 1.8041587}
+  m_Size: {x: 1.9571066, y: 1.7207236}
   m_EdgeRadius: 0
 --- !u!61 &61894886741390746
 BoxCollider2D:
@@ -7200,7 +7200,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3085668, y: -0.093342066}
+  m_Offset: {x: 0.096924305, y: -0.053644896}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -7211,7 +7211,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.4020743, y: 1.8041587}
+  m_Size: {x: 1.9787893, y: 1.7247643}
   m_EdgeRadius: 0
 --- !u!61 &61896400004497118
 BoxCollider2D:
