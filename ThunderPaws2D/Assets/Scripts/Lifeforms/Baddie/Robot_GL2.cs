@@ -53,5 +53,6 @@ public class Robot_GL2 : GroundBaddieLifeform {
         CalculateFacingDirection(directionToTarget);
 
         ApplyGravity();
+        Move();
     }
 }

@@ -97,7 +97,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1321417408384644}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.26, y: -4.83, z: -1}
+  m_LocalPosition: {x: 14.607908, y: -4.539191, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4782572345265172}
@@ -214,7 +214,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95836571108915492}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95211788404904362}

@@ -23,7 +23,7 @@ public class Robot_GL1 : GroundBaddieLifeform {
     private const float GRAVITY = -25.08f;
     private const float SHOT_DELAY = 3f;
     private const float FIRE_DELAY = 1f;
-    private const float FIRE_ANIMATION_DELAY = 0.27f;
+    private const float FIRE_ANIMATION_DELAY = 0.7f;
     private const int MOVE_SPEED = 5;
     private const float VISION_LENGTH = 10f;
     private const float MAX_STOP_SECONDS = 2f;

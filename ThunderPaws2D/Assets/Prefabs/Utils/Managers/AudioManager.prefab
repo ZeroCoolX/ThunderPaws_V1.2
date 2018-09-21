@@ -277,14 +277,28 @@ MonoBehaviour:
     randomPitch: 0
     loop: 1
   - name: S1L4
-    clip: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
-    volume: 1
+    clip: {fileID: 8300000, guid: 64643485f6930e64288f129356e0d7af, type: 3}
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: S1L4H
-    clip: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
+    clip: {fileID: 8300000, guid: 64643485f6930e64288f129356e0d7af, type: 3}
+    volume: 0.5
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 1
+  - name: S1BossLaugh
+    clip: {fileID: 8300000, guid: 06120314864b66a478b2e2a203a37cce, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 1
+  - name: S1BossSqueak
+    clip: {fileID: 8300000, guid: 35cde87cb84ca584e90addb3c547baf7, type: 3}
     volume: 1
     pitch: 1
     randomVolume: 0
