@@ -206,7 +206,6 @@ public class CollisionController2D : RaycastController {
 
     private bool CheckForThroughPlatforms(RaycastHit2D hit, float directionY, string joystickId) {
         if (gameObject.tag.Contains(GameConstants.Tag_Baddie) && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
-            print("I do no think this is used");
             return true;
         }
 

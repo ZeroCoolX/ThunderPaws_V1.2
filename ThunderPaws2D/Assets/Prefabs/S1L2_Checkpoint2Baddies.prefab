@@ -8877,7 +8877,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95790639328408572}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114008666467304544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9067,7 +9067,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95819856125645612}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114038567201165540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9230,7 +9230,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95807611018627480}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114070611257512028
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9450,7 +9450,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95780299676550272}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114123805095642040
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -9610,7 +9610,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95490140463765704}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114166489419840956
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -10192,7 +10192,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95436533363586426}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114293911211234820
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -11438,7 +11438,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95260139727479560}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114711275599751900
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -12371,7 +12371,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95530370387682944}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114938468450930156
 MonoBehaviour:
   m_ObjectHideFlags: 1

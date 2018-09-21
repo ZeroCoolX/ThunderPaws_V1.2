@@ -30,7 +30,7 @@ public class PauseScreenUI : MonoBehaviour {
     public void Menu() {
         AudioManager.Instance.StopSound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
         AudioManager.Instance.PlaySound(GameConstants.Audio_MenuMusic);
-        SceneManager.LoadScene("AlphaDemoMainMenu");
+        SceneManager.LoadScene(GameConstants.Scene_LevelName_Menu);
         Time.timeScale = 1f;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,12 @@ public class DifficultyManager : MonoBehaviour {
     /// thanks to how static objects live in the lifetime of an application
     /// </summary>
     public void SetDifficulty() {
+        if (_sceneLoader == null) {
+            print("Getting scene loader as a backup");
+            var loader = GameObject.Find("SceneLoader");
+            _sceneLoader = loader.GetComponent<SceneLoader>();
+        }
+
         int[] values;
         var livesAndHealth = _difficulties.TryGetValue(Difficulty.ToLower(), out values);
         if (values == null) {
@@ -37,6 +44,12 @@ public class DifficultyManager : MonoBehaviour {
 
         print("Beginning level : " + LevelToPlay);
         if(LevelToPlay == 11) {
+            print("Loading scene");
+            try {
+                AudioManager.Instance.StopSound(GameConstants.Audio_MenuMusic);
+            } catch (Exception e) {
+                print("Menu Music could not be stopped");
+            }
             SceneManager.LoadScene(GameConstants.Scene_Backstory_Menu);
         }
         else{
@@ -45,7 +58,6 @@ public class DifficultyManager : MonoBehaviour {
                     print("Loading scene async");
                     _sceneLoader.LoadScene(GameConstants.GetLevel(LevelToPlay), GameConstants.Audio_MenuMusic);
                 } else {
-                    print("Loading scene");
                     SceneManager.LoadScene(GameConstants.GetLevel(LevelToPlay));
                 }
             }

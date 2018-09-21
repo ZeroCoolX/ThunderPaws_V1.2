@@ -8433,7 +8433,7 @@ MonoBehaviour:
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95730720376679788}
-  LedgeBound: 0
+  LedgeBound: 1
 --- !u!114 &114010528092527772
 MonoBehaviour:
   m_ObjectHideFlags: 1

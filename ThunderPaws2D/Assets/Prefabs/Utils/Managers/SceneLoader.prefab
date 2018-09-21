@@ -53,3 +53,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingScreenVisual: {fileID: 0}
   LoadingSlider: {fileID: 0}
+  LoadingText: {fileID: 0}

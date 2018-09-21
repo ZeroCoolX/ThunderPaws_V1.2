@@ -7057,11 +7057,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.size
-      value: 34
-      objectReference: {fileID: 0}
     - target: {fileID: 4251785315818792, guid: fbf53e6eaf7133048abe3700df4674bf, type: 2}
       propertyPath: m_LocalPosition.x
       value: 719.46173
@@ -7093,56 +7088,6 @@ Prefab:
     - target: {fileID: 4251785315818792, guid: fbf53e6eaf7133048abe3700df4674bf, type: 2}
       propertyPath: m_RootOrder
       value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[32].name
-      value: S1L4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[32].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[32].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[32].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[32].loop
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[33].name
-      value: S1L4H
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[33].clip
-      value: 
-      objectReference: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[33].volume
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[33].pitch
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[33].loop
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbf53e6eaf7133048abe3700df4674bf, type: 2}
@@ -13740,14 +13685,14 @@ Prefab:
       objectReference: {fileID: 1113183272}
     - target: {fileID: 114844425950833722, guid: 9af072296e0de164b8231a8a2ed9a8fb,
         type: 2}
-      propertyPath: LoadingText
-      value: 
-      objectReference: {fileID: 2069335026}
-    - target: {fileID: 114844425950833722, guid: 9af072296e0de164b8231a8a2ed9a8fb,
-        type: 2}
       propertyPath: LoadingSlider
       value: 
       objectReference: {fileID: 885634454}
+    - target: {fileID: 114844425950833722, guid: 9af072296e0de164b8231a8a2ed9a8fb,
+        type: 2}
+      propertyPath: LoadingText
+      value: 
+      objectReference: {fileID: 2069335026}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9af072296e0de164b8231a8a2ed9a8fb, type: 2}
   m_IsPrefabParent: 0
@@ -14731,7 +14676,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 11.5625
+      value: 11.583334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}
