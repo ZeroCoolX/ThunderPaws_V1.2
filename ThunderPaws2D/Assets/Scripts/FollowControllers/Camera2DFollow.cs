@@ -8,6 +8,8 @@ public class Camera2DFollow : FollowBase {
     private float _currentXOffset;
     private const float _bottomYThreshold = -19;
 
+    public int DistanceFromOrigin = 5;
+
     private float _originPoint;
 
     private void Start() {
@@ -29,9 +31,9 @@ public class Camera2DFollow : FollowBase {
     private bool TooFarFromOrigin() {
 
         if (Mathf.Sign(_originPoint) == Mathf.Sign(Target.position.y)) {
-            return Mathf.Abs(_originPoint - Target.position.y) > ((Target.position.y > _originPoint) ? 5 : 1.5);
+            return Mathf.Abs(_originPoint - Target.position.y) > ((Target.position.y > _originPoint) ? DistanceFromOrigin : 1.5);
         } else {
-            return (Mathf.Abs(_originPoint) + Mathf.Abs(Target.position.y)) > ((Target.position.y > _originPoint) ? 5 : 1.5);
+            return (Mathf.Abs(_originPoint) + Mathf.Abs(Target.position.y)) > ((Target.position.y > _originPoint) ? DistanceFromOrigin : 1.5);
         }
     }
 
@@ -57,7 +59,7 @@ public class Camera2DFollow : FollowBase {
         Vector3 aheadTargetPos = new Vector3(tempPos.x, 1, tempPos.z);
         if (TooFarFromOrigin()) {
             aheadTargetPos.y = tempPos.y;
-            aheadTargetPos.y += HordeVerticalOffset;
+            aheadTargetPos.y += VerticalOffset;
 
         } else {
             aheadTargetPos.y = _originPoint;

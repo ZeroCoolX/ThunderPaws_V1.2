@@ -2251,7 +2251,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95915374795272630}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95786430679379050}
@@ -2347,7 +2347,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95273657918975928}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95022289470441498}
@@ -2398,7 +2398,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95747337200434434}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95853136142845412}
@@ -2614,7 +2614,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95584086742260844}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95352660611542156}
@@ -2727,7 +2727,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95041263429069440}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95865451342305308}
@@ -2804,7 +2804,7 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95656114942637550}
-  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
+  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
   DustTrailAnimator: {fileID: 95111517255376694}

@@ -152,7 +152,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6.5208335
+  orthographic size: 11.583334
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -190,6 +190,7 @@ MonoBehaviour:
   VerticalOffset: 5
   HordeVerticalOffset: 0
   FreeMovement: 1
+  DistanceFromOrigin: 5
 --- !u!114 &114570341021998122
 MonoBehaviour:
   m_ObjectHideFlags: 1
