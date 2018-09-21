@@ -1033,6 +1033,11 @@ Prefab:
       value: 
       objectReference: {fileID: 114844425950833722, guid: 9af072296e0de164b8231a8a2ed9a8fb,
         type: 2}
+    - target: {fileID: 114975997920759814, guid: ad3f2c3533bf50d4b8a3cadee26d543b,
+        type: 2}
+      propertyPath: OptionalMenuToDeactivate
+      value: 
+      objectReference: {fileID: 1654888521}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ad3f2c3533bf50d4b8a3cadee26d543b, type: 2}
   m_IsPrefabParent: 0

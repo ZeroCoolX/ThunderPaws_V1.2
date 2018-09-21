@@ -16,6 +16,8 @@ public class DialogueManager : MonoBehaviour {
     public Transform DialogUi;
     public int SceneToLoadAfter;
 
+    public GameObject OptionalMenuToDeactivate;
+
     private Queue<string> _sentences;
 
     private void Awake() {
@@ -55,6 +57,9 @@ public class DialogueManager : MonoBehaviour {
         if (SceneToLoadAfter > 0) {
             if (_sceneLoader != null) {
                 print("Loading scene async");
+                if(OptionalMenuToDeactivate != null) {
+                    OptionalMenuToDeactivate.SetActive(false);
+                }
                 _sceneLoader.LoadScene(GameConstants.GetLevel(SceneToLoadAfter), GameConstants.Audio_BackstoryMusic);
             } else {
                 print("Loading scene");

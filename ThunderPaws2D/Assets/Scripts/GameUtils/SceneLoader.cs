@@ -20,7 +20,6 @@ public class SceneLoader : MonoBehaviour {
     private int index = 0;
 
     public void LoadScene(string sceneName, string audio) {
-        Time.timeScale = 0f;
         LoadingScreenVisual.SetActive(true);
         StartCoroutine(LoadNewScene(sceneName, audio));
     }
@@ -47,7 +46,6 @@ public class SceneLoader : MonoBehaviour {
                     yield return new WaitForSeconds(randomWait);
                 }
                 AudioManager.Instance.StopSound(audio);
-                Time.timeScale = 1f;
                 async.allowSceneActivation = true;
             }
 
