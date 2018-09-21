@@ -59,7 +59,9 @@ public class Camera2DFollow : FollowBase {
         Vector3 aheadTargetPos = new Vector3(tempPos.x, 1, tempPos.z);
         if (TooFarFromOrigin()) {
             aheadTargetPos.y = tempPos.y;
-            aheadTargetPos.y += VerticalOffset;
+            if(aheadTargetPos.y < _originPoint) {
+                aheadTargetPos.y += VerticalOffset;
+            }
 
         } else {
             aheadTargetPos.y = _originPoint;

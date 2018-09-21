@@ -49,7 +49,7 @@ public class CheckpointController : MonoBehaviour {
         BaddieSpawn = CheckpointSpawns[CheckpointSpawnIndex];
         print("Creating Baddies for spawn : " + gameObject.name + " with spawn index : " + SpawnPointManager.Instance.GetSpawnIndex() + " at Time [" + Time.time+"]");
         // If things go south quickly its because of this
-        if(CheckpointIndex == Checkpoints.Length) {
+        if (CheckpointIndex < 0) {
             return;
         }
         BaddiesInCheckpointRange = Checkpoints[CheckpointIndex];
