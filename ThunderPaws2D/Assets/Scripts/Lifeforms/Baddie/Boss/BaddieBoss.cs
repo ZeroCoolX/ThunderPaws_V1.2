@@ -12,6 +12,8 @@ public class BaddieBoss : BaddieLifeform {
     public bool Hattack = false;
     private bool _hAttackInitiated = false;
 
+    private bool _allowPlayerfacing = true;
+
     private float smoothTime = 1F;
     private float yVelocity = 0.3F;
     private float xVelocity = 0.3F;
@@ -38,6 +40,11 @@ public class BaddieBoss : BaddieLifeform {
 
         transform.GetComponent<VerticalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<HorizontalHeavyAttack>().OnComplete += ResumeBasicAttack;
+        transform.GetComponent<HorizontalHeavyAttack>().ToggleFacingLock += ToggleFacingLock;
+    }
+
+    private void ToggleFacingLock(bool allowFacing) {
+        _allowPlayerfacing = allowFacing;
     }
 
     private void ResumeBasicAttack() {
@@ -45,6 +52,7 @@ public class BaddieBoss : BaddieLifeform {
         _vAttackInitiated = false;
         Hattack = false;
         _hAttackInitiated = false;
+        _allowPlayerfacing = true;
     }
 
     // Update is called once per frame
@@ -56,7 +64,9 @@ public class BaddieBoss : BaddieLifeform {
 
         // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - Target.position.x;
-        CalculateFacingDirection(directionToTarget);
+        if (_allowPlayerfacing) {
+            CalculateFacingDirection(directionToTarget);
+        }
 
         if (Vattack && !_vAttackInitiated) {
             _vAttackInitiated = true;

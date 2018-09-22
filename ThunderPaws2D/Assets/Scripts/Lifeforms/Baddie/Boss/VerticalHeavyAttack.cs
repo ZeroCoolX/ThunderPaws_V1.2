@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class VerticalHeavyAttack : MonoBehaviour {
 
+    public Animator Animator;
     public Transform AttackPoint;
     public Transform MovementIndicator;
 
@@ -23,8 +24,11 @@ public class VerticalHeavyAttack : MonoBehaviour {
     private bool _attack;
     private bool _smashLocked = false;
     private bool _flashOn = false;
+    private bool _standupCalled = false;
+    private bool _testIt = false;
+    public Vector3 _startSmashPos;
 
-    private enum AttackState { DEFAULT, RISE, TRACK, SMASH, PAUSE, END }
+    private enum AttackState { DEFAULT, RISE, TRACK, SMASH, PAUSE, END, WEAK, STAND }
     private AttackState _attackState = AttackState.DEFAULT;
 
     private void Start() {
@@ -37,21 +41,36 @@ public class VerticalHeavyAttack : MonoBehaviour {
     private void InitiateAttack() {
         if (!_attack) {
             _attack = true;
-            _attackState = AttackState.RISE;
+            Animator.SetBool("Attack2_UP", true);
+            Animator.SetBool("Attack2_UP_FLY", true);
+            StartCoroutine(ChangeStateAfterSeconds(AttackState.RISE, 0.25f));
         }
     }
 
     private void ResetState() {
         _attack = false;
         smoothTime = 1f;
+        _standupCalled = false;
         _smashLocked = false;
+        ResetAllAnimations();
         MovementIndicator.GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         _attackState = AttackState.DEFAULT;
+    }
+
+    private void ResetAllAnimations() {
+        Animator.SetBool("Attack2_UP", false);
+        Animator.SetBool("Attack2_DOWN", false);
+        Animator.SetBool("Attack2_STANDUP", false);
+        Animator.SetBool("Attack2_WEAK", false);
+        Animator.SetBool("Attack2_SMASH", false);
+        Animator.SetBool("Attack2_UP_FLY", false);
     }
 
     private void Update() {
         switch (_attackState) {
             case AttackState.RISE:
+                Animator.SetBool("Attack2_UP", true);
+                Animator.SetBool("Attack2_UP_FLY", true);
                 _currentAttackPoint = AttackPoint.position;
                 StartCoroutine(ChangeStateAfterSeconds(AttackState.TRACK, 2f));
                 break;
@@ -64,19 +83,43 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 StartCoroutine(ChangeStateAfterSeconds(AttackState.PAUSE, 5f));
                 break;
             case AttackState.SMASH:
-                if(!_smashLocked) {
+                Animator.SetBool("Attack2_DOWN", true);
+                Animator.SetBool("Attack2_UP_FLY", false);
+                Animator.SetBool("Attack2_UP", false);
+                if (!_smashLocked) {
                     MovementIndicator.gameObject.SetActive(false);
                     _currentAttackPoint = new Vector3(_currentAttackPoint.x, transform.GetComponent<BaddieBoss>().GetTarget().position.y + 1, _currentAttackPoint.z);
                     _smashLocked = true;
+                    _startSmashPos = transform.position;
+                    _testIt = true;
                 }
-                smoothTime = 0.3f;
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.1f));
+                smoothTime = 0.1f;
+                StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.25f));
                 break;
             case AttackState.PAUSE:
                 Flash();
                 StartCoroutine(ChangeStateAfterSeconds(AttackState.SMASH, 0.5f));
                 break;
+            case AttackState.WEAK:
+                _testIt = false;
+                Animator.SetBool("Attack2_DOWN", false);
+                Animator.SetBool("Attack2_SMASH", true);
+                Animator.SetBool("Attack2_WEAK", true);
+                StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
+                break;
+            case AttackState.STAND:
+                Animator.SetBool("Attack2_SMASH", false);
+                Animator.SetBool("Attack2_WEAK", false);
+                if (!_standupCalled) {
+                    Animator.SetBool("Attack2_STANDUP", true);
+                    _standupCalled = true;
+                } else {
+                    Animator.SetBool("Attack2_STANDUP", false);
+                }
+                StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.5f));
+                break;
             case AttackState.END:
+                Animator.SetBool("Attack2_STANDUP", false);
                 ResetState();
                 OnComplete.Invoke();
                 break;
@@ -104,7 +147,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
     private void CalculateVelocity() {
         float newX = Mathf.SmoothDamp(transform.position.x, _currentAttackPoint.x, ref yVelocity, smoothTime);
-        float newY = Mathf.SmoothDamp(transform.position.y, _currentAttackPoint.y, ref xVelocity, smoothTime);
+        float newY = Mathf.SmoothDamp(_testIt ? _startSmashPos.y : transform.position.y, _currentAttackPoint.y, ref xVelocity, smoothTime);
         transform.position = new Vector3(newX, newY, transform.position.z);
     }
 }
