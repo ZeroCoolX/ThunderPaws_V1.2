@@ -271,6 +271,7 @@
     <Compile Include="Assets\Scripts\GameUtils\JoystickManagerController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\LifetimeController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\LivesManager.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\MazeSpawnController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MazeSpawnPoint.cs" />
     <Compile Include="Assets\Scripts\GameUtils\MenuController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Parallax\ConstantParallax.cs" />

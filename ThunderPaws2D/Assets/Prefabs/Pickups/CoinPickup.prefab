@@ -158,8 +158,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParentCheck: 1
-  KillImmediatelyOnInvisible: 0
-  AllowLifetimeWhileInvisible: 10
+  KillImmediatelyOnInvisible: 1
+  AllowLifetimeWhileInvisible: 1
 --- !u!114 &114572560977285148
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -191,8 +191,7 @@ MonoBehaviour:
   CollisionMask:
     serializedVersion: 2
     m_Bits: 1024
-  JumpLanding: JumpLanding
-  PlayerInput: {x: 0, y: 0}
+  NotifyOnCollision: 0
 --- !u!212 &212488767765957678
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 58175567877281452}
   - component: {fileID: 114074213577730836}
   - component: {fileID: 114421651779226892}
+  - component: {fileID: 114835457673782460}
   m_Layer: 11
   m_Name: Robot_GL2Bullet
   m_TagString: Projectile
@@ -92,6 +93,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114835457673782460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1789134891346298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bf1c4b5f34622c4a83bb2df330beb04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ParentCheck: 0
+  KillImmediatelyOnInvisible: 1
+  AllowLifetimeWhileInvisible: 5
 --- !u!212 &212626819846253688
 SpriteRenderer:
   m_ObjectHideFlags: 1
