@@ -12,6 +12,7 @@ public class DifficultyUI : MonoBehaviour {
 
 	public void SelectDifficulty(string diff) {
         DifficultyManager.Instance.Difficulty = diff.ToLower();
+        print("setting difficulty");
         DifficultyManager.Instance.SetDifficulty();
     }
 }

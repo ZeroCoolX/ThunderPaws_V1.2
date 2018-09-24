@@ -13,7 +13,7 @@ public class ControllerAssignmentUI : MonoBehaviour {
 
     private Transform ControllerConnectionWarning;
 
-    private Transform DifficultyUI;
+    private Transform StageSelectMenu;
 
 
 
@@ -31,7 +31,7 @@ public class ControllerAssignmentUI : MonoBehaviour {
         _player1Icon = transform.Find("Player1Icon").GetComponent<Image>();
         _player2Icon = transform.Find("Player2Icon").GetComponent<Image>();
         ControllerConnectionWarning = transform.Find("ControllerWarning");
-        DifficultyUI = transform.parent.Find("DifficultySelectMenu");
+        StageSelectMenu = transform.parent.Find("StageSelectMenu");
     }
 
     private void Update() {
@@ -67,6 +67,6 @@ public class ControllerAssignmentUI : MonoBehaviour {
     private IEnumerator MoveToDifficulty() {
         yield return new WaitForSeconds(1);
         gameObject.SetActive(false);
-        DifficultyUI.gameObject.SetActive(true);
+        StageSelectMenu.gameObject.SetActive(true);
     }
 }

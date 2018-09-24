@@ -105,7 +105,7 @@ MonoBehaviour:
   ShotEffectSpawnRate: 10
   FireRate: 0
   FireDelay: 1
-  Damage: 200
+  Damage: 5
   Ammo: -117
   MaxAmmo: 0
   HasAmmo: 0

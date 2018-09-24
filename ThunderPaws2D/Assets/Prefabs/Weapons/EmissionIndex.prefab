@@ -132,16 +132,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CamShakeAmount: 0.025
   CamShakeLength: 0.1
-  TimeToSpawnEffect: 0
-  EffectSpawnRate: 10
+  ShotEffectDelay: 0
+  ShotEffectSpawnRate: 10
   FireRate: 0
   FireDelay: 1
-  Damage: 20
+  Damage: 100
   Ammo: 50
+  MaxAmmo: 0
   HasAmmo: 1
-  BulletPrefab: {fileID: 0}
   BulletSpeed: 0
   MaxLifetime: 0.5
+  BulletPrefab: {fileID: 0}
+  Player: {fileID: 0}
   WhatToHit:
     serializedVersion: 2
     m_Bits: 17408
