@@ -98,7 +98,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 break;
             case AttackState.PAUSE:
                 Flash();
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.SMASH, 0.5f));
+                StartCoroutine(ChangeStateAfterSeconds(AttackState.SMASH, 0.25f));
                 break;
             case AttackState.WEAK:
                 _testIt = false;

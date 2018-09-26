@@ -11,6 +11,9 @@ public class BaddieBoss : BaddieLifeform {
     [Header("Play Horizontal Attack")]
     public bool Hattack = false;
     private bool _hAttackInitiated = false;
+    [Header("Play Default Attack")]
+    public bool Dattack = false;
+    private bool _dAttackInitiated = false;
 
     private bool _allowPlayerfacing = true;
 
@@ -80,9 +83,8 @@ public class BaddieBoss : BaddieLifeform {
             _hAttackInitiated = true;
             PlayHorizontalHeavyAttack.Invoke();
         }
-        if (_hAttackInitiated) {
-            return;
-        }
+
+        Attack();
 
         if (Time.time > _moveTrigger) {
             RandomlySelectAttackPoint();
@@ -100,5 +102,9 @@ public class BaddieBoss : BaddieLifeform {
     private void RandomlySelectAttackPoint() {
         var rand = Random.Range(0, 5);
         _currentAttackPoint = Attack1Points[rand].position;
+    }
+
+    private void Attack() {
+        Animator.SetBool("Attack1", Dattack);
     }
 }

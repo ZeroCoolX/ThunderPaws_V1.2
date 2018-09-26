@@ -11,7 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 2108210716, guid: 89f0137620f6af44b9ba852b4190e64e, type: 3}
   m_Name: GradientYellow
   m_EditorClassIdentifier: 
-  topLeft: {r: 1, g: 0.78039217, b: 0.34117648, a: 1}
-  topRight: {r: 1, g: 0.78039217, b: 0.34117648, a: 1}
-  bottomLeft: {r: 1, g: 0.6117647, b: 0.19215687, a: 1}
-  bottomRight: {r: 1, g: 0.6117647, b: 0.19215687, a: 1}
+  topLeft: {r: 0.90344834, g: 1, b: 0, a: 1}
+  topRight: {r: 0.90344834, g: 1, b: 0, a: 1}
+  bottomLeft: {r: 0.95720077, g: 0.9705882, b: 0, a: 1}
+  bottomRight: {r: 0.9448277, g: 1, b: 0, a: 1}
