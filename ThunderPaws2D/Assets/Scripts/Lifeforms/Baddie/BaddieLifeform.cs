@@ -48,7 +48,7 @@ public class BaddieLifeform : DamageableLifeform {
 
         ProjectileData.FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
         if (ProjectileData.FirePoint == null) {
-            throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.FirePoint");
+            print("BaddieLifeform is missing ProjectileData.FirePoint");
         }
 
         // Assign the layermask for WhatToHit to be the Player(8) and Obstacle(10)
