@@ -37,8 +37,10 @@ public class BaddieBoss : BaddieLifeform {
 
     private RaycastHit2D[] AttackHits = new RaycastHit2D[3];
     private float[] AttackHitDistances = new float[3];
-
     private List<Transform> _currentFirePoints;
+
+    private float _attackDelay;
+    private float _attackTimeToWait;
 
     public Transform GetTarget() {
         return Target;
@@ -92,7 +94,7 @@ public class BaddieBoss : BaddieLifeform {
             _hAttackInitiated = true;
             PlayHorizontalHeavyAttack.Invoke();
         }
-
+        CheckIfCanAttack();
         CalculateAttackFirepoint();
         if (Dattack && !_dAttackInitiated) {
             Attack();
@@ -143,6 +145,15 @@ public class BaddieBoss : BaddieLifeform {
             }
         } catch (System.Exception e) {
             print("Caught Exception trying to Fire from Baddie " + gameObject.name + " Exception : " + e.Message);
+        }
+    }
+
+
+    private void CheckIfCanAttack() {
+        if(Time.time > _attackTimeToWait) {
+            Dattack = true;
+            _attackDelay = Random.Range(3f, 10f);
+            _attackTimeToWait = Time.time + _attackDelay;
         }
     }
 
