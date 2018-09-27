@@ -142,6 +142,10 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
     private IEnumerator ChangeStateAfterSeconds(AttackState state, float afterSeconds) {
         yield return new WaitForSeconds(afterSeconds);
+        // Extra check to see if we hit the player - if we did we want to move immediately to the End
+        if(AttackState.WEAK == state) {
+
+        }
         _attackState = state;
     }
 

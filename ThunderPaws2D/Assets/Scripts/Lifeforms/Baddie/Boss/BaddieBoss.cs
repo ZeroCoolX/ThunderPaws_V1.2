@@ -3,24 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BaddieBoss : BaddieLifeform {
+    [Header("Movement Pattern")]
     public Transform[] Attack1Points;
 
+    [Header("Vertical Attack")]
+    public bool Vattack = false;
+    private bool _vAttackInitiated = false;
+    public delegate void VerticalHeavyAttackDelegate();
+    public VerticalHeavyAttackDelegate PlayVerticalHeavyAttack;
+
+    [Header("Horizontal Attack")]
+    public bool Hattack = false;
+    private bool _hAttackInitiated = false;
+    public delegate void HorizontalHeavyAttackDelegate();
+    public HorizontalHeavyAttackDelegate PlayHorizontalHeavyAttack;
+
+    [Header("Default Attack")]
     public Transform FirePoint0;
     public Transform FirePoint45;
     public Transform FirePoint90;
-
-    [Header("Play Vertical Attack")]
-    public bool Vattack = false;
-    private bool _vAttackInitiated = false;
-    [Header("Play Horizontal Attack")]
-    public bool Hattack = false;
-    private bool _hAttackInitiated = false;
-    [Header("Play Default Attack")]
     public bool Dattack = false;
     private bool _dAttackInitiated = false;
+    private RaycastHit2D[] AttackHits = new RaycastHit2D[3];
+    private float[] AttackHitDistances = new float[3];
+    private List<Transform> _currentFirePoints;
+    private float _attackDelay;
+    private float _attackTimeToWait;
 
     private bool _allowPlayerfacing = true;
-
     private float smoothTime = 1F;
     private float yVelocity = 0.3F;
     private float xVelocity = 0.3F;
@@ -29,18 +39,8 @@ public class BaddieBoss : BaddieLifeform {
     private float _moveTrigger;
     private float _delayBetweenMoves = 1f;
 
-    public delegate void VerticalHeavyAttackDelegate();
-    public VerticalHeavyAttackDelegate PlayVerticalHeavyAttack;
-
-    public delegate void HorizontalHeavyAttackDelegate();
-    public HorizontalHeavyAttackDelegate PlayHorizontalHeavyAttack;
-
-    private RaycastHit2D[] AttackHits = new RaycastHit2D[3];
-    private float[] AttackHitDistances = new float[3];
-    private List<Transform> _currentFirePoints;
-
-    private float _attackDelay;
-    private float _attackTimeToWait;
+    private enum AttackType { DEFAULT, VERTICAL, HORIZONAL}
+    private AttackType _currentAttackType;
 
     public Transform GetTarget() {
         return Target;
@@ -48,6 +48,7 @@ public class BaddieBoss : BaddieLifeform {
 
     private new void Start() {
         base.Start();
+        MaxHealth = Health;
         Gravity = 0.0f;
         RandomlySelectAttackPoint();
         _moveTrigger = Time.time + _delayBetweenMoves;
@@ -69,14 +70,12 @@ public class BaddieBoss : BaddieLifeform {
         _allowPlayerfacing = true;
     }
 
-    // Update is called once per frame
     private new void Update() {
         base.Update();
         if (!CheckTargetsExist()) {
             return;
         }
 
-        // Find out where the target is in reference to this.
         var directionToTarget = transform.position.x - Target.position.x;
         if (_allowPlayerfacing) {
             CalculateFacingDirection(directionToTarget);
@@ -94,6 +93,11 @@ public class BaddieBoss : BaddieLifeform {
             _hAttackInitiated = true;
             PlayHorizontalHeavyAttack.Invoke();
         }
+        if (_hAttackInitiated) {
+            return;
+        }
+
+
         CheckIfCanAttack();
         CalculateAttackFirepoint();
         if (Dattack && !_dAttackInitiated) {
@@ -105,6 +109,76 @@ public class BaddieBoss : BaddieLifeform {
             _moveTrigger = Time.time + _delayBetweenMoves;
         }
         CalculateVelocity();
+    }
+
+    private void CheckIfCanAttack() {
+        if (Time.time > _attackTimeToWait) {
+            Dattack = true;
+            _attackDelay = Random.Range(3f, 10f);
+            _attackTimeToWait = Time.time + _attackDelay;
+        }
+    }
+
+    private void CalculateAttackFirepoint() {
+        CalculateRaycastHits();
+
+        DrawForTesting();
+
+        if (!Dattack) {
+            return;
+        }
+
+        CalculateHitDistancesToTarget();
+
+        AddAllFirepoints(AssignClosesFirePoint());
+    }
+
+    private void CalculateRaycastHits() {
+        // Shoot out a raycast from each fire point till it collides with something on the obstacle  or player layer
+        Vector2 rotation0 = new Vector3(0.5f * (FacingRight ? 1 : -1), -0.1f, 0);
+        Vector2 rotation45 = new Vector3(0.5f * (FacingRight ? 1 : -1), -0.5f, 0);
+        Vector2 rotation90 = new Vector3(0f, -1f, 0);
+
+        // Player or obstacle
+        var layermask = (1 << 8) | (1 << 10);
+
+        AttackHits[0] = (Physics2D.Raycast(FirePoint0.position, rotation0, 50, layermask));
+        AttackHits[1] = (Physics2D.Raycast(FirePoint45.position, rotation45, 50, layermask));
+        AttackHits[2] = (Physics2D.Raycast(FirePoint90.position, rotation90, 50, layermask));
+    }
+
+    private void DrawForTesting() {
+        Debug.DrawRay(FirePoint0.position, new Vector3(0.5f * (FacingRight ? 1 : -1), -0.1f, 0) * 50, Color.green);
+        Debug.DrawRay(FirePoint45.position, new Vector3(0.5f * (FacingRight ? 1 : -1), -0.5f, 0) * 50, Color.green);
+        Debug.DrawRay(FirePoint90.position, new Vector3(0f, -1f, 0) * 50, Color.green);
+    }
+
+    private void CalculateHitDistancesToTarget() {
+        for (int i = 0; i < AttackHitDistances.Length; ++i) {
+            if (AttackHits[i].collider == null) {
+                AttackHitDistances[i] = 1000;
+            } else {
+                AttackHitDistances[i] = Vector3.Distance(AttackHits[i].collider.transform.position, Target.position);
+            }
+        }
+    }
+
+    private Transform AssignClosesFirePoint() {
+        var min = Mathf.Min(AttackHitDistances[0], AttackHitDistances[1], AttackHitDistances[2]);
+        _currentFirePoints = new List<Transform>();
+        if (min == AttackHitDistances[0]) {
+            return FirePoint0;
+        } else if (min == AttackHitDistances[1]) {
+            return FirePoint45;
+        } else {
+            return FirePoint90;
+        }
+    }
+
+    private void AddAllFirepoints(Transform firepointParent) {
+        foreach (Transform child in firepointParent) {
+            _currentFirePoints.Add(child);
+        }
     }
 
     private void CalculateVelocity() {
@@ -148,64 +222,14 @@ public class BaddieBoss : BaddieLifeform {
         }
     }
 
-
-    private void CheckIfCanAttack() {
-        if(Time.time > _attackTimeToWait) {
-            Dattack = true;
-            _attackDelay = Random.Range(3f, 10f);
-            _attackTimeToWait = Time.time + _attackDelay;
-        }
-    }
-
-    private void CalculateAttackFirepoint() {
-        // Shoot out a raycast from each fire point till it collides with something on the obstacle  or player layer
-        Vector2 rotation0 = new Vector3(0.5f * (FacingRight ? 1 : -1), -0.1f, 0);
-        Vector2 rotation45 = new Vector3(0.5f * (FacingRight ? 1 : -1), -0.5f, 0);
-        Vector2 rotation90 = new Vector3(0f, -1f, 0);
-
-        // Player or obstacle
-        var layermask = (1 << 8) | (1 << 10);
-
-        AttackHits[0] = (Physics2D.Raycast(FirePoint0.position, rotation0, 50, layermask));
-        AttackHits[1] = (Physics2D.Raycast(FirePoint45.position, rotation45, 50, layermask));
-        AttackHits[2] = (Physics2D.Raycast(FirePoint90.position, rotation90, 50, layermask));
-
-        Debug.DrawRay(FirePoint0.position, new Vector3(0.5f * (FacingRight ? 1 : -1), -0.1f, 0) * 50, Color.green);
-        Debug.DrawRay(FirePoint45.position, new Vector3(0.5f *(FacingRight ? 1 : -1), -0.5f, 0) * 50, Color.green);
-        Debug.DrawRay(FirePoint90.position, new Vector3(0f, -1f, 0) * 50 , Color.green);
-
-        if (!Dattack) {
-            return;
-        }
-        if (AttackHits[0].collider == null) {
-            AttackHitDistances[0] = 1000;
+    private void DetermineAttackType() {
+        // If health is above 3/4
+        if(Health >= MaxHealth * 0.75) {
+            // Normal Default speed
+        }else if (Health >= MaxHealth * 0.5f) {
+            // Middle speed
         }else {
-            AttackHitDistances[0] = Vector3.Distance(AttackHits[0].collider.transform.position, Target.position);
-        }
-        if (AttackHits[1].collider == null) {
-            AttackHitDistances[1] = 1000;
-        }else {
-            AttackHitDistances[1] = Vector3.Distance(AttackHits[1].collider.transform.position, Target.position);
-        }
-        if (AttackHits[2].collider == null) {
-            AttackHitDistances[2] = 1000;
-        }else {
-            AttackHitDistances[2] = Vector3.Distance(AttackHits[2].collider.transform.position, Target.position);
-        }
-
-        var min = Mathf.Min(AttackHitDistances[0], AttackHitDistances[1], AttackHitDistances[2]);
-        _currentFirePoints = new List<Transform>();
-        Transform currentFirePoint;
-        if (min == AttackHitDistances[0]) {
-            currentFirePoint = FirePoint0;
-        } else if(min == AttackHitDistances[1]) {
-            currentFirePoint = FirePoint45;
-        } else {
-            currentFirePoint = FirePoint90;
-        }
-
-        foreach(Transform child in currentFirePoint) {
-            _currentFirePoints.Add(child);
+            // Fastest, most violent
         }
     }
 }

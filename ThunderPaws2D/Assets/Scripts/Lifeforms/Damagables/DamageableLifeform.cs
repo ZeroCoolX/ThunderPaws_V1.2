@@ -12,6 +12,8 @@ public class DamageableLifeform : BaseLifeform {
 
     [Header("Life Properties")]
     public float Health = 1f;
+    protected float MaxHealth;
+
     [Header("Payload Properties")]
     public Transform PayloadContent;
     public int PayloadItemCount = 10;
