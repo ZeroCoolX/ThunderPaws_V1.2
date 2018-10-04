@@ -11,6 +11,8 @@ public class VerticalHeavyAttack : MonoBehaviour {
     public delegate void AttackComplete();
     public AttackComplete OnComplete;
 
+    private SimpleCollider SpecialDamageCollider;
+
     private Transform _target;
     private float vAttackTimeBeforeSmash = 5f;
     private float smoothTime = 1F;
@@ -39,11 +41,16 @@ public class VerticalHeavyAttack : MonoBehaviour {
         var bossBaddieScript = transform.GetComponent<BaddieBoss>();
         _target = bossBaddieScript.GetTarget();
         bossBaddieScript.PlayVerticalHeavyAttack += InitiateAttack;
-    }
 
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 1.5f);
+        SpecialDamageCollider = transform.GetComponent<SimpleCollider>();
+        if(SpecialDamageCollider == null) {
+            throw new MissingComponentException("Simple Collider for special damage is missing!");
+        }
+        SpecialDamageCollider.InvokeCollision += Apply;
+        SpecialDamageCollider.Initialize(1 << 11, 6, true);
+        SpecialDamageCollider.enabled = false;
+
+
     }
 
     private void InitiateAttack() {
@@ -55,17 +62,35 @@ public class VerticalHeavyAttack : MonoBehaviour {
         }
     }
 
+    public void Apply(Vector3 v, Collider2D c) {
+        print("Apply special damage!");
+    }
+
+
     public void CheckForPlayerContact() {
-        if (!_contactedPlayer) {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f, 1 << 8);
-            foreach (var collider in colliders) {
-                if (collider != null) {
-                    print("HIT PLAYER!!");
-                    _contactedPlayer = true;
-                    return;
-                }
+        if (!_contactedPlayer && _attackState != AttackState.END && _attackState != AttackState.DEFAULT) {
+            print("Checking collision");
+            var leftCorner = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
+            var rightCorner = new Vector3(transform.position.x + 1, transform.position.y, transform.position.z);
+            RaycastHit2D hitLeft = Physics2D.Raycast(leftCorner, Vector2.down, 2, 1 << 8);
+            RaycastHit2D hitMiddle = Physics2D.Raycast(transform.position, Vector2.down, 2, 1 << 8);
+            RaycastHit2D hitRight = Physics2D.Raycast(rightCorner, Vector2.down, 2, 1 << 8);
+            Debug.DrawRay(leftCorner, Vector2.down * 2, Color.green);
+            Debug.DrawRay(transform.position, Vector2.down * 2, Color.green);
+            Debug.DrawRay(rightCorner, Vector2.down * 2, Color.green);
+
+            _contactedPlayer = (hitLeft.collider != null || hitMiddle.collider != null || hitRight.collider != null);
+            if (_contactedPlayer) {
+                StopAllCoroutinesAndStand();
             }
+            print("contacted player is : " + _contactedPlayer);
         }
+    }
+
+    private void StopAllCoroutinesAndStand() {
+        SpecialDamageCollider.enabled = false;
+        StopAllCoroutines();
+        StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 0));
     }
 
     private void ResetState() {
@@ -78,6 +103,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
         _attackState = AttackState.DEFAULT;
         _stateChangeInitiated = false;
         _contactedPlayer = false;
+        SpecialDamageCollider.enabled = false;
     }
 
     private void ResetAllAnimations() {
@@ -140,14 +166,12 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 _testIt = false;
                 Animator.SetBool("Attack2_DOWN", false);
                 Animator.SetBool("Attack2_SMASH", true);
-                if (!_contactedPlayer) {
-                    Animator.SetBool("Attack2_WEAK", true);
-                }else {
-                    Animator.SetBool("Attack2_WEAK", false);
-                }
+                Animator.SetBool("Attack2_WEAK", true);
+
                 if (!_stateChangeInitiated) {
+                    SpecialDamageCollider.enabled = true;
                     _stateChangeInitiated = true;
-                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, !_contactedPlayer ? 3f : 0.25f));
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
                 }
                 break;
             case AttackState.STAND:
@@ -160,6 +184,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                     Animator.SetBool("Attack2_STANDUP", false);
                 }
                 if (!_stateChangeInitiated) {
+                    SpecialDamageCollider.enabled = false;
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.5f));
                 }

@@ -82,12 +82,16 @@ public class BaddieBoss : BaddieLifeform {
         _currentAttackType = AttackType.DEFAULT;
     }
 
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 1.5f);
+    }
+
     private new void Update() {
         base.Update();
         if (!CheckTargetsExist()) {
             return;
         }
-        print("Health: " + Health + "    max Health: " + MaxHealth);
         BaddieHudManager.Instance.SetHealthStatus(Health, MaxHealth);
 
         var directionToTarget = transform.position.x - Target.position.x;

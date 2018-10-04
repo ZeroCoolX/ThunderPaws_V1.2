@@ -152,26 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 21
       objectReference: {fileID: 0}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 324638062}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 380661269}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoint
-      value: 
-      objectReference: {fileID: 1972510368}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: MovementIndicator
-      value: 
-      objectReference: {fileID: 1375836546}
     - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
       propertyPath: Attack1Points.Array.data[0]
@@ -197,30 +177,34 @@ Prefab:
       propertyPath: Attack1Points.Array.data[4]
       value: 
       objectReference: {fileID: 1429157321}
-    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
-      propertyPath: m_Offset.x
-      value: 0.077334166
+      propertyPath: AttackPoint
+      value: 
+      objectReference: {fileID: 1972510368}
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: MovementIndicator
+      value: 
+      objectReference: {fileID: 1375836546}
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 324638062}
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 380661269}
+    - target: {fileID: 4754850756677850, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.48
       objectReference: {fileID: 0}
-    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+    - target: {fileID: 114328693877031218, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
-      propertyPath: m_Offset.y
-      value: 0.75624466
-      objectReference: {fileID: 0}
-    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: m_Size.y
-      value: 3.5612373
-      objectReference: {fileID: 0}
-    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: m_Size.x
-      value: 4.0300145
-      objectReference: {fileID: 0}
-    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: Health
-      value: 5000
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
@@ -5854,7 +5838,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 8.208333
+      value: 7.802083
       objectReference: {fileID: 0}
     - target: {fileID: 212996950197282144, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}

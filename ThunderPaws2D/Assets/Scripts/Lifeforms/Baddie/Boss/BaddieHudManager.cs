@@ -30,6 +30,5 @@ public class BaddieHudManager : MonoBehaviour {
             healthVal = (float)currentHealth / maxHealth;
         }
         _healthBarRect.localScale = new Vector3(healthVal, _healthBarRect.localScale.y, _healthBarRect.localScale.z);
-        print("localScale = " + _healthBarRect.localScale);
     }
 }
