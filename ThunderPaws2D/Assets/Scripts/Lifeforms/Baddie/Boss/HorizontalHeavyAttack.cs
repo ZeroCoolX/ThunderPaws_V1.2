@@ -17,6 +17,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     private float xVelocity = 0.3F;
     private Vector3 _currentAttackPoint;
     private Vector3 _chargeAttackPoint;
+    private Vector2 _attackDirection;
     private bool _attack;
     private bool _flashOn;
     private bool _standupCalled = false;
@@ -35,19 +36,24 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
 
     public void CheckForPlayerContact() {
-        if(!_contactedPlayer && _attackState != AttackState.WEAK) {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(new Vector3(transform.position.x, transform.position.y - 1, transform.position.z), 1, 1 << 8);
-            foreach (var collider in colliders) {
-                if (collider != null) {
-                    print("HIT PLAYER!!");
-                    _contactedPlayer = true;
-                    return;
-                }
-            }
+        if (!_contactedPlayer && _attackState != AttackState.END && _attackState != AttackState.DEFAULT) {
+            print("Checking collision");
+            var leftCorner = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
+            var rightCorner = new Vector3(transform.position.x, transform.position.y - 2, transform.position.z);
+            RaycastHit2D hitLeft = Physics2D.Raycast(leftCorner, _attackDirection, 3, 1 << 8);
+            RaycastHit2D hitMiddle = Physics2D.Raycast(transform.position, _attackDirection, 3, 1 << 8);
+            RaycastHit2D hitRight = Physics2D.Raycast(rightCorner, _attackDirection, 3, 1 << 8);
+            Debug.DrawRay(leftCorner, _attackDirection * 2, Color.red);
+            Debug.DrawRay(transform.position, _attackDirection * 2, Color.red);
+            Debug.DrawRay(rightCorner, _attackDirection * 2, Color.red);
+
+            _contactedPlayer = (hitLeft.collider != null || hitMiddle.collider != null || hitRight.collider != null);
+            print("contacted player is : " + _contactedPlayer);
         }
     }
 
     private void Update() {
+        CheckForPlayerContact();
         switch (_attackState) {
             case AttackState.TRAVEL:
                 smoothTime = 0.5f;
@@ -67,7 +73,6 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 }
                 break;
             case AttackState.CHARGE:
-                CheckForPlayerContact();
                 Animator.SetBool("Attack3_CROUCH", false);
                 Animator.SetBool("Attack3_CHARGEUP", false);
                 _currentAttackPoint = _chargeAttackPoint;
@@ -153,6 +158,11 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         //}
         var attackStart = Random.Range(0, 10) % 2 == 0? 0 : 1;
         var attackEnd = attackStart > 0 ? 0 : 1;
+        if(attackStart == 0) {
+            _attackDirection = Vector2.left;
+        }else {
+            _attackDirection = Vector2.right;
+        }
         _chargeAttackPoint = AttackPoints[attackEnd].position;
         return AttackPoints[attackStart].position;
     }

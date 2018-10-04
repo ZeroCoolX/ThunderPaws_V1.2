@@ -206,6 +206,26 @@ Prefab:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.19548225
+      objectReference: {fileID: 0}
+    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 3.4843817
+      objectReference: {fileID: 0}
+    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.89914846
+      objectReference: {fileID: 0}
+    - target: {fileID: 61966246908808266, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 3.2754297
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
   m_IsPrefabParent: 0
@@ -5838,7 +5858,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 7.802083
+      value: 10.083333
       objectReference: {fileID: 0}
     - target: {fileID: 212996950197282144, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
