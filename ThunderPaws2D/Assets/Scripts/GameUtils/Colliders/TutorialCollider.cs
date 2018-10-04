@@ -34,11 +34,6 @@ public class TutorialCollider : MonoBehaviour {
         }
     }
 
-    //void OnDrawGizmosSelected() {
-    //    Gizmos.color = Color.green;
-    //    Gizmos.DrawSphere(transform.position, 0.5f);
-    //}
-
 
     private void Apply(Vector3 v, Collider2D c) {
         print("Apply");

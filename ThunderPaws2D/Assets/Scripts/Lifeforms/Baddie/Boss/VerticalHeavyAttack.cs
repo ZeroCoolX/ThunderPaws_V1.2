@@ -28,6 +28,9 @@ public class VerticalHeavyAttack : MonoBehaviour {
     private bool _testIt = false;
     public Vector3 _startSmashPos;
 
+    private bool _stateChangeInitiated = false;
+    private bool _contactedPlayer = false;
+
     private enum AttackState { DEFAULT, RISE, TRACK, SMASH, PAUSE, END, WEAK, STAND }
     private AttackState _attackState = AttackState.DEFAULT;
 
@@ -36,6 +39,11 @@ public class VerticalHeavyAttack : MonoBehaviour {
         var bossBaddieScript = transform.GetComponent<BaddieBoss>();
         _target = bossBaddieScript.GetTarget();
         bossBaddieScript.PlayVerticalHeavyAttack += InitiateAttack;
+    }
+
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 2f);
     }
 
     private void InitiateAttack() {
@@ -47,6 +55,19 @@ public class VerticalHeavyAttack : MonoBehaviour {
         }
     }
 
+    public void CheckForPlayerContact() {
+        if (!_contactedPlayer) {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2, 1 << 8);
+            foreach (var collider in colliders) {
+                if (collider != null) {
+                    print("HIT PLAYER!!");
+                    _contactedPlayer = true;
+                    return;
+                }
+            }
+        }
+    }
+
     private void ResetState() {
         _attack = false;
         smoothTime = 1f;
@@ -55,6 +76,8 @@ public class VerticalHeavyAttack : MonoBehaviour {
         ResetAllAnimations();
         MovementIndicator.GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         _attackState = AttackState.DEFAULT;
+        _stateChangeInitiated = false;
+        _contactedPlayer = false;
     }
 
     private void ResetAllAnimations() {
@@ -67,20 +90,27 @@ public class VerticalHeavyAttack : MonoBehaviour {
     }
 
     private void Update() {
+        CheckForPlayerContact();
         switch (_attackState) {
             case AttackState.RISE:
                 Animator.SetBool("Attack2_UP", true);
                 Animator.SetBool("Attack2_UP_FLY", true);
                 _currentAttackPoint = AttackPoint.position;
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.TRACK, 2f));
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.TRACK, 2f));
+                }
                 break;
             case AttackState.TRACK:
                 if (!MovementIndicator.gameObject.activeSelf) {
                     MovementIndicator.gameObject.SetActive(true);
                 }
-                _currentAttackPoint.x = transform.GetComponent<BaddieBoss>().GetTarget().position.x;
-                MovementIndicator.transform.position = new Vector3(_currentAttackPoint.x, MovementIndicator.transform.position.y, MovementIndicator.transform.position.z);
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.PAUSE, 5f));
+                    _currentAttackPoint.x = transform.GetComponent<BaddieBoss>().GetTarget().position.x;
+                    MovementIndicator.transform.position = new Vector3(_currentAttackPoint.x, MovementIndicator.transform.position.y, MovementIndicator.transform.position.z);
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.PAUSE, 5f));
+                }
                 break;
             case AttackState.SMASH:
                 Animator.SetBool("Attack2_DOWN", true);
@@ -93,19 +123,32 @@ public class VerticalHeavyAttack : MonoBehaviour {
                     _startSmashPos = transform.position;
                     _testIt = true;
                 }
-                smoothTime = 0.1f;
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.25f));
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    smoothTime = 0.1f;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.25f));
+                }
                 break;
             case AttackState.PAUSE:
                 Flash();
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.SMASH, 0.25f));
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.SMASH, 0.25f));
+                }
                 break;
             case AttackState.WEAK:
                 _testIt = false;
                 Animator.SetBool("Attack2_DOWN", false);
                 Animator.SetBool("Attack2_SMASH", true);
-                Animator.SetBool("Attack2_WEAK", true);
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
+                if (!_contactedPlayer) {
+                    Animator.SetBool("Attack2_WEAK", true);
+                }else {
+                    Animator.SetBool("Attack2_WEAK", false);
+                }
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, !_contactedPlayer ? 3f : 0.25f));
+                }
                 break;
             case AttackState.STAND:
                 Animator.SetBool("Attack2_SMASH", false);
@@ -116,7 +159,10 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 } else {
                     Animator.SetBool("Attack2_STANDUP", false);
                 }
-                StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.5f));
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.5f));
+                }
                 break;
             case AttackState.END:
                 Animator.SetBool("Attack2_STANDUP", false);
@@ -143,9 +189,8 @@ public class VerticalHeavyAttack : MonoBehaviour {
     private IEnumerator ChangeStateAfterSeconds(AttackState state, float afterSeconds) {
         yield return new WaitForSeconds(afterSeconds);
         // Extra check to see if we hit the player - if we did we want to move immediately to the End
-        if(AttackState.WEAK == state) {
-
-        }
+        _stateChangeInitiated = false;
+        print("State = " + state);
         _attackState = state;
     }
 

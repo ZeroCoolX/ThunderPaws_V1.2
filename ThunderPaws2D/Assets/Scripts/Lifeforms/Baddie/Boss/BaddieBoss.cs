@@ -39,6 +39,14 @@ public class BaddieBoss : BaddieLifeform {
     private float _moveTrigger;
     private float _delayBetweenMoves = 1f;
 
+    // Deterministic attack values
+    private bool _verticalAttackChance;
+    private bool _horizontalAttackChance;
+
+    private float _delayBetweenSpecialAttacks = 0;
+
+    private AttackType _lastAttackType;
+
     private enum AttackType { DEFAULT, VERTICAL, HORIZONAL}
     private AttackType _currentAttackType;
 
@@ -56,6 +64,8 @@ public class BaddieBoss : BaddieLifeform {
         transform.GetComponent<VerticalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<HorizontalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<HorizontalHeavyAttack>().ToggleFacingLock += ToggleFacingLock;
+
+        ResetAttackDelay();
     }
 
     private void ToggleFacingLock(bool allowFacing) {
@@ -68,6 +78,8 @@ public class BaddieBoss : BaddieLifeform {
         Hattack = false;
         _hAttackInitiated = false;
         _allowPlayerfacing = true;
+        ResetAttackDelay();
+        _currentAttackType = AttackType.DEFAULT;
     }
 
     private new void Update() {
@@ -81,7 +93,8 @@ public class BaddieBoss : BaddieLifeform {
             CalculateFacingDirection(directionToTarget);
         }
 
-        if (Vattack && !_vAttackInitiated) {
+
+        if (_currentAttackType == AttackType.VERTICAL && !_vAttackInitiated) {
             _vAttackInitiated = true;
             PlayVerticalHeavyAttack.Invoke();
         }
@@ -89,7 +102,7 @@ public class BaddieBoss : BaddieLifeform {
             return;
         }
 
-        if (Hattack && !_hAttackInitiated) {
+        if (_currentAttackType == AttackType.HORIZONAL && !_hAttackInitiated) {
             _hAttackInitiated = true;
             PlayHorizontalHeavyAttack.Invoke();
         }
@@ -109,6 +122,8 @@ public class BaddieBoss : BaddieLifeform {
             _moveTrigger = Time.time + _delayBetweenMoves;
         }
         CalculateVelocity();
+
+        DetermineNextAttackType();
     }
 
     private void CheckIfCanAttack() {
@@ -222,14 +237,41 @@ public class BaddieBoss : BaddieLifeform {
         }
     }
 
-    private void DetermineAttackType() {
-        // If health is above 3/4
-        if(Health >= MaxHealth * 0.75) {
-            // Normal Default speed
-        }else if (Health >= MaxHealth * 0.5f) {
-            // Middle speed
-        }else {
-            // Fastest, most violent
+    private void ResetAttackDelay() {
+        _delayBetweenSpecialAttacks = Time.time + Random.Range(5, 10);
+    }
+
+    private void DetermineNextAttackType() {
+        if(Time.time <= _delayBetweenSpecialAttacks) {
+            return;
         }
+
+        _currentAttackType = AttackType.DEFAULT;
+
+        var rand = Random.Range(0, 10);
+
+        // If health is above 3/4 - 75% chance a special attack will happen
+        if(Health >= MaxHealth * 0.75) {
+            if(rand > 3) {
+                _currentAttackType = GenerateAttackType();
+            }
+            // Normal Default speed
+        } else if (Health >= MaxHealth * 0.5f) { // 50% chance special attack happens
+            // Middle speed
+            if(rand != 0 && rand % 2 == 0) {
+                _currentAttackType = GenerateAttackType();
+            }
+        } else { // 25% chance special attack happens
+            // Fastest, most violent
+            if(rand < 3) {
+                _currentAttackType = GenerateAttackType();
+            }
+        }
+    }
+
+    private AttackType GenerateAttackType() {
+        var rand = Random.Range(0, 10);
+        print("Random : " + rand);
+        return rand % 2 == 0 ? AttackType.VERTICAL : AttackType.HORIZONAL;
     }
 }

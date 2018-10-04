@@ -22,6 +22,8 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     private bool _standupCalled = false;
     private bool _stateChangeInitiated = false;
 
+    private bool _contactedPlayer = false;
+
     private enum AttackState { DEFAULT, TRAVEL, POWERUP, CHARGE, END, WALLSMASH, WEAK, STAND }
     private AttackState _attackState = AttackState.DEFAULT;
 
@@ -31,12 +33,30 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         _attackState = AttackState.DEFAULT;
     }
 
+    void OnDrawGizmosSelected() {
+        Gizmos.color = Color.green;
+        Gizmos.DrawSphere(transform.position, 2f);
+    }
+
+    public void CheckForPlayerContact() {
+        if(!_contactedPlayer && _attackState != AttackState.WEAK) {
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,2, 1 << 8);
+            foreach (var collider in colliders) {
+                if (collider != null) {
+                    print("HIT PLAYER!!");
+                    _contactedPlayer = true;
+                    return;
+                }
+            }
+        }
+    }
+
     private void Update() {
         switch (_attackState) {
             case AttackState.TRAVEL:
-                _currentAttackPoint = GetClosestAttackPoint();
                 smoothTime = 0.5f;
                 if (!_stateChangeInitiated) {
+                    _currentAttackPoint = GetClosestAttackPoint();
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.POWERUP, 2f));
                     _stateChangeInitiated = true;
                 }
@@ -51,6 +71,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 }
                 break;
             case AttackState.CHARGE:
+                CheckForPlayerContact();
                 Animator.SetBool("Attack3_CROUCH", false);
                 Animator.SetBool("Attack3_CHARGEUP", false);
                 _currentAttackPoint = _chargeAttackPoint;
@@ -134,8 +155,10 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         //    _chargeAttackPoint = AttackPoints[0].position;
         //    return AttackPoints[1].position;
         //}
-        _chargeAttackPoint = AttackPoints[1].position;
-        return AttackPoints[0].position;
+        var attackStart = Random.Range(0, 10) % 2 == 0? 0 : 1;
+        var attackEnd = attackStart > 0 ? 0 : 1;
+        _chargeAttackPoint = AttackPoints[attackEnd].position;
+        return AttackPoints[attackStart].position;
     }
 
     private void Flash() {
@@ -151,6 +174,11 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     private IEnumerator ChangeStateAfterSeconds(AttackState state, float afterSeconds) {
         yield return new WaitForSeconds(afterSeconds);
         _stateChangeInitiated = false;
+        if(AttackState.WEAK == state && _contactedPlayer) {
+            ResetAllAnimations();
+            // Instead we want to immediately get back up!
+            state = AttackState.END;
+        }
         _attackState = state;
     }
 
@@ -168,6 +196,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         ResetAllAnimations();
         GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
         _attackState = AttackState.DEFAULT;
+        _contactedPlayer = false;
     }
 
     private void ResetAllAnimations() {
