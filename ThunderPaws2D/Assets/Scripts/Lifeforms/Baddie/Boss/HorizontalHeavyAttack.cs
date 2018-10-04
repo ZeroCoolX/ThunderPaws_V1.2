@@ -35,12 +35,12 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 2f);
+        Gizmos.DrawSphere(transform.position, 1.5f);
     }
 
     public void CheckForPlayerContact() {
         if(!_contactedPlayer && _attackState != AttackState.WEAK) {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,2, 1 << 8);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position,1, 1 << 8);
             foreach (var collider in colliders) {
                 if (collider != null) {
                     print("HIT PLAYER!!");

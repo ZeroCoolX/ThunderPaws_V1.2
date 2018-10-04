@@ -43,7 +43,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
     void OnDrawGizmosSelected() {
         Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 2f);
+        Gizmos.DrawSphere(transform.position, 1.5f);
     }
 
     private void InitiateAttack() {
@@ -57,7 +57,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
     public void CheckForPlayerContact() {
         if (!_contactedPlayer) {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2, 1 << 8);
+            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.5f, 1 << 8);
             foreach (var collider in colliders) {
                 if (collider != null) {
                     print("HIT PLAYER!!");

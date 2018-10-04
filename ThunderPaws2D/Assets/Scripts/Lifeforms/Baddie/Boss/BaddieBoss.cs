@@ -87,6 +87,8 @@ public class BaddieBoss : BaddieLifeform {
         if (!CheckTargetsExist()) {
             return;
         }
+        print("Health: " + Health + "    max Health: " + MaxHealth);
+        BaddieHudManager.Instance.SetHealthStatus(Health, MaxHealth);
 
         var directionToTarget = transform.position.x - Target.position.x;
         if (_allowPlayerfacing) {
