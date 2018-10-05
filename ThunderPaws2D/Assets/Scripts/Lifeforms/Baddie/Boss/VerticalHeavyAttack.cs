@@ -87,9 +87,6 @@ public class VerticalHeavyAttack : MonoBehaviour {
     }
 
     private void StopAllCoroutinesAndStand() {
-        if (_contactedPlayer) {
-            ShakeCamera.Invoke();
-        }
         ApplyDamageModifierForWeakSpot.Invoke(1);
         StopAllCoroutines();
         StartCoroutine(ChangeStateAfterSeconds(AttackState.CONTACT, 0));
@@ -171,6 +168,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_WEAK", true);
 
                 if (!_stateChangeInitiated) {
+                    ShakeCamera.Invoke();
                     ApplyDamageModifierForWeakSpot.Invoke(8);
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 4f));
@@ -183,6 +181,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_CONTACT", true);
 
                 if (!_stateChangeInitiated) {
+                    ShakeCamera.Invoke();
                     _stateChangeInitiated = true;
                     Invoke("WeaknessCheck", 0.25f);
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 2f));

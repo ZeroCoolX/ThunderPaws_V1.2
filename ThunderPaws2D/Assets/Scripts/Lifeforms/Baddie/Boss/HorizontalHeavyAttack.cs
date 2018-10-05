@@ -33,7 +33,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
     private Transform _player;
 
-    private enum AttackState { DEFAULT, TRAVEL, POWERUP, CHARGE, END, WALLSMASH, WEAK, STAND }
+    private enum AttackState { DEFAULT, TRAVEL, POWERUP, CHARGE, END, WALLSMASH, WEAK, STAND, PIN }
     private AttackState _attackState = AttackState.DEFAULT;
 
     private void Start() {
@@ -44,10 +44,10 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
 
     public void CheckForPlayerContact() {
-        if (!_contactedPlayer && _attackState != AttackState.END && _attackState != AttackState.DEFAULT) {
+        if (!_contactedPlayer && _attackState != AttackState.END && _attackState != AttackState.DEFAULT && _attackState != AttackState.TRAVEL) {
             print("Checking collision");
-            var leftCorner = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
-            var rightCorner = new Vector3(transform.position.x, transform.position.y - 2, transform.position.z);
+            var leftCorner = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+            var rightCorner = new Vector3(transform.position.x, transform.position.y - 1.5f, transform.position.z);
             RaycastHit2D hitLeft = Physics2D.Raycast(leftCorner, _attackDirection, 2, 1 << 8);
             RaycastHit2D hitRight = Physics2D.Raycast(rightCorner, _attackDirection, 2, 1 << 8);
             Debug.DrawRay(leftCorner, _attackDirection * 2, Color.red);
@@ -119,13 +119,24 @@ public class HorizontalHeavyAttack : MonoBehaviour {
             case AttackState.WALLSMASH:
                 smoothTime = 0.3f;
                 if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    ShakeCamera.Invoke();
                     if (_contactedPlayer) {
-                        ShakeCamera.Invoke();
+                        Animator.SetBool("Attack3_WALLSMASH", true);
+                        StartCoroutine(ChangeStateAfterSeconds(AttackState.PIN, 0.3f));
+                    } else {
+                        Animator.SetBool("Attack3_WALLSMASH", true);
+                        Animator.SetBool("Attack3_BOUNCEBACK", true);
+                        StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.5f));
                     }
-                    Animator.SetBool("Attack3_DASH", false);
-                    Animator.SetBool("Attack3_WALLSMASH", true);
-                    Animator.SetBool("Attack3_BOUNCEBACK", true);
-                    StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.5f));
+                }
+                break;
+            case AttackState.PIN:
+                smoothTime = 1f;
+                if (!_stateChangeInitiated) {
+                    Animator.SetBool("Attack3_WALLSMASH", false);
+                    Animator.SetBool("Attack3_PIN", true);
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
                     _stateChangeInitiated = true;
                 }
                 break;
@@ -133,8 +144,8 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 smoothTime = 1f;
                 if (!_stateChangeInitiated) {
                     ApplyDamageModifierForWeakSpot.Invoke(8);
-                    Animator.SetBool("Attack3_WALLSMASH", false);
                     Animator.SetBool("Attack3_BOUNCEBACK", false);
+                    Animator.SetBool("Attack3_WALLSMASH", false);
                     Invoke("ToggleLockFacingBackOn", 0.1f);
                     Animator.SetBool("Attack3_WEAK", true);
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
@@ -143,6 +154,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 break;
             case AttackState.STAND:
                 Animator.SetBool("Attack3_WEAK", false);
+                Animator.SetBool("Attack3_PIN", false);
                 if (!_standupCalled) {
                     Animator.SetBool("Attack3_STANDUP", true);
                     _standupCalled = true;
