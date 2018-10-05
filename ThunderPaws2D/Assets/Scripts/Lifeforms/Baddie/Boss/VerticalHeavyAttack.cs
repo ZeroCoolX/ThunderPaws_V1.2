@@ -154,7 +154,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 if (!_stateChangeInitiated) {
                     _stateChangeInitiated = true;
                     smoothTime = 0.1f;
-                    StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0.25f));
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.CONTACT, 0.25f));
                 }
                 break;
             case AttackState.PAUSE:
@@ -173,7 +173,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 if (!_stateChangeInitiated) {
                     ApplyDamageModifierForWeakSpot.Invoke(8);
                     _stateChangeInitiated = true;
-                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 4f));
                 }
                 break;
             case AttackState.CONTACT:
@@ -184,12 +184,14 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
                 if (!_stateChangeInitiated) {
                     _stateChangeInitiated = true;
-                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 1.5f));
+                    Invoke("WeaknessCheck", 0.25f);
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 2f));
                 }
                 break;
             case AttackState.STAND:
                 Animator.SetBool("Attack2_SMASH", false);
                 Animator.SetBool("Attack2_WEAK", false);
+                Animator.SetBool("Attack2_CONTACT", false);
                 if (!_standupCalled) {
                     Animator.SetBool("Attack2_STANDUP", true);
                     _standupCalled = true;
@@ -229,6 +231,14 @@ public class VerticalHeavyAttack : MonoBehaviour {
         _stateChangeInitiated = false;
         print("State = " + state);
         _attackState = state;
+    }
+
+    private void WeaknessCheck() {
+        if (!_contactedPlayer) {
+            print("Sending into weak mode");
+            StopAllCoroutines();
+            StartCoroutine(ChangeStateAfterSeconds(AttackState.WEAK, 0));
+        }
     }
 
     private void CalculateVelocity() {
