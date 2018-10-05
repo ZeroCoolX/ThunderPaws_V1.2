@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 114328693877031218}
   - component: {fileID: 114476691141527812}
   - component: {fileID: 114617981893915602}
-  - component: {fileID: 114831841094175138}
   m_Layer: 14
   m_Name: Boss_S1
   m_TagString: Baddie
@@ -208,7 +207,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1189089018264822}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.0183806, y: -0.74649996, z: 1.55}
+  m_LocalPosition: {x: 3.0183806, y: -0.74649996, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4140125350211966}
@@ -349,7 +348,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1172497717464102}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4022868960382546}
@@ -380,7 +379,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.077334166, y: 0.75624466}
+  m_Offset: {x: -0.19548225, y: 0.89914846}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -391,7 +390,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.0300145, y: 3.5612373}
+  m_Size: {x: 3.4843817, y: 3.2754297}
   m_EdgeRadius: 0
 --- !u!95 &95297888252955896
 Animator:
@@ -508,17 +507,6 @@ MonoBehaviour:
   FirePoint45: {fileID: 4560943184588660}
   FirePoint90: {fileID: 4441762400312266}
   Dattack: 0
---- !u!114 &114831841094175138
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1189089018264822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &212504251988293266
 SpriteRenderer:
   m_ObjectHideFlags: 1

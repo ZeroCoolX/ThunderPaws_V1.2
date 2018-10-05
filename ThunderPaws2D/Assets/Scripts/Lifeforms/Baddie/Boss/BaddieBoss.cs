@@ -62,10 +62,17 @@ public class BaddieBoss : BaddieLifeform {
         _moveTrigger = Time.time + _delayBetweenMoves;
 
         transform.GetComponent<VerticalHeavyAttack>().OnComplete += ResumeBasicAttack;
+        transform.GetComponent<VerticalHeavyAttack>().ApplyDamageModifierForWeakSpot += ApplyDamageModifier;
+
         transform.GetComponent<HorizontalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<HorizontalHeavyAttack>().ToggleFacingLock += ToggleFacingLock;
+        transform.GetComponent<HorizontalHeavyAttack>().ApplyDamageModifierForWeakSpot += ApplyDamageModifier;
 
         ResetAttackDelay();
+    }
+
+    private void ApplyDamageModifier(int multiplier) {
+        DamageMultiplier = multiplier;
     }
 
     private void ToggleFacingLock(bool allowFacing) {
@@ -73,6 +80,7 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private void ResumeBasicAttack() {
+        ApplyDamageModifier(1);
         Vattack = false;
         _vAttackInitiated = false;
         Hattack = false;
@@ -80,11 +88,6 @@ public class BaddieBoss : BaddieLifeform {
         _allowPlayerfacing = true;
         ResetAttackDelay();
         _currentAttackType = AttackType.DEFAULT;
-    }
-
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(transform.position, 1.5f);
     }
 
     private new void Update() {

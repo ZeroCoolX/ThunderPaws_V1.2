@@ -13,6 +13,7 @@ public class DamageableLifeform : BaseLifeform {
     [Header("Life Properties")]
     public float Health = 1f;
     protected float MaxHealth;
+    protected int DamageMultiplier = 1;
 
     [Header("Payload Properties")]
     public Transform PayloadContent;
@@ -92,7 +93,7 @@ public class DamageableLifeform : BaseLifeform {
     }
 
     public override bool Damage(float damage) {
-        Health -= damage;
+        Health -= (damage * DamageMultiplier);
         ActivateFlash();
         return Health <= 0;
     }

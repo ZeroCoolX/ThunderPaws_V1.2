@@ -11,7 +11,8 @@ public class VerticalHeavyAttack : MonoBehaviour {
     public delegate void AttackComplete();
     public AttackComplete OnComplete;
 
-    private SimpleCollider SpecialDamageCollider;
+    public delegate void ApplySpecialDamageModifier(int multiplier);
+    public ApplySpecialDamageModifier ApplyDamageModifierForWeakSpot;
 
     private Transform _target;
     private float vAttackTimeBeforeSmash = 5f;
@@ -40,17 +41,8 @@ public class VerticalHeavyAttack : MonoBehaviour {
         MovementIndicator.gameObject.SetActive(false);
         var bossBaddieScript = transform.GetComponent<BaddieBoss>();
         _target = bossBaddieScript.GetTarget();
+
         bossBaddieScript.PlayVerticalHeavyAttack += InitiateAttack;
-
-        SpecialDamageCollider = transform.GetComponent<SimpleCollider>();
-        if(SpecialDamageCollider == null) {
-            throw new MissingComponentException("Simple Collider for special damage is missing!");
-        }
-        SpecialDamageCollider.InvokeCollision += Apply;
-        SpecialDamageCollider.Initialize(1 << 11, 6, true);
-        SpecialDamageCollider.enabled = false;
-
-
     }
 
     private void InitiateAttack() {
@@ -88,7 +80,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
     }
 
     private void StopAllCoroutinesAndStand() {
-        SpecialDamageCollider.enabled = false;
+        ApplyDamageModifierForWeakSpot.Invoke(1);
         StopAllCoroutines();
         StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 0));
     }
@@ -103,7 +95,6 @@ public class VerticalHeavyAttack : MonoBehaviour {
         _attackState = AttackState.DEFAULT;
         _stateChangeInitiated = false;
         _contactedPlayer = false;
-        SpecialDamageCollider.enabled = false;
     }
 
     private void ResetAllAnimations() {
@@ -169,7 +160,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_WEAK", true);
 
                 if (!_stateChangeInitiated) {
-                    SpecialDamageCollider.enabled = true;
+                    ApplyDamageModifierForWeakSpot.Invoke(5);
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
                 }
@@ -184,7 +175,6 @@ public class VerticalHeavyAttack : MonoBehaviour {
                     Animator.SetBool("Attack2_STANDUP", false);
                 }
                 if (!_stateChangeInitiated) {
-                    SpecialDamageCollider.enabled = false;
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.END, 0.5f));
                 }

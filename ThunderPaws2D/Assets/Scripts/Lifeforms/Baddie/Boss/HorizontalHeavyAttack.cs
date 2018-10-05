@@ -9,6 +9,9 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     public delegate void AttackComplete();
     public AttackComplete OnComplete;
 
+    public delegate void ApplySpecialDamageModifier(int multiplier);
+    public ApplySpecialDamageModifier ApplyDamageModifierForWeakSpot;
+
     public delegate void LockFacingDirectionDelegate(bool locked);
     public LockFacingDirectionDelegate ToggleFacingLock;
 
@@ -100,6 +103,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
             case AttackState.WEAK:
                 smoothTime = 1f;
                 if (!_stateChangeInitiated) {
+                    ApplyDamageModifierForWeakSpot.Invoke(8);
                     Animator.SetBool("Attack3_WALLSMASH", false);
                     Animator.SetBool("Attack3_BOUNCEBACK", false);
                     Invoke("ToggleLockFacingBackOn", 0.1f);
@@ -134,28 +138,6 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
 
     private Vector3 GetClosestAttackPoint() {
-        //float point1Distance;
-        //float point2Distance;
-
-        //if (Mathf.Sign(transform.position.x) != Mathf.Sign(AttackPoints[0].position.x)) {
-        //    point1Distance = transform.position.x + AttackPoints[0].position.x;
-        //}else {
-        //    point1Distance = Mathf.Abs(transform.position.x - AttackPoints[0].position.x);
-        //}
-
-        //if (Mathf.Sign(transform.position.x) != Mathf.Sign(AttackPoints[1].position.x)) {
-        //    point2Distance = transform.position.x + AttackPoints[1].position.x;
-        //} else {
-        //    point2Distance = Mathf.Abs(transform.position.x - AttackPoints[1].position.x);
-        //}
-
-        //if (point1Distance < point2Distance) {
-        //    _chargeAttackPoint = AttackPoints[1].position;
-        //    return AttackPoints[0].position;
-        //} else {
-        //    _chargeAttackPoint = AttackPoints[0].position;
-        //    return AttackPoints[1].position;
-        //}
         var attackStart = Random.Range(0, 10) % 2 == 0? 0 : 1;
         var attackEnd = attackStart > 0 ? 0 : 1;
         if(attackStart == 0) {
@@ -181,6 +163,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         yield return new WaitForSeconds(afterSeconds);
         _stateChangeInitiated = false;
         if(AttackState.WEAK == state && _contactedPlayer) {
+            ApplyDamageModifierForWeakSpot.Invoke(1);
             ResetAllAnimations();
             // Instead we want to immediately get back up!
             state = AttackState.END;
