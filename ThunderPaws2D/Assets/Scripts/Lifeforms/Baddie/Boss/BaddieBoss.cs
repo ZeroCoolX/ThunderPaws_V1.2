@@ -22,6 +22,11 @@ public class BaddieBoss : BaddieLifeform {
     public Transform FirePoint0;
     public Transform FirePoint45;
     public Transform FirePoint90;
+
+    private float _camShakeAmount = 0.1f;
+    private float _camShakeLength = 0.5f;
+    private CameraShake _camShake;
+
     public bool Dattack = false;
     private bool _dAttackInitiated = false;
     private RaycastHit2D[] AttackHits = new RaycastHit2D[3];
@@ -63,12 +68,24 @@ public class BaddieBoss : BaddieLifeform {
 
         transform.GetComponent<VerticalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<VerticalHeavyAttack>().ApplyDamageModifierForWeakSpot += ApplyDamageModifier;
+        transform.GetComponent<VerticalHeavyAttack>().ShakeCamera += GenerateCameraShake;
 
         transform.GetComponent<HorizontalHeavyAttack>().OnComplete += ResumeBasicAttack;
         transform.GetComponent<HorizontalHeavyAttack>().ToggleFacingLock += ToggleFacingLock;
         transform.GetComponent<HorizontalHeavyAttack>().ApplyDamageModifierForWeakSpot += ApplyDamageModifier;
+        transform.GetComponent<HorizontalHeavyAttack>().ShakeCamera += GenerateCameraShake;
+
+        _camShake = GameMasterV2.Instance.GetComponent<CameraShake>();
+        if (_camShake == null) {
+            Debug.LogError("Weapon.cs: No CameraShake found on game master");
+            throw new MissingComponentException();
+        }
 
         ResetAttackDelay();
+    }
+
+    private void GenerateCameraShake() {
+        _camShake.Shake(_camShakeAmount, _camShakeLength);
     }
 
     private void ApplyDamageModifier(int multiplier) {

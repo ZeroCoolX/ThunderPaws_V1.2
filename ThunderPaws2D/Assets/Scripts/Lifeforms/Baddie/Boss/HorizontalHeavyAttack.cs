@@ -15,6 +15,9 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     public delegate void LockFacingDirectionDelegate(bool locked);
     public LockFacingDirectionDelegate ToggleFacingLock;
 
+    public delegate void CameraShakeDelegate();
+    public CameraShakeDelegate ShakeCamera;
+
     private float smoothTime = 1F;
     private float yVelocity = 0.3F;
     private float xVelocity = 0.3F;
@@ -27,6 +30,8 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     private bool _stateChangeInitiated = false;
 
     private bool _contactedPlayer = false;
+
+    private Transform _player;
 
     private enum AttackState { DEFAULT, TRAVEL, POWERUP, CHARGE, END, WALLSMASH, WEAK, STAND }
     private AttackState _attackState = AttackState.DEFAULT;
@@ -43,20 +48,41 @@ public class HorizontalHeavyAttack : MonoBehaviour {
             print("Checking collision");
             var leftCorner = new Vector3(transform.position.x, transform.position.y - 1, transform.position.z);
             var rightCorner = new Vector3(transform.position.x, transform.position.y - 2, transform.position.z);
-            RaycastHit2D hitLeft = Physics2D.Raycast(leftCorner, _attackDirection, 3, 1 << 8);
-            RaycastHit2D hitMiddle = Physics2D.Raycast(transform.position, _attackDirection, 3, 1 << 8);
-            RaycastHit2D hitRight = Physics2D.Raycast(rightCorner, _attackDirection, 3, 1 << 8);
+            RaycastHit2D hitLeft = Physics2D.Raycast(leftCorner, _attackDirection, 2, 1 << 8);
+            RaycastHit2D hitRight = Physics2D.Raycast(rightCorner, _attackDirection, 2, 1 << 8);
             Debug.DrawRay(leftCorner, _attackDirection * 2, Color.red);
-            Debug.DrawRay(transform.position, _attackDirection * 2, Color.red);
             Debug.DrawRay(rightCorner, _attackDirection * 2, Color.red);
 
-            _contactedPlayer = (hitLeft.collider != null || hitMiddle.collider != null || hitRight.collider != null);
+            _contactedPlayer = (hitLeft.collider != null || hitRight.collider != null);
+            if (_contactedPlayer) {
+                var hit = hitLeft.collider != null ? hitLeft : hitRight;
+                // We know its the player because the player is the only thing on layer we're checking
+                _player = hit.collider.transform;
+                hit.collider.transform.GetComponent<Player>().Damage(100);
+                // play explosion;
+            }
             print("contacted player is : " + _contactedPlayer);
         }
     }
 
+    private bool ShouldDragPlayer() {
+        var drag = false;
+        switch (_attackState) {
+            case AttackState.CHARGE:
+            case AttackState.WALLSMASH:
+            case AttackState.WEAK:
+            case AttackState.END:
+                drag = true;
+                break;
+        }
+        return drag && _contactedPlayer;
+    }
+
     private void Update() {
         CheckForPlayerContact();
+        if (ShouldDragPlayer()) {
+            _player.transform.position = transform.position;
+        }
         switch (_attackState) {
             case AttackState.TRAVEL:
                 smoothTime = 0.5f;
@@ -93,6 +119,9 @@ public class HorizontalHeavyAttack : MonoBehaviour {
             case AttackState.WALLSMASH:
                 smoothTime = 0.3f;
                 if (!_stateChangeInitiated) {
+                    if (_contactedPlayer) {
+                        ShakeCamera.Invoke();
+                    }
                     Animator.SetBool("Attack3_DASH", false);
                     Animator.SetBool("Attack3_WALLSMASH", true);
                     Animator.SetBool("Attack3_BOUNCEBACK", true);

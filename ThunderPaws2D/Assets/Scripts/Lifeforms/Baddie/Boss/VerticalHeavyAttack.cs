@@ -14,6 +14,9 @@ public class VerticalHeavyAttack : MonoBehaviour {
     public delegate void ApplySpecialDamageModifier(int multiplier);
     public ApplySpecialDamageModifier ApplyDamageModifierForWeakSpot;
 
+    public delegate void CameraShakeDelegate();
+    public CameraShakeDelegate ShakeCamera;
+
     private Transform _target;
     private float vAttackTimeBeforeSmash = 5f;
     private float smoothTime = 1F;
@@ -34,7 +37,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
     private bool _stateChangeInitiated = false;
     private bool _contactedPlayer = false;
 
-    private enum AttackState { DEFAULT, RISE, TRACK, SMASH, PAUSE, END, WEAK, STAND }
+    private enum AttackState { DEFAULT, RISE, TRACK, SMASH, PAUSE, END, WEAK, STAND, CONTACT }
     private AttackState _attackState = AttackState.DEFAULT;
 
     private void Start() {
@@ -73,6 +76,10 @@ public class VerticalHeavyAttack : MonoBehaviour {
 
             _contactedPlayer = (hitLeft.collider != null || hitMiddle.collider != null || hitRight.collider != null);
             if (_contactedPlayer) {
+                var hit = hitLeft.collider != null ? hitLeft : hitMiddle.collider != null ? hitMiddle : hitRight;
+                // We know its the player because the player is the only thing on layer we're checking
+                hit.collider.transform.GetComponent<Player>().Damage(100);
+                // play explosion
                 StopAllCoroutinesAndStand();
             }
             print("contacted player is : " + _contactedPlayer);
@@ -80,9 +87,12 @@ public class VerticalHeavyAttack : MonoBehaviour {
     }
 
     private void StopAllCoroutinesAndStand() {
+        if (_contactedPlayer) {
+            ShakeCamera.Invoke();
+        }
         ApplyDamageModifierForWeakSpot.Invoke(1);
         StopAllCoroutines();
-        StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 0));
+        StartCoroutine(ChangeStateAfterSeconds(AttackState.CONTACT, 0));
     }
 
     private void ResetState() {
@@ -104,6 +114,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
         Animator.SetBool("Attack2_WEAK", false);
         Animator.SetBool("Attack2_SMASH", false);
         Animator.SetBool("Attack2_UP_FLY", false);
+        Animator.SetBool("Attack2_CONTACT", false);
     }
 
     private void Update() {
@@ -160,9 +171,20 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_WEAK", true);
 
                 if (!_stateChangeInitiated) {
-                    ApplyDamageModifierForWeakSpot.Invoke(5);
+                    ApplyDamageModifierForWeakSpot.Invoke(8);
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 3f));
+                }
+                break;
+            case AttackState.CONTACT:
+                _testIt = false;
+                Animator.SetBool("Attack2_DOWN", false);
+                Animator.SetBool("Attack2_SMASH", true);
+                Animator.SetBool("Attack2_CONTACT", true);
+
+                if (!_stateChangeInitiated) {
+                    _stateChangeInitiated = true;
+                    StartCoroutine(ChangeStateAfterSeconds(AttackState.STAND, 1.5f));
                 }
                 break;
             case AttackState.STAND:
