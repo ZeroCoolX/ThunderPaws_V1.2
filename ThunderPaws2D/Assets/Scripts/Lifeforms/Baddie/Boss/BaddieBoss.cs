@@ -35,6 +35,10 @@ public class BaddieBoss : BaddieLifeform {
     private float _attackDelay;
     private float _attackTimeToWait;
 
+    private enum DamageAmount{ NONE, SOME, ALL}
+    private DamageAmount _damageTaken = DamageAmount.NONE;
+    private int _damageLayer = 0;
+
     private bool _allowPlayerfacing = true;
     private float smoothTime = 1F;
     private float yVelocity = 0.3F;
@@ -82,6 +86,7 @@ public class BaddieBoss : BaddieLifeform {
         }
 
         ResetAttackDelay();
+        //Animator.SetLayerWeight(2, 1.0f);
     }
 
     private void GenerateCameraShake() {
@@ -150,6 +155,17 @@ public class BaddieBoss : BaddieLifeform {
         CalculateVelocity();
 
         DetermineNextAttackType();
+
+       // CheckDamageTaken();
+    }
+
+    private void CheckDamageTaken() {
+        var currentDamageTaken = CalculateDamageTaken();
+        if (_damageTaken != currentDamageTaken) {
+            // update the damage to be the current and update layers
+            UpdateAnimatorLayerByDamage(currentDamageTaken);
+            _damageTaken = currentDamageTaken;
+        }
     }
 
     private void CheckIfCanAttack() {
@@ -267,6 +283,25 @@ public class BaddieBoss : BaddieLifeform {
         _delayBetweenSpecialAttacks = Time.time + Random.Range(5, 10);
     }
 
+    private DamageAmount CalculateDamageTaken() {
+        if(Health <= MaxHealth * 0.25) {
+            return DamageAmount.ALL;
+        } else if(Health <= MaxHealth * 0.7) {
+            return DamageAmount.SOME;
+        } else {
+            return DamageAmount.NONE;
+        }
+    }
+
+    private void UpdateAnimatorLayerByDamage(DamageAmount newDamageLayer) {
+        print("Updating layer " + _damageTaken + " to 0.0 and layer " + newDamageLayer + " to 1");
+        if(_damageTaken != DamageAmount.NONE) {
+            Animator.SetLayerWeight((int)_damageTaken, 0.0f);
+        }
+        Animator.SetLayerWeight((int)newDamageLayer, 1.0f);
+
+    }
+
     private void DetermineNextAttackType() {
         if(Time.time <= _delayBetweenSpecialAttacks) {
             return;
@@ -298,6 +333,6 @@ public class BaddieBoss : BaddieLifeform {
     private AttackType GenerateAttackType() {
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        return rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.HORIZONAL;
+        return rand % 2 == 0 ? AttackType.VERTICAL : AttackType.VERTICAL;
     }
 }
