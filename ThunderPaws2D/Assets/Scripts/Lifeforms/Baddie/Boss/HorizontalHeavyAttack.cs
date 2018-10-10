@@ -233,7 +233,6 @@ public class HorizontalHeavyAttack : MonoBehaviour {
         Animator.SetBool("Attack3_CHARGEUP", false);
         Animator.SetBool("Attack3_DASH", false);
         Animator.SetBool("Attack3_WALLSMASH", false);
-        Animator.SetBool("Attack3_RECOVER", false);
         Animator.SetBool("Attack3_BOUNCEBACK", false);
         Animator.SetBool("Attack3_WEAK", false);
         Animator.SetBool("Attack3_STANDUP", false);
