@@ -399,7 +399,7 @@ public class BaddieBoss : BaddieLifeform {
     private AttackType GenerateAttackType() {
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        return rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.HORIZONAL;
+        return rand % 2 == 0 ? AttackType.VERTICAL : AttackType.HORIZONAL;
     }
 
     public override bool Damage(float damage) {
