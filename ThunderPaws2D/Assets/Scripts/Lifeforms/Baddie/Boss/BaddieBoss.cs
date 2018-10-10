@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BaddieBoss : BaddieLifeform {
+    [Header("Death Spot")]
+    public Transform DeathSpot;
+
     [Header("Movement Pattern")]
     public Transform[] Attack1Points;
 
@@ -27,6 +30,10 @@ public class BaddieBoss : BaddieLifeform {
     public Transform WeakspotExplosionPrefab;
 
     private Transform _weakspotExplosion;
+
+    private SimpleCollider _deathSpotCollider;
+    private bool _deathInitiated = false;
+    private bool _dead = false;
 
     private float _camShakeAmount = 0.1f;
     private float _camShakeLength = 0.5f;
@@ -95,6 +102,13 @@ public class BaddieBoss : BaddieLifeform {
         }
 
         ResetAttackDelay();
+
+        DeathSpot.GetComponent<SimpleCollider>().enabled = false;
+    }
+
+    private void Apply(Vector3 v, Collider2D c) {
+        StartCoroutine(PlayFinalDeathAnimation());
+        DeathSpot.GetComponent<SimpleCollider>().enabled = false;
     }
 
     private void GenerateCameraShake() {
@@ -109,6 +123,45 @@ public class BaddieBoss : BaddieLifeform {
         _allowPlayerfacing = allowFacing;
     }
 
+    protected override void PreDestroy() {
+        _deathInitiated = true;
+        print("PreDestroy was called");
+        // Ensures we cannot attack
+        _attackTimeToWait = Time.time + int.MaxValue;
+        Invoke("MoveToDeathSpot", 2f);
+    }
+
+    private void MoveToDeathSpot() {
+        // Ensures we cannot move except to our death
+        _moveTrigger = Time.time + int.MaxValue;
+        _currentAttackPoint = DeathSpot.position;
+        StartCoroutine(PlayFinalDeathAnimation());
+    }
+
+    private IEnumerator PlayFinalDeathAnimation() {
+        yield return new WaitForSeconds(4f);
+        Animator.SetBool("Death", true);
+        yield return new WaitForSeconds(0.25f);
+        Invoke("PlayDeathExplosion", 0f);
+        Invoke("PlayDeathExplosion", 0.1f);
+        Invoke("PlayDeathExplosion", 0.25f);
+        Invoke("PlayDeathExplosion", 0.3f);
+        Invoke("PlayDeathExplosion", 0.7f);
+        _dead = true;
+        GetComponent<SpriteRenderer>().sortingOrder = 0;
+    }
+
+    private void PlayDeathExplosion() {
+        var clone = Instantiate(WeakspotExplosionPrefab, _weakspotExplosion.position, _weakspotExplosion.rotation);
+        clone.GetComponent<SpriteRenderer>().sortingOrder = 10;
+        clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
+        clone.GetComponent<Animator>().SetBool("Invoke", true);
+    }
+
+    protected override void InvokeDestroy() {
+        print("InvokeDestroy was called");
+    }
+
     private void ResumeBasicAttack() {
         ApplyDamageModifier(1);
         Vattack = false;
@@ -121,7 +174,10 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private new void Update() {
-        base.Update();
+        if (_dead) {
+            return;
+        }
+
         if (!CheckTargetsExist()) {
             return;
         }
@@ -148,7 +204,9 @@ public class BaddieBoss : BaddieLifeform {
         if (_hAttackInitiated) {
             return;
         }
-
+        if (!_deathInitiated) {
+            base.Update();
+        }
 
         CheckIfCanAttack();
         CalculateAttackFirepoint();

@@ -23,8 +23,8 @@ public class BaddieHudManager : MonoBehaviour {
 
     public void SetHealthStatus(float currentHealth, float maxHealth) {
         float healthVal;
-        if (currentHealth == 0 && maxHealth == 0) {
-            healthVal = 1f;
+        if (currentHealth == 0) {
+            healthVal = 0f;
         } else {
             // Calculate percentage of max health
             healthVal = (float)currentHealth / maxHealth;
