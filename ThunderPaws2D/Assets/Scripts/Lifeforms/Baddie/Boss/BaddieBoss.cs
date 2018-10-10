@@ -23,6 +23,11 @@ public class BaddieBoss : BaddieLifeform {
     public Transform FirePoint45;
     public Transform FirePoint90;
 
+    [Header("Explosion Prefab")]
+    public Transform WeakspotExplosionPrefab;
+
+    private Transform _weakspotExplosion;
+
     private float _camShakeAmount = 0.1f;
     private float _camShakeLength = 0.5f;
     private CameraShake _camShake;
@@ -79,10 +84,14 @@ public class BaddieBoss : BaddieLifeform {
         transform.GetComponent<HorizontalHeavyAttack>().ApplyDamageModifierForWeakSpot += ApplyDamageModifier;
         transform.GetComponent<HorizontalHeavyAttack>().ShakeCamera += GenerateCameraShake;
 
+        _weakspotExplosion = transform.Find("ExplosionOrigin");
+        if(_weakspotExplosion == null) {
+            throw new MissingComponentException("Baddie Boss was missing a weakspot explosion");
+        }
+
         _camShake = GameMasterV2.Instance.GetComponent<CameraShake>();
         if (_camShake == null) {
-            Debug.LogError("Weapon.cs: No CameraShake found on game master");
-            throw new MissingComponentException();
+            throw new MissingComponentException("Weapon.cs: No CameraShake found on game master");
         }
 
         ResetAttackDelay();
@@ -333,5 +342,19 @@ public class BaddieBoss : BaddieLifeform {
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
         return rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.HORIZONAL;
+    }
+
+    public override bool Damage(float damage) {
+        Health -= (damage * DamageMultiplier);
+        if(DamageMultiplier > 1) {
+            print("Play massive weakspot explosion!");
+            var clone = Instantiate(WeakspotExplosionPrefab, _weakspotExplosion.position, _weakspotExplosion.rotation);
+            clone.GetComponent<SpriteRenderer>().sortingOrder = 10;
+            clone.GetComponent<DeathTimer>().TimeToLive = 0.5f;
+            clone.GetComponent<Animator>().SetBool("Invoke", true);
+        } else {
+            ActivateFlash();
+        }
+        return Health <= 0;
     }
 }
