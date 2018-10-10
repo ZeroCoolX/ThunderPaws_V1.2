@@ -71,7 +71,6 @@ public class HorizontalHeavyAttack : MonoBehaviour {
             case AttackState.CHARGE:
             case AttackState.WALLSMASH:
             case AttackState.WEAK:
-            case AttackState.END:
                 drag = true;
                 break;
         }

@@ -86,7 +86,6 @@ public class BaddieBoss : BaddieLifeform {
         }
 
         ResetAttackDelay();
-        //Animator.SetLayerWeight(2, 1.0f);
     }
 
     private void GenerateCameraShake() {
@@ -156,7 +155,7 @@ public class BaddieBoss : BaddieLifeform {
 
         DetermineNextAttackType();
 
-       // CheckDamageTaken();
+        CheckDamageTaken();
     }
 
     private void CheckDamageTaken() {
@@ -333,6 +332,6 @@ public class BaddieBoss : BaddieLifeform {
     private AttackType GenerateAttackType() {
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        return rand % 2 == 0 ? AttackType.VERTICAL : AttackType.VERTICAL;
+        return rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.HORIZONAL;
     }
 }

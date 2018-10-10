@@ -152,26 +152,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 21
       objectReference: {fileID: 0}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 324638062}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 380661269}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoint
-      value: 
-      objectReference: {fileID: 1972510368}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: MovementIndicator
-      value: 
-      objectReference: {fileID: 1375836546}
     - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
       propertyPath: Attack1Points.Array.data[0]
@@ -197,6 +177,26 @@ Prefab:
       propertyPath: Attack1Points.Array.data[4]
       value: 
       objectReference: {fileID: 1429157321}
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoint
+      value: 
+      objectReference: {fileID: 1972510368}
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: MovementIndicator
+      value: 
+      objectReference: {fileID: 1375836546}
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 324638062}
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 380661269}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
   m_IsPrefabParent: 0
@@ -6011,7 +6011,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 9.46875
+      value: 8.864584
       objectReference: {fileID: 0}
     - target: {fileID: 212996950197282144, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
