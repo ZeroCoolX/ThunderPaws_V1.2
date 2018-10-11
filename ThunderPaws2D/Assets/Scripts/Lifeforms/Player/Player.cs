@@ -71,7 +71,7 @@ public class Player : PlayerLifeform {
         // Since we know we're forcibly calling deactive - make sure the UI updates correctly
         PlayerStats.CurrentUltimate = 0;
         PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
-
+        Animator.SetLayerWeight(1, 0.0f);
         // Stop the ultimate
         PlayerStats.UltEnabled = false;
         _weaponManager.ToggleUltimateForAllWeapons(false);
@@ -93,7 +93,7 @@ public class Player : PlayerLifeform {
 
     public void PickupCoin() {
         if (!PlayerStats.UltEnabled) {
-            PlayerStats.CurrentUltimate += 1;
+            PlayerStats.CurrentUltimate += 5;
             PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
         }
         GameStatsManager.Instance.AddCoin(PlayerNumber);
@@ -196,6 +196,7 @@ public class Player : PlayerLifeform {
         CalcualteFacingDirection();
         CalculateWeaponRotation();
         DevelopmentHealthHack();
+        CheckForUltReady();
         CheckForUltimateUse();
 
         // Check for weapon switching
@@ -272,6 +273,15 @@ public class Player : PlayerLifeform {
         transform.Translate(Velocity * Time.deltaTime);
         Invoke("DeactivateBounceBackTrigger", 0.1f);
     }
+
+    private void CheckForUltReady() {
+        if (PlayerStats.UltReady) {
+            if (!PlayerStats.UltEnabled) {
+                Animator.SetLayerWeight(1, 1.0f);
+            }
+        }
+    }
+
 
     private void CheckForUltimateUse() {
         if ((Input.GetButtonUp(JoystickId + GameConstants.Input_Ultimate) || Input.GetKeyUp(InputManager.Instance.Ultimate)) && PlayerStats.UltReady) {
