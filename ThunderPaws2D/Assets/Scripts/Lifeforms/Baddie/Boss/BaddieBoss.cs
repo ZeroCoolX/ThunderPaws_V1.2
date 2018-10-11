@@ -44,6 +44,7 @@ public class BaddieBoss : BaddieLifeform {
     private RaycastHit2D[] AttackHits = new RaycastHit2D[3];
     private float[] AttackHitDistances = new float[3];
     private List<Transform> _currentFirePoints;
+    private string _defaultFireAngleAnimation = "Attack1-0";
     private float _attackDelay;
     private float _attackTimeToWait;
 
@@ -290,10 +291,13 @@ public class BaddieBoss : BaddieLifeform {
         var min = Mathf.Min(AttackHitDistances[0], AttackHitDistances[1], AttackHitDistances[2]);
         _currentFirePoints = new List<Transform>();
         if (min == AttackHitDistances[0]) {
+            _defaultFireAngleAnimation = "Attack1-0";
             return FirePoint0;
         } else if (min == AttackHitDistances[1]) {
+            _defaultFireAngleAnimation = "Attack1-45";
             return FirePoint45;
         } else {
+            _defaultFireAngleAnimation = "Attack1-90";
             return FirePoint90;
         }
     }
@@ -317,13 +321,21 @@ public class BaddieBoss : BaddieLifeform {
 
     private void Attack() {
         var fireTime = 0f;
-        for (var i = 0; i < 25; ++i) {
+
+        Animator.SetBool(_defaultFireAngleAnimation, true);
+        for (var i = 0; i < Random.Range(10, 25); ++i) {
             Invoke("Fire", fireTime);
             fireTime += 0.075f;
         }
 
+        Invoke("DeactivateDefaultAttackAnimation", fireTime - 0.075f);
+
         Dattack = false;
         _dAttackInitiated = false;
+    }
+
+    private void DeactivateDefaultAttackAnimation() {
+        Animator.SetBool(_defaultFireAngleAnimation, false);
     }
 
     private void Fire() {
@@ -346,7 +358,7 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private void ResetAttackDelay() {
-        _delayBetweenSpecialAttacks = Time.time + Random.Range(5, 10);
+        _delayBetweenSpecialAttacks = Time.time + Random.Range(10, 15);
     }
 
     private DamageAmount CalculateDamageTaken() {
@@ -369,17 +381,17 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private void DetermineNextAttackType() {
-        if(Time.time <= _delayBetweenSpecialAttacks) {
+        _currentAttackType = AttackType.DEFAULT;
+
+        if (Time.time <= _delayBetweenSpecialAttacks) {
             return;
         }
 
-        _currentAttackType = AttackType.DEFAULT;
-
-        var rand = Random.Range(0, 10);
+        var rand = Random.Range(0, 11);
 
         // If health is above 3/4 - 75% chance a special attack will happen
         if(Health >= MaxHealth * 0.75) {
-            if(rand > 3) {
+            if(rand > 4) {
                 _currentAttackType = GenerateAttackType();
             }
             // Normal Default speed

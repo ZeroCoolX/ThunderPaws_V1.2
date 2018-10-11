@@ -514,9 +514,10 @@ MonoBehaviour:
     type: 2}
   PayloadItemCount: 10
   Animator: {fileID: 95869084425988396}
-  BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
+  BulletPrefab: {fileID: 4659474290433748, guid: 2a411f2d3ca73f44bad0d9c734977ad4,
     type: 2}
   PartOfHorde: 0
+  DeathSpot: {fileID: 0}
   Attack1Points:
   - {fileID: 0}
   - {fileID: 0}
