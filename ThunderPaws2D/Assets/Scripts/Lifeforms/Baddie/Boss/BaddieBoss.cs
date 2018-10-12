@@ -72,6 +72,15 @@ public class BaddieBoss : BaddieLifeform {
     private enum AttackType { DEFAULT, VERTICAL, HORIZONAL}
     private AttackType _currentAttackType;
 
+    private Stack<HealthChunk> _healthChunks = new Stack<HealthChunk>();
+    private HealthChunk _currentHealth;
+    private int _chunkIndex = 0;
+
+    private struct HealthChunk {
+        public float MaxHealth;
+        public float Health;
+    }
+
     public Transform GetTarget() {
         return Target;
     }
@@ -79,6 +88,15 @@ public class BaddieBoss : BaddieLifeform {
     private new void Start() {
         base.Start();
         MaxHealth = Health;
+
+        var healthChunk = MaxHealth / 3;
+
+        for(int i = 0; i < 3; ++i) {
+            _healthChunks.Push(new HealthChunk { Health = healthChunk, MaxHealth = healthChunk });
+        }
+
+        _currentHealth = _healthChunks.Pop();
+
         Gravity = 0.0f;
         RandomlySelectAttackPoint();
         _moveTrigger = Time.time + _delayBetweenMoves;
@@ -176,13 +194,13 @@ public class BaddieBoss : BaddieLifeform {
 
     private new void Update() {
         if (_dead) {
+            GetComponent<SpriteRenderer>().material.SetFloat("_FlashAmount", 0f);
             return;
         }
 
         if (!CheckTargetsExist()) {
             return;
         }
-        BaddieHudManager.Instance.SetHealthStatus(Health, MaxHealth);
 
         var directionToTarget = transform.position.x - Target.position.x;
         if (_allowPlayerfacing) {
@@ -224,6 +242,23 @@ public class BaddieBoss : BaddieLifeform {
         DetermineNextAttackType();
 
         CheckDamageTaken();
+    }
+
+    private void UpdateHeathbar() {
+        if(_currentHealth.Health <= 0) {
+            if(_healthChunks.Count == 0) {
+                BaddieHudManager.Instance.HideHealthBar(_chunkIndex);
+                Health = 0.0f;
+                return;
+            }else {
+                print("adding new current health!");
+                _currentHealth = _healthChunks.Pop();
+                BaddieHudManager.Instance.HideHealthBar(_chunkIndex);
+                ++_chunkIndex;
+            }
+        }
+        print("Updating chunk: " + _chunkIndex + " with "+_currentHealth.Health + "/" + _currentHealth.MaxHealth);
+        BaddieHudManager.Instance.SetHealthStatus(_chunkIndex, _currentHealth.Health, _currentHealth.MaxHealth);
     }
 
     private void CheckDamageTaken() {
@@ -362,9 +397,9 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private DamageAmount CalculateDamageTaken() {
-        if(Health <= MaxHealth * 0.25) {
+        if(_healthChunks.Count == 0) {
             return DamageAmount.ALL;
-        } else if(Health <= MaxHealth * 0.7) {
+        } else if(_healthChunks.Count == 1) {
             return DamageAmount.SOME;
         } else {
             return DamageAmount.NONE;
@@ -389,13 +424,12 @@ public class BaddieBoss : BaddieLifeform {
 
         var rand = Random.Range(0, 11);
 
-        // If health is above 3/4 - 75% chance a special attack will happen
-        if(Health >= MaxHealth * 0.75) {
+        if(_healthChunks.Count == 2) {
             if(rand > 4) {
                 _currentAttackType = GenerateAttackType();
             }
             // Normal Default speed
-        } else if (Health >= MaxHealth * 0.5f) { // 50% chance special attack happens
+        } else if (_healthChunks.Count == 1) {
             // Middle speed
             if(rand != 0 && rand % 2 == 0) {
                 _currentAttackType = GenerateAttackType();
@@ -415,7 +449,7 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     public override bool Damage(float damage) {
-        Health -= (damage * DamageMultiplier);
+        _currentHealth.Health -= (damage * DamageMultiplier);
         if(DamageMultiplier > 1) {
             print("Play massive weakspot explosion!");
             var clone = Instantiate(WeakspotExplosionPrefab, _weakspotExplosion.position, _weakspotExplosion.rotation);
@@ -425,6 +459,7 @@ public class BaddieBoss : BaddieLifeform {
         } else {
             ActivateFlash();
         }
-        return Health <= 0;
+        UpdateHeathbar();
+        return _currentHealth.Health <= 0 && _healthChunks.Count == 0;
     }
 }

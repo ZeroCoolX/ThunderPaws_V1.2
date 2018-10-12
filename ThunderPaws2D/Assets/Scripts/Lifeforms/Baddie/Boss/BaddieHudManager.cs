@@ -6,7 +6,7 @@ public class BaddieHudManager : MonoBehaviour {
     public static BaddieHudManager Instance;
 
     [SerializeField]
-    private RectTransform _healthBarRect;
+    private RectTransform[] _healthBarRects;
 
     private void Awake() {
         if (Instance == null) {
@@ -15,13 +15,17 @@ public class BaddieHudManager : MonoBehaviour {
             Destroy(gameObject);
         }
 
-        if (_healthBarRect == null) {
-            Debug.LogError("No HealthBarRect found");
+        if (_healthBarRects == null || _healthBarRects.Length == 0) {
+            Debug.LogError("No HealthBarRects found");
             throw new UnassignedReferenceException();
         }
     }
 
-    public void SetHealthStatus(float currentHealth, float maxHealth) {
+    public void HideHealthBar(int index) {
+        _healthBarRects[index].gameObject.SetActive(false);
+    }
+
+    public void SetHealthStatus(int healthbarIndex, float currentHealth, float maxHealth) {
         float healthVal;
         if (currentHealth == 0) {
             healthVal = 0f;
@@ -29,6 +33,6 @@ public class BaddieHudManager : MonoBehaviour {
             // Calculate percentage of max health
             healthVal = (float)currentHealth / maxHealth;
         }
-        _healthBarRect.localScale = new Vector3(healthVal, _healthBarRect.localScale.y, _healthBarRect.localScale.z);
+        _healthBarRects[healthbarIndex].localScale = new Vector3(healthVal, _healthBarRects[healthbarIndex].localScale.y, _healthBarRects[healthbarIndex].localScale.z);
     }
 }
