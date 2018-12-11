@@ -2712,6 +2712,11 @@ Prefab:
       propertyPath: SpecialPlatforms.Array.data[1]
       value: 
       objectReference: {fileID: 447095426}
+    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: Health
+      value: 10000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
   m_IsPrefabParent: 0
