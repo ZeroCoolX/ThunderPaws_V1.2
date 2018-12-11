@@ -304,3 +304,10 @@ MonoBehaviour:
     randomVolume: 0
     randomPitch: 0
     loop: 0
+  - name: AccessDenied
+    clip: {fileID: 8300000, guid: 95d61cce109028a479e5e3a3e624b4fc, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
