@@ -47,6 +47,8 @@ public class BaddieBoss : BaddieLifeform {
     private string _defaultFireAngleAnimation = "Attack1-0";
     private float _attackDelay;
     private float _attackTimeToWait;
+    private int _lastAttackIndex = 0;
+    private AttackType[] _lastTwoAttacks = new AttackType[2] { AttackType.DEFAULT, AttackType.DEFAULT };
 
     private enum DamageAmount{ NONE, SOME, ALL}
     private DamageAmount _damageTaken = DamageAmount.NONE;
@@ -443,9 +445,25 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private AttackType GenerateAttackType() {
+        Random.InitState((int)Time.time);
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        return rand % 2 == 0 ? AttackType.VERTICAL : AttackType.HORIZONAL;
+        var newAttack = rand % 2 == 0 ? AttackType.VERTICAL : AttackType.HORIZONAL;
+        if(_lastTwoAttacks[_lastAttackIndex] == newAttack) {
+            if(_lastAttackIndex == _lastTwoAttacks.Length - 1) {
+                _lastTwoAttacks[1] = AttackType.DEFAULT;
+                _lastTwoAttacks[0] = GetOppositeAttackType(newAttack);
+            }
+            _lastTwoAttacks[++_lastAttackIndex] = newAttack;
+        }
+        _lastTwoAttacks[1] = AttackType.DEFAULT;
+        _lastTwoAttacks[0] = newAttack;
+        _lastAttackIndex = 0;
+        return _lastTwoAttacks[_lastAttackIndex];
+    }
+
+    private AttackType GetOppositeAttackType(AttackType attack) {
+        return attack == AttackType.VERTICAL ? AttackType.HORIZONAL : AttackType.VERTICAL;
     }
 
     public override bool Damage(float damage) {
