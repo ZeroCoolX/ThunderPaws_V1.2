@@ -29,6 +29,10 @@ public class BaddieBoss : BaddieLifeform {
     [Header("Explosion Prefab")]
     public Transform WeakspotExplosionPrefab;
 
+    [Header("Platform Switches")]
+    public Transform[] SpecialPlatforms;
+    private bool _platformsOn = true;
+
     private Transform _weakspotExplosion;
 
     private SimpleCollider _deathSpotCollider;
@@ -192,6 +196,7 @@ public class BaddieBoss : BaddieLifeform {
         _allowPlayerfacing = true;
         ResetAttackDelay();
         _currentAttackType = AttackType.DEFAULT;
+        TogglePlatformsOn(true);
     }
 
     private new void Update() {
@@ -444,7 +449,14 @@ public class BaddieBoss : BaddieLifeform {
         }
     }
 
+    private void TogglePlatformsOn(bool on) {
+        SpecialPlatforms[0].gameObject.SetActive(on);
+        SpecialPlatforms[1].gameObject.SetActive(!on);
+    }
+
     private AttackType GenerateAttackType() {
+        TogglePlatformsOn(false);
+
         Random.InitState((int)Time.time);
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
