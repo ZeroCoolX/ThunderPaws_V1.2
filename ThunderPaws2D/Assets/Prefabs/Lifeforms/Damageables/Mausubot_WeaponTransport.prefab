@@ -188,7 +188,7 @@ MonoBehaviour:
   - {fileID: 4817874658325376, guid: ba4fc744cd0b5e54db15c740e64a18b4, type: 2}
   - {fileID: 4817874658325376, guid: 98477d139757fbf43b33c289c8b84a2f, type: 2}
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
-  - {fileID: 4817874658325376, guid: c59a8bc433d09cc4fa18a0bb8d853cf4, type: 2}
+  - {fileID: 4795677035519362, guid: 7824611b3149fcd498df812d4dde6af8, type: 2}
   - {fileID: 4817874658325376, guid: fbe04607da1f48444a658fe64fb78683, type: 2}
 --- !u!212 &212089085880457384
 SpriteRenderer:
