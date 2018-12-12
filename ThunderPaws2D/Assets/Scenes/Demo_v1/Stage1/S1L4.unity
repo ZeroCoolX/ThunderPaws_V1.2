@@ -2615,11 +2615,6 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: SpecialPlatforms.Array.size
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4022868960382546, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
       propertyPath: m_LocalPosition.x
       value: 3.0183806
@@ -2652,26 +2647,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 25
       objectReference: {fileID: 0}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
-      propertyPath: AttackPoints.Array.data[0]
+      propertyPath: DeathSpot
       value: 
-      objectReference: {fileID: 1660540371}
-    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 2051513764}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: AttackPoint
-      value: 
-      objectReference: {fileID: 602892365}
-    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
-      propertyPath: MovementIndicator
-      value: 
-      objectReference: {fileID: 1222483706}
+      objectReference: {fileID: 2121129143}
     - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
       propertyPath: Attack1Points.Array.data[0]
@@ -2699,11 +2679,6 @@ Prefab:
       objectReference: {fileID: 503696483}
     - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
-      propertyPath: DeathSpot
-      value: 
-      objectReference: {fileID: 2121129143}
-    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
-        type: 2}
       propertyPath: SpecialPlatforms.Array.data[0]
       value: 
       objectReference: {fileID: 1771360754}
@@ -2712,11 +2687,26 @@ Prefab:
       propertyPath: SpecialPlatforms.Array.data[1]
       value: 
       objectReference: {fileID: 447095426}
-    - target: {fileID: 114661601653744494, guid: feda470d977fa7b44b3a835308908ee4,
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
         type: 2}
-      propertyPath: Health
-      value: 10000
-      objectReference: {fileID: 0}
+      propertyPath: AttackPoints.Array.data[0]
+      value: 
+      objectReference: {fileID: 1660540371}
+    - target: {fileID: 114617981893915602, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoints.Array.data[1]
+      value: 
+      objectReference: {fileID: 2051513764}
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: AttackPoint
+      value: 
+      objectReference: {fileID: 602892365}
+    - target: {fileID: 114476691141527812, guid: feda470d977fa7b44b3a835308908ee4,
+        type: 2}
+      propertyPath: MovementIndicator
+      value: 
+      objectReference: {fileID: 1222483706}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: feda470d977fa7b44b3a835308908ee4, type: 2}
   m_IsPrefabParent: 0

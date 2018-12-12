@@ -36,7 +36,6 @@ public class CoinController : MonoBehaviour {
 
     private const int PLAYER_LAYER = 8;
 
-
     public void Initialize(Vector2 initalVelocity) {
         _velocity = initalVelocity;
     }
@@ -80,12 +79,13 @@ public class CoinController : MonoBehaviour {
         ApplyGravity();
         _controller.Move(_velocity * Time.deltaTime, Vector2.zero);
     }
-
     /// <summary>
     /// Everytime the coin collides with the ground we send it vertically in the opposite direction.
     /// Each time it hits the ground we half the speed of the last time so it eventually stops, thus creating a bounce effect
     /// </summary>
     private void CalculateBounce() {
+        print("turning off rotation");
+        gameObject.GetComponentInChildren<SimpleRotator>().enabled = false;
         if (_totalBounceEffect.y > 0) {
             _totalBounceEffect.y = _totalBounceEffect.y / 2;
             _velocity.y = _totalBounceEffect.y;
