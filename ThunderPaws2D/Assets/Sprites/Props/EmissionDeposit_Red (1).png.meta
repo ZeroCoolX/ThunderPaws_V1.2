@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: cd4d31f5ff7fc8643bd38d5efd63637f
+guid: cf60d9e1c9f033c4f95e50842d9da916
 TextureImporter:
   fileIDToRecycleName:
-    21300000: EmissionDeposit_Red_0
-    21300002: EmissionDeposit_Red_1
-    21300004: EmissionDeposit_Red_2
-    21300006: EmissionDeposit_Red_3
-    21300008: EmissionDeposit_Red_4
-    21300010: EmissionDeposit_Red_5
+    21300000: EmissionDeposit_Red (1)_0
+    21300002: EmissionDeposit_Red (1)_1
+    21300004: EmissionDeposit_Red (1)_2
+    21300006: EmissionDeposit_Red (1)_3
+    21300008: EmissionDeposit_Red (1)_4
+    21300010: EmissionDeposit_Red (1)_5
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 24
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -85,7 +85,35 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: EmissionDeposit_Red_0
+      name: EmissionDeposit_Red (1)_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmissionDeposit_Red (1)_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: EmissionDeposit_Red (1)_2
       rect:
         serializedVersion: 2
         x: 0
@@ -99,7 +127,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: EmissionDeposit_Red_1
+      name: EmissionDeposit_Red (1)_3
       rect:
         serializedVersion: 2
         x: 48
@@ -113,35 +141,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: EmissionDeposit_Red_2
-      rect:
-        serializedVersion: 2
-        x: 96
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: EmissionDeposit_Red_3
-      rect:
-        serializedVersion: 2
-        x: 144
-        y: 48
-        width: 48
-        height: 48
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: EmissionDeposit_Red_4
+      name: EmissionDeposit_Red (1)_4
       rect:
         serializedVersion: 2
         x: 0
@@ -155,7 +155,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: EmissionDeposit_Red_5
+      name: EmissionDeposit_Red (1)_5
       rect:
         serializedVersion: 2
         x: 48
