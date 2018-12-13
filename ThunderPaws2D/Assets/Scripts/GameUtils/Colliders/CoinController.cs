@@ -85,7 +85,10 @@ public class CoinController : MonoBehaviour {
     /// </summary>
     private void CalculateBounce() {
         print("turning off rotation");
-        gameObject.GetComponentInChildren<SimpleRotator>().enabled = false;
+        var rotator = gameObject.GetComponentInChildren<SimpleRotator>();
+        if(rotator != null){
+            gameObject.GetComponentInChildren<SimpleRotator>().enabled = false;
+        }
         if (_totalBounceEffect.y > 0) {
             _totalBounceEffect.y = _totalBounceEffect.y / 2;
             _velocity.y = _totalBounceEffect.y;

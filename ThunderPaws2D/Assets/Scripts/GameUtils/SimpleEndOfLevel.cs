@@ -32,7 +32,7 @@ public class SimpleEndOfLevel : MonoBehaviour {
 
     private void Apply(Vector3 v, Collider2D c) {
         // Lock Camera
-        Camera.GetComponent<Camera2DFollow>().Target = transform;
+        Camera.GetComponent<BetterCameraFollow>().Target = transform;
 
         // Remove player input
         _velocity = c.transform.GetComponent<Player>().GetCurrentVelocity();

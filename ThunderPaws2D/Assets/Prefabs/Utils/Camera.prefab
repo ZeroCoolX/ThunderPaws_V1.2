@@ -51,6 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4577878596718628}
   - component: {fileID: 114044399596692558}
+  - component: {fileID: 114751474484610054}
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
@@ -181,7 +182,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1440532710190838}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34c07784f81d3d547a3cb79cc5f4eade, type: 3}
   m_Name: 
@@ -213,6 +214,23 @@ MonoBehaviour:
   retroSnap: 0
   assetsPixelsPerUnit: 24
   showHUD: 0
+--- !u!114 &114751474484610054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1440532710190838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38c802da02d1e1c49ae58c2ba787f3e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  FocusAreaSize: {x: 3, y: 5}
+  VerticalOffset: 1
+  LookaheadDistanceX: 4
+  LookSmoothTimeX: 0.5
+  VerticalSmoothTime: 0.2
 --- !u!124 &124889709427851530
 Behaviour:
   m_ObjectHideFlags: 1
@@ -254,7 +272,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -50
-  m_Sprite: {fileID: 21300000, guid: 459f500337329a644972d1d13bb3ce87, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 33bedc5f4e8c50142a2000e390507917, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

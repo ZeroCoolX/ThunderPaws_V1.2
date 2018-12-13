@@ -1,8 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BetterCameraFollow : MonoBehaviour {
+
+    public Transform Target;
 
     public Vector2 FocusAreaSize;
     public float VerticalOffset;
@@ -18,7 +18,7 @@ public class BetterCameraFollow : MonoBehaviour {
 
     private bool _lookaheadStopped;
 
-    private CollisionController2D _target;
+    private CollisionController2D _targetCollider;
     private FocusArea _focusArea;
 
     private float nextTimeToSearch = 0f;
@@ -26,11 +26,12 @@ public class BetterCameraFollow : MonoBehaviour {
     private string _searchName;
 
     private void Start() {
-        if (_target == null) {
+        if (Target == null || _targetCollider == null) {
             FindPlayer();
             return;
         }
-        _focusArea = new FocusArea(_target.BoxCollider.bounds, FocusAreaSize);
+        _targetCollider = Target.GetComponent<CollisionController2D>();
+        _focusArea = new FocusArea(_targetCollider.BoxCollider.bounds, FocusAreaSize);
     }
 
     protected void FindPlayer() {
@@ -40,25 +41,31 @@ public class BetterCameraFollow : MonoBehaviour {
                 if (!searchResult.GetComponent<BaddieActivator>().enabled) {
                     Invoke("DelayedActivate", 1);
                 }
-                _target = searchResult.transform.GetComponent<CollisionController2D>();
-                _focusArea = new FocusArea(_target.BoxCollider.bounds, FocusAreaSize);
+                Target = searchResult.transform;
+                _targetCollider = Target.GetComponent<CollisionController2D>();
+                _focusArea = new FocusArea(_targetCollider.BoxCollider.bounds, FocusAreaSize);
                 nextTimeToSearch = Time.time + searchDelay;
             }
         }
     }
 
+    private void DelayedActivate() {
+        Target.gameObject.GetComponent<BaddieActivator>().enabled = true;
+        Target.gameObject.GetComponent<SimpleCollider>().enabled = true;
+    }
+
     private void LateUpdate() {
-        if (_target == null) {
+        if (Target == null || _targetCollider == null) {
             FindPlayer();
             return;
         }
-        _focusArea.Update(_target.BoxCollider.bounds);
+        _focusArea.Update(_targetCollider.BoxCollider.bounds);
 
         Vector2 focusPosition = _focusArea.Center + Vector2.up * VerticalOffset;
 
         if(_focusArea.Velocity.x != 0) {
             _lookaheadDirectionX = Mathf.Sign(_focusArea.Velocity.x);
-            if(Mathf.Sign(_target.PlayerInput.x) == Mathf.Sign(_focusArea.Velocity.x) && _target.PlayerInput.x != 0) {
+            if(Mathf.Sign(_targetCollider.PlayerInput.x) == Mathf.Sign(_focusArea.Velocity.x) && _targetCollider.PlayerInput.x != 0) {
                 _lookaheadStopped = false;
                 _targetLookaheadX = _lookaheadDirectionX * LookaheadDistanceX;
             }else {
