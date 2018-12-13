@@ -5,6 +5,18 @@ using UnityEngine;
 public class BetterCameraFollow : MonoBehaviour {
 
     public Vector2 FocusAreaSize;
+    public float VerticalOffset;
+    public float LookaheadDistanceX;
+    public float LookSmoothTimeX;
+    public float VerticalSmoothTime;
+
+    private float _currentLookaheadX;
+    private float _targetLookaheadX;
+    private float _lookaheadDirectionX;
+    private float _smoothLookVelocityX;
+    private float _smoothVelocityY;
+
+    private bool _lookaheadStopped;
 
     private CollisionController2D _target;
     private FocusArea _focusArea;
@@ -41,6 +53,27 @@ public class BetterCameraFollow : MonoBehaviour {
             return;
         }
         _focusArea.Update(_target.BoxCollider.bounds);
+
+        Vector2 focusPosition = _focusArea.Center + Vector2.up * VerticalOffset;
+
+        if(_focusArea.Velocity.x != 0) {
+            _lookaheadDirectionX = Mathf.Sign(_focusArea.Velocity.x);
+            if(Mathf.Sign(_target.PlayerInput.x) == Mathf.Sign(_focusArea.Velocity.x) && _target.PlayerInput.x != 0) {
+                _lookaheadStopped = false;
+                _targetLookaheadX = _lookaheadDirectionX * LookaheadDistanceX;
+            }else {
+                if (!_lookaheadStopped) {
+                    _lookaheadStopped = true;
+                    _targetLookaheadX = _currentLookaheadX + (_lookaheadDirectionX * LookaheadDistanceX - _currentLookaheadX) / 4; // just random 4...
+                }
+            }
+        }
+
+        _currentLookaheadX = Mathf.SmoothDamp(_currentLookaheadX, _targetLookaheadX, ref _smoothLookVelocityX, LookSmoothTimeX);
+
+        focusPosition.y = Mathf.SmoothDamp(transform.position.y, focusPosition.y, ref _smoothVelocityY, VerticalSmoothTime);
+        focusPosition += Vector2.right * _currentLookaheadX;
+        transform.position = (Vector3)focusPosition + Vector3.forward * -10; // making sure the camera is in front of the level always
     }
 
     private void OnDrawGizmos() {

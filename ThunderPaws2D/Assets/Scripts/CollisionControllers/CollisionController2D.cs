@@ -34,8 +34,9 @@ public class CollisionController2D : RaycastController {
         }
     }
     public CollisionInfo Collisions;
+    [HideInInspector]
+    public Vector2 PlayerInput;
 
-    private Vector2 _playerInput;
     private float _maxSlopeClimbAngle = 80f;
     private float _maxSlopeDescendAngle = 75f;
 
@@ -57,7 +58,7 @@ public class CollisionController2D : RaycastController {
     /// Optional input parameter is for one way platforms. Need a reference to the player input to know if we should drop through platforms
     /// </summary>
     public void Move(Vector3 velocity, Vector2 input, string playerJoystickId = "") {
-        _playerInput = input;
+        PlayerInput = input;
 
         UpdateRaycasyOrigins();
 
@@ -220,7 +221,7 @@ public class CollisionController2D : RaycastController {
             return true;
         }
         // Give the player half a second chance to fall through the platform
-        if ((Input.GetKey(KeyCode.S) || (_playerInput.y < -0.25 && Input.GetButton(joystickId + GameConstants.Input_Jump)))
+        if ((Input.GetKey(KeyCode.S) || (PlayerInput.y < -0.25 && Input.GetButton(joystickId + GameConstants.Input_Jump)))
             && hit.collider.tag == GameConstants.Tag_ObstacleThrough) {
             Collisions.FallingThroughPlatform = true;
             Invoke("ResetFallingThroughPlatform", 0.25f);
