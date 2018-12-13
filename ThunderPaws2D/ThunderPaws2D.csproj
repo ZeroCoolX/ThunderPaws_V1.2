@@ -245,6 +245,7 @@
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\FollowControllers\BetterCameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
