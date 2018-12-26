@@ -460,17 +460,19 @@ public class BaddieBoss : BaddieLifeform {
         Random.InitState((int)Time.time);
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        var newAttack = rand % 2 == 0 ? AttackType.VERTICAL : AttackType.HORIZONAL;
+        var newAttack = rand % 2 == 0 ? AttackType.VERTICAL : AttackType.VERTICAL;
         if(_lastTwoAttacks[_lastAttackIndex] == newAttack) {
             if(_lastAttackIndex == _lastTwoAttacks.Length - 1) {
                 _lastTwoAttacks[1] = AttackType.DEFAULT;
                 _lastTwoAttacks[0] = GetOppositeAttackType(newAttack);
+                _lastAttackIndex = 0;
             }
             _lastTwoAttacks[++_lastAttackIndex] = newAttack;
+        }else {
+            _lastTwoAttacks[1] = AttackType.DEFAULT;
+            _lastTwoAttacks[0] = newAttack;
+            _lastAttackIndex = 0;
         }
-        _lastTwoAttacks[1] = AttackType.DEFAULT;
-        _lastTwoAttacks[0] = newAttack;
-        _lastAttackIndex = 0;
         return _lastTwoAttacks[_lastAttackIndex];
     }
 

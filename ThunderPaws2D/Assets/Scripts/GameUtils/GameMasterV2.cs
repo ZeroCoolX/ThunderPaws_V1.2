@@ -330,9 +330,12 @@ public class GameMasterV2 : MonoBehaviour {
         if (respawn) {
             Instance.StartCoroutine(Instance.RespawnPlayer(player, fullRespawn));
         } else {
-            if (RemainingLives <= 0) {
-                OnHordeKilledPlayer.Invoke();
+            if (RemainingLives <= 0) { 
+                if(OnHordeKilledPlayer != null) {
+                    OnHordeKilledPlayer.Invoke();
+                }
                 print("GAME OVER DUDE");
+                // add optional delay in here so its not so sudden when you lose
                 UIManager.Instance.GetUi("GameLost").gameObject.SetActive(true);
             }
         }

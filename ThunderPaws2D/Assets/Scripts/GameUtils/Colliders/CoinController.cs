@@ -84,7 +84,6 @@ public class CoinController : MonoBehaviour {
     /// Each time it hits the ground we half the speed of the last time so it eventually stops, thus creating a bounce effect
     /// </summary>
     private void CalculateBounce() {
-        print("turning off rotation");
         var rotator = gameObject.GetComponentInChildren<SimpleRotator>();
         if(rotator != null){
             gameObject.GetComponentInChildren<SimpleRotator>().enabled = false;

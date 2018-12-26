@@ -252,8 +252,6 @@ public class HordeController : MonoBehaviour {
                 damageableLifeform.InvokeHordeUpdate += UpdateBaddieCount;
                 print("Adding baddie: " + baddieTransform.gameObject.name);
                 // Add this baddie to the cache
-                // Key = prefix-gameobject.name
-                // Value = actual transform
                 ActiveHordeBaddieCache.Add(baddieTransform.gameObject.name, baddieTransform);
                 offset += (size * 1.5f * invertFactor);
             }

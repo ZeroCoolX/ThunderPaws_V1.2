@@ -33,7 +33,9 @@ public class CheckpointController : MonoBehaviour {
     public void DeactivateBaddiesInCheckpoint() {
         print("Destroying Baddies" + " at Time [" + Time.time + "]");
         if(SpawnPointManager.Instance.GetSpawnIndex() != 3) {
-            Destroy(BaddiesInCheckpointRange.gameObject);
+            if(BaddiesInCheckpointRange != null) {
+                Destroy(BaddiesInCheckpointRange.gameObject);
+            }
         }
     }
 

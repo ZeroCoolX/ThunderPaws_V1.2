@@ -78,9 +78,11 @@ public class HorizontalHeavyAttack : MonoBehaviour {
     }
 
     private void Update() {
-        CheckForPlayerContact();
-        if (ShouldDragPlayer()) {
-            _player.transform.position = transform.position;
+        if (transform.GetComponent<BaddieBoss>().GetTarget() != null) {
+            CheckForPlayerContact();
+            if (ShouldDragPlayer()) {
+                _player.transform.position = transform.position;
+            }
         }
         switch (_attackState) {
             case AttackState.TRAVEL:

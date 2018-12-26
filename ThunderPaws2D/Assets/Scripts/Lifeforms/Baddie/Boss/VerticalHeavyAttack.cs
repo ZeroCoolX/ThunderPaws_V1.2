@@ -114,8 +114,20 @@ public class VerticalHeavyAttack : MonoBehaviour {
         Animator.SetBool("Attack2_CONTACT", false);
     }
 
+    private bool ExitDueToPlayerDeath() {
+        if (transform.GetComponent<BaddieBoss>().GetTarget() == null) {
+            print("Short circuiting because the target is dead");
+            ResetState();
+            OnComplete.Invoke();
+            return true;
+        }
+        return false;
+    }
+
     private void Update() {
-        CheckForPlayerContact();
+        if (transform.GetComponent<BaddieBoss>().GetTarget() != null) {
+            CheckForPlayerContact();
+        }
         switch (_attackState) {
             case AttackState.RISE:
                 Animator.SetBool("Attack2_UP", true);
@@ -130,8 +142,10 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 if (!MovementIndicator.gameObject.activeSelf) {
                     MovementIndicator.gameObject.SetActive(true);
                 }
+                if(transform.GetComponent<BaddieBoss>().GetTarget() != null) {
                     _currentAttackPoint.x = transform.GetComponent<BaddieBoss>().GetTarget().position.x;
-                    MovementIndicator.transform.position = new Vector3(_currentAttackPoint.x, MovementIndicator.transform.position.y, MovementIndicator.transform.position.z);
+                }
+                MovementIndicator.transform.position = new Vector3(_currentAttackPoint.x, MovementIndicator.transform.position.y, MovementIndicator.transform.position.z);
                 if (!_stateChangeInitiated) {
                     _stateChangeInitiated = true;
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.PAUSE, 5f));
@@ -143,7 +157,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_UP", false);
                 if (!_smashLocked) {
                     MovementIndicator.gameObject.SetActive(false);
-                    _currentAttackPoint = new Vector3(_currentAttackPoint.x, transform.GetComponent<BaddieBoss>().GetTarget().position.y + 1, _currentAttackPoint.z);
+                    _currentAttackPoint = new Vector3(_currentAttackPoint.x, transform.GetComponent<BaddieBoss>().GetTarget() != null ? transform.GetComponent<BaddieBoss>().GetTarget().position.y + 1 : _currentAttackPoint.y, _currentAttackPoint.z);
                     _smashLocked = true;
                     _startSmashPos = transform.position;
                     _testIt = true;
