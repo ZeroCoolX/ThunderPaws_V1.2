@@ -38,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1995136797487688}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.41, y: -1.25, z: -1}
+  m_LocalPosition: {x: 13.32, y: 0.31792045, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.0047130585, y: 0.16598415}
+  m_Offset: {x: 0.0047135353, y: -0.016177654}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -67,7 +67,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8981438, y: 1.3540697}
+  m_Size: {x: 1.1032572, y: 1.7183933}
   m_EdgeRadius: 0
 --- !u!95 &95378122600867558
 Animator:
@@ -106,6 +106,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   NotifyOnCollision: 0
+  PlayerInput: {x: 0, y: 0}
 --- !u!114 &114336012608782728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,7 +121,7 @@ MonoBehaviour:
   Health: 16
   PayloadContent: {fileID: 4690192281386644, guid: cb7fc46e80fd2e04f990b4f5d54ad0b4,
     type: 2}
-  PayloadItemCount: 10
+  PayloadItemCount: 5
 --- !u!212 &212014032489082598
 SpriteRenderer:
   m_ObjectHideFlags: 1

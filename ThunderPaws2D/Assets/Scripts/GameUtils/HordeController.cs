@@ -4,7 +4,6 @@ using System.Linq;
 using UnityEngine;
 
 public class HordeController : MonoBehaviour {
-    //TODO: After the art arrives this will need to be more generic
     /// <summary>
     /// Reference to the left wall we activate to lock the player in duing a horde session
     /// </summary>
@@ -119,7 +118,7 @@ public class HordeController : MonoBehaviour {
         if (PlayerDiedHack) {
             var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
             if(player != null) {
-                SetCameraTarget(player.transform, true, 5f);
+                Camera.GetComponent<BetterCameraFollow>().HordePosition = Vector3.zero;
                 PlayerDiedHack = false;
             }
         }
@@ -159,7 +158,7 @@ public class HordeController : MonoBehaviour {
         ActiveHordeBaddieCache = new Dictionary<string, Transform>();
         var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_HordeBaddie);
 
-        // DEstroy every baddie
+        // Destroy every baddie
         foreach (var baddie in baddies) {
             try {
                 Destroy(baddie);
@@ -198,7 +197,7 @@ public class HordeController : MonoBehaviour {
     
     private void EndHorde(){
         var player = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
-         SetCameraTarget(player.transform, true, 5f);
+        Camera.GetComponent<BetterCameraFollow>().HordePosition = Vector3.zero;
 
         // Failsafe just so the player doesn't die after beatig the horde
         player.GetComponent<Player>().RegenerateAllHealth();
@@ -333,25 +332,21 @@ public class HordeController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         // Here we should also close the path on either side of the horde section locking the player in
         GameMasterV2.Instance.LastSeenInHorde = true;
+        Camera.GetComponent<BetterCameraFollow>().HordePosition = new Vector3(transform.position.x, transform.position.y + OptionalYOffset, transform.position.z);
 
-        SetCameraTarget(transform, false, OptionalYOffset);
         _spawningAllowed = true;
         if (LeftBarrier != null) {
             LeftBarrier.gameObject.SetActive(true);
         }
-        //        AudioManager.Instance.PlaySound(GameConstants.GetLevel(DifficultyManager.Instance.LevelToPlay));
         AudioManager.Instance.StopSound(_levelAudio);
         AudioManager.Instance.PlaySound(_levelAudio+"H");
     }
         
     private void SetCameraTarget(Transform target, bool activator, float yOffset){
-        var camFollow = Camera.GetComponent<BetterCameraFollow>();
-        camFollow.Target = target;
-        //camFollow.HordeVerticalOffset = yOffset;
         // Disable the simple collider and activator as well. Not that this is necessary but why leave it running.
-        if(target.gameObject.tag == GameConstants.Tag_Player) {
-            target.GetComponent<BaddieActivator>().enabled = activator;
-            target.GetComponent<SimpleCollider>().enabled = activator;
-        }
+        //if(target.gameObject.tag == GameConstants.Tag_Player) {
+        //    target.GetComponent<BaddieActivator>().enabled = activator;
+        //    target.GetComponent<SimpleCollider>().enabled = activator;
+        //}
     }
 }

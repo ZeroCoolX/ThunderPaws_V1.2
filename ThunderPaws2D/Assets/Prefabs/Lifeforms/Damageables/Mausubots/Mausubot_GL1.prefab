@@ -198,6 +198,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1280
   NotifyOnCollision: 0
+  PlayerInput: {x: 0, y: 0}
 --- !u!114 &114773207592181814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,7 +211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 10
-  PayloadContent: {fileID: 4089692721204164, guid: da20fd1c733bb0c4f8be7d0163986977,
+  PayloadContent: {fileID: 4690192281386644, guid: cb7fc46e80fd2e04f990b4f5d54ad0b4,
     type: 2}
   PayloadItemCount: 3
   Animator: {fileID: 95836571108915492}

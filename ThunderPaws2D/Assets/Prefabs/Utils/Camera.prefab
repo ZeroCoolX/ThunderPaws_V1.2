@@ -226,6 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Target: {fileID: 0}
+  HordePosition: {x: 0, y: 0, z: 0}
   FocusAreaSize: {x: 3, y: 5}
   VerticalOffset: 1
   LookaheadDistanceX: 4

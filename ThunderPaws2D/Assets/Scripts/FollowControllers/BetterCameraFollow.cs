@@ -3,6 +3,7 @@
 public class BetterCameraFollow : MonoBehaviour {
 
     public Transform Target;
+    public Vector3 HordePosition = Vector3.zero;
 
     public Vector2 FocusAreaSize;
     public float VerticalOffset;
@@ -55,10 +56,17 @@ public class BetterCameraFollow : MonoBehaviour {
     }
 
     private void LateUpdate() {
+        // Update for everything unless we're in a horde section
+        if (HordePosition != Vector3.zero) {
+            transform.position = HordePosition + Vector3.forward * -10;
+            return;
+        }
+
         if (Target == null || _targetCollider == null) {
             FindPlayer();
             return;
         }
+
         _focusArea.Update(_targetCollider.BoxCollider.bounds);
 
         Vector2 focusPosition = _focusArea.Center + Vector2.up * VerticalOffset;

@@ -93,7 +93,7 @@ public class Player : PlayerLifeform {
 
     public void PickupCoin() {
         if (!PlayerStats.UltEnabled) {
-            PlayerStats.CurrentUltimate += 5;
+            PlayerStats.CurrentUltimate += 2;
             PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
         }
         GameStatsManager.Instance.AddCoin(PlayerNumber);
