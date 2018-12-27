@@ -555,6 +555,10 @@ Prefab:
       propertyPath: LoadingText
       value: 
       objectReference: {fileID: 688025419}
+    - target: {fileID: 1725770967619758, guid: 9af072296e0de164b8231a8a2ed9a8fb, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9af072296e0de164b8231a8a2ed9a8fb, type: 2}
   m_IsPrefabParent: 0

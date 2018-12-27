@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -54,5 +55,12 @@ public class GameOverUI : MonoBehaviour {
         }
         SceneManager.LoadScene(GameConstants.Scene_LevelName_Menu);
     }
+    
+    public void NextLevel() {
+        print("Going to next level!");
+        var currentLevel = DifficultyManager.Instance.LevelToPlay;
+        DifficultyManager.Instance.LevelToPlay = ++currentLevel;
+        DifficultyManager.Instance.SetDifficulty();
+    } 
 
 }
