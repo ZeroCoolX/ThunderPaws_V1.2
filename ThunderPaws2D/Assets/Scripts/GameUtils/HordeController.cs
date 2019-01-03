@@ -4,6 +4,10 @@ using System.Linq;
 using UnityEngine;
 
 public class HordeController : MonoBehaviour {
+    // Optional to allow a weapon to spawn everytime a horde spawns just to help the player out a bit
+    public Transform SpawnWeapon;
+    public Vector3 SpawnWeaponPosition;
+
     /// <summary>
     /// Reference to the left wall we activate to lock the player in duing a horde session
     /// </summary>
@@ -336,6 +340,11 @@ public class HordeController : MonoBehaviour {
         if (LeftBarrier != null) {
             LeftBarrier.gameObject.SetActive(true);
         }
+
+        if(SpawnWeapon != null) {
+            Instantiate(SpawnWeapon, SpawnWeaponPosition, Quaternion.identity);
+        }
+
         AudioManager.Instance.StopSound(_levelAudio);
         AudioManager.Instance.PlaySound(_levelAudio+"H");
     }

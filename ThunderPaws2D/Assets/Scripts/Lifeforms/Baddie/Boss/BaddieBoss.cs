@@ -82,6 +82,9 @@ public class BaddieBoss : BaddieLifeform {
     private HealthChunk _currentHealth;
     private int _chunkIndex = 0;
 
+    public delegate void StopSpawningDelegate();
+    public StopSpawningDelegate StopSpawning;
+
     private struct HealthChunk {
         public float MaxHealth;
         public float Health;
@@ -157,6 +160,7 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private void MoveToDeathSpot() {
+        StopSpawning.Invoke();
         // Ensures we cannot move except to our death
         _moveTrigger = Time.time + int.MaxValue;
         _currentAttackPoint = DeathSpot.position;
@@ -171,7 +175,12 @@ public class BaddieBoss : BaddieLifeform {
         Invoke("PlayDeathExplosion", 0.1f);
         Invoke("PlayDeathExplosion", 0.25f);
         Invoke("PlayDeathExplosion", 0.3f);
+        Invoke("PlayDeathExplosion", 0.5f);
+        Invoke("PlayDeathExplosion", 0.65f);
         Invoke("PlayDeathExplosion", 0.7f);
+        Invoke("PlayDeathExplosion", 0.73f);
+        Invoke("PlayDeathExplosion", 0.8f);
+        Invoke("ShowExit", 2f);
         _dead = true;
         GetComponent<SpriteRenderer>().sortingOrder = 0;
     }
@@ -181,6 +190,20 @@ public class BaddieBoss : BaddieLifeform {
         clone.GetComponent<SpriteRenderer>().sortingOrder = 10;
         clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
         clone.GetComponent<Animator>().SetBool("Invoke", true);
+    }
+
+    private void ShowExit() {
+        SpecialPlatforms[0].gameObject.SetActive(false);
+        SpecialPlatforms[1].gameObject.SetActive(false);
+        SpecialPlatforms[2].gameObject.SetActive(true);
+        TurnOffColliders();
+    }
+
+    private void TurnOffColliders() {
+        foreach(var collider in GetComponents<BoxCollider2D>()) {
+            collider.enabled = false;
+        }
+        GetComponent<CircleCollider2D>().enabled = false;
     }
 
     protected override void InvokeDestroy() {
@@ -460,7 +483,7 @@ public class BaddieBoss : BaddieLifeform {
         Random.InitState((int)Time.time);
         var rand = Random.Range(0, 10);
         print("Random : " + rand);
-        var newAttack = rand % 2 == 0 ? AttackType.VERTICAL : AttackType.VERTICAL;
+        var newAttack = rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.VERTICAL;
         if(_lastTwoAttacks[_lastAttackIndex] == newAttack) {
             if(_lastAttackIndex == _lastTwoAttacks.Length - 1) {
                 _lastTwoAttacks[1] = AttackType.DEFAULT;
@@ -489,7 +512,9 @@ public class BaddieBoss : BaddieLifeform {
             clone.GetComponent<DeathTimer>().TimeToLive = 0.5f;
             clone.GetComponent<Animator>().SetBool("Invoke", true);
         } else {
-            ActivateFlash();
+            if (_currentHealth.Health > 0) {
+                ActivateFlash();
+            }
         }
         UpdateHeathbar();
         return _currentHealth.Health <= 0 && _healthChunks.Count == 0;

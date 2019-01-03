@@ -10,14 +10,24 @@ public class SimpleSpawner : MonoBehaviour {
     public int SpawnMax = 1;
     
 
-    private bool _shouldSpawn;
+    private bool _shouldSpawn = true;
     private float _spawnCounter;
+
+    public Transform Boss;
 
     private void Start() {
         _spawnCounter = Time.time + SpawnEverySeconds;
+        Boss.GetComponent<BaddieBoss>().StopSpawning += StopSpawning;
+    }
+
+    private void StopSpawning() {
+        _shouldSpawn = false;
     }
 
     private void Update() {
+        if (!_shouldSpawn) {
+            return;
+        }
         if (Time.time > _spawnCounter) {
             foreach(var spawn in SpawnPoints) {
                 print("Spawning baddies!");
