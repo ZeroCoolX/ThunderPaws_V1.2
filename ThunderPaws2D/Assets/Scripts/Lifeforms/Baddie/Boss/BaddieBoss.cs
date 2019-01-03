@@ -39,7 +39,7 @@ public class BaddieBoss : BaddieLifeform {
     private bool _deathInitiated = false;
     private bool _dead = false;
 
-    private float _camShakeAmount = 0.1f;
+    private float _camShakeAmount = 0.5f;
     private float _camShakeLength = 0.5f;
     private CameraShake _camShake;
 
@@ -140,7 +140,7 @@ public class BaddieBoss : BaddieLifeform {
     }
 
     private void GenerateCameraShake() {
-        _camShake.Shake(_camShakeAmount, _camShakeLength);
+        _camShake.Shake(_camShakeAmount, _camShakeLength); // make this MASSIVELY larger
     }
 
     private void ApplyDamageModifier(int multiplier) {
@@ -187,6 +187,7 @@ public class BaddieBoss : BaddieLifeform {
 
     private void PlayDeathExplosion() {
         var clone = Instantiate(WeakspotExplosionPrefab, _weakspotExplosion.position, _weakspotExplosion.rotation);
+        AudioManager.Instance.PlaySound("MediumExplosion");
         clone.GetComponent<SpriteRenderer>().sortingOrder = 10;
         clone.GetComponent<DeathTimer>().TimeToLive = 0.25f;
         clone.GetComponent<Animator>().SetBool("Invoke", true);
@@ -407,6 +408,7 @@ public class BaddieBoss : BaddieLifeform {
         try {
             foreach(var fp in _currentFirePoints) {
                 Transform clone = Instantiate(BulletPrefab, fp.position, Quaternion.identity) as Transform;
+                AudioManager.Instance.PlaySound("BasicShot");
                 // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
                 AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 
@@ -485,6 +487,7 @@ public class BaddieBoss : BaddieLifeform {
         print("Random : " + rand);
         var newAttack = rand % 2 == 0 ? AttackType.HORIZONAL : AttackType.VERTICAL;
         if(_lastTwoAttacks[_lastAttackIndex] == newAttack) {
+            print("Last attack index = " + _lastAttackIndex);
             if(_lastAttackIndex == _lastTwoAttacks.Length - 1) {
                 _lastTwoAttacks[1] = AttackType.DEFAULT;
                 _lastTwoAttacks[0] = GetOppositeAttackType(newAttack);
@@ -508,6 +511,7 @@ public class BaddieBoss : BaddieLifeform {
         if(DamageMultiplier > 1) {
             print("Play massive weakspot explosion!");
             var clone = Instantiate(WeakspotExplosionPrefab, _weakspotExplosion.position, _weakspotExplosion.rotation);
+            AudioManager.Instance.PlaySound("MediumExplosion");
             clone.GetComponent<SpriteRenderer>().sortingOrder = 10;
             clone.GetComponent<DeathTimer>().TimeToLive = 0.5f;
             clone.GetComponent<Animator>().SetBool("Invoke", true);

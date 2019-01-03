@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SimpleSpawner : MonoBehaviour {
-    public Transform SpawnPrefab;
+    public Transform[] SpawnPrefabs;
     public Transform[] SpawnPoints;
     public int SpawnEverySeconds = 5;
     public int SpawnMin = 0;
@@ -43,7 +43,8 @@ public class SimpleSpawner : MonoBehaviour {
         for(var i = 0; i < rand; ++i) {
             var rand2 = Random.Range(1, 2);
             if(rand2 % 2 == 0) { continue; }
-            var clone = Instantiate(SpawnPrefab, position.position, Quaternion.identity);
+            var randIndex = Random.Range(1, 10);
+            var clone = Instantiate(SpawnPrefabs[randIndex < 8 ? 0 : 1], position.position, Quaternion.identity);
             //clone.GetComponent<BaddieLifeform>().enabled = true;
         }
     }

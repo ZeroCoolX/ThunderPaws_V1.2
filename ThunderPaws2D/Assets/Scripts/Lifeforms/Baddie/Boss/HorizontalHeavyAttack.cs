@@ -95,6 +95,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 break;
             case AttackState.POWERUP:
                 if (!_stateChangeInitiated) {
+                    AudioManager.Instance.PlaySound("PowerUp");
                     ToggleFacingLock.Invoke(false);
                     Animator.SetBool("Attack3_CROUCH", true);
                     Animator.SetBool("Attack3_CHARGEUP", true);
@@ -108,6 +109,8 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 _currentAttackPoint = _chargeAttackPoint;
                 smoothTime = 0.2f;
                 if (!_stateChangeInitiated) {
+                    AudioManager.Instance.StopSound("PowerUp");
+                    AudioManager.Instance.PlaySound("Charge");
                     Animator.SetBool("Attack3_DASH", true);
                     StartCoroutine(ChangeStateAfterSeconds(AttackState.WALLSMASH, 0.3f));
                     _stateChangeInitiated = true;
@@ -122,6 +125,7 @@ public class HorizontalHeavyAttack : MonoBehaviour {
                 if (!_stateChangeInitiated) {
                     _stateChangeInitiated = true;
                     ShakeCamera.Invoke();
+                    PlaySmashSound();
                     if (_contactedPlayer) {
                         Animator.SetBool("Attack3_WALLSMASH", true);
                         StartCoroutine(ChangeStateAfterSeconds(AttackState.PIN, 0.3f));
@@ -176,6 +180,12 @@ public class HorizontalHeavyAttack : MonoBehaviour {
 
     private void ToggleLockFacingBackOn() {
         ToggleFacingLock.Invoke(true);
+    }
+
+    private void PlaySmashSound() {
+        AudioManager.Instance.PlaySound("CrashBase");
+        var randCrash = Random.Range(0, 10) % 2 == 0 ? 1 : 2;
+        AudioManager.Instance.PlaySound(("Crash" + randCrash));
     }
 
 

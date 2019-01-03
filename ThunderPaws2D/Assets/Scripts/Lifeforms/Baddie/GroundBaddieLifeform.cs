@@ -65,6 +65,7 @@ public class GroundBaddieLifeform : BaddieLifeform {
 
     protected void Fire() {
         Transform clone = Instantiate(BulletPrefab, ProjectileData.FirePoint.position, ProjectileData.FirePoint.rotation) as Transform;
+        AudioManager.Instance.PlaySound("BasicShot");
         // Parent the bullet to who shot it so we know what to hit (parents LayerMask whatToHit)
         AbstractProjectile projectile = clone.GetComponent<BulletProjectile>();
 

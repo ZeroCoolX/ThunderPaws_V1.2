@@ -68,14 +68,14 @@ MonoBehaviour:
     loop: 1
   - name: FuzzBusterShot
     clip: {fileID: 8300000, guid: 871e39e08b4527c458431f741047ca8c, type: 3}
-    volume: 0.3
+    volume: 0.7
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 0
   - name: ShotgunShot
     clip: {fileID: 8300000, guid: 0dd5914467860cb44ad796843cbd0bf1, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -96,21 +96,21 @@ MonoBehaviour:
     loop: 0
   - name: BulletImpact1
     clip: {fileID: 8300000, guid: 7785e5330a622554baffe2008bd2f158, type: 3}
-    volume: 0.1
+    volume: 0.2
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 0
   - name: BulletImpact2
     clip: {fileID: 8300000, guid: 7b30d1ad6d8ab3e48937148f121101d5, type: 3}
-    volume: 0.1
+    volume: 0.2
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 0
   - name: SmallExplosion
     clip: {fileID: 8300000, guid: d110a5c23422deb4c916a169608f2c46, type: 3}
-    volume: 0.3
+    volume: 0.75
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -310,4 +310,53 @@ MonoBehaviour:
     pitch: 1
     randomVolume: 0
     randomPitch: 0
+    loop: 0
+  - name: BasicShot
+    clip: {fileID: 8300000, guid: bc7c1132870112d4f889844dd0df7242, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.108
+    randomPitch: 0.168
+    loop: 0
+  - name: CrashBase
+    clip: {fileID: 8300000, guid: ef32e48b92660c04cb86e81fa10de45e, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: Crash1
+    clip: {fileID: 8300000, guid: 8a87bc7bfca03e14eb165a0abe72291e, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0
+    loop: 0
+  - name: Crash2
+    clip: {fileID: 8300000, guid: 6e8f9f73aacb77e48980c50ecf9da182, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.1
+    randomPitch: 0
+    loop: 0
+  - name: PowerUp
+    clip: {fileID: 8300000, guid: 6d18393415615ea48a823e81d1e696c0, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: Charge
+    clip: {fileID: 8300000, guid: d81ee02f08fa39c4eafe203b5180a914, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0
+    randomPitch: 0
+    loop: 0
+  - name: MediumExplosion
+    clip: {fileID: 8300000, guid: 1693f53a44f5d6d4ea834c52bfafbd7c, type: 3}
+    volume: 1
+    pitch: 1
+    randomVolume: 0.146
+    randomPitch: 0.259
     loop: 0

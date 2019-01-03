@@ -195,6 +195,7 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 Animator.SetBool("Attack2_CONTACT", true);
 
                 if (!_stateChangeInitiated) {
+                    PlaySmashSound();
                     ShakeCamera.Invoke();
                     _stateChangeInitiated = true;
                     Invoke("WeaknessCheck", 0.25f);
@@ -226,6 +227,12 @@ public class VerticalHeavyAttack : MonoBehaviour {
                 return;
         }
         CalculateVelocity();
+    }
+
+    private void PlaySmashSound() {
+        AudioManager.Instance.PlaySound("CrashBase");
+        var randCrash = Random.Range(0, 10) % 2 == 0 ? 1 : 2;
+        AudioManager.Instance.PlaySound(("Crash" + randCrash));
     }
 
     private void Flash() {
