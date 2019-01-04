@@ -294,6 +294,28 @@ public class GameMasterV2 : MonoBehaviour {
         }
         return sprite;
     }
+    private string currentTune = "";
+    private void SoundCheckDebug() {
+        if (Input.GetKeyDown(KeyCode.Alpha0)) {
+            AudioManager.Instance.StopSound(currentTune);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            currentTune = "S1L1";
+            AudioManager.Instance.PlaySound(currentTune);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            currentTune = "S1L2";
+            AudioManager.Instance.PlaySound(currentTune);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            currentTune = "S1L3";
+            AudioManager.Instance.PlaySound(currentTune);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            currentTune = "S1L4";
+            AudioManager.Instance.PlaySound(currentTune);
+        }
+    }
 
     /// <summary>
     /// Decrement lives, generate particles, shake camera and destroy current player reference
@@ -447,5 +469,6 @@ public class GameMasterV2 : MonoBehaviour {
                 print("Couldn't set difficulty : " + e.Message);
             }
         }
+        SoundCheckDebug();
     }
 }

@@ -54,21 +54,21 @@ MonoBehaviour:
   sounds:
   - name: Music_Main
     clip: {fileID: 8300000, guid: 34b144dcb9296204c9ee1b24d92c3c35, type: 3}
-    volume: 1
+    volume: 0
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: Music_Boss
     clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
-    volume: 1
+    volume: 0
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: FuzzBusterShot
     clip: {fileID: 8300000, guid: 871e39e08b4527c458431f741047ca8c, type: 3}
-    volume: 0.7
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -159,7 +159,7 @@ MonoBehaviour:
     loop: 0
   - name: GaussShot
     clip: {fileID: 8300000, guid: 3ccb4cb6a3b0feb4bbfd821005bdda01, type: 3}
-    volume: 0.3
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
     loop: 1
   - name: S1L4
     clip: {fileID: 8300000, guid: 64643485f6930e64288f129356e0d7af, type: 3}
-    volume: 0.5
+    volume: 0.3
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -313,7 +313,7 @@ MonoBehaviour:
     loop: 0
   - name: BasicShot
     clip: {fileID: 8300000, guid: bc7c1132870112d4f889844dd0df7242, type: 3}
-    volume: 1
+    volume: 0.3
     pitch: 1
     randomVolume: 0.108
     randomPitch: 0.168
