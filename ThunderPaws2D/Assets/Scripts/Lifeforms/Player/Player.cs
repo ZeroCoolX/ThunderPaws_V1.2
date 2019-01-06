@@ -174,7 +174,7 @@ public class Player : PlayerLifeform {
     private new void Update() {
         base.Update();
 
-        FallCheck();
+        //FallCheck();
 
         // Do not accumulate gravity if colliding with anythig vertical
         if (Controller2d.Collisions.FromBelow || Controller2d.Collisions.FromAbove) {

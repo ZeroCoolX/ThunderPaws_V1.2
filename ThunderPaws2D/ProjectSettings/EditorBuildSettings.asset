@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/AlphaDemo/AlphaDemoLevel1.unity
     guid: 5b389f3120f16dd40854ae0b68b1617f
   - enabled: 0
-    path: Assets/Scenes/Development/LeastObjectsPossible.unity
+    path: Assets/Scenes/Development/Stage1_BossTesting.unity
     guid: 159ea0f2d1b57e74f960dbde06304838
   - enabled: 1
     path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel1.unity
@@ -39,7 +39,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Demo_v1/IntroUI/MainMenu.unity
     guid: 99ac049e2671e6142b410ed75a512ccf
   - enabled: 1
-    path: Assets/Scenes/Demo_v1/Stage1/S1L1.unity
+    path: Assets/Scenes/Demo_v1/Stage1/S1L1w.unity
     guid: 6b8d8628c7ed6cf4aaf85cf79b13f5eb
   - enabled: 1
     path: Assets/Scenes/Demo_v1/Stage1/S1L3.unity
@@ -47,3 +47,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel3.unity
     guid: 6acb1416a693b8e4b9e9a0f72a591866
+  - enabled: 1
+    path: Assets/Scenes/Demo_v1/Stage1Backups/S1L1.unity
+    guid: fcf0dfaa406aa694d8a8546791d10315
