@@ -7,6 +7,7 @@ public class BaddieSpawn : MonoBehaviour {
     public Vector2 SpawnAmount = new Vector2(1, 1);
     public float SpawnDelaySeconds = 0f;
     public Vector3 SpawnOffset = Vector3.zero;
+    public bool BaddieLedgeBound = false;
 
     private void Start() {
         SetSpawnOffset();
@@ -31,6 +32,9 @@ public class BaddieSpawn : MonoBehaviour {
     }
 
     private void Spawn(Vector3 position) {
-        Instantiate(BaddiePrefab, position, Quaternion.identity, transform.parent);
+        var clone = (Instantiate(BaddiePrefab, position, Quaternion.identity, transform.parent) as Transform);
+        if (BaddieLedgeBound) {
+            clone.GetComponent<Robot_GL1>().LedgeBound = true;
+        }
     }
 }

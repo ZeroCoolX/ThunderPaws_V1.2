@@ -7,7 +7,6 @@ public class CheckpointControllerV2 : MonoBehaviour {
     private Transform _activeBaddieSpawnGroup;
 
     private SimpleCollider _collider;
-    private Vector3 _spawnPosition;
 
     private const int PLAYER_LAYER = 8;
     private const int COLLISION_RADIUS = 8;
@@ -28,7 +27,6 @@ public class CheckpointControllerV2 : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         print("Checkpoint " + gameObject.name + " Activated");
         SpawnPointManagerV2.Instance.IncrementSpawnIndex();
-        _spawnPosition = c.transform.position;
         SpawnFreshBaddiespawnGroup();
         c.transform.GetComponent<Player>().RegenerateAllHealth();
     }
@@ -51,6 +49,6 @@ public class CheckpointControllerV2 : MonoBehaviour {
 
     private void Spawn() {
         print("Creating baddie spawn group : " + BaddieSpawnGroup.gameObject.name + " for spawn index : " + SpawnPointManagerV2.Instance.GetSpawnIndex() + " at Time [" + Time.time + "]");
-        _activeBaddieSpawnGroup = Instantiate(BaddieSpawnGroup, _spawnPosition, Quaternion.identity) as Transform;
+        _activeBaddieSpawnGroup = Instantiate(BaddieSpawnGroup, transform.position, Quaternion.identity, transform) as Transform;
     }
 }
