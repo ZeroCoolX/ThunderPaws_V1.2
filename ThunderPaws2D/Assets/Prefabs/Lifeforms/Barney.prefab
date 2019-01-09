@@ -180,13 +180,14 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 50176
   NotifyOnCollision: 1
+  PlayerInput: {x: 0, y: 0}
 --- !u!114 &114174318653646354
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
   m_Name: 
@@ -218,23 +219,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoFallCheck: 0
+  PlayerStats: {fileID: 0}
   PlayerNumber: 1
   JoystickId: 
   FacingRight: 1
-  PlayerStats: {fileID: 0}
-  MeleeDamage: 10
-  ShowroomSpawns:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &114834322300645876
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f62c9af4bd5b24247b2eaf4838d5628d, type: 3}
   m_Name: 

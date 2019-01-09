@@ -237,6 +237,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\BaddieSpawn.cs" />
     <Compile Include="Assets\CustomImageEffect.cs" />
     <Compile Include="Assets\NightBehaviour.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
+    <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\BetterCameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\Camera2DFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />

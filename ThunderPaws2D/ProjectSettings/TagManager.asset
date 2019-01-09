@@ -41,8 +41,8 @@ TagManager:
   - DAMAGABLE
   - OBSTACLE_HORDE
   - PLX_Background
-  - 
-  - 
+  - Camera
+  - BADDIE_SPAWN
   - 
   - 
   - 

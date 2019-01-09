@@ -31,6 +31,17 @@ public class SimpleCollider : MonoBehaviour {
     private float _raycastLength;
     private bool _hit = false;
 
+    private Vector2 _areaSize;
+    private bool _useAreaCollider = false;
+
+    public void Initialize(LayerMask whatToHit, Vector2 areaSize, bool continuousCollision = false) {
+        _areaSize = areaSize;
+        _whatToHit = whatToHit;
+        _continuousCollision = continuousCollision;
+        _useAreaCollider = true;
+        _hit = false;
+    }
+
     public void Initialize(LayerMask whatToHit, float radius = 0f, bool continuousCollision = false) {
         _useCircleCollider = true;
         _radius = radius == 0 ? GetComponent<SpriteRenderer>().bounds.size.x : radius;
@@ -67,13 +78,25 @@ public class SimpleCollider : MonoBehaviour {
         }
         if (_useCircleCollider) {
             CheckForMultiCircleCollisions();
-        } else {
+        } else if(_useAreaCollider){
+            CheckForMultiAreaCollisions();
+        }else {
             CheckForRaycastCollisions();
         }
     }
 
     private void CheckForMultiCircleCollisions() {
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, _radius, _whatToHit);
+        foreach (var collider in colliders) {
+            if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
+                InvokeCollision.Invoke(transform.position, collider);
+                _hit = true;
+            }
+        }
+    }
+
+    private void CheckForMultiAreaCollisions() {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, _areaSize, 0, _whatToHit);
         foreach (var collider in colliders) {
             if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
                 InvokeCollision.Invoke(transform.position, collider);
