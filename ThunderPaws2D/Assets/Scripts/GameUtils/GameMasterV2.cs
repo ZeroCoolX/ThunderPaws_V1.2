@@ -219,7 +219,7 @@ public class GameMasterV2 : MonoBehaviour {
     private void SpawnPlayers() {
         // Spawn the allotted number of players into the room
         foreach (var player in Maps.PlayersPrefabMap) {
-            var currentSpawn = SpawnPointManager.Instance.GetCurrentSpawn();
+            var currentSpawn = SpawnPointManagerV2.Instance.GetCurrentSpawn();
             var playerNum = player.Value.GetComponent<Player>().PlayerNumber;
 
             Instantiate(player.Value, currentSpawn.position, currentSpawn.rotation);
@@ -367,14 +367,13 @@ public class GameMasterV2 : MonoBehaviour {
         yield return new WaitForSeconds(SpawnDelay);
         if (fullRespawn) {
             _fullRespawnOccurred = true;
-            var spawn = SpawnPointManager.Instance.GetCurrentSpawn();
-            var controller = spawn.GetComponent<CheckpointController>();
+            var spawn = SpawnPointManagerV2.Instance.GetCurrentSpawn();
+            var controller = spawn.GetComponent<CheckpointControllerV2>();
             if (controller == null) {
                 throw new MissingComponentException("No Checkpoint controller");
             }
-            if (SpawnPointManager.Instance.GetSpawnIndex() != 3) {
-                controller.DeactivateBaddiesInCheckpoint();
-                controller.SpawnFreshBaddiesForCheckpoint(1.5f);
+            if (SpawnPointManagerV2.Instance.GetSpawnIndex() != 3) {
+                controller.ResetBaddieSpawnGroup(1.5f);
                 if (LastSeenInHorde) {
                     OnHordeKilledPlayer.Invoke();
                 }

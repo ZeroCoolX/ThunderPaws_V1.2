@@ -26,9 +26,11 @@ public class BaddieSpawn : MonoBehaviour {
         for (int i = 0; i < numberOfBaddies; ++i) {
             Spawn(initialSpawn + (SpawnOffset * i));
         }
+
+        Destroy(gameObject);
     }
 
     private void Spawn(Vector3 position) {
-        var clone = Instantiate(BaddiePrefab, position, Quaternion.identity) as Transform;
+        Instantiate(BaddiePrefab, position, Quaternion.identity, transform.parent);
     }
 }

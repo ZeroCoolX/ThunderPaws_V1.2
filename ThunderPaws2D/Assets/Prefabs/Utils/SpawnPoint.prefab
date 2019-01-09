@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114209240241215776}
   - component: {fileID: 61361815107672826}
   - component: {fileID: 114769689472127938}
+  - component: {fileID: 114766187911258376}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -74,7 +75,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1140145428039896}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 089d141bc903a754d96368f161d6384d, type: 3}
   m_Name: 
@@ -91,6 +92,18 @@ MonoBehaviour:
   CheckpointSpawns:
   - {fileID: 4560259247052540, guid: d4a4724b61ae1cb4a94d1c486ff70094, type: 2}
   - {fileID: 4560259247052540, guid: d4a4724b61ae1cb4a94d1c486ff70094, type: 2}
+--- !u!114 &114766187911258376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1140145428039896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d30c3579a48d44b8513f3f84343355, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BaddieSpawnGroup: {fileID: 0}
 --- !u!114 &114769689472127938
 MonoBehaviour:
   m_ObjectHideFlags: 1

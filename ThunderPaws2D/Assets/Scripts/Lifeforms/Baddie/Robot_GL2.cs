@@ -31,8 +31,9 @@ public class Robot_GL2 : GroundBaddieLifeform {
         }
 
         // Find out where the target is in reference to this.
-        var directionToTarget = transform.position.x - Target.position.x;
-        CalculateFacingDirection(directionToTarget);
+        if (CheckTargetsExist()) {
+            CalculateFacingDirection(transform.position.x - Target.position.x);
+        }
     }
 
     public void Update() {
@@ -50,7 +51,7 @@ public class Robot_GL2 : GroundBaddieLifeform {
             HaltAndFire();
         }
 
-        CalculateFacingDirection(directionToTarget);
+        CalculateFacingDirection(transform.position.x - Target.position.x);
 
         ApplyGravity();
         Move();
