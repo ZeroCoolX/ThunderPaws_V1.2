@@ -42,7 +42,9 @@ public class Profile {
     private int _emissionCache;
 
     public void LoadProfileFromFile() {
-        string path = @"Assets/Profiles/" + ProfileName;
+        string path = Path.Combine("Assets", "Profiles");
+        path = Path.Combine(path, ProfileName);
+
         var profileModel = JsonUtility.FromJson<ProfileModel>(File.ReadAllText(path));
 
         foreach (var weapon in profileModel.Weapons) {
@@ -57,7 +59,8 @@ public class Profile {
     }
 
     public void SaveProfile() {
-        string path = @"Assets/Profiles/" + ProfileName;
+        string path = Path.Combine("Assets", "Profiles");
+        path = Path.Combine(path, ProfileName);
 
 
         var model = new ProfileModel {

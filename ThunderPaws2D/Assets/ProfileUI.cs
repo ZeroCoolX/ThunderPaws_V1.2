@@ -6,14 +6,32 @@ public class ProfileUI : MonoBehaviour {
     public InputField Profile;
     public InputField Level;
 
+    public Dropdown AvailableProfiles;
+
+    private void Start() {
+        RefreshProfilesDropdown();
+    }
+
+    private void RefreshProfilesDropdown() {
+        AvailableProfiles.ClearOptions();
+        //Add the options created in the List above
+        AvailableProfiles.AddOptions(ProfilePool.Instance.GetPublicProfiles());
+    }
+
+    public void OnDropdownOptionSelected() {
+        var profileSelected = AvailableProfiles.value;
+        print("Selected Profile: " + profileSelected);
+    }
+
     public void SubmitProfile() {
         ProfilePool.Instance.CreateProfile(Profile.text);
         PrintProfile();
+        RefreshProfilesDropdown();
     }
 
     public void PrintProfile() {
         var profile = ProfilePool.Instance.GetProfile(Profile.text);
-        print("Profile [" + profile.ProfileName + "]");
+        print("Profile [" + ProfilePool.DecodeProfileName(profile.ProfileName) + "]");
 
         print("Weapons [" + string.Join(",", profile.GetUnlockedWeapons().Select(x => string.Format("{0}", x)).ToArray()) + "]");
         print("Ultimates [" + string.Join(",", profile.GetUnlockedUltimates().Select(x => string.Format("{0}", x)).ToArray()) + "]");
@@ -25,5 +43,6 @@ public class ProfileUI : MonoBehaviour {
         var profile = ProfilePool.Instance.GetProfile(Profile.text);
         profile.UnlockLevel(Level.text);
         PrintProfile();
+        RefreshProfilesDropdown();
     }
 }
