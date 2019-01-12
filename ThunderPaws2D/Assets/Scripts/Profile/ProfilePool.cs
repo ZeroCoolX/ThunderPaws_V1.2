@@ -9,7 +9,7 @@ public class ProfilePool : MonoBehaviour{
 
     public static ProfilePool Instance;
 
-    private const string ENCODE_DELIM = "-SIERRA117-";
+    private const string ENCODE_DELIM = "-FELINE117-";
     public static string EncodeProfileNameFirstTime(string profileName) {
         StringBuilder sb = new StringBuilder();
         sb.Append(profileName.ToLower());
@@ -29,6 +29,13 @@ public class ProfilePool : MonoBehaviour{
     private Dictionary<string, Profile> _profiles;
     // <K,V> = <Full Unique Profile Name, Publicly Visible Profile Name>
     private Dictionary<string, string> _decodeProfileMap;
+
+    public void ActivateProfile(string profileName) {
+        var fullName = _decodeProfileMap[profileName];
+        if (!_activeProfiles.Contains(fullName)) {
+            _activeProfiles.Add(fullName);
+        }
+    }
 
     public void CreateProfile(string profile) {
         if (_profiles.ContainsKey(profile)) {
