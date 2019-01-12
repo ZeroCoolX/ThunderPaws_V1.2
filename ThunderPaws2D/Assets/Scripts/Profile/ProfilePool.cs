@@ -24,6 +24,7 @@ public class ProfilePool : MonoBehaviour{
 
     private string _path = Path.Combine("Assets", "Profiles");
 
+    private List<string> _activeProfiles;
     // <K,V> = <Full Unique Profile Name, Profile>
     private Dictionary<string, Profile> _profiles;
     // <K,V> = <Full Unique Profile Name, Publicly Visible Profile Name>
