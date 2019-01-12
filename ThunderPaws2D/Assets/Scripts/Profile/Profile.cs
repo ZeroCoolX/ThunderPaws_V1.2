@@ -67,10 +67,7 @@ public class Profile {
             Levels = GetUnlockedLevels(),
         };
 
-        Console.WriteLine("Json object to save to file:\n " + JsonUtility.ToJson(model));
-
-        Console.WriteLine("Writing out to file: " + path);
-        using (StreamWriter sw = new StreamWriter(File.Open(path, System.IO.FileMode.OpenOrCreate))) {
+        using (StreamWriter sw = new StreamWriter(File.Open(path, FileMode.Create))) {
             var json = JsonUtility.ToJson(model);
             sw.Write(json);
             sw.Close();
@@ -111,6 +108,7 @@ public class Profile {
             return false;
         }
         map[key] = true;
+        SaveProfile();
         return true;
     }
 }
