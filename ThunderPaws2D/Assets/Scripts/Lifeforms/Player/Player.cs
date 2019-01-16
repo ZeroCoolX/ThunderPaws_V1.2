@@ -14,6 +14,8 @@ public class Player : PlayerLifeform {
     public bool AllowBackwardsProgression { get; set; }
     public bool FacingRight = true;
 
+    private ProfileProxy _profile;
+
     private float _meleeDamage = 10f;
     private bool _meleeActive = false;
     private float _meleeRaycastLength = 2.5f;
@@ -118,6 +120,7 @@ public class Player : PlayerLifeform {
     }
 
     private void Start() {
+        StupPlayerProfile();
         SetupActionMovement();
         SetupPlayerIdentification();
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
@@ -129,6 +132,15 @@ public class Player : PlayerLifeform {
         _meleeLayerMask = 1 << 14;
 
         Controller2d.NotifyCollision += BounceBack;
+    }
+
+    private void StupPlayerProfile() {
+        _profile = GetComponent<ProfileProxy>();
+        if (_profile == null) {
+            throw new MissingComponentException("Player is missing its profile!");
+        }
+
+        print(_profile.PrettyPrint());
     }
 
     private void SetupActionMovement() {

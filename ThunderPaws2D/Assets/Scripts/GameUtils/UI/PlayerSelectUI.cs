@@ -15,7 +15,7 @@ public class PlayerSelectUI : MonoBehaviour {
             // Its on them to figure out which controller I secretly assigned as player 1 xD
             JoystickManagerController.Instance.CollectControllers(true);
         }
-        SceneManager.LoadScene("PreAlphaDemoMainMenu");
+        //SceneManager.LoadScene("PreAlphaDemoMainMenu");
     }
 
     public void Select2Player() {

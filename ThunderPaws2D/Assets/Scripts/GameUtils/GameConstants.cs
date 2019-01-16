@@ -27,6 +27,7 @@ public class GameConstants {
     public static string Audio_GaussShotImpact = "GaussShot_Impact";
     public static string Audio_GaussShotUltImpact = "GaussShot_UltImpact";
     public static string Audio_FatCatImpact = "FatCat_Impact";
+    public static string Audio_AccessDenied = "AccessDenied";
     // Level + (H)orde  audio
     public static string S1L1 = "S1L1";
     public static string S1L1H = "S1L1H";
@@ -110,18 +111,16 @@ public class GameConstants {
         {12,"S1L2"},
         {13,"S1L3"},
         {14,"S1L4"},
-        {21,""},
-        {22,""},
-        {23,""},
-        {24,""},
-        {31,""},
-        {32,""},
-        {33,""},
-        {34,""},
-        {41,""},
-        {42,""},
-        {43,""},
-        {44,""},
+        {21,"S2L1"},
+        {22,"S2L2"},
+        {23,"S2L3"},
+        {24,"S2L4"},
+        {31,"S3L1"},
+        {32,"S3L2"},
+        {33,"S3L3"},
+        {34,"S3L4"},
+        {41,"S4L1"},
+        {42,"S4L2"}
     };
     public static string GetLevel(int key) {
         string level = "";

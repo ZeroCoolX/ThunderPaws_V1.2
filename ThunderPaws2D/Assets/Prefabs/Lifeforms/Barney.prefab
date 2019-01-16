@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 114834322300645876}
   - component: {fileID: 114174318653646354}
   - component: {fileID: 114102050316462756}
+  - component: {fileID: 114702767453380004}
   m_Layer: 8
   m_Name: Barney
   m_TagString: Player
@@ -223,6 +224,18 @@ MonoBehaviour:
   PlayerNumber: 1
   JoystickId: 
   FacingRight: 1
+--- !u!114 &114702767453380004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52f4feeab98a1047ab0c4543d5da0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerNumber: 1
 --- !u!114 &114834322300645876
 MonoBehaviour:
   m_ObjectHideFlags: 1

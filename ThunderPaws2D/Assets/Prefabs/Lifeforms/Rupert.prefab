@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 114834322300645876}
   - component: {fileID: 114174318653646354}
   - component: {fileID: 114449358002250874}
+  - component: {fileID: 114117080280235376}
   m_Layer: 8
   m_Name: Rupert
   m_TagString: Player
@@ -149,6 +150,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88f969871bfa6640aef75498a8c0a7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114117080280235376
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d52f4feeab98a1047ab0c4543d5da0de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerNumber: 2
 --- !u!114 &114118023174978558
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -169,6 +182,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 50176
   NotifyOnCollision: 1
+  PlayerInput: {x: 0, y: 0}
 --- !u!114 &114174318653646354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,16 +221,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NoFallCheck: 0
+  PlayerStats: {fileID: 0}
   PlayerNumber: 2
   JoystickId: J2-
   FacingRight: 1
-  PlayerStats: {fileID: 0}
-  MeleeDamage: 10
-  ShowroomSpawns:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &114449358002250874
 MonoBehaviour:
   m_ObjectHideFlags: 1

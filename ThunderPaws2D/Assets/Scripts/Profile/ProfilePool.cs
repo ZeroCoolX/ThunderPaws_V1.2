@@ -10,37 +10,30 @@ public class ProfilePool : MonoBehaviour{
     public static ProfilePool Instance;
 
     private const string ENCODE_DELIM = "-FELINE117-";
-    public static string EncodeProfileNameFirstTime(string profileName) {
-        StringBuilder sb = new StringBuilder();
-        sb.Append(profileName.ToLower());
-        sb.Append(ENCODE_DELIM);
-        sb.Append(Guid.NewGuid());
-        return sb.ToString();
-    }
-
-    public static string DecodeProfileName(string profileName) {
-        return profileName.Substring(0, profileName.IndexOf(ENCODE_DELIM));
-    }
 
     private string _path = Path.Combine("Assets", "Profiles");
 
-    private List<string> _activeProfiles;
+    // <K,V> = <Player number (1 or 2), Profile>
+    private Dictionary<int, string> _activePlayerProfiles;
+
     // <K,V> = <Full Unique Profile Name, Profile>
     private Dictionary<string, Profile> _profiles;
     // <K,V> = <Full Unique Profile Name, Publicly Visible Profile Name>
     private Dictionary<string, string> _decodeProfileMap;
 
-    public void ActivateProfile(string profileName) {
-        var fullName = _decodeProfileMap[profileName];
-        if (!_activeProfiles.Contains(fullName)) {
-            _activeProfiles.Add(fullName);
+    public void ActivateProfile(string profileName, int playerNum) {
+        string profile;
+        if (!_activePlayerProfiles.TryGetValue(playerNum, out profile)) {
+            _activePlayerProfiles.Add(playerNum, profileName);
         }
     }
 
-    public void CreateProfile(string profile) {
+    public string CreateProfile(string profile) {
+        profile = profile.ToLower();
+
         if (_profiles.ContainsKey(profile)) {
             print("Profile map already contains entry for this profile");
-            return;
+            return profile;
         }else {
             // Create a new one
             var newProfile = new Profile { ProfileName = EncodeProfileNameFirstTime(profile) };
@@ -48,6 +41,7 @@ public class ProfilePool : MonoBehaviour{
             newProfile.SaveProfile();
             StoreProfileInCache(newProfile);
         }
+        return profile;
     }
 
     public List<string> GetAllProfiles() {
@@ -56,6 +50,14 @@ public class ProfilePool : MonoBehaviour{
 
     public List<string> GetPublicProfiles() {
         return _decodeProfileMap.Select(kvp => kvp.Key).ToList();
+    }
+
+    public Profile GetPlayerProfile(int playerNum) {
+        string profile;
+        if(!_activePlayerProfiles.TryGetValue(playerNum, out profile)) {
+            throw new KeyNotFoundException("Player profile not found for number " + playerNum);
+        }
+        return GetProfile(profile);
     }
 
     public Profile GetProfile(string p) {
@@ -75,6 +77,18 @@ public class ProfilePool : MonoBehaviour{
         return profile;
     }
 
+    public string PrettyPrint(string profileName) {
+        var profile = GetProfile(profileName);
+
+        StringBuilder sb = new StringBuilder();
+        sb.AppendLine("Weapons [" + string.Join(",", profile.GetUnlockedWeapons().Select(x => string.Format("{0}", x)).ToArray()) + "]");
+        sb.AppendLine("Ultimates [" + string.Join(",", profile.GetUnlockedUltimates().Select(x => string.Format("{0}", x)).ToArray()) + "]");
+        sb.AppendLine("Levels [" + string.Join(",", profile.GetUnlockedLevels().Select(x => string.Format("{0}", x)).ToArray()) + "]");
+        sb.AppendLine("Emission Cache [" + profile.GetEmissionCache() + "]");
+
+        return sb.ToString();
+    }
+
     void Awake() {
         if (Instance != null) {
             if (Instance != this) {
@@ -87,7 +101,20 @@ public class ProfilePool : MonoBehaviour{
 
         _profiles = new Dictionary<string, Profile>();
         _decodeProfileMap = new Dictionary<string, string>();
+        _activePlayerProfiles = new Dictionary<int, string>();
         LoadProfilesOnStart();
+    }
+
+    private string EncodeProfileNameFirstTime(string profileName) {
+        StringBuilder sb = new StringBuilder();
+        sb.Append(profileName.ToLower());
+        sb.Append(ENCODE_DELIM);
+        sb.Append(Guid.NewGuid());
+        return sb.ToString();
+    }
+
+    private string DecodeProfileName(string profileName) {
+        return profileName.Substring(0, profileName.IndexOf(ENCODE_DELIM));
     }
 
     private void StoreProfileInCache(Profile p) {
@@ -108,5 +135,5 @@ public class ProfilePool : MonoBehaviour{
             profile.LoadProfileFromFile();
             StoreProfileInCache(profile);
         }
-    } 
+    }
 }
