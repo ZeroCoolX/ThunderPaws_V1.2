@@ -28,6 +28,7 @@ public class GameConstants {
     public static string Audio_GaussShotUltImpact = "GaussShot_UltImpact";
     public static string Audio_FatCatImpact = "FatCat_Impact";
     public static string Audio_AccessDenied = "AccessDenied";
+
     // Level + (H)orde  audio
     public static string S1L1 = "S1L1";
     public static string S1L1H = "S1L1H";
@@ -122,6 +123,25 @@ public class GameConstants {
         {41,"S4L1"},
         {42,"S4L2"}
     };
+
+    private static Dictionary<int, string> _stages = new Dictionary<int, string> {
+        { 1 ,"Nipton City"},
+        { 2, "Neko Forest"},
+        { 3, "Mausu Ops Base"},
+        { 4, "Mausu Space Station"},
+        { 0, "CLASSIFIED"}
+    };
+
+    public static string GetStage(int key) {
+        string stage = "";
+        _stages.TryGetValue(key, out stage);
+        if (string.IsNullOrEmpty(stage)) {
+            Debug.LogError("Error retrieving stage : " + key + " returning stage 1 regardless");
+            stage = "Nipton City";
+        }
+        return stage;
+    }
+
     public static string GetLevel(int key) {
         string level = "";
         _stageLevels.TryGetValue(key, out level);

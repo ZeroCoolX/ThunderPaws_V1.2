@@ -77,6 +77,21 @@ public class Profile {
         }
     }
 
+
+    public bool IsLevelUnlocked(string level) {
+        var levels = GetUnlockedLevels();
+        return levels.Contains(level);
+    }
+
+    public byte[] GetStagesUnlocked() {
+        var stages = new byte[4];
+        for (var i = 0; i < stages.Length; ++i) {
+            // If at least the first level of the stage is unlocked then the entire stage is unlocked
+            stages[i] = Convert.ToByte(IsLevelUnlocked("S" + (i+1) + "L1"));
+        }
+        return stages;
+    }
+
     public int GetEmissionCache() {
         return _emissionCache;
     }

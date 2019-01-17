@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,6 +39,7 @@ public class ProfileProxy : MonoBehaviour {
         _profile.SaveProfile();
     }
 
+    
     public List<string> GetUnlockedLevels() {
         return _profile.GetUnlockedLevels();
     }
