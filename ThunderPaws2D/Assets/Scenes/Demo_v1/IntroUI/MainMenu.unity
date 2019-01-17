@@ -30551,6 +30551,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85fc13c325288fc478c5f6a7039d98fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Levels:
+  - {fileID: 2036742612}
+  - {fileID: 104842574}
+  - {fileID: 2014284245}
+  - {fileID: 54283271}
+  LevelButtons:
+  - {fileID: 2107854493}
+  - {fileID: 1736636874}
+  - {fileID: 2063600895}
+  - {fileID: 1941800434}
+  StageNum: 1
 --- !u!1 &1910635890
 GameObject:
   m_ObjectHideFlags: 0

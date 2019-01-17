@@ -77,6 +77,16 @@ public class Profile {
         }
     }
 
+    public byte[] GetLevelsUnlockedForStage(int stageNum) {
+        var stage = "S" + stageNum;
+        var levels = new byte[4];
+        for (var i = 0; i < levels.Length; ++i) {
+            // If at least the first level of the stage is unlocked then the entire stage is unlocked
+            levels[i] = Convert.ToByte(IsLevelUnlocked(stage + "L" + (i + 1)));
+        }
+        return levels;
+    }
+
 
     public bool IsLevelUnlocked(string level) {
         var levels = GetUnlockedLevels();

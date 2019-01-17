@@ -132,6 +132,25 @@ public class GameConstants {
         { 0, "CLASSIFIED"}
     };
 
+
+    private static Dictionary<int, string> _level1Test = new Dictionary<int, string> {
+        { 1 ,"City Outskirts"},
+        { 2, "City Streets"},
+        { 3, "Rooftops"},
+        { 4, "Capital"},
+        { 0, "OVERTAKEN"}
+    };
+    public static string GetLevelTest(int key) {
+        string level = "";
+        _level1Test.TryGetValue(key, out level);
+        if (string.IsNullOrEmpty(level)) {
+            Debug.LogError("Error retrieving level : " + key + " playing level 1 instead");
+            level = "OVERTAKEN";
+        }
+        return level;
+    }
+
+
     public static string GetStage(int key) {
         string stage = "";
         _stages.TryGetValue(key, out stage);
