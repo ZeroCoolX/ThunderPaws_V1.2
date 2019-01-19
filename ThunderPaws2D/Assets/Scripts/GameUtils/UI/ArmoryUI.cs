@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ArmoryUI : MonoBehaviour {
     public Button SelectedUltimate;
     public Button SelectedWeapon;
+    public Transform EmissionCacheDisplay;
 
     public Sprite UnselectedWeaponSprite;
     public Sprite UnselectedUltimateSprite;
@@ -17,6 +19,7 @@ public class ArmoryUI : MonoBehaviour {
     private Dictionary<string, Sprite> SpriteAccessMap;
 
     private const string LOCK_SUFFIX = "_lock";
+    private const string EMISSION_SUFFIX = "EMS";
     private List<Transform> _weaponButtons;
     private List<Transform> _ultimateButtons;
 
@@ -29,7 +32,24 @@ public class ArmoryUI : MonoBehaviour {
     public void SelectWeapon(Button selection) {
         SelectedWeapon.GetComponent<Image>().sprite = selection.GetComponent<Image>().sprite;
         var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
-        profile.SetSelectedWeapon(selection.gameObject.name);
+
+        // if the weapon is not locked, just set it.
+        if (profile.IsWeaponUnlocked(selection.gameObject.name)) {
+            profile.SetSelectedWeapon(selection.gameObject.name);
+        }else {
+            print("Weapon is not unlocked yet - ask to unlock");
+            // show unlock screen, filling in the pieces of data needed
+        }
+        // if the weapon IS locked, ask if they want to unlock it - or tell them they don't have enough EMS
+    }
+
+    public void UnlockWeapon(int cost, Sprite sprite) {
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        UpdateEmissionCache(cost);
+        SelectedWeapon.GetComponent<Image>().sprite = sprite;
+
+        profile.UnlockWeapon(sprite.name);
+        profile.SetSelectedWeapon(sprite.name);
     }
 
     public void LoadProfileSelection() {
@@ -43,6 +63,14 @@ public class ArmoryUI : MonoBehaviour {
 
         var selectedUltimate = profile.GetSelectedUltimate();
         LoadUltimateSelection(selectedUltimate);
+
+        EmissionCacheDisplay.GetComponent<TextMeshProUGUI>().text = "[" + profile.GetEmissionCache() + EMISSION_SUFFIX + "]";
+    }
+
+    public void UpdateEmissionCache(int cost) {
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        profile.UpdateEmissionCache(cost * -1);
+        EmissionCacheDisplay.GetComponent<TextMeshProUGUI>().text = "[" + profile.GetEmissionCache() + EMISSION_SUFFIX + "]";
     }
 
     private void DisplayWeaponsByLockStatus(Profile profile) {
@@ -70,7 +98,7 @@ public class ArmoryUI : MonoBehaviour {
     private void LoadWeaponSelection(string selectedWeapon) {
         if (!string.IsNullOrEmpty(selectedWeapon)) {
             try {
-                SelectedWeapon.GetComponent<Image>().sprite = GetSpriteFromMap(selectedWeapon);//GameObject.Find(selectedWeapon).GetComponent<Image>().sprite;
+                SelectedWeapon.GetComponent<Image>().sprite = GetSpriteFromMap(selectedWeapon);
             } catch (Exception e) {
                 print("Failed to set selected weapon on startup for weapon [" + selectedWeapon + "]");
             }
@@ -82,7 +110,7 @@ public class ArmoryUI : MonoBehaviour {
     private void LoadUltimateSelection(string selectedUltimate) {
         if (!string.IsNullOrEmpty(selectedUltimate)) {
             try {
-                SelectedUltimate.GetComponent<Image>().sprite = GameObject.Find(selectedUltimate).GetComponent<Image>().sprite;
+                SelectedUltimate.GetComponent<Image>().sprite = GetSpriteFromMap(selectedUltimate);//GameObject.Find(selectedUltimate).GetComponent<Image>().sprite;
             } catch (Exception e) {
                 print("Failed to set selected ultimate on startup for ultimate [" + selectedUltimate + "]");
             }
