@@ -253,7 +253,6 @@
     <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
-    <Compile Include="Assets\Scripts\GameUtils\ArmoryUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\AudioManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BaddieActivator.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BossController.cs" />
@@ -284,7 +283,6 @@
     <Compile Include="Assets\Scripts\GameUtils\Parallax\ParallaxTiling.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Parallax\RelativeParallax.cs" />
     <Compile Include="Assets\Scripts\GameUtils\PlayerSpriteController.cs" />
-    <Compile Include="Assets\Scripts\GameUtils\ProfileUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleAudio.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleEndOfLevel.cs" />
@@ -297,8 +295,8 @@
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SimpleSpawner.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManagerV2.cs" />
-    <Compile Include="Assets\Scripts\GameUtils\StageSelectUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\ArmoryUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ControllerAssignmentUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\Dialogue.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\DialogueManager.cs" />
@@ -312,8 +310,10 @@
     <Compile Include="Assets\Scripts\GameUtils\UI\PauseScreenUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerHudManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\PlayerSelectUI.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\ProfileUI.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\StageSelectUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\UIManager.cs" />
-    <Compile Include="Assets\Scripts\GameUtils\UISoundController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\UISoundController.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\BaddieLifeform.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Boss\BaddieBoss.cs" />
     <Compile Include="Assets\Scripts\Lifeforms\Baddie\Boss\BaddieHudManager.cs" />

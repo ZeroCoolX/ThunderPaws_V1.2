@@ -9,6 +9,23 @@ public class ProfileProxy : MonoBehaviour {
 
     private Profile _profile;
 
+
+    public string GetSelectedWeapon() {
+        return _profile.GetSelectedWeapon();
+    }
+    public string SetSelectedWeapon(string weapon) {
+        var selectedWeapon = _profile.SetSelectedWeapon(weapon);
+        return selectedWeapon;
+    }
+
+    public string GetSelectedUltimate() {
+        return _profile.GetSelectedUltimate();
+    }
+    public string SetSelectedUltimate(string ultimate) {
+        var selectedUltimate = _profile.SetSelectedUltimate(ultimate);
+        return selectedUltimate;
+    }
+
     public int GetEmissionCache() {
         return _profile.GetEmissionCache();
     }

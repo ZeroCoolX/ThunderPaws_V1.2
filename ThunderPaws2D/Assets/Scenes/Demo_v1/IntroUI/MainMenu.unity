@@ -8930,8 +8930,9 @@ GameObject:
   - component: {fileID: 472461596}
   - component: {fileID: 472461595}
   - component: {fileID: 472461594}
+  - component: {fileID: 472461597}
   m_Layer: 5
-  m_Name: Gauss
+  m_Name: gauss
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9140,6 +9141,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 472461592}
+--- !u!114 &472461597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 472461592}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &486762113
 GameObject:
   m_ObjectHideFlags: 0
@@ -10329,11 +10342,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -10366,7 +10379,7 @@ GameObject:
   - component: {fileID: 545573046}
   - component: {fileID: 545573049}
   m_Layer: 5
-  m_Name: LighteningClaw
+  m_Name: lighteningclaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10717,11 +10730,11 @@ MonoBehaviour:
     lineCount: 0
     pageCount: 0
     materialCount: 1
-  m_havePropertiesChanged: 0
+  m_havePropertiesChanged: 1
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 0
+  m_isInputParsingRequired: 1
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -14952,11 +14965,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -15372,8 +15385,9 @@ GameObject:
   - component: {fileID: 877734636}
   - component: {fileID: 877734635}
   - component: {fileID: 877734634}
+  - component: {fileID: 877734637}
   m_Layer: 5
-  m_Name: Shotgun
+  m_Name: shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15582,6 +15596,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 877734632}
+--- !u!114 &877734637
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 877734632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &885634452
 GameObject:
   m_ObjectHideFlags: 0
@@ -18037,7 +18063,7 @@ GameObject:
   - component: {fileID: 1033402045}
   - component: {fileID: 1033402048}
   m_Layer: 5
-  m_Name: TriggerPaw
+  m_Name: triggerpaw
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19382,6 +19408,7 @@ MonoBehaviour:
   SelectedUltimate: {fileID: 1177997239}
   SelectedWeapon: {fileID: 1652058900}
   CallerOriginScreen: {fileID: 0}
+  PlayerNumber: 1
 --- !u!1 &1113183272
 GameObject:
   m_ObjectHideFlags: 0
@@ -24357,11 +24384,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -25817,11 +25844,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -26862,8 +26889,9 @@ GameObject:
   - component: {fileID: 1455254409}
   - component: {fileID: 1455254408}
   - component: {fileID: 1455254407}
+  - component: {fileID: 1455254410}
   m_Layer: 5
-  m_Name: FatCat
+  m_Name: fatcat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27072,6 +27100,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1455254405}
+--- !u!114 &1455254410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1455254405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &1467689604
 GameObject:
   m_ObjectHideFlags: 0
@@ -27467,7 +27507,7 @@ GameObject:
   - component: {fileID: 1505044544}
   - component: {fileID: 1505044547}
   m_Layer: 5
-  m_Name: ReflectFurball
+  m_Name: reflectfurball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30358,11 +30398,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -32081,7 +32121,7 @@ GameObject:
   - component: {fileID: 1731333272}
   - component: {fileID: 1731333275}
   m_Layer: 5
-  m_Name: ThunderPounce
+  m_Name: thunderpounce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33486,11 +33526,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -36309,11 +36349,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -36857,8 +36897,9 @@ GameObject:
   - component: {fileID: 1996341879}
   - component: {fileID: 1996341878}
   - component: {fileID: 1996341877}
+  - component: {fileID: 1996341880}
   m_Layer: 5
-  m_Name: EmissionIndex
+  m_Name: emissionindex
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37067,6 +37108,18 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1996341875}
+--- !u!114 &1996341880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1996341875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53eeb236f9d8be24b84d93d1f4946bfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SoundName: MenuButton_Click
 --- !u!1 &2000669069
 GameObject:
   m_ObjectHideFlags: 0

@@ -85,6 +85,8 @@ public class ProfilePool : MonoBehaviour{
         sb.AppendLine("Ultimates [" + string.Join(",", profile.GetUnlockedUltimates().Select(x => string.Format("{0}", x)).ToArray()) + "]");
         sb.AppendLine("Levels [" + string.Join(",", profile.GetUnlockedLevels().Select(x => string.Format("{0}", x)).ToArray()) + "]");
         sb.AppendLine("Emission Cache [" + profile.GetEmissionCache() + "]");
+        sb.AppendLine("Selected Weapon [" + profile.GetSelectedWeapon() + "]");
+        sb.AppendLine("Selected Ultimate [" + profile.GetSelectedUltimate() + "]");
 
         return sb.ToString();
     }

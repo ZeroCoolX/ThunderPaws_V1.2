@@ -8,6 +8,9 @@ using UnityEngine;
 public class Profile {
     public string ProfileName;
 
+    private string _selectedWeapon;
+    private string _selectedUltimate;
+
     private Dictionary<string, bool> _weaponCache = new Dictionary<string, bool> {
         { "gauss", false},
         { "shotgun", false},
@@ -15,7 +18,7 @@ public class Profile {
         { "fatcat", false}
     };
     private Dictionary<string, bool> _ultimateCache = new Dictionary<string, bool> {
-        { "lighteneingclaw", false},
+        { "lighteningclaw", false},
         { "thunderpounce", false},
         { "triggerpaw", false},
         { "reflectfurball", false}
@@ -47,6 +50,10 @@ public class Profile {
 
         var profileModel = JsonUtility.FromJson<ProfileModel>(File.ReadAllText(path));
 
+        _emissionCache = profileModel.EmissionCache;
+        _selectedWeapon = profileModel.SelectedWeapon;
+        _selectedUltimate = profileModel.SelectedUltimate;
+
         foreach (var weapon in profileModel.Weapons) {
             UnlockWeapon(weapon);
         }
@@ -64,6 +71,8 @@ public class Profile {
 
 
         var model = new ProfileModel {
+            SelectedUltimate = _selectedUltimate,
+            SelectedWeapon = _selectedWeapon,
             EmissionCache = _emissionCache,
             Weapons = GetUnlockedWeapons(),
             Ultimates = GetUnlockedUltimates(),
@@ -100,6 +109,41 @@ public class Profile {
             stages[i] = Convert.ToByte(IsLevelUnlocked("S" + (i+1) + "L1"));
         }
         return stages;
+    }
+
+    public string GetSelectedWeapon() {
+        return _selectedWeapon;
+    }
+    public string SetSelectedWeapon(string weapon) {
+        if (!IsWeaponUnlocked(weapon)) {
+            UnlockWeapon(weapon);
+        }
+        _selectedWeapon = weapon;
+        SaveProfile();
+        return _selectedWeapon;
+    }
+
+    private bool IsWeaponUnlocked(string weapon) {
+        var weapons = GetUnlockedWeapons();
+        return weapons.Contains(weapon);
+    }
+
+    public string GetSelectedUltimate() {
+        return _selectedUltimate;
+    }
+
+    public string SetSelectedUltimate(string ultimate) {
+        if (!IsUltimateUnlocked(ultimate)) {
+            UnlockUltimate(ultimate);
+        }
+        _selectedUltimate = ultimate;
+        SaveProfile();
+        return _selectedUltimate;
+    }
+
+    private bool IsUltimateUnlocked(string ultimate) {
+        var ultimates = GetUnlockedUltimates();
+        return ultimates.Contains(ultimate);
     }
 
     public int GetEmissionCache() {
