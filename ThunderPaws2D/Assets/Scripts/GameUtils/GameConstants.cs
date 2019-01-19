@@ -69,6 +69,11 @@ public class GameConstants {
     public static string ObjectName_ShotgunWeapon = "shotgun";
     public static string ObjectName_EmissionIndexWeapon = "emissionindex";
     public static string ObjectName_FatCatWeapon = "fatcat";
+    //Ultimates
+    public static string ObjectName_TriggerPaw = "triggerpaw";
+    public static string ObjectName_LighteningClaw = "lighteningclaw";
+    public static string ObjectName_ThunderPounce = "thunderpounce";
+    public static string ObjectName_ReflectFurball = "reflectfurball";
 
 
 

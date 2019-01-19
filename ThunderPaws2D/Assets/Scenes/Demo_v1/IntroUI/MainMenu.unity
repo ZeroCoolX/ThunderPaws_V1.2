@@ -19424,6 +19424,23 @@ MonoBehaviour:
     type: 3}
   CallerOriginScreen: {fileID: 0}
   PlayerNumber: 1
+  Sprites:
+  - {fileID: 21300000, guid: b52a8eb2e3193a94aa4fe07d8a45755a, type: 3}
+  - {fileID: 21300000, guid: 8766660594987be4eae6ddbab13da2d3, type: 3}
+  - {fileID: 21300000, guid: 9b0b7afcd8ac6574c8ef7a5452caa897, type: 3}
+  - {fileID: 21300000, guid: 18b233c45138f4f4cb0ff4ec7abe99d5, type: 3}
+  - {fileID: 21300000, guid: 8eede4e68e5bc9b499eef7c2b80cb927, type: 3}
+  - {fileID: 21300000, guid: 2fab3293c5a47664cbda9a246e2f183e, type: 3}
+  - {fileID: 21300000, guid: ac21ead769397e0418805436c86cfe1b, type: 3}
+  - {fileID: 21300000, guid: c86371015490610479125a0c456207d7, type: 3}
+  - {fileID: 21300000, guid: 71f8d2e1d883f6f45bf9395889f6092b, type: 3}
+  - {fileID: 21300000, guid: 77c649cbcac12c14abfa979de22972c8, type: 3}
+  - {fileID: 21300000, guid: 8568baaa35bc43643825972bb57114f1, type: 3}
+  - {fileID: 21300000, guid: 7b7fed4b7f1c8c541a06b586c78e8cbd, type: 3}
+  - {fileID: 21300000, guid: ab1dd30e7e335a044ba8f05da8250633, type: 3}
+  - {fileID: 21300000, guid: c0ec81aa002a8f948a78b007756bb703, type: 3}
+  - {fileID: 21300000, guid: b52413583f7c1be4999c37ed84194201, type: 3}
+  - {fileID: 21300000, guid: c0b02a86bf0b8834285bae7bb6aba480, type: 3}
 --- !u!1 &1113183272
 GameObject:
   m_ObjectHideFlags: 0
@@ -27430,7 +27447,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 14.8125
+      value: 14
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}

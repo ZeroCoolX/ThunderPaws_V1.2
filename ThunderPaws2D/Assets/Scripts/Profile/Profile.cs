@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -12,16 +11,16 @@ public class Profile {
     private string _selectedUltimate;
 
     private Dictionary<string, bool> _weaponCache = new Dictionary<string, bool> {
-        { "gauss", false},
-        { "shotgun", false},
-        { "emissionindex", false},
-        { "fatcat", false}
+        { GameConstants.ObjectName_GaussWeapon, false},
+        {  GameConstants.ObjectName_ShotgunWeapon, false},
+        {  GameConstants.ObjectName_EmissionIndexWeapon, false},
+        {  GameConstants.ObjectName_FatCatWeapon, false}
     };
     private Dictionary<string, bool> _ultimateCache = new Dictionary<string, bool> {
-        { "lighteningclaw", false},
-        { "thunderpounce", false},
-        { "triggerpaw", false},
-        { "reflectfurball", false}
+        { GameConstants.ObjectName_LighteningClaw, false},
+        { GameConstants.ObjectName_ThunderPounce, false},
+        { GameConstants.ObjectName_TriggerPaw, false},
+        { GameConstants.ObjectName_ReflectFurball, false}
     };
     private Dictionary<string, bool> _levelCache = new Dictionary<string, bool> {
         { "S1L1", true},
@@ -123,7 +122,7 @@ public class Profile {
         return _selectedWeapon;
     }
 
-    private bool IsWeaponUnlocked(string weapon) {
+    public bool IsWeaponUnlocked(string weapon) {
         var weapons = GetUnlockedWeapons();
         return weapons.Contains(weapon);
     }
@@ -141,7 +140,7 @@ public class Profile {
         return _selectedUltimate;
     }
 
-    private bool IsUltimateUnlocked(string ultimate) {
+    public bool IsUltimateUnlocked(string ultimate) {
         var ultimates = GetUnlockedUltimates();
         return ultimates.Contains(ultimate);
     }
