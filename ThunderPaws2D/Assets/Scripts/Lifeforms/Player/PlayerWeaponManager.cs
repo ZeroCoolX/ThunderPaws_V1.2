@@ -30,7 +30,9 @@ public class PlayerWeaponManager : MonoBehaviour {
         }
 
         // Create secondary if its selected
-        CreateSecondaryWeapon();
+        if (!ProfilePool.Instance.Debug) {
+            CreateSecondaryWeapon();
+        }
     }
 
     private void CreateSecondaryWeapon() {
@@ -87,6 +89,8 @@ public class PlayerWeaponManager : MonoBehaviour {
             ToggleWeaponActiveStatus(true);
             PlayerHudManager.Instance.GetPlayerHud(_playerNumber).SetAmmo(_currentWeapon.GetComponent<AbstractWeapon>().Ammo);
             PlayWeaponSoundEffect(GameConstants.Audio_WeaponSwitch);
+            // TODO: The name of the object could have (clone) on it so...its not very elegant right now
+            PlayerHudManager.Instance.UpdateWeaponPickup(_playerNumber, _currentWeapon.gameObject.name.ToLower().Substring(0, _currentWeapon.gameObject.name.IndexOf("(")));
         }
     }
 
@@ -101,7 +105,7 @@ public class PlayerWeaponManager : MonoBehaviour {
         if (weaponKey != GameConstants.ObjectName_DefaultWeapon) {
             ToggleWeaponActiveStatus(false);
         }
-        _currentWeapon = Instantiate(GameMasterV2.Instance.GetWeaponFromMap(weaponKey), _weaponAnchorPoint.position, _weaponAnchorPoint.rotation, _weaponAnchorPoint);
+        _currentWeapon = Instantiate(GameMasterV2.Instance.GetWeaponFromMap(weaponKey.ToLower()), _weaponAnchorPoint.position, _weaponAnchorPoint.rotation, _weaponAnchorPoint);
         ToggleWeaponActiveStatus(true);
         print("Created weapon: " + _currentWeapon.gameObject.name);
     }

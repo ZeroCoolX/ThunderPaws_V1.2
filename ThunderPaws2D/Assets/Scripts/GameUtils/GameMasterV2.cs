@@ -26,6 +26,11 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     public Sprite[] WeaponSpriteList;
     /// <summary>
+    /// Compile time collection of any ultimate sprites
+    /// These are for indicating to the player what ultimate they currently have
+    /// </summary>
+    public Sprite[] UltimateSpriteList;
+    /// <summary>
     /// Compile time list of all weapon prefabs.
     /// </summary>
     public Transform[] WeaponList;
@@ -126,6 +131,7 @@ public class GameMasterV2 : MonoBehaviour {
         Maps.PlayerSpiteMap = new Dictionary<int, Sprite>();
         Maps.PlayersPrefabMap = new Dictionary<int, Transform>();
         Maps.WeaponSpriteMap = new Dictionary<string, Sprite>();
+        Maps.UltimateSpriteMap = new Dictionary<string, Sprite>();
         Maps.WeaponPrefabMap = new Dictionary<string, Transform>();
         BuildMaps();
 
@@ -177,6 +183,11 @@ public class GameMasterV2 : MonoBehaviour {
         Maps.PlayerSpiteMap.Add(25, PlayerSpriteList[5]);
 
         // Load weapon sprite map
+        foreach (var ultSprite in UltimateSpriteList) {
+            Maps.UltimateSpriteMap.Add(ultSprite.name.ToLower(), ultSprite);
+        }
+
+        // Load weapon sprite map
         foreach (var weaponSprite in WeaponSpriteList) {
             Maps.WeaponSpriteMap.Add(weaponSprite.name.Substring(weaponSprite.name.IndexOf("_")+1).ToLower(), weaponSprite);
         }
@@ -222,10 +233,13 @@ public class GameMasterV2 : MonoBehaviour {
             var currentSpawn = SpawnPointManagerV2.Instance.GetCurrentSpawn();
             var playerNum = player.Value.GetComponent<Player>().PlayerNumber;
 
-            Instantiate(player.Value, currentSpawn.position, currentSpawn.rotation);
+            var clone = Instantiate(player.Value, currentSpawn.position, currentSpawn.rotation);
 
             print("Setting lives for player " + playerNum);
             PlayerHudManager.Instance.ActivateStatsHud(playerNum);
+            if (!ProfilePool.Instance.Debug) {
+                PlayerHudManager.Instance.UpdateUltimateUI2(playerNum, ProfilePool.Instance.GetPlayerProfile(playerNum).GetSelectedUltimate());
+            }
             PlayerHudManager.Instance.GetPlayerHud(playerNum).SetLives(RemainingLives);
 
             // Push a player onto the stack indicating he is alive in the scene
@@ -294,6 +308,17 @@ public class GameMasterV2 : MonoBehaviour {
         }
         return sprite;
     }
+
+    public Sprite GetUltimateSpriteFromMap(string ultimateKey) {
+        Sprite sprite;
+        Maps.UltimateSpriteMap.TryGetValue(ultimateKey, out sprite);
+        if (sprite == null) {
+            print("Just informing that GetUltimateSpriteFromMap(" + ultimateKey + ") was called and we didn't have that sprite");
+            sprite = UltimateSpriteList[0];
+        }
+        return sprite;
+    }
+
     private string currentTune = "";
     private void SoundCheckDebug() {
         if (Input.GetKeyDown(KeyCode.Alpha0)) {
@@ -445,6 +470,10 @@ public class GameMasterV2 : MonoBehaviour {
         /// Mapped by weapon name.
         /// </summary>
         public Dictionary<string, Sprite> WeaponSpriteMap;
+        /// <summary>
+        /// Mapped by ultimate name
+        /// </summary>
+        public Dictionary<string, Sprite> UltimateSpriteMap;
         /// <summary>
         /// Mapped by name to weapon prefab.
         /// Actual storage since unity cannot handle public Dictionaries....

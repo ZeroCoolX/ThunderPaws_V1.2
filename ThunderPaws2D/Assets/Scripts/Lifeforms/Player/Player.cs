@@ -60,7 +60,7 @@ public class Player : PlayerLifeform {
 
     public override bool Damage(float dmg) {
         PlayerStats.CurrentHealth -= (int)dmg;
-        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);//TODO: Don't hardcode this
+        PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
         if (PlayerStats.CurrentHealth <= 0) {
             GameMasterV2.KillPlayer(this);
         } else {
@@ -120,7 +120,9 @@ public class Player : PlayerLifeform {
     }
 
     private void Start() {
-        StupPlayerProfile();
+        if (!ProfilePool.Instance.Debug) {
+            StupPlayerProfile();
+        }
         SetupActionMovement();
         SetupPlayerIdentification();
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);

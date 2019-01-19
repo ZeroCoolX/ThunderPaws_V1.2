@@ -72,6 +72,8 @@ public class ProfileProxy : MonoBehaviour {
     }
 
     private void Awake() {
-        _profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        if (!ProfilePool.Instance.Debug) {
+            _profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        }
     }
 }

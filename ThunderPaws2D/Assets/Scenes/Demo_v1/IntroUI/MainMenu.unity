@@ -19420,6 +19420,8 @@ MonoBehaviour:
   SelectedWeapon: {fileID: 1652058900}
   UnselectedWeaponSprite: {fileID: 21300000, guid: e7aa2e112e962934cb3ec84e201deb60,
     type: 3}
+  UnselectedUltimateSprite: {fileID: 21300000, guid: e5a868aaf17ecd9408afa0dac45d54a0,
+    type: 3}
   CallerOriginScreen: {fileID: 0}
   PlayerNumber: 1
 --- !u!1 &1113183272

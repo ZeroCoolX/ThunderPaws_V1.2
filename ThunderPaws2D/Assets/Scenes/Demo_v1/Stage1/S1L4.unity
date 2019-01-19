@@ -6508,6 +6508,11 @@ Prefab:
       propertyPath: Backgrounds.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114499844392596702, guid: d31a4c98cd670bd44b79736b1ba9f224,
+        type: 2}
+      propertyPath: UltimateSpriteList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4169245292921112, guid: d31a4c98cd670bd44b79736b1ba9f224, type: 2}
       propertyPath: m_LocalPosition.x
       value: 5.0600014
@@ -6610,6 +6615,30 @@ Prefab:
       propertyPath: MoveSpeed
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 114499844392596702, guid: d31a4c98cd670bd44b79736b1ba9f224,
+        type: 2}
+      propertyPath: UltimateSpriteList.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 71f8d2e1d883f6f45bf9395889f6092b,
+        type: 3}
+    - target: {fileID: 114499844392596702, guid: d31a4c98cd670bd44b79736b1ba9f224,
+        type: 2}
+      propertyPath: UltimateSpriteList.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: b52413583f7c1be4999c37ed84194201,
+        type: 3}
+    - target: {fileID: 114499844392596702, guid: d31a4c98cd670bd44b79736b1ba9f224,
+        type: 2}
+      propertyPath: UltimateSpriteList.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 8568baaa35bc43643825972bb57114f1,
+        type: 3}
+    - target: {fileID: 114499844392596702, guid: d31a4c98cd670bd44b79736b1ba9f224,
+        type: 2}
+      propertyPath: UltimateSpriteList.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: ab1dd30e7e335a044ba8f05da8250633,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d31a4c98cd670bd44b79736b1ba9f224, type: 2}
   m_IsPrefabParent: 0

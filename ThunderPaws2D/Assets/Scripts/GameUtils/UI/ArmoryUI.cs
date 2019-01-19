@@ -6,6 +6,7 @@ public class ArmoryUI : MonoBehaviour {
     public Button SelectedUltimate;
     public Button SelectedWeapon;
     public Sprite UnselectedWeaponSprite;
+    public Sprite UnselectedUltimateSprite;
 
     public Transform CallerOriginScreen;
     public int PlayerNumber = 1;
@@ -24,16 +25,35 @@ public class ArmoryUI : MonoBehaviour {
 
     public void LoadProfileSelection() {
         var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
-        var selectedWeapon = profile.GetSelectedWeapon();
 
+        var selectedWeapon = profile.GetSelectedWeapon();
+        LoadWeaponSelection(selectedWeapon);
+
+        var selectedUltimate = profile.GetSelectedUltimate();
+        LoadUltimateSelection(selectedUltimate);
+    }
+
+    private void LoadWeaponSelection(string selectedWeapon) {
         if (!string.IsNullOrEmpty(selectedWeapon)) {
             try {
                 SelectedWeapon.GetComponent<Image>().sprite = GameObject.Find(selectedWeapon).GetComponent<Image>().sprite;
             } catch (Exception e) {
                 print("Failed to set selected weapon on startup for weapon [" + selectedWeapon + "]");
             }
-        }else {
+        } else {
             SelectedWeapon.GetComponent<Image>().sprite = UnselectedWeaponSprite;
+        }
+    }
+
+    private void LoadUltimateSelection(string selectedUltimate) {
+        if (!string.IsNullOrEmpty(selectedUltimate)) {
+            try {
+                SelectedUltimate.GetComponent<Image>().sprite = GameObject.Find(selectedUltimate).GetComponent<Image>().sprite;
+            } catch (Exception e) {
+                print("Failed to set selected ultimate on startup for ultimate [" + selectedUltimate + "]");
+            }
+        } else {
+            SelectedUltimate.GetComponent<Image>().sprite = UnselectedUltimateSprite;
         }
     }
 

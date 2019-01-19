@@ -14,6 +14,7 @@ public class PlayerStatsUIController : MonoBehaviour {
 
     private Image _playerHealthImage;
     private Image _weaponImage;
+    private Image _ultImage;
     private Transform _ultimateIndicator;
     private Animator _ultimateBarAnimator;
 
@@ -65,10 +66,20 @@ public class PlayerStatsUIController : MonoBehaviour {
             Debug.LogError("No WeaponImage found");
             throw new UnassignedReferenceException();
         }
+
+        _ultImage = transform.Find(GameConstants.ObjectName_UltimateImage).GetComponent<Image>();
+        if (_ultImage == null) {
+            Debug.LogError("No UltimateImage found");
+            throw new UnassignedReferenceException();
+        }
     }
 
     public void SetWeaponPickup(string weaponName) {
         _weaponImage.sprite = GameMasterV2.Instance.GetWeaponSpriteFromMap(weaponName.ToLower());
+    }
+
+    public void SetUltimate(string ultName) {
+        _ultImage.sprite = GameMasterV2.Instance.GetUltimateSpriteFromMap(ultName.ToLower());
     }
 
     public void SetAmmo(int ammo = -1) {

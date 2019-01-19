@@ -8,6 +8,7 @@ using UnityEngine;
 public class ProfilePool : MonoBehaviour{
 
     public static ProfilePool Instance;
+    public bool Debug;
 
     private const string ENCODE_DELIM = "-FELINE117-";
 
