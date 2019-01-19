@@ -50,7 +50,6 @@ public class GameConstants {
 
     // Game object names
     public static string ObjectName_Pickup = "Pickup";
-    public static string ObjectName_DefaultWeapon = "FuzzBuster";
     public static string ObjectName_WeaponAnchor = "WeaponAnchor";
     public static string ObjectName_UltimateIndicator = "UltIndicator";
     public static string ObjectName_PlayerImage = "PlayerImage";
@@ -62,6 +61,15 @@ public class GameConstants {
     public static string ObjectName_FirePoint = "FirePoint";
     public static string ObjectName_MainCamera = "MainCamera";
     public static string ObjectName_ScoreText = "ScoreText";
+
+    //Weapons
+    public static string ObjectName_DefaultWeapon = "fuzzbuster";
+    public static string ObjectName_GaussWeapon = "gaussrifle";
+    public static string ObjectName_ShotgunWeapon = "shotgun";
+    public static string ObjectName_EmissionIndexWeapon = "emissionindex";
+    public static string ObjectName_FatCatWeapon = "fatcat";
+
+
 
     // Input names
     public static string Input_LBumper = "LBumper";

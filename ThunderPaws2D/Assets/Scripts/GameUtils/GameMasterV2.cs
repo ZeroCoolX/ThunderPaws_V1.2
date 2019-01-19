@@ -183,7 +183,7 @@ public class GameMasterV2 : MonoBehaviour {
 
         // Load weapon prefab map
         foreach (var weaponPrefab in WeaponList) {
-            Maps.WeaponPrefabMap.Add(weaponPrefab.gameObject.name, weaponPrefab);
+            Maps.WeaponPrefabMap.Add(weaponPrefab.gameObject.name.ToLower(), weaponPrefab);
         }
 
         // Load Player prefab map

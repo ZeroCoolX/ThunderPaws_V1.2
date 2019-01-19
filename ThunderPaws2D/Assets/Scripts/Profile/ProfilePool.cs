@@ -24,7 +24,11 @@ public class ProfilePool : MonoBehaviour{
     public void ActivateProfile(string profileName, int playerNum) {
         string profile;
         if (!_activePlayerProfiles.TryGetValue(playerNum, out profile)) {
+            // Add if its a new one
             _activePlayerProfiles.Add(playerNum, profileName);
+        }else {
+            // Otherwise overwrite the profile for this number
+            _activePlayerProfiles[playerNum] = profileName;
         }
     }
 

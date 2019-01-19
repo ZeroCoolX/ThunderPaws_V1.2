@@ -23,9 +23,22 @@ public class PlayerWeaponManager : MonoBehaviour {
             throw new MissingComponentException("The weapon anchor is missing an animator.");
         }
 
+        // Always create the default
         CreateAndEquipWeapon(GameConstants.ObjectName_DefaultWeapon);
         if (_currentWeapon == null) {
             throw new MissingComponentException("There was no weapon attached to the Player");
+        }
+
+        // Create secondary if its selected
+        CreateSecondaryWeapon();
+    }
+
+    private void CreateSecondaryWeapon() {
+        var playerProfile = ProfilePool.Instance.GetPlayerProfile(_playerNumber);
+
+        var selectedWeapon = playerProfile.GetSelectedWeapon();
+        if (!string.IsNullOrEmpty(selectedWeapon)) {
+            CreateAndEquipWeapon(selectedWeapon);
         }
     }
 
