@@ -245,7 +245,6 @@
     <Compile Include="Assets\PixelPerfectCamera\Scripts\PixelPerfectCamera.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\PixelSnap.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Scroller.cs" />
-    <Compile Include="Assets\ProfileUI.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\CollisionController2D.cs" />
     <Compile Include="Assets\Scripts\CollisionControllers\RaycastController.cs" />
     <Compile Include="Assets\Scripts\Extensions\CameraExtensions.cs" />
@@ -254,6 +253,7 @@
     <Compile Include="Assets\Scripts\FollowControllers\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\FollowControllers\FollowBase.cs" />
     <Compile Include="Assets\Scripts\GameUtils\ApplyPickup.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\ArmoryUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\AudioManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BaddieActivator.cs" />
     <Compile Include="Assets\Scripts\GameUtils\BossController.cs" />
@@ -284,6 +284,7 @@
     <Compile Include="Assets\Scripts\GameUtils\Parallax\ParallaxTiling.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Parallax\RelativeParallax.cs" />
     <Compile Include="Assets\Scripts\GameUtils\PlayerSpriteController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\ProfileUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleAudio.cs" />
     <Compile Include="Assets\Scripts\GameUtils\SimpleEndOfLevel.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SimpleSpawner.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManagerV2.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\StageSelectUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ControllerAssignmentUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\Dialogue.cs" />
@@ -359,7 +361,6 @@
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\FuzzBusterConfig.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\ShotgunConfig.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\WeaponConfigs\WeaponConfig.cs" />
-    <Compile Include="Assets\StageSelectUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

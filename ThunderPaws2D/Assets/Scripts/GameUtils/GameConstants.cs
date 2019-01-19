@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -105,23 +106,27 @@ public class GameConstants {
     public static string Difficulty_Normal = "normal";
     public static string Difficulty_Hard = "hard";
 
+    public struct Level {
+        public string Name { get; set; }
+        public string PublicName { get; set; }
+    }
 
-    // Stages and Levels
-    private static Dictionary<int, string> _stageLevels = new Dictionary<int, string>() {
-        {11,"S1L1"},
-        {12,"S1L2"},
-        {13,"S1L3"},
-        {14,"S1L4"},
-        {21,"S2L1"},
-        {22,"S2L2"},
-        {23,"S2L3"},
-        {24,"S2L4"},
-        {31,"S3L1"},
-        {32,"S3L2"},
-        {33,"S3L3"},
-        {34,"S3L4"},
-        {41,"S4L1"},
-        {42,"S4L2"}
+    // Levels
+    private static Dictionary<int, Level> _stageLevels = new Dictionary<int, Level>() {
+        {11, new Level { Name = "S1L1", PublicName =  "City Outskirts"} },
+        {12, new Level { Name = "S1L2", PublicName =  "City Streets"} },
+        {13, new Level { Name = "S1L3", PublicName =  "Rooftops"} },
+        {14, new Level { Name = "S1L4", PublicName =  "Capital"} },
+        {21, new Level { Name = "S2L1", PublicName =  "..."} },
+        {22, new Level { Name = "S2L2", PublicName =  "..."} },
+        {23, new Level { Name = "S2L3", PublicName =  "..."} },
+        {24, new Level { Name = "S2L4", PublicName =  "..."} },
+        {31, new Level { Name = "S3L1", PublicName =  "..."} },
+        {32, new Level { Name = "S3L2", PublicName =  "..."} },
+        {33, new Level { Name = "S3L3", PublicName =  "..."} },
+        {34, new Level { Name = "S3L4", PublicName =  "..."} },
+        {41, new Level { Name = "S4L1", PublicName =  "..."} },
+        {42, new Level { Name = "S4L2", PublicName =  "..."} }
     };
 
     private static Dictionary<int, string> _stages = new Dictionary<int, string> {
@@ -132,22 +137,15 @@ public class GameConstants {
         { 0, "CLASSIFIED"}
     };
 
-
-    private static Dictionary<int, string> _level1Test = new Dictionary<int, string> {
-        { 1 ,"City Outskirts"},
-        { 2, "City Streets"},
-        { 3, "Rooftops"},
-        { 4, "Capital"},
-        { 0, "OVERTAKEN"}
-    };
-    public static string GetLevelTest(int key) {
-        string level = "";
-        _level1Test.TryGetValue(key, out level);
-        if (string.IsNullOrEmpty(level)) {
-            Debug.LogError("Error retrieving level : " + key + " playing level 1 instead");
-            level = "OVERTAKEN";
+    public static string GetLevelPublicName(string key) {
+        int realKey = Convert.ToInt32(key);
+        if(realKey % 10 == 0) {
+            // This indicates the level was not unlocked so return default
+            return "UN-LIBERATED";
         }
-        return level;
+        Level level;
+        _stageLevels.TryGetValue(realKey, out level);
+        return level.PublicName;
     }
 
 
@@ -162,13 +160,9 @@ public class GameConstants {
     }
 
     public static string GetLevel(int key) {
-        string level = "";
+        Level level;
         _stageLevels.TryGetValue(key, out level);
-        if (string.IsNullOrEmpty(level)) {
-            Debug.LogError("Error retrieving level : " + key + " playing level 1 instead");
-            level = "S1L1";
-        }
-        return level;
+        return level.Name;
     }
 
 }
