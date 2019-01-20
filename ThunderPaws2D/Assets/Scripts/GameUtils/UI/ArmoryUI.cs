@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class ArmoryUI : MonoBehaviour {
     public Button SelectedUltimate;
     public Button SelectedWeapon;
     public Transform EmissionCacheDisplay;
+
+    public Transform WeaponUnlockScreen;
+    public Transform UltimateUnlockScreen;
 
     public Sprite UnselectedWeaponSprite;
     public Sprite UnselectedUltimateSprite;
@@ -18,38 +22,150 @@ public class ArmoryUI : MonoBehaviour {
     public Sprite[] Sprites;
     private Dictionary<string, Sprite> SpriteAccessMap;
 
+    private GameObject _eventSystem;
+
     private const string LOCK_SUFFIX = "_lock";
     private const string EMISSION_SUFFIX = "EMS";
+
     private List<Transform> _weaponButtons;
+    private GameObject _weaponSelectorEventSystem;
     private List<Transform> _ultimateButtons;
+    private GameObject _ultimateSelectorEventSystem;
+
+    // Indicates we have successfully unlocked this item, or it was previously unlocked so just select it
+    public void WeaponItemSelected(Button selection) {
+        WeaponUnlockScreen.gameObject.SetActive(false);
+
+        foreach (var btn in _weaponButtons) {
+            btn.GetComponent<Button>().enabled = false;
+        }
+        _weaponSelectorEventSystem.SetActive(false);
+
+        SelectedWeapon.enabled = true;
+        SelectedUltimate.enabled = true;
+
+        var selectionName = selection.gameObject.name;
+
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        var sprite = selection.GetComponent<Image>().sprite;
+        if (!profile.IsWeaponUnlocked(selectionName)) {
+            sprite = GetSpriteFromMap(sprite.name.Substring(0, sprite.name.IndexOf(LOCK_SUFFIX)));
+            profile.UnlockWeapon(selectionName);
+            UpdateEmissionCache(selection.GetComponent<ArmoryItem>().Price);
+        }
+        profile.SetSelectedWeapon(selectionName);
+
+        SelectedWeapon.GetComponent<Image>().sprite = sprite;
+
+        _eventSystem.SetActive(true);
+        _eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(SelectedWeapon.gameObject);
+
+        // refresh the sprites
+        DisplayWeaponsByLockStatus(profile);
+    }
+
+    public void UltimateItemSelected(Button selection) {
+        UltimateUnlockScreen.gameObject.SetActive(false);
+
+        foreach (var btn in _ultimateButtons) {
+            btn.GetComponent<Button>().enabled = false;
+        }
+        _ultimateSelectorEventSystem.SetActive(false);
+
+        SelectedWeapon.enabled = true;
+        SelectedUltimate.enabled = true;
+
+        var selectionName = selection.gameObject.name;
+
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        var sprite = selection.GetComponent<Image>().sprite;
+        if (!profile.IsUltimateUnlocked(selectionName)) {
+            sprite = GetSpriteFromMap(sprite.name.Substring(0, sprite.name.IndexOf(LOCK_SUFFIX)));
+            profile.UnlockUltimate(selectionName);
+            UpdateEmissionCache(selection.GetComponent<ArmoryItem>().Price);
+        }
+        profile.SetSelectedUltimate(selectionName);
+
+        SelectedUltimate.GetComponent<Image>().sprite = sprite;
+
+        _eventSystem.SetActive(true);
+        _eventSystem.GetComponent<EventSystem>().SetSelectedGameObject(SelectedUltimate.gameObject);
+
+        // refresh the sprites
+        DisplayUltimatesByLockStatus(profile);
+    }
+
+    // Either the user backed out of the unlock, or they didn't have enough funds
+    public void GoBackToWeaponSelection(Button selection) {
+        WeaponUnlockScreen.gameObject.SetActive(false);
+
+        ToggleSelectionScreenActivation(true, _weaponButtons, _weaponSelectorEventSystem);
+        _weaponSelectorEventSystem.GetComponent<EventSystem>().SetSelectedGameObject(selection.gameObject);
+    }
+
+    public void GoBackToUltimateSelection(Button selection) {
+        UltimateUnlockScreen.gameObject.SetActive(false);
+
+        ToggleSelectionScreenActivation(true, _ultimateButtons, _ultimateSelectorEventSystem);
+        _ultimateSelectorEventSystem.GetComponent<EventSystem>().SetSelectedGameObject(selection.gameObject);
+    }
 
     public void SelectUltimate(Button selection) {
-        SelectedUltimate.GetComponent<Image>().sprite = selection.GetComponent<Image>().sprite;
         var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
-        profile.SetSelectedUltimate(selection.gameObject.name);
+
+        if (_ultimateSelectorEventSystem == null) {
+            _ultimateSelectorEventSystem = FindEventSystem("UltimateSelectorEventSystem");
+        }
+
+        if (profile.IsUltimateUnlocked(selection.gameObject.name)) {
+            UltimateItemSelected(selection);
+        } else {
+            print("Ultimate is not unlocked yet, try unlocking it");
+            TryToUnlockUltimate(selection);
+        }
     } 
 
     public void SelectWeapon(Button selection) {
-        SelectedWeapon.GetComponent<Image>().sprite = selection.GetComponent<Image>().sprite;
         var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
 
-        // if the weapon is not locked, just set it.
-        if (profile.IsWeaponUnlocked(selection.gameObject.name)) {
-            profile.SetSelectedWeapon(selection.gameObject.name);
-        }else {
-            print("Weapon is not unlocked yet - ask to unlock");
-            // show unlock screen, filling in the pieces of data needed
+        if(_weaponSelectorEventSystem == null) {
+            _weaponSelectorEventSystem = FindEventSystem("WeaponSelectorEventSystem");
         }
-        // if the weapon IS locked, ask if they want to unlock it - or tell them they don't have enough EMS
+
+        if (profile.IsWeaponUnlocked(selection.gameObject.name)) {
+            WeaponItemSelected(selection);
+        }else {
+            print("Weapon is not unlocked yet, try unlocking it");
+            TryToUnlockWeapon(selection);
+        }
     }
 
-    public void UnlockWeapon(int cost, Sprite sprite) {
-        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
-        UpdateEmissionCache(cost);
-        SelectedWeapon.GetComponent<Image>().sprite = sprite;
+    private GameObject FindEventSystem(string es) {
+        var eventSystem = GameObject.Find(es);
+        if (eventSystem == null) {
+            throw new MissingComponentException("Missing " + es);
+        }
+        return eventSystem;
+    }
 
-        profile.UnlockWeapon(sprite.name);
-        profile.SetSelectedWeapon(sprite.name);
+    private void TryToUnlockWeapon(Button selection) {
+        // Show the unlock screen
+        WeaponUnlockScreen.gameObject.SetActive(true);
+        // Shut off selection events and turn on Unlock screen events
+        ToggleSelectionScreenActivation(false, _weaponButtons, _weaponSelectorEventSystem);
+
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        WeaponUnlockScreen.GetComponent<ArmoryItemUI>().SelectItem(selection, profile.GetEmissionCache());
+    }
+
+    private void TryToUnlockUltimate(Button selection) {
+        // Show the unlock screen
+        UltimateUnlockScreen.gameObject.SetActive(true);
+        // Shut off selection events and turn on Unlock screen events
+        ToggleSelectionScreenActivation(false, _ultimateButtons, _ultimateSelectorEventSystem);
+
+        var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
+        UltimateUnlockScreen.GetComponent<ArmoryItemUI>().SelectItem(selection, profile.GetEmissionCache());
     }
 
     public void LoadProfileSelection() {
@@ -71,6 +187,22 @@ public class ArmoryUI : MonoBehaviour {
         var profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
         profile.UpdateEmissionCache(cost * -1);
         EmissionCacheDisplay.GetComponent<TextMeshProUGUI>().text = "[" + profile.GetEmissionCache() + EMISSION_SUFFIX + "]";
+    }
+
+    public void SetOrigin(Transform origin) {
+        CallerOriginScreen = origin;
+    }
+
+    public void GoBackToCaller() {
+        CallerOriginScreen.gameObject.SetActive(true);
+        gameObject.SetActive(false);
+    }
+
+    private void ToggleSelectionScreenActivation(bool active, List<Transform> buttonItems, GameObject eventSystem) {
+        foreach (var btn in buttonItems) {
+            btn.GetComponent<Button>().enabled = active;
+        }
+        eventSystem.SetActive(active);
     }
 
     private void DisplayWeaponsByLockStatus(Profile profile) {
@@ -119,15 +251,6 @@ public class ArmoryUI : MonoBehaviour {
         }
     }
 
-    public void SetOrigin(Transform origin) {
-        CallerOriginScreen = origin;
-    }
-
-    public void GoBackToCaller() {
-        CallerOriginScreen.gameObject.SetActive(true);
-        gameObject.SetActive(false);
-    }
-
     private Sprite GetSpriteFromMap(string key) {
         Sprite sprite;
         if(!SpriteAccessMap.TryGetValue(key, out sprite)) {
@@ -144,6 +267,10 @@ public class ArmoryUI : MonoBehaviour {
             SpriteAccessMap.Add(sprite.name, sprite);
         }
 
+        _eventSystem = GameObject.Find("ArmoryEventSystem");
+        if(_eventSystem == null) {
+            throw new MissingComponentException("Missing ArmoryEventSystem");
+        }
 
         _weaponButtons = new List<Transform>();
         _weaponButtons.Add(GameObject.Find(GameConstants.ObjectName_ShotgunWeapon).transform);

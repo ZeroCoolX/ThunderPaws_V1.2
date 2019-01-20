@@ -296,6 +296,8 @@
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManager.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Spawning\SpawnPointManagerV2.cs" />
     <Compile Include="Assets\Scripts\GameUtils\TutorialKeyActionController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\ArmoryItem.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\UI\ArmoryItemUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ArmoryUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\ControllerAssignmentUI.cs" />
     <Compile Include="Assets\Scripts\GameUtils\UI\Dialogue.cs" />
