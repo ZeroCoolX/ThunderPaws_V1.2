@@ -21,6 +21,8 @@ public class Player : PlayerLifeform {
     private float _meleeRaycastLength = 2.5f;
     private LayerMask _meleeLayerMask;
     private PlayerWeaponManager _weaponManager;
+    private PlayerUltimateManager _ultimateManager;
+
     /// <summary>
     /// How long the player is allowed to fall before they can no longer jump.
     /// This is in here since "platform mechanics" are not the core of the game.
@@ -76,8 +78,6 @@ public class Player : PlayerLifeform {
         Animator.SetLayerWeight(1, 0.0f);
         // Stop the ultimate
         PlayerStats.UltEnabled = false;
-        _weaponManager.ToggleUltimateForAllWeapons(false);
-        CancelInvoke("DepleteUltimate");
     }
 
     public void ApplyWeaponPickup(string weaponkey) {
@@ -132,6 +132,7 @@ public class Player : PlayerLifeform {
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);
         SetupWeapons();
         SetupPlayerStats();
+        SetupUltimate();
 
         // Bitshift the DAMAGEABLE layermask because that is what we want to hit
         // 14 = DAMAGEABLE
@@ -175,6 +176,15 @@ public class Player : PlayerLifeform {
             throw new MissingComponentException("No PlayerWeaponManager found on Player object");
         }
         _weaponManager.InitializeWeapon(PlayerNumber, transform.Find(GameConstants.ObjectName_WeaponAnchor));
+    }
+
+    private void SetupUltimate() {
+        _ultimateManager = transform.GetComponent<PlayerUltimateManager>();
+        if (_ultimateManager == null) {
+            throw new MissingComponentException("No PlayerUltimateManager found on Player object");
+        }
+        _ultimateManager.Initialize(PlayerNumber, PlayerStats);
+        _ultimateManager.GetCurrentUltimate().DeactivateDelegate += DeactivateUltimate;
     }
 
     private void SetupPlayerStats() {
@@ -433,20 +443,21 @@ public class Player : PlayerLifeform {
     }
 
     private void ActivateUltimate() {
-        _weaponManager.ToggleUltimateForAllWeapons(true);
+        _ultimateManager.ActivatePlayerUlt();
+        //_weaponManager.ToggleUltimateForAllWeapons(true);
 
-        PlayerStats.UltEnabled = true;
-        PlayerStats.UltReady = false;
+        //PlayerStats.UltEnabled = true;
+        //PlayerStats.UltReady = false;
 
-        InvokeRepeating("DepleteUltimate", 0, 0.07f);
-        // After 10 seconds deactivate ultimate
-        Invoke("DeactivateUltimate", 7f);
+        //InvokeRepeating("DepleteUltimate", 0, 0.07f);
+        //// After 10 seconds deactivate ultimate
+        //Invoke("DeactivateUltimate", 7f);
     }
 
-    private void DepleteUltimate() {
-        --PlayerStats.CurrentUltimate;
-        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
-    }
+    //private void DepleteUltimate() {
+    //    --PlayerStats.CurrentUltimate;
+    //    PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+    //}
 
     /// <summary>
     /// Helper method that ensures the player cannot walk during the melee animation
