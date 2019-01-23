@@ -30,9 +30,7 @@ public class PlayerWeaponManager : MonoBehaviour {
         }
 
         // Create secondary if its selected
-        if (!ProfilePool.Instance.Debug) {
-            CreateSecondaryWeapon();
-        }
+        CreateSecondaryWeapon();
     }
 
     private void CreateSecondaryWeapon() {

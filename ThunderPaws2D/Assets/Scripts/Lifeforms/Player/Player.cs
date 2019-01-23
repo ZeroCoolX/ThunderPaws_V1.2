@@ -101,6 +101,12 @@ public class Player : PlayerLifeform {
         GameStatsManager.Instance.AddCoin(PlayerNumber);
     }
 
+    // Simply update the emission amount
+    public void PickupEmissionDeposit(int amount) {
+        _profile.UpdateEmissionCache(amount);
+    }
+
+
     /// <summary>
     /// Delegate method fired from CollisionController2D which indicates
     /// the player collided with a baddie and should be damaged a little 
@@ -120,9 +126,7 @@ public class Player : PlayerLifeform {
     }
 
     private void Start() {
-        if (!ProfilePool.Instance.Debug) {
-            StupPlayerProfile();
-        }
+        StupPlayerProfile();
         SetupActionMovement();
         SetupPlayerIdentification();
         InitializePhysicsValues(9f, 2.6f, 0.25f, 0.3f, 0.2f, 0.1f);

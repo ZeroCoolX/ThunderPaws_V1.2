@@ -31,8 +31,10 @@ public class ProfileProxy : MonoBehaviour {
     }
 
     public int UpdateEmissionCache(int amount) {
+        print("Updating emission count by : " + amount);
         var currentCacheAmount = _profile.UpdateEmissionCache(amount);
         _profile.SaveProfile();
+        print("current Emission Count = " + currentCacheAmount);
         return currentCacheAmount;
     }
 
@@ -72,8 +74,6 @@ public class ProfileProxy : MonoBehaviour {
     }
 
     private void Awake() {
-        if (!ProfilePool.Instance.Debug) {
-            _profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
-        }
+        _profile = ProfilePool.Instance.GetPlayerProfile(PlayerNumber);
     }
 }

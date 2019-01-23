@@ -14,7 +14,7 @@ public class ProfilePool : MonoBehaviour{
 
     private string _path = Path.Combine("Assets", "Profiles");
 
-    // <K,V> = <Player number (1 or 2), Profile>
+    // <K,V> = <Player number (1 or 2), Profile name>
     private Dictionary<int, string> _activePlayerProfiles;
 
     // <K,V> = <Full Unique Profile Name, Profile>
@@ -110,6 +110,9 @@ public class ProfilePool : MonoBehaviour{
         _decodeProfileMap = new Dictionary<string, string>();
         _activePlayerProfiles = new Dictionary<int, string>();
         LoadProfilesOnStart();
+        if (Debug) {
+            ActivateProfile(_profiles.First().Key, 1);
+        }
     }
 
     private string EncodeProfileNameFirstTime(string profileName) {

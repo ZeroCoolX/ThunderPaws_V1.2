@@ -266,6 +266,7 @@
     <Compile Include="Assets\Scripts\GameUtils\DebugGameStatsController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DifficultyController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\DifficultyManager.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\EmissionDepositController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameConstants.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameMasterV2.cs" />
     <Compile Include="Assets\Scripts\GameUtils\GameStatsManager.cs" />

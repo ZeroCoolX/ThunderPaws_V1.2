@@ -237,9 +237,7 @@ public class GameMasterV2 : MonoBehaviour {
 
             print("Setting lives for player " + playerNum);
             PlayerHudManager.Instance.ActivateStatsHud(playerNum);
-            if (!ProfilePool.Instance.Debug) {
-                PlayerHudManager.Instance.UpdateUltimateUI2(playerNum, ProfilePool.Instance.GetPlayerProfile(playerNum).GetSelectedUltimate());
-            }
+            PlayerHudManager.Instance.UpdateUltimateUI2(playerNum, ProfilePool.Instance.GetPlayerProfile(playerNum).GetSelectedUltimate());
             PlayerHudManager.Instance.GetPlayerHud(playerNum).SetLives(RemainingLives);
 
             // Push a player onto the stack indicating he is alive in the scene
