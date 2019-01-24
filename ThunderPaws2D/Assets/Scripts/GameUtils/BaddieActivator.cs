@@ -12,12 +12,7 @@ public class BaddieActivator : MonoBehaviour {
             throw new MissingComponentException("No collider for this object");
         }
         Collider.InvokeCollision += Apply;
-        Collider.Initialize(1 << 18, new Vector2(30, 20), true);
-    }
-
-    void OnDrawGizmosSelected() {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position, new Vector2(30, 20));
+        Collider.Initialize(1 << 18, new Vector2(20, 20), true, GameObject.Find("Camera").transform);
     }
 
     private void Apply(Vector3 v, Collider2D c) {

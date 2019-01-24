@@ -42,8 +42,6 @@ GameObject:
   - component: {fileID: 114118023174978558}
   - component: {fileID: 114236751249061372}
   - component: {fileID: 95689846243776832}
-  - component: {fileID: 114834322300645876}
-  - component: {fileID: 114174318653646354}
   - component: {fileID: 114102050316462756}
   - component: {fileID: 114702767453380004}
   - component: {fileID: 114809364505336124}
@@ -187,17 +185,6 @@ MonoBehaviour:
     m_Bits: 50176
   NotifyOnCollision: 1
   PlayerInput: {x: 0, y: 0}
---- !u!114 &114174318653646354
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1883217469759206}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 248d48eda8180f043a17ca19c470747e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114236751249061372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -240,6 +227,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4f1db97a47a6a6449e15fe1d3d638c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
+  PlayerNum: 0
 --- !u!114 &114409829690470952
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -251,6 +240,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c453a2362216104ca024bff3cc91aff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
+  PlayerNum: 0
 --- !u!114 &114702767453380004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -279,17 +270,6 @@ MonoBehaviour:
   - {fileID: 114393226797360724}
   - {fileID: 114960310264876182}
   - {fileID: 114409829690470952}
---- !u!114 &114834322300645876
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1883217469759206}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62c9af4bd5b24247b2eaf4838d5628d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114871165466080444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -301,6 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45779003f3b21449a2a1007e62e608c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
+  PlayerNum: 0
 --- !u!114 &114960310264876182
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -312,6 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80f69b8a89adbe24db28659a7d967ef4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
+  PlayerNum: 0
 --- !u!212 &212664059488354518
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -95,6 +95,9 @@ public class GameConstants {
     public static string Layer_PlayerProjectile = "PLAYER_PROJECTILE";
     public static string Layer_ObstacleThrough = "OBSTACLE-THROUGH";
 
+    // Layer values
+    public static int Layer_Player = 8;
+
     // Player Data
     public static float Data_PlayerCrouchY = -0.49f;
     public static float Data_PlayerCrouchSize = 0.78303f;

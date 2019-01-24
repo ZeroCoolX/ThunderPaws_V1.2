@@ -39,20 +39,12 @@ public class BetterCameraFollow : MonoBehaviour {
         if (nextTimeToSearch <= Time.time) {
             GameObject searchResult = GameObject.FindGameObjectWithTag(GameConstants.Tag_Player);
             if (searchResult != null) {
-                if (!searchResult.GetComponent<BaddieActivator>().enabled) {
-                    Invoke("DelayedActivate", 1);
-                }
                 Target = searchResult.transform;
                 _targetCollider = Target.GetComponent<CollisionController2D>();
                 _focusArea = new FocusArea(_targetCollider.BoxCollider.bounds, FocusAreaSize);
                 nextTimeToSearch = Time.time + searchDelay;
             }
         }
-    }
-
-    private void DelayedActivate() {
-        Target.gameObject.GetComponent<BaddieActivator>().enabled = true;
-        Target.gameObject.GetComponent<SimpleCollider>().enabled = true;
     }
 
     private void LateUpdate() {

@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2017.4.8f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -240,6 +238,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CustomImageEffect.cs" />
+    <Compile Include="Assets\HiddenAreaCollider.cs" />
     <Compile Include="Assets\NightBehaviour.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
@@ -356,11 +355,11 @@
     <Compile Include="Assets\Scripts\Tutorials\Tutorial5Controller.cs" />
     <Compile Include="Assets\Scripts\Tutorials\TutorialControllerBase.cs" />
     <Compile Include="Assets\Scripts\Tutorials\TutorialManager.cs" />
-    <Compile Include="Assets\Scripts\Ultimates\Ultimate.cs" />
     <Compile Include="Assets\Scripts\Ultimates\LighteningClaw.cs" />
     <Compile Include="Assets\Scripts\Ultimates\ReflectFurball.cs" />
     <Compile Include="Assets\Scripts\Ultimates\ThunderPounce.cs" />
     <Compile Include="Assets\Scripts\Ultimates\TriggerPaw.cs" />
+    <Compile Include="Assets\Scripts\Ultimates\Ultimate.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\AbstractWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\EmissionIndex.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\FatCat.cs" />
@@ -436,7 +435,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

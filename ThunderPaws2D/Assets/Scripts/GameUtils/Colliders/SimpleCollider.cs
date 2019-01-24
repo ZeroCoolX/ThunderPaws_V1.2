@@ -6,6 +6,9 @@ public class SimpleCollider : MonoBehaviour {
     public delegate void InvokeCollisionDelegate(Vector3 pos, Collider2D collider);
     public InvokeCollisionDelegate InvokeCollision;
 
+    public delegate void InvokeCollisionStoped();
+    public InvokeCollisionStoped InvokeCollisionStopped;
+
     /// <summary>
     /// Indicates if we use base raycasts or Circle colliders
     /// </summary>
@@ -30,16 +33,21 @@ public class SimpleCollider : MonoBehaviour {
     private float _moveSpeed;
     private float _raycastLength;
     private bool _hit = false;
+    private Transform _followCamera;// too much
+    private Vector3 _positionLastFrame;//way too much
+    private Vector3 _debugPosition;
 
     private Vector2 _areaSize;
     private bool _useAreaCollider = false;
 
-    public void Initialize(LayerMask whatToHit, Vector2 areaSize, bool continuousCollision = false) {
+    public void Initialize(LayerMask whatToHit, Vector2 areaSize, bool continuousCollision = false, Transform followCamera = null) { // too much
         _areaSize = areaSize;
         _whatToHit = whatToHit;
         _continuousCollision = continuousCollision;
         _useAreaCollider = true;
         _hit = false;
+        _followCamera = followCamera;
+        _positionLastFrame = transform.position;
     }
 
     public void Initialize(LayerMask whatToHit, float radius = 0f, bool continuousCollision = false) {
@@ -83,6 +91,12 @@ public class SimpleCollider : MonoBehaviour {
         }else {
             CheckForRaycastCollisions();
         }
+        if(_continuousCollision && !_hit && InvokeCollisionStopped != null) {
+            InvokeCollisionStopped.Invoke();
+        }
+        if (_continuousCollision) {
+            _hit = false;
+        }
     }
 
     private void CheckForMultiCircleCollisions() {
@@ -96,12 +110,29 @@ public class SimpleCollider : MonoBehaviour {
     }
 
     private void CheckForMultiAreaCollisions() {
-        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, _areaSize, 0, _whatToHit);
+        Vector3 position = transform.position;
+        if(_followCamera != null) {
+            float amountToShiftX = 0.5f * _areaSize.x;
+            amountToShiftX *= (position.x < _positionLastFrame.x ? -1 : 1);
+            position = new Vector3(position.x + amountToShiftX, position.y, position.z);
+            print("Camera Position [" + transform.position + "]");
+            print("New Position ["+position+"]");
+            _debugPosition = position;//debug purposes only!
+        }
+        _positionLastFrame = transform.position;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(position, _areaSize, 0, _whatToHit);
         foreach (var collider in colliders) {
             if (collider != null && !_expemptFromCollision.Contains(collider.gameObject.tag)) {
                 InvokeCollision.Invoke(transform.position, collider);
                 _hit = true;
             }
+        }
+    }
+
+    void OnDrawGizmosSelected() {
+        if(_followCamera) {
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(_debugPosition, new Vector2(20, 20));
         }
     }
 
