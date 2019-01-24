@@ -49,8 +49,11 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private ActionData _actionData;
 
     private const float DELAY_BETWEEN_SHOT = 5f;
+
+    private float _timeToCalculateNewBounds;
     private const float MIN_DISTANCE_FROM_TARGET = 3f;
-    private const float MAX_DISTANCE_FROM_TARGET = 12f;
+    private const float MAX_DISTANCE_FROM_TARGET = 9f;
+    private const float RECALCULATE_BOUNDS_DELAY = 2f;
 
     private void Start() {
         base.Start();
@@ -64,6 +67,8 @@ public class Robot_FL3 : FlyingBaddieLifeform {
         FlyingPositionData.MoveSpeed = 2.5f;
 
         FlyingPositionData.TargetYDirection = ChooseRandomHeight();
+
+        _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
     }
 
     /// <summary>
@@ -90,6 +95,12 @@ public class Robot_FL3 : FlyingBaddieLifeform {
             Velocity.x = 0;
             Velocity.y = 0f;
             CalculateMovementDirection();
+        }
+
+
+        if (Time.time > _timeToCalculateNewBounds) {
+            CalculateBounds(MIN_DISTANCE_FROM_TARGET, MAX_DISTANCE_FROM_TARGET);
+            _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
         }
 
         MaxBoundsCheck();

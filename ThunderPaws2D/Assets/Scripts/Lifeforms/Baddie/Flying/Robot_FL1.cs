@@ -14,6 +14,7 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         public float TimeToFindNewSpeed;
     }
     private ActionData _actionData;
+    private float _timeToCalculateNewBounds;
 
     private const float MOVE_SPEED = 2f;
     private const float MIN_DISTANCE_FROM_TARGET = 3f;
@@ -34,6 +35,7 @@ public class Robot_FL1 : FlyingBaddieLifeform {
         FlyingPositionData.MoveSpeed = MOVE_SPEED;
 
         FlyingPositionData.TargetYDirection = ChooseRandomHeight();
+        _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
     }
 
     private void Update() {
@@ -43,12 +45,11 @@ public class Robot_FL1 : FlyingBaddieLifeform {
             return;
         }
 
-        // Every 2 seconds recalcualte the min and max just in case the playewr is in a much different spot vertically than before
-        // Right now RecalculateBounds is always false...
-        if (_actionData.RecalculateBounds) {
-            _actionData.RecalculateBounds = false;
-            Invoke("CalculateBounds", RECALCULATE_BOUNDS_DELAY);
+        if (Time.time > _timeToCalculateNewBounds) {
+            CalculateBounds(MIN_DISTANCE_FROM_TARGET, MAX_DISTANCE_FROM_TARGET);
+            _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
         }
+
 
         MaxBoundsCheck();
 

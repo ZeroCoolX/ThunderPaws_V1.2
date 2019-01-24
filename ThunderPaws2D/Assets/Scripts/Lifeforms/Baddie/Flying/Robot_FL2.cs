@@ -16,6 +16,10 @@ public class Robot_FL2 : FlyingBaddieLifeform {
     }
     private ActionData _actionData;
 
+    private float _timeToCalculateNewBounds;
+    private const float MIN_DISTANCE_FROM_TARGET = 3f;
+    private const float MAX_DISTANCE_FROM_TARGET = 8f;
+    private const float RECALCULATE_BOUNDS_DELAY = 2f;
     /// <summary>
     /// References to where to fire the raycast angles
     /// -45degree down, 90degree down, 45degree down
@@ -34,7 +38,7 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         base.Start();
 
         if (Target != null) {
-            CalculateBounds(3f, 8f);
+            CalculateBounds(MIN_DISTANCE_FROM_TARGET, MAX_DISTANCE_FROM_TARGET);
         }
 
         FlyingPositionData.MoveSpeed = 3.5f;
@@ -42,6 +46,7 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         FlyingPositionData.TargetYDirection = ChooseRandomHeight();
 
         _actionData.TimeToFire = Time.time + 1f;
+        _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
     }
 
     /// <summary>
@@ -55,6 +60,11 @@ public class Robot_FL2 : FlyingBaddieLifeform {
 
         if (!CheckTargetsExist()) {
             return;
+        }
+
+        if (Time.time > _timeToCalculateNewBounds) {
+            CalculateBounds(MIN_DISTANCE_FROM_TARGET, MAX_DISTANCE_FROM_TARGET);
+            _timeToCalculateNewBounds = Time.time + RECALCULATE_BOUNDS_DELAY;
         }
 
         MaxBoundsCheck();
@@ -120,7 +130,7 @@ public class Robot_FL2 : FlyingBaddieLifeform {
     private void CalculateVelocity() {
         Velocity.x = Mathf.SmoothDamp(Velocity.x, _actionData.HorizontalMoveSpeed, ref FlyingPositionData.VelocityXSmoothing, 0.2f);
         CalculateVerticalThreshold();
-        Velocity.y = Mathf.SmoothDamp(Velocity.y, FlyingPositionData.TargetYDirection, ref FlyingPositionData.VelocityYSmoothing, 1f);
+        Velocity.y = Mathf.SmoothDamp(Velocity.y, FlyingPositionData.TargetYDirection * Random.Range(1.5f, FlyingPositionData.MoveSpeed), ref FlyingPositionData.VelocityYSmoothing, 1f);
     }
 
     /// <summary>
