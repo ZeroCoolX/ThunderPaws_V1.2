@@ -44,7 +44,12 @@ public class CheckpointControllerV2 : MonoBehaviour {
     }
 
     private void SpawnFreshBaddiespawnGroup(float waitTime = 0f) {
-        Invoke("Spawn", waitTime);
+        if(BaddieSpawnGroup != null) {
+            Invoke("Spawn", waitTime);
+        }
+        else{
+            print("Not spawning anything because there are no baddies to spawn!");
+        }
     }
 
     private void Spawn() {

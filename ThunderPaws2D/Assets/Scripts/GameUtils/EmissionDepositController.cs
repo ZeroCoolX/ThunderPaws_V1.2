@@ -7,6 +7,8 @@ public class EmissionDepositController : MonoBehaviour {
     public Transform PayloadContent;
     public int PayloadItemCount = 10;
 
+    public Transform EmptyShell;
+
     /// <summary>
     /// Min and Max values for the range to which the items in the payload can explode.
     /// </summary>
@@ -60,7 +62,12 @@ public class EmissionDepositController : MonoBehaviour {
 
     private void PreDestroy() {
         GeneratePayload();
+        GenerateEmptyShell();
         Destroy(gameObject);
+    }
+
+    private void GenerateEmptyShell() {
+        Instantiate(EmptyShell, transform.position, transform.rotation);
     }
 
     private void GeneratePayload() {
@@ -85,7 +92,8 @@ public class EmissionDepositController : MonoBehaviour {
         var explodeX = UnityEngine.Random.Range(_explodeRanges[0].x, _explodeRanges[1].x);
         explodeX *= Mathf.Sign(UnityEngine.Random.Range(-1, 2));
         var explodeY = UnityEngine.Random.Range(_explodeRanges[0].y, _explodeRanges[1].y);
-        return new Vector2(explodeX, explodeY);
+        var explosionDir = transform.rotation * new Vector2(explodeX, explodeY);
+        return explosionDir;
     }
 
     /// <summary>

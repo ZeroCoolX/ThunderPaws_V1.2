@@ -19,6 +19,7 @@ public class Robot_GL1 : GroundBaddieLifeform {
     /// was just here and might return - before returning to wandering
     /// </summary>
     private float _alertTimeThreshold = -1f;
+    private float _randomAlertTime = 0f;
 
     private const float GRAVITY = -25.08f;
     private const float SHOT_DELAY = 3f;
@@ -56,8 +57,8 @@ public class Robot_GL1 : GroundBaddieLifeform {
 
         // Check if we can shoot at the target
         var hCollider = FireRaycast();
-        if (hCollider.collider != null) {
-            _alertTimeThreshold = LedgeBound ? Time.time + 1f : 0f;
+        if (Time.time >= _alertTimeThreshold && hCollider.collider != null) {
+            _alertTimeThreshold = Time.time + GenerateRandomAlertTime();
             HaltAndFire();
         }
 
@@ -82,6 +83,15 @@ public class Robot_GL1 : GroundBaddieLifeform {
         }
         DustTrailAnimator.SetFloat("Velocity", Mathf.Abs(Velocity.x));
         Move();
+    }
+
+    private float GenerateRandomAlertTime() {
+        if (LedgeBound) {
+            return 1f;
+        }
+
+        var randomAlert = Random.Range(0f, 2f);
+        return randomAlert;
     }
 
     private void HandleLedgeboundMovement() {
