@@ -138,7 +138,7 @@ MonoBehaviour:
     loop: 0
   - name: Music_Menu
     clip: {fileID: 8300000, guid: bb85f65c040652545bde61f158877b8d, type: 3}
-    volume: 0
+    volume: 0.25
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -222,35 +222,35 @@ MonoBehaviour:
     loop: 0
   - name: Music_Backstory
     clip: {fileID: 8300000, guid: 444514c946ac0fd44ac9d36be516bd10, type: 3}
-    volume: 0
+    volume: 0.25
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: S1L1
     clip: {fileID: 8300000, guid: 34b144dcb9296204c9ee1b24d92c3c35, type: 3}
-    volume: 0
+    volume: 0.25
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: S1L2
     clip: {fileID: 8300000, guid: ad40e9418839c88409aaf28f8405cf88, type: 3}
-    volume: 0
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: S1L1H
     clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
-    volume: 0
+    volume: 1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
     loop: 1
   - name: S1L2H
     clip: {fileID: 8300000, guid: 091fd98ad3dc17b4495706a4d51fc1f3, type: 3}
-    volume: 0
+    volume: 1
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -264,7 +264,7 @@ MonoBehaviour:
     loop: 0
   - name: S1L3
     clip: {fileID: 8300000, guid: 350de8f885e4ce24ea16190fd5937b59, type: 3}
-    volume: 0
+    volume: 0.5
     pitch: 1
     randomVolume: 0
     randomPitch: 0
@@ -278,7 +278,7 @@ MonoBehaviour:
     loop: 1
   - name: S1L4
     clip: {fileID: 8300000, guid: 64643485f6930e64288f129356e0d7af, type: 3}
-    volume: 0
+    volume: 0.3
     pitch: 1
     randomVolume: 0
     randomPitch: 0

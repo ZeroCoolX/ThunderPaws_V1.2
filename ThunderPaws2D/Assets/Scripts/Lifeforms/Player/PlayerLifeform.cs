@@ -74,8 +74,11 @@ public abstract class PlayerLifeform : BaseLifeform {
         }
         // This is a super dumb hack to allow baddies to spawn in the last room because im so worn out I want to finish this
         if(transform.position.y <= FallDeathHeight && transform.position.y > -40f) {
-            // Ensure nothing can survive
-            Damage(999);
+            var player = transform.GetComponent<Player>();
+            if (player != null && !player.Controller2d.Collisions.FromBelow) {
+                print("Player fell off the map");
+                //Damage(999);
+            }
         }
     }
 }

@@ -48,7 +48,7 @@ public class LifetimeController : MonoBehaviour {
     }
 
     private void Update() {
-        FallCheck();
+        //FallCheck();
         // special case for when they spawn outside the field of view - they never "become visible" - therefor never "become invisible" therfor kill never gets called
         if(KillImmediatelyOnInvisible && !_seenRecently) {
             Kill();
