@@ -238,7 +238,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\CustomImageEffect.cs" />
-    <Compile Include="Assets\HiddenAreaCollider.cs" />
     <Compile Include="Assets\NightBehaviour.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
@@ -259,6 +258,7 @@
     <Compile Include="Assets\Scripts\GameUtils\BossController.cs" />
     <Compile Include="Assets\Scripts\GameUtils\CameraShake.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Colliders\CoinController.cs" />
+    <Compile Include="Assets\Scripts\GameUtils\Colliders\HiddenAreaCollider.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Colliders\SimpleCollider.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Colliders\TutorialCollider.cs" />
     <Compile Include="Assets\Scripts\GameUtils\Colliders\TutorialResetCollider.cs" />

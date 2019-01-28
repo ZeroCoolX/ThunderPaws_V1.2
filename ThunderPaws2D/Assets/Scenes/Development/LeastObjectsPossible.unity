@@ -1716,11 +1716,6 @@ Light:
   m_UseColorTemperature: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &207332542 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4440994287242450, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
-    type: 2}
-  m_PrefabInternal: {fileID: 422790071}
 --- !u!1 &212406339
 GameObject:
   m_ObjectHideFlags: 0
@@ -2622,7 +2617,8 @@ Prefab:
         type: 2}
       propertyPath: BaddiePrefab
       value: 
-      objectReference: {fileID: 207332542}
+      objectReference: {fileID: 4930055791183770, guid: ac8c38f87da1963409a5eb603974e526,
+        type: 2}
     - target: {fileID: 114766935048827330, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
         type: 2}
       propertyPath: BaddiePrefab
@@ -10895,6 +10891,11 @@ Prefab:
     - target: {fileID: 4577878596718628, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}
       propertyPath: m_RootOrder
       value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
+        type: 2}
+      propertyPath: orthographic size
+      value: 7.0104165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}
