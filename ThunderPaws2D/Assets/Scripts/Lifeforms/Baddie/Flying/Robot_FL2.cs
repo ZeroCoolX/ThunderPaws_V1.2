@@ -114,8 +114,8 @@ public class Robot_FL2 : FlyingBaddieLifeform {
 
             // Set layermask of parent (either player or baddie)
             projectile.SetLayerMask(ProjectileData.WhatToHit);
-            projectile.Damage = 5;
-            projectile.MoveSpeed = 10;
+            projectile.Damage = BulletDamage;//5;
+            projectile.MoveSpeed = BulletSpeed;//10;
             projectile.MaxLifetime = 10;
             projectile.Fire(Target.position - transform.position, Vector2.up);
         }catch(System.Exception e) {
@@ -142,9 +142,14 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         foreach (var angle in _raycastAngles) {
             Debug.DrawRay(transform.position, angle * rayLength, Color.green);
             RaycastHit2D collisionCheck = Physics2D.Raycast(transform.position, angle, rayLength, targetLayer);
-            if(collisionCheck.collider != null) {
-                EvadeTarget();
+            // If we are NOT within +- 45 degrees or right above we should attempt to get there
+            if (collisionCheck.collider == null) {
+                TrackTarget();
             }
+            // If we are within +- 45 degrees or right above, evade
+            //if(collisionCheck.collider != null) {
+            //    EvadeTarget();
+            //}
         }
     }
 
@@ -174,6 +179,23 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         }
 
         _actionData.HorizontalMoveSpeed = FlyingPositionData.MoveSpeed * rf3;
+        CalculateVerticalThreshold();
+    }
+
+    private void TrackTarget() {
+        _actionData.MoveDuration = Time.time + (Random.Range(1, 4));
+
+        // pos = baddie is on players right
+        // neg = baddie is on players left
+        var directionFromTarget = Mathf.Sign(transform.position.x - Target.position.x);
+        print("baddie is on side : " + directionFromTarget);
+        var horizontalMoveDirection = 1;
+
+        if (directionFromTarget > 0) {
+            horizontalMoveDirection = -1;
+        }
+
+        _actionData.HorizontalMoveSpeed = FlyingPositionData.MoveSpeed * horizontalMoveDirection;
         CalculateVerticalThreshold();
     }
 }

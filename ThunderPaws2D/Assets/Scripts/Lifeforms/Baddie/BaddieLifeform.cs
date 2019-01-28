@@ -7,7 +7,6 @@ using UnityEngine;
 /// Class specifically for Baddie lifeform types.
 /// </summary>
 public class BaddieLifeform : DamageableLifeform {
-
     public Animator Animator;
     public Transform BulletPrefab;
     /// <summary>
@@ -15,6 +14,10 @@ public class BaddieLifeform : DamageableLifeform {
     /// the HordeController of its death
     /// </summary>
     public bool PartOfHorde = false;
+
+    public int BulletSpeed;
+    public int BulletDamage;
+
     /// <summary>
     /// Delegate for informing the HordeController of our death so it can appropriately update its counts
     /// </param>

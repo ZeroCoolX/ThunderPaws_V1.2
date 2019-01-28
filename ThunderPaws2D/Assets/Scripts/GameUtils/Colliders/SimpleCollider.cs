@@ -115,8 +115,6 @@ public class SimpleCollider : MonoBehaviour {
             float amountToShiftX = 0.5f * _areaSize.x;
             amountToShiftX *= (position.x < _positionLastFrame.x ? -1 : 1);
             position = new Vector3(position.x + amountToShiftX, position.y, position.z);
-            print("Camera Position [" + transform.position + "]");
-            print("New Position ["+position+"]");
             _debugPosition = position;//debug purposes only!
         }
         _positionLastFrame = transform.position;
