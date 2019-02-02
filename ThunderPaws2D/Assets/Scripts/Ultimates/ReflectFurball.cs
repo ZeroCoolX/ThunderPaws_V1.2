@@ -40,8 +40,8 @@ public class ReflectFurball : Ultimate {
         bulletScript.ResetTargetDirection(1 << 10 | 1 << 14);
     }
 
-    private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, 2f);
-    }
+    //private void OnDrawGizmos() {
+    //    Gizmos.color = Color.yellow;
+    //    Gizmos.DrawWireSphere(transform.position, 2f);
+    //}
 }

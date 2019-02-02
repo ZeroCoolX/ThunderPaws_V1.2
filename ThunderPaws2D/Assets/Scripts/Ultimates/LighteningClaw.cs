@@ -1,10 +1,12 @@
 ﻿
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class LighteningClaw : Ultimate {
     private bool _activated = false;
+    private Vector2 _pauseDamageTime = new Vector2(0, 0.1f);
 
     private Stack<GameObject> _flyingBaddies;
     private List<GameObject> _baddies;
@@ -49,7 +51,9 @@ public class LighteningClaw : Ultimate {
 
     private void CalculateColliderSize() {
         var spriteSize = GetComponent<SpriteRenderer>().size;
-        _spritePlayerSize = new Vector2(spriteSize.x / 2, spriteSize.y / 2);
+        _spritePlayerSize = new Vector2(spriteSize.x / 4, spriteSize.y / 4);
+        print("SpriteSize : " + spriteSize);
+        print("_spritePlayerSize : " + _spritePlayerSize);
     }
 
     private void CollectAllBaddies() {
@@ -84,6 +88,11 @@ public class LighteningClaw : Ultimate {
         if (!_activated) {
             return;
         }
+
+        if(Time.time < _pauseDamageTime.x) {
+            return;
+        }
+
         if (_currentTarget == null) {
             if (_flyingBaddies.Count() == 0) {
                 ReturnToOriginAndTurnOff();
@@ -110,7 +119,7 @@ public class LighteningClaw : Ultimate {
     }
 
     private void OnDrawGizmos() {
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.cyan;
         Gizmos.DrawWireCube(transform.position, _spritePlayerSize);
     }
 
@@ -120,6 +129,7 @@ public class LighteningClaw : Ultimate {
             if (collider != null && _currentTarget.gameObject.GetInstanceID() == collider.gameObject.GetInstanceID()) {
                 print("Damage this baddie and move to the next!");
                 _currentTarget = null;
+                _pauseDamageTime.x = Time.time + _pauseDamageTime.y;
                 return;
             }
         }
