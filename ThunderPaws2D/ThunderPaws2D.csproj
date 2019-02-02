@@ -341,6 +341,7 @@
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerInputController.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStats.cs" />
     <Compile Include="Assets\Scripts\PlayerScripts\PlayerStatsUIController.cs" />
+    <Compile Include="Assets\Scripts\PlayerScripts\Ultimates\LighteningClawUltimate.cs" />
     <Compile Include="Assets\Scripts\Profile\Profile.cs" />
     <Compile Include="Assets\Scripts\Profile\ProfileModel.cs" />
     <Compile Include="Assets\Scripts\Profile\ProfilePool.cs" />

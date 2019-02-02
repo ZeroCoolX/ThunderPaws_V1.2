@@ -32,5 +32,6 @@ public class PlayerUltimateManager : MonoBehaviour {
         }
         _currentUltimate.PlayerStats = playerStats;
         _currentUltimate.PlayerNum = playerNum;
+        _currentUltimate.enabled = true;
     }
 }

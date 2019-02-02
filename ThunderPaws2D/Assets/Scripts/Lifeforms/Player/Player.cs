@@ -75,9 +75,8 @@ public class Player : PlayerLifeform {
         // Since we know we're forcibly calling deactive - make sure the UI updates correctly
         PlayerStats.CurrentUltimate = 0;
         PlayerHudManager.Instance.UpdateUltimateUI(PlayerNumber, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
-        Animator.SetLayerWeight(1, 0.0f);
-        // Stop the ultimate
         PlayerStats.UltEnabled = false;
+        Animator.SetLayerWeight(1, 0.0f);
     }
 
     public void ApplyWeaponPickup(string weaponkey) {
