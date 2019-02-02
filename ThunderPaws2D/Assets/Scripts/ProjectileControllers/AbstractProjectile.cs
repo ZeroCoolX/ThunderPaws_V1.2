@@ -50,6 +50,16 @@ public abstract class AbstractProjectile : MonoBehaviour {
         TargetDirection = TargetPos;
     }
 
+    public void ResetTargetDirection(LayerMask newLayerMask) {
+        TargetDirection = -TargetDirection;
+        TargetPos = (-TargetDirection) * 50;
+        ResetSimpleColliderLayermask(newLayerMask);
+    }
+
+    public void ResetSimpleColliderLayermask(LayerMask newLayerMask) {
+        Collider.Initialize(newLayerMask, TargetDirection, TargetPos, MoveSpeed, GameConstants.Layer_ObstacleThrough);
+    }
+
     private void SetupSimpleCollider() {
         //Add delegate for collision detection
         Collider = GetComponent<SimpleCollider>();
