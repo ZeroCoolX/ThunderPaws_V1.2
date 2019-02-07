@@ -81,11 +81,6 @@ public class HordeController : MonoBehaviour {
     public Transform FL3BaddiePrefab;
     public int MaxFL3Count;
     private int _activeFL3Count = 0;
-    
-    /// <summary>
-    /// Holds the flying spawn points
-    /// </summary>
-    public Transform[] FlyingSpawns;
     /// <summary>
     /// Holds the ground spawn points
     /// </summary>
@@ -106,10 +101,7 @@ public class HordeController : MonoBehaviour {
         }
         Collider.InvokeCollision += Apply;
         Collider.Initialize(1 << 8, RadiusOfTrigger);
-        
-        if(FlyingSpawns == null){
-            throw new MissingComponentException("No Flying Spawns specified");
-        }
+
         if(GroundSpawns == null){
             throw new MissingComponentException("No Flying Spawns specified");
         }
@@ -136,7 +128,7 @@ public class HordeController : MonoBehaviour {
             KillAllBaddies();
         }
         if(Time.time > _spawnWaitTime){
-            print("SPAWN BADDIES!");
+            //print("SPAWN BADDIES!");
             _spawnWaitTime = Time.time + _spawnDelay;
             SpawnBaddies();
         }
@@ -209,10 +201,6 @@ public class HordeController : MonoBehaviour {
         // Here we should also open the path to let the player out
         GameMasterV2.Instance.LastSeenInHorde = false;
 
-        // Then destroy the spawns, and destroy ourself
-        foreach (var spawn in FlyingSpawns){
-            GameObject.Destroy(spawn.gameObject);
-        }
         foreach(var spawn in GroundSpawns){
             GameObject.Destroy(spawn.gameObject);
         }
@@ -236,27 +224,39 @@ public class HordeController : MonoBehaviour {
         }
     }
 
-    private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, int maxBaddies, Transform baddiePrefab, Vector3 position, bool yOffset, int invertFactor = 1){
+    private void AddBaddieToHorde(Transform baddie) {
+        baddie.tag = GameConstants.Tag_HordeBaddie;
+        var damageableLifeform = baddie.GetComponent<BaddieLifeform>();
+        if (damageableLifeform == null) {
+            throw new MissingComponentException("Somehow the baddie: " + baddie.gameObject.name + " does not have a DamageableLifeform script attached");
+        }
+        damageableLifeform.enabled = true;
+        damageableLifeform.PartOfHorde = true;
+        // Add delegate onto the created baddie so when it dies it can inform the hordecontroller to update the counts
+        damageableLifeform.InvokeHordeUpdate += UpdateBaddieCount;
+        // Add this baddie to the cache
+        ActiveHordeBaddieCache.Add(baddie.gameObject.name, baddie);
+    }
+
+    private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, Transform baddiePrefab) {
+        // We need to spawn the difference of Max and active
+        for (var i = 0; i <= numBaddies; ++i) {
+            Transform baddieTransform = Instantiate(baddiePrefab, GetRandomPointInArea(), transform.rotation) as Transform;
+            baddieTransform.gameObject.name = baddieCachePrefix + baddieTransform.gameObject.GetInstanceID();
+            AddBaddieToHorde(baddieTransform);
+        }
+    }
+
+    private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, Transform baddiePrefab, Vector3 position, bool yOffset, int invertFactor){
         // This just stops the baddies from spawning literally on top of one another
         var size = baddiePrefab.GetComponent<Renderer>().bounds.size;
         var offset = size;
             // We need to spawn the difference of Max and active
             for (var i = 0; i <= numBaddies; ++i){
                 var cleanPosition = new Vector3((!yOffset ? position.x + offset.x : position.x), (yOffset ? position.y + offset.y : position.y), position.z);
-                Transform baddieTransform = Instantiate(baddiePrefab, cleanPosition, transform.rotation) as Transform;
+                Transform baddieTransform = Instantiate(baddiePrefab, GetRandomPointInArea(), transform.rotation) as Transform;
                 baddieTransform.gameObject.name = baddieCachePrefix+baddieTransform.gameObject.GetInstanceID();
-                baddieTransform.tag = GameConstants.Tag_HordeBaddie;
-                var damageableLifeform = baddieTransform.GetComponent<BaddieLifeform>();
-                if(damageableLifeform == null){
-                    throw new MissingComponentException("Somehow the baddie: " + baddieTransform.gameObject.name + " does not have a DamageableLifeform script attached");
-                }
-                damageableLifeform.enabled = true;
-                damageableLifeform.PartOfHorde = true;
-                // Add delegate onto the created baddie so when it dies it can inform the hordecontroller to update the counts
-                damageableLifeform.InvokeHordeUpdate += UpdateBaddieCount;
-                print("Adding baddie: " + baddieTransform.gameObject.name);
-                // Add this baddie to the cache
-                ActiveHordeBaddieCache.Add(baddieTransform.gameObject.name, baddieTransform);
+                AddBaddieToHorde(baddieTransform);
                 offset += (size * 1.5f * invertFactor);
             }
     }
@@ -266,10 +266,8 @@ public class HordeController : MonoBehaviour {
         // Try to get the baddie from the cache, and remove it
         Transform outBaddie;
         if(ActiveHordeBaddieCache.TryGetValue(baddieName, out outBaddie)){
-            print("Removing baddie: " + baddieName);
             ActiveHordeBaddieCache.Remove(baddieName);
         }
-        print("Update baddie count - decrement : " + baddieNameKey);
         // Decrement the appropriate count 
         switch(baddieNameKey) {
             case "GL1":
@@ -294,29 +292,43 @@ public class HordeController : MonoBehaviour {
     }
     
     private void SpawnFlyingBaddies(){
-        var rand = (int)Random.Range(0, 10);
+        Random.InitState(System.Environment.TickCount);
+
+        var randomLocation = GetRandomPointInArea();
         if (Time.time > FL1SpawnRate && _activeFL1Count < MaxFL1Count){
             // Wait between 1 and 4 seconds to spawn new badddies
             FL1SpawnRate = Time.time + Random.Range(1, 5);
-            InstantiateBaddies("FL1-", (MaxFL1Count - _activeFL1Count), MaxFL1Count, FL1BaddiePrefab, FlyingSpawns[rand <= 3 ? 0 : 1].position, false);
+            InstantiateBaddies("FL1-", (MaxFL1Count - _activeFL1Count), FL1BaddiePrefab);
             _activeFL1Count = MaxFL1Count;
         }
         if (Time.time > FL2SpawnRate && _activeFL2Count < MaxFL2Count) {
             FL2SpawnRate = Time.time + Random.Range(1, 3);
-            InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), MaxFL2Count, FL2BaddiePrefab, FlyingSpawns[rand > 3 && rand <= 5 ? 1 : 2].position, false);
+            InstantiateBaddies("FL2-", (MaxFL2Count - _activeFL2Count), FL2BaddiePrefab);
             _activeFL2Count = MaxFL2Count;
         }
         if (Time.time > FL1SpawnRate && _activeFL3Count < MaxFL3Count) {
             FL3SpawnRate = Time.time + Random.Range(3, 8);
-            InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), MaxFL3Count, FL3BaddiePrefab, FlyingSpawns[rand > 6 ? 2 : 0].position, false);
+            InstantiateBaddies("FL3-", (MaxFL3Count - _activeFL3Count), FL3BaddiePrefab);
             _activeFL3Count = MaxFL3Count;
         }
     }
-    
+
+    private Vector3 GetRandomPointInArea() {
+        var bounds = GetComponent<BoxCollider2D>().bounds;
+
+        var minBounds = new Vector2(bounds.min.x, bounds.min.y);
+        var maxBounds = new Vector2(bounds.max.x, bounds.max.y);
+
+        var randX = Random.Range(minBounds.x, maxBounds.x);
+        var randY = Random.Range(minBounds.y, maxBounds.y);
+
+        return new Vector3(randX, randY, transform.position.z);
+    }
+
     private void SpawnGroundBaddies(){
          var rand = (int)Random.Range(0, 9);
         if (_activeGL1Count < MaxGL1Count) {
-            InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), MaxGL1Count, GL1BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 0 : 1].position, false, (rand % 2 != 0) ? -1 : 1);
+            InstantiateBaddies("GL1-", (MaxGL1Count - _activeGL1Count), GL1BaddiePrefab, GroundSpawns[rand % 2 == 0 ? 0 : 1].position, false, (rand % 2 != 0) ? -1 : 1);
             _activeGL1Count = MaxGL1Count;
         }
     }
@@ -347,13 +359,5 @@ public class HordeController : MonoBehaviour {
 
         AudioManager.Instance.StopSound(_levelAudio);
         AudioManager.Instance.PlaySound(_levelAudio+"H");
-    }
-        
-    private void SetCameraTarget(Transform target, bool activator, float yOffset){
-        // Disable the simple collider and activator as well. Not that this is necessary but why leave it running.
-        //if(target.gameObject.tag == GameConstants.Tag_Player) {
-        //    target.GetComponent<BaddieActivator>().enabled = activator;
-        //    target.GetComponent<SimpleCollider>().enabled = activator;
-        //}
     }
 }

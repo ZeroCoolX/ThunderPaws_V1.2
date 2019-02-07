@@ -51,11 +51,12 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private const float DELAY_BETWEEN_SHOT = 5f;
 
     private float _timeToCalculateNewBounds;
-    private const float MIN_DISTANCE_FROM_TARGET = 3f;
-    private const float MAX_DISTANCE_FROM_TARGET = 9f;
     private const float RECALCULATE_BOUNDS_DELAY = 2f;
 
     private void Start() {
+        MIN_DISTANCE_FROM_TARGET = 3f;
+        MAX_DISTANCE_FROM_TARGET = 9f;
+
         base.Start();
 
         _actionData.FiringAttack = false;

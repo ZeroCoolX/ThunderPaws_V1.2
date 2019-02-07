@@ -20,7 +20,7 @@ public class BulletProjectile : AbstractProjectile {
     }
 
     protected override void HitTarget(Vector3 hitPos, Collider2D hitObject) {
-        print("Hit object: " + hitObject.gameObject.tag);
+        //print("Hit object: " + hitObject.gameObject.tag);
         if (hitObject.gameObject.tag == GameConstants.Tag_Baddie) {
             var rand = UnityEngine.Random.Range(0, 9);
             AudioManager.Instance.PlaySound(rand % 2 == 0 ? "BulletImpact1" : "BulletImpact2");
@@ -28,7 +28,7 @@ public class BulletProjectile : AbstractProjectile {
         // If we hit a lifeform damage it - otherwise move on
         var lifeform = hitObject.transform.GetComponent<BaseLifeform>();
         if(lifeform != null) {
-            print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
+            //print("hit lifeform: " + lifeform.gameObject.name + " and did " + Damage + " damage");
             if (lifeform.Damage(Damage)) {
                 // Increment the stats for whoever shot the bullet
                 GameStatsManager.Instance.AddBaddie(FromPlayerNumber);

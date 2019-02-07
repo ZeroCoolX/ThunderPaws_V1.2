@@ -17,13 +17,13 @@ public class Robot_FL1 : FlyingBaddieLifeform {
     private float _timeToCalculateNewBounds;
 
     private const float MOVE_SPEED = 2f;
-    private const float MIN_DISTANCE_FROM_TARGET = 3f;
-    private const float MAX_DISTANCE_FROM_TARGET = 7f;
     private const float RECALCULATE_BOUNDS_DELAY = 2f;
 
     private new void Awake() {
         base.Awake();
         _actionData.BombDropInitiated = _actionData.OverPlayer = _actionData.RecalculateBounds = false;
+        MIN_DISTANCE_FROM_TARGET = 3f;
+        MAX_DISTANCE_FROM_TARGET = 7f;
     }
 
     protected new void Start() {

@@ -9,6 +9,9 @@ public class FlyingBaddieLifeform : BaddieLifeform {
     private bool _beserkAttempted = false;
     protected bool Beserk = false;
 
+    public float MIN_DISTANCE_FROM_TARGET;
+    public float MAX_DISTANCE_FROM_TARGET;
+
     protected struct FlyingPositionModel {
         public float MinY, MaxY;
         public float MoveSpeed;
@@ -61,7 +64,9 @@ public class FlyingBaddieLifeform : BaddieLifeform {
 
     public void Update() {
         base.Update();
-        BeserkCheck();
+        if (GameConstants.Difficulty_Hard.Equals(DifficultyManager.Instance.Difficulty)){
+            BeserkCheck();
+        }
     }
 
     protected void BeserkCheck() {

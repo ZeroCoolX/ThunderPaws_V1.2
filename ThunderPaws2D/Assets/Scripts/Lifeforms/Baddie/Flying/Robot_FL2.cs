@@ -17,8 +17,6 @@ public class Robot_FL2 : FlyingBaddieLifeform {
     private ActionData _actionData;
 
     private float _timeToCalculateNewBounds;
-    private const float MIN_DISTANCE_FROM_TARGET = 3f;
-    private const float MAX_DISTANCE_FROM_TARGET = 8f;
     private const float RECALCULATE_BOUNDS_DELAY = 2f;
     /// <summary>
     /// References to where to fire the raycast angles
@@ -35,6 +33,9 @@ public class Robot_FL2 : FlyingBaddieLifeform {
 
 
     private void Start() {
+        MIN_DISTANCE_FROM_TARGET = 3f;
+        MAX_DISTANCE_FROM_TARGET = 8f;
+
         base.Start();
 
         if (Target != null) {
