@@ -33,14 +33,14 @@ public class ThunderPounce : Ultimate {
     }
 
     private void CollectAllBaddies() {
-        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Baddie);
+        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Baddie).Union(GameObject.FindGameObjectsWithTag(GameConstants.Tag_HordeBaddie));
         if (baddies == null || baddies.Count() == 0) {
             print("There were no baddies on screen");
             return;
         }
 
         foreach (var baddie in baddies.ToList()) {
-            if (baddie.gameObject.name.IndexOf("_GL") != -1) {
+            if (baddie.gameObject.name.IndexOf("GL") != -1) {
                 print("Adding baddie " + baddie.gameObject.name + " to stack");
                 _baddies.Add(baddie);
             }

@@ -88,6 +88,11 @@ public class Robot_FL3 : FlyingBaddieLifeform {
         var directionToTarget = transform.position.x - Target.position.x;
         CalculateFacingDirection(directionToTarget);
 
+        if (Beserk) {
+            SuicideDiveTarget();
+            return;
+        }
+
         // If we need to be moving do that instead of checking sightline
         if (!_actionData.FiringAttack) {
             CalculateVelocity();

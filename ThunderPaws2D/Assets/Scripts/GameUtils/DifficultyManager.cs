@@ -73,9 +73,9 @@ public class DifficultyManager : MonoBehaviour {
         }
 
         // Pre-store difficulties
-        _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 10, 500 });
-        _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 250 });
-        _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 100 });
+        _difficulties.Add(GameConstants.Difficulty_Easy, new int[] { 7, 300 });
+        _difficulties.Add(GameConstants.Difficulty_Normal, new int[] { 5, 200 });
+        _difficulties.Add(GameConstants.Difficulty_Hard, new int[] { 3, 150 });
     }
 
 }

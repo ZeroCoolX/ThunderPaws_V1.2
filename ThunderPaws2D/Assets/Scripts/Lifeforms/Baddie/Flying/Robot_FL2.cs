@@ -73,6 +73,11 @@ public class Robot_FL2 : FlyingBaddieLifeform {
         var directionToTarget = transform.position.x - Target.position.x;
         CalculateFacingDirection(directionToTarget);
 
+        if (Beserk) {
+            SuicideDiveTarget();
+            return;
+        }
+
         // Collect distance from this to target
         var rayLength = Vector2.Distance(transform.position, Target.position);
         Debug.DrawRay(transform.position, (Target.position - transform.position), Color.red);
@@ -86,6 +91,7 @@ public class Robot_FL2 : FlyingBaddieLifeform {
             Velocity.y = 0f;
             CalculateAngleCollisions(rayLength);
         }
+
         Move();
         CalculateFire();
     }

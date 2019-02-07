@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class ReflectFurball : Ultimate {
     private HashSet<int> _reflectedProjectiles;
+    private bool _active = false;
 
     public override void Activate() {
         print("ReflectFurball activated!");
         _reflectedProjectiles = new HashSet<int>();
+        _active = true;
         //DeactivateDelegate.Invoke();
     }
 
     private void Update() {
-        CheckForMultiCircleCollisions();
+        if (_active) {
+            CheckForMultiCircleCollisions();
+        }
     }
 
     private void CheckForMultiCircleCollisions() {
@@ -40,8 +44,8 @@ public class ReflectFurball : Ultimate {
         bulletScript.ResetTargetDirection(1 << 10 | 1 << 14);
     }
 
-    //private void OnDrawGizmos() {
-    //    Gizmos.color = Color.yellow;
-    //    Gizmos.DrawWireSphere(transform.position, 2f);
-    //}
+    private void OnDrawGizmos() {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, 2f);
+    }
 }

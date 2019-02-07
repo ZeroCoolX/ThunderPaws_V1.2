@@ -30,6 +30,7 @@ public class LighteningClaw : Ultimate {
         PlayerStats.UltReady = false;
 
         _originalPlayerPosition = transform.position;
+        print("_originalPlayerPosition = " + _originalPlayerPosition);
 
         ResetCollections();
         StopAllMovement();
@@ -57,14 +58,14 @@ public class LighteningClaw : Ultimate {
     }
 
     private void CollectAllBaddies() {
-        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Baddie);
+        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Baddie).Union(GameObject.FindGameObjectsWithTag(GameConstants.Tag_HordeBaddie));
         if (baddies == null || baddies.Count() == 0) {
             print("There were no baddies on screen");
             return;
         }
         _baddies = baddies.ToList();
         foreach (var baddie in _baddies) {
-            if (baddie.gameObject.name.IndexOf("_FL") != -1) {
+            if (baddie.gameObject.name.IndexOf("FL") != -1) {
                 print("Adding baddie " + baddie.gameObject.name + " to stack");
                 _flyingBaddies.Push(baddie);
             }
@@ -78,7 +79,7 @@ public class LighteningClaw : Ultimate {
             baddieLifeform.enabled = true;
 
             // Damage if it was a flying baddie
-            if (baddie.gameObject.name.IndexOf("_FL") != -1) {
+            if (baddie.gameObject.name.IndexOf("FL") != -1) {
                 baddieLifeform.Damage(100);
             }
         }
@@ -108,14 +109,20 @@ public class LighteningClaw : Ultimate {
     private void ReturnToOriginAndTurnOff() {
         CalculateVelocity(_originalPlayerPosition);
 
-        if (transform.position == _originalPlayerPosition) {
+        if (ToIntVector(transform.position) == ToIntVector(_originalPlayerPosition)) {
             GetComponent<Player>().enabled = true;
             _cameraScript.enabled = true;
             ResumeBaddieMovement();
             ResetCollections();
             DeactivateDelegate.Invoke();
             _activated = false;
+        }else {
+            print("transform.position " + ToIntVector(transform.position)+ "!= " + ToIntVector(_originalPlayerPosition));
         }
+    }
+
+    private Vector3 ToIntVector(Vector3 ogVector) {
+        return new Vector3((int)ogVector.x, (int)ogVector.y, (int)ogVector.z);
     }
 
     private void OnDrawGizmos() {

@@ -156,7 +156,10 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4659474290433748, guid: 947583edfe079bf46aa03730c83b37e6,
     type: 2}
   PartOfHorde: 0
+  BulletSpeed: 0
+  BulletDamage: 0
   IsHorde2Hack: 0
+  BeserkHealthTrigger: 5
 --- !u!114 &114972686550160120
 MonoBehaviour:
   m_ObjectHideFlags: 1

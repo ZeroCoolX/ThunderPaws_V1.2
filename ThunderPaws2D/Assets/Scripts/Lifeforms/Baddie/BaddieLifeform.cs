@@ -162,6 +162,7 @@ public class BaddieLifeform : DamageableLifeform {
     }
 
     protected override void Move() {
+        print("MOVING");
         Animator.SetFloat("Velocity", Mathf.Abs(Velocity.x));
         Controller2d.Move(Velocity * Time.deltaTime);
     }

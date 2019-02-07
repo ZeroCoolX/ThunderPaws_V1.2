@@ -2617,13 +2617,13 @@ Prefab:
         type: 2}
       propertyPath: BaddiePrefab
       value: 
-      objectReference: {fileID: 4930055791183770, guid: f2b457dd3a192244ea1580cfb0726ab0,
+      objectReference: {fileID: 4930055791183770, guid: ac8c38f87da1963409a5eb603974e526,
         type: 2}
     - target: {fileID: 114766935048827330, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
         type: 2}
       propertyPath: BaddiePrefab
       value: 
-      objectReference: {fileID: 4930055791183770, guid: f2b457dd3a192244ea1580cfb0726ab0,
+      objectReference: {fileID: 4930055791183770, guid: be6553286a9da194695e702039014a79,
         type: 2}
     - target: {fileID: 114965977690835164, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
         type: 2}
@@ -2635,13 +2635,13 @@ Prefab:
         type: 2}
       propertyPath: BaddiePrefab
       value: 
-      objectReference: {fileID: 4930055791183770, guid: be6553286a9da194695e702039014a79,
+      objectReference: {fileID: 4930055791183770, guid: b7f9d5b35826e474c9f0956cb6c15e3e,
         type: 2}
     - target: {fileID: 114241198434182836, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
         type: 2}
       propertyPath: BaddiePrefab
       value: 
-      objectReference: {fileID: 4930055791183770, guid: f2b457dd3a192244ea1580cfb0726ab0,
+      objectReference: {fileID: 4930055791183770, guid: ac8c38f87da1963409a5eb603974e526,
         type: 2}
     - target: {fileID: 4440994287242450, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
       propertyPath: m_LocalPosition.y
@@ -2721,6 +2721,10 @@ Prefab:
         type: 2}
       propertyPath: SpawnAmount.y
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419401610958460, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
@@ -10934,7 +10938,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 10.812499
+      value: 11.1875
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}

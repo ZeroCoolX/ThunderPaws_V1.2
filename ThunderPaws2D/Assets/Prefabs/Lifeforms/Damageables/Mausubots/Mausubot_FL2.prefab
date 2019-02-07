@@ -173,6 +173,7 @@ MonoBehaviour:
   BulletSpeed: 15
   BulletDamage: 5
   IsHorde2Hack: 0
+  BeserkHealthTrigger: 5
 --- !u!212 &212409509080490964
 SpriteRenderer:
   m_ObjectHideFlags: 1
