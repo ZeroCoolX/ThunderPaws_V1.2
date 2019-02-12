@@ -28,10 +28,8 @@ public class Mausubot_GL3 : GroundBaddieLifeform {
         }
 
         if (!_awakened) {
-            print("Haven't seen target yet");
             CheckForTargetInRange();
         } else {
-            print("ACTIVATED");
             ExplodeIfNear();
 
             var directionToTarget = transform.position.x - Target.position.x;
