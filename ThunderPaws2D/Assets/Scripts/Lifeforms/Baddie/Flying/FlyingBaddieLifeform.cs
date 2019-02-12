@@ -64,7 +64,7 @@ public class FlyingBaddieLifeform : BaddieLifeform {
 
     public void Update() {
         base.Update();
-        if (GameConstants.Difficulty_Hard.Equals(DifficultyManager.Instance.Difficulty)){
+        if (DifficultyManager.Instance != null && GameConstants.Difficulty_Hard.Equals(DifficultyManager.Instance.Difficulty)){
             BeserkCheck();
         }
     }

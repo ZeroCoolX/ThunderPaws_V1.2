@@ -46,7 +46,8 @@ public class BaddieLifeform : DamageableLifeform {
 
     protected void Start() {
         if (BulletPrefab == null) {
-            throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.BulletPrefab");
+            //throw new UnassignedReferenceException("BaddieLifeform is missing ProjectileData.BulletPrefab");
+            print("BaddieLifeform is missing ProjectileData.BulletPrefab");
         }
 
         ProjectileData.FirePoint = transform.Find(GameConstants.ObjectName_FirePoint);
