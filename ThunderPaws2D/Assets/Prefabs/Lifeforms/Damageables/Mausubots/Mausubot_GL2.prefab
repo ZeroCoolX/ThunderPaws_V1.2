@@ -135,6 +135,8 @@ MonoBehaviour:
   BulletPrefab: {fileID: 4379591510626146, guid: 33e8e45dd64f5fa40ada98a0da3348e9,
     type: 2}
   PartOfHorde: 0
+  BulletSpeed: 0
+  BulletDamage: 0
 --- !u!114 &114801493458386830
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -203,7 +205,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: 2210cc70e2abaf64981b14b7fcba7f38, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

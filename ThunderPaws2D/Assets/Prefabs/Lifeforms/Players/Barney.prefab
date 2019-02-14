@@ -229,6 +229,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 0}
   PlayerNum: 0
+  SlashEffectPrefab: {fileID: 4125495361155634, guid: fb888989eb87b004b879ef962d3e77de,
+    type: 2}
 --- !u!114 &114409829690470952
 MonoBehaviour:
   m_ObjectHideFlags: 1

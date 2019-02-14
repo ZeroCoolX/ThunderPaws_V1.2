@@ -14,6 +14,7 @@ public class BaddieLifeform : DamageableLifeform {
     /// the HordeController of its death
     /// </summary>
     public bool PartOfHorde = false;
+    public bool ForceHalt;
 
     public int BulletSpeed;
     public int BulletDamage;
