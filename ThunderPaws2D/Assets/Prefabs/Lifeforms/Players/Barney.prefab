@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 114702767453380004}
   - component: {fileID: 114809364505336124}
   - component: {fileID: 114393226797360724}
+  - component: {fileID: 114345994198173248}
   - component: {fileID: 114409829690470952}
   - component: {fileID: 114960310264876182}
-  - component: {fileID: 114871165466080444}
   m_Layer: 8
   m_Name: Barney
   m_TagString: Player
@@ -216,6 +216,21 @@ MonoBehaviour:
   PlayerNumber: 1
   JoystickId: 
   FacingRight: 1
+--- !u!114 &114345994198173248
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1883217469759206}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f45779003f3b21449a2a1007e62e608c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerStats: {fileID: 0}
+  PlayerNum: 0
+  BulletTrailPrefab: {fileID: 4130485358774342, guid: 599414168a4a2844c9bfa063704d15d3,
+    type: 2}
 --- !u!114 &114393226797360724
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,6 +244,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 0}
   PlayerNum: 0
+  UpdateNoInteraction: 0
+  UpdateAttackOnlyInteraction: 0
+  UpdateAttackAndMovementInteraction: 0
+  StopBaddieOnAttack: 0
   SlashEffectPrefab: {fileID: 4125495361155634, guid: fb888989eb87b004b879ef962d3e77de,
     type: 2}
 --- !u!114 &114409829690470952
@@ -268,23 +287,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Ultimates:
-  - {fileID: 114871165466080444}
+  - {fileID: 114345994198173248}
   - {fileID: 114393226797360724}
   - {fileID: 114960310264876182}
   - {fileID: 114409829690470952}
---- !u!114 &114871165466080444
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1883217469759206}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f45779003f3b21449a2a1007e62e608c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerStats: {fileID: 0}
-  PlayerNum: 0
 --- !u!114 &114960310264876182
 MonoBehaviour:
   m_ObjectHideFlags: 1

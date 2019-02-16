@@ -17,7 +17,7 @@ public abstract class AbstractWeapon : MonoBehaviour {
     public float FireRate = 0f;
     public float FireDelay = 1;
     protected float TimeToFire = 0f;
-    protected Transform FirePoint { get; private set; }
+    public Transform FirePoint { get; private set; }
 
     [Header("Weapon Properties")]
     public int Damage;

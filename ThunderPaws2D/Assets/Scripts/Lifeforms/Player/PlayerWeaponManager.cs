@@ -33,6 +33,10 @@ public class PlayerWeaponManager : MonoBehaviour {
         CreateSecondaryWeapon();
     }
 
+    public Transform GetCurrentWeapon() {
+        return _currentWeapon;
+    }
+
     private void CreateSecondaryWeapon() {
         var playerProfile = ProfilePool.Instance.GetPlayerProfile(_playerNumber);
 
