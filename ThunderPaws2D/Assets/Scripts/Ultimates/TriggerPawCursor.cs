@@ -7,6 +7,8 @@ public class TriggerPawCursor : MonoBehaviour {
     public delegate void InvokeBaddiesTaggedDelegate(List<GameObject> baddies);
     public InvokeBaddiesTaggedDelegate InvokeTaggedBaddies;
 
+    public Sprite[] ClickSprites;
+
     public float TagSize = 2.5f;
     private float TagDurationTime = 3f;
     public Player Player;
@@ -19,7 +21,14 @@ public class TriggerPawCursor : MonoBehaviour {
     private float _velocityYSmoothing;
     private bool _active;
 
+    private SpriteRenderer _renderer;
+    private int _spriteIndex = 0;
+
     void Start () {
+        _renderer = GetComponent<SpriteRenderer>();
+        if(_renderer == null) {
+            throw new MissingComponentException("SpriteRenderer is null");
+        }
     }
 
     private void ResetMap() {
@@ -28,6 +37,7 @@ public class TriggerPawCursor : MonoBehaviour {
 
     public void Activate() {
         _active = true;
+        _renderer.enabled = true;
 
         ResetMap();
 
@@ -44,6 +54,7 @@ public class TriggerPawCursor : MonoBehaviour {
         transform.position = Player.transform.position;
         InvokeTaggedBaddies.Invoke(_baddiesTagged.Select(kvp => kvp.Value).ToList());
         enabled = false;
+        _renderer.enabled = false;
     }
 
     private void TagBaddie(Vector3 v, Collider2D c) {
@@ -53,9 +64,11 @@ public class TriggerPawCursor : MonoBehaviour {
 
         GameObject outObj;
         if(!_baddiesTagged.TryGetValue(c.gameObject.GetInstanceID(), out outObj)) {
-            print("Adding baddie : " + c.gameObject.GetInstanceID() + " to map");
-            _baddiesTagged.Add(c.gameObject.GetInstanceID(), c.gameObject);
-            c.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonUp(Player.JoystickId + GameConstants.Input_Jump)) {
+                print("Adding baddie : " + c.gameObject.GetInstanceID() + " to map");
+                _baddiesTagged.Add(c.gameObject.GetInstanceID(), c.gameObject);
+                c.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+            }
         }
     }
 
@@ -68,6 +81,13 @@ public class TriggerPawCursor : MonoBehaviour {
         if (!_active) {
             return;
         }
+
+        if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(Player.JoystickId + GameConstants.Input_Jump)) {
+            _renderer.sprite = ClickSprites[1];
+        }else {
+            _renderer.sprite = ClickSprites[0];
+        }
+
         var directionalInput = GetDirectionBasedOffInputType();
         print("dir: " + directionalInput + " vel: " + _velocity);
         _velocity.x = Mathf.SmoothDamp(_velocity.x, directionalInput.x * _cursorMoveSpeed, ref _velocityXSmoothing, 0f);
