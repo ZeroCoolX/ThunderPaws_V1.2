@@ -8,18 +8,34 @@ public class TriggerPaw : Ultimate {
     private List<GameObject> _baddies;
     private Transform FirePoint;
 
+    private BetterCameraFollow _cameraScript;
+    private TriggerPawCursor _ultCursor;
+
     public override void Activate() {
         print("TriggerPaw activated!");
-        CollectAllBaddies();
+
+        PlayerStats.UltEnabled = true;
+        PlayerStats.UltReady = false;
+
+        Update_MarkOverInteraction();
     }
 
-    private void CollectAllBaddies() {
-        var baddies = GameObject.FindGameObjectsWithTag(GameConstants.Tag_Baddie).Union(GameObject.FindGameObjectsWithTag(GameConstants.Tag_HordeBaddie));
-        if (baddies == null || baddies.Count() == 0) {
-            print("There were no baddies on screen");
-            return;
-        }
-        _baddies = baddies.ToList();
+    private void Update_MarkOverInteraction() {
+        StopAllMovement();
+    }
+
+    private void StopAllMovement() {
+        InvokeRepeating("DepleteUltimate", 0, 0.03f);
+        // After 10 seconds deactivate ultimate
+        Invoke("StopUltimateDrain", 3f);
+
+        GetComponent<Player>().enabled = false;
+        _cameraScript.enabled = false;
+        _ultCursor.Activate();
+    }
+
+    private void CollectTaggedBaddies(List<GameObject> tagged) {
+        _baddies = tagged;
         BeginUlt();
     }
 
@@ -47,44 +63,27 @@ public class TriggerPaw : Ultimate {
         currentBaddie.gameObject.GetComponent<BaddieLifeform>().Damage(999);
     }
 
+    private void DepleteUltimate() {
+        --PlayerStats.CurrentUltimate;
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNum, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+    }
 
-    //private PlayerWeaponManager _weaponManager;
-
-    //public override void Activate() {
-    //    _weaponManager = transform.GetComponent<PlayerWeaponManager>();
-    //    if (_weaponManager == null) {
-    //        throw new MissingComponentException("No PlayerWeaponManager found on Player object");
-    //    }
-
-    //    _weaponManager.ToggleUltimateForAllWeapons(true);
-
-    //    PlayerStats.UltEnabled = true;
-    //    PlayerStats.UltReady = false;
-
-    //    InvokeRepeating("DepleteUltimate", 0, 0.07f);
-    //    // After 10 seconds deactivate ultimate
-    //    Invoke("DeactivateUltimate", 7f);
-    //}
-
-    //private void DepleteUltimate() {
-    //    --PlayerStats.CurrentUltimate;
-    //    PlayerHudManager.Instance.UpdateUltimateUI(PlayerNum, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
-    //}
+    private void StopUltimateDrain() {
+        CancelInvoke("DepleteUltimate");
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNum, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+    }
 
     private void DeactivateUltimate() {
-        //_weaponManager.ToggleUltimateForAllWeapons(false);
-        //CancelInvoke("DepleteUltimate");
+        GetComponent<Player>().enabled = true;
+        _cameraScript.enabled = true;
         DeactivateDelegate.Invoke();
     }
 
-
-    // Use this for initialization
     void Start() {
         FirePoint = GetComponent<PlayerWeaponManager>().GetCurrentWeapon().GetComponent<AbstractWeapon>().FirePoint;
-    }
-
-    // Update is called once per frame
-    void Update() {
-
+        _cameraScript = Camera.main.GetComponentInParent<BetterCameraFollow>();
+        _ultCursor = GetComponentInChildren<TriggerPawCursor>();
+        _ultCursor.InvokeTaggedBaddies += CollectTaggedBaddies;
+        _ultCursor.Player = GetComponent<Player>();
     }
 }

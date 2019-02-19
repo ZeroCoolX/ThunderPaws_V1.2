@@ -31,8 +31,6 @@ public class LighteningClaw : Ultimate {
 
     private void Start() {
         _cameraScript = Camera.main.GetComponentInParent<BetterCameraFollow>();
-
-
     }
 
     public override void Activate() {

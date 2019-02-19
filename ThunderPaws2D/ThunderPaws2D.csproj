@@ -362,6 +362,7 @@
     <Compile Include="Assets\Scripts\Ultimates\ReflectFurball.cs" />
     <Compile Include="Assets\Scripts\Ultimates\ThunderPounce.cs" />
     <Compile Include="Assets\Scripts\Ultimates\TriggerPaw.cs" />
+    <Compile Include="Assets\Scripts\Ultimates\TriggerPawCursor.cs" />
     <Compile Include="Assets\Scripts\Ultimates\Ultimate.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\AbstractWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponScripts\EmissionIndex.cs" />

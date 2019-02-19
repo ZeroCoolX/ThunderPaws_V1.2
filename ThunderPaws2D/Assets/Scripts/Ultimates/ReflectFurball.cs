@@ -6,11 +6,26 @@ public class ReflectFurball : Ultimate {
     private HashSet<int> _reflectedProjectiles;
     private bool _active = false;
 
+    private float _ultDuration = 7f;
+
     public override void Activate() {
         print("ReflectFurball activated!");
         _reflectedProjectiles = new HashSet<int>();
         _active = true;
-        //DeactivateDelegate.Invoke();
+
+        PlayerStats.UltEnabled = true;
+        PlayerStats.UltReady = false;
+
+        Invoke("ResetState", _ultDuration);
+    }
+
+    private void ResetState() {
+        _reflectedProjectiles = new HashSet<int>();
+        _active = true;
+    }
+
+    private void Deactivate() {
+        DeactivateDelegate.Invoke();
     }
 
     private void Update() {

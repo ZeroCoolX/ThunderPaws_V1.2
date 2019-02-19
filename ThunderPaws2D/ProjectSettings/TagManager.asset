@@ -23,6 +23,7 @@ TagManager:
   - BossCameraTarget
   - SCENELOADER
   - InputManager
+  - TriggerPawCursor
   layers:
   - Default
   - TransparentFX
