@@ -14523,16 +14523,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[25].volume
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114895202195031666, guid: fbf53e6eaf7133048abe3700df4674bf,
-        type: 2}
-      propertyPath: sounds.Array.data[27].volume
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fbf53e6eaf7133048abe3700df4674bf, type: 2}
   m_IsPrefabParent: 0
@@ -30586,7 +30576,7 @@ Prefab:
     - target: {fileID: 20714114864763456, guid: b5b78d19197b71542b140f3c4ac5bafe,
         type: 2}
       propertyPath: orthographic size
-      value: 10.812499
+      value: 6.6979165
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b5b78d19197b71542b140f3c4ac5bafe, type: 2}

@@ -23,14 +23,16 @@ public class LighteningClaw : Ultimate {
 
     private float _xVelocity;
     private float _yVelocity;
-    private float _smoothTime = 0.15F;
+    private float _smoothTime = 0.05F;
 
     private Vector2 _spritePlayerSize;
     private Vector3 _originalPlayerPosition;
     private BetterCameraFollow _cameraScript;
+    private Player _player;
 
     private void Start() {
         _cameraScript = Camera.main.GetComponentInParent<BetterCameraFollow>();
+        _player = GetComponent<Player>();
     }
 
     public override void Activate() {
@@ -127,14 +129,14 @@ public class LighteningClaw : Ultimate {
         if (_reachedTarget && _currentTarget != null) {
             if (_currentTargetHealth <= 0) {
                 // show indicator to move to next baddie
-                if (Input.GetKeyDown(KeyCode.UpArrow)) {
+                if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown(_player.JoystickId + GameConstants.Input_Jump)) {
                     _currentTarget.GetComponent<BaddieLifeform>().Damage(999);
                     _pauseDamageTime.x = 0;
                     return;
                 }
             }
 
-            if (Time.time > _pauseDamageTime.x && Input.GetKeyDown(KeyCode.Space)) {
+            if (Time.time > _pauseDamageTime.x && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(_player.JoystickId + GameConstants.Input_Melee))) {
                 DamageBaddie();
                 Invoke("ResetSlashAnimation", 0.05f);
                 _pauseDamageTime.x = Time.time + _pauseDamageTime.y;
@@ -160,7 +162,7 @@ public class LighteningClaw : Ultimate {
 
     private void Update_AttackOnlyInteraction() {
         if (_reachedTarget && _currentTarget != null) {
-            if (Time.time > _pauseDamageTime.x && Input.GetKeyDown(KeyCode.Space)) {
+            if (Time.time > _pauseDamageTime.x && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(_player.JoystickId + GameConstants.Input_Melee))) {
                 DamageBaddie();
                 Invoke("ResetSlashAnimation", 0.05f);
                 _pauseDamageTime.x = Time.time + _pauseDamageTime.y;
@@ -208,7 +210,7 @@ public class LighteningClaw : Ultimate {
             // Play effect
             _slashEffectAnimator.SetBool("slash1", true);
             _slashEffect.transform.position = _currentTarget.transform.position;
-            _currentTargetHealth -= 3;
+            _currentTargetHealth -= 2;
             if(_currentTargetHealth <= 0) {
                 _currentTarget.GetComponent<SpriteRenderer>().color = Color.red;
             }

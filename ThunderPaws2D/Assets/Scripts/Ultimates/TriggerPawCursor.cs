@@ -64,7 +64,7 @@ public class TriggerPawCursor : MonoBehaviour {
 
         GameObject outObj;
         if(!_baddiesTagged.TryGetValue(c.gameObject.GetInstanceID(), out outObj)) {
-            if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonUp(Player.JoystickId + GameConstants.Input_Jump)) {
+            if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(Player.JoystickId + GameConstants.Input_Jump)) {
                 print("Adding baddie : " + c.gameObject.GetInstanceID() + " to map");
                 _baddiesTagged.Add(c.gameObject.GetInstanceID(), c.gameObject);
                 c.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
