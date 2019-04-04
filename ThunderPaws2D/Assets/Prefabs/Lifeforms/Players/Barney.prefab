@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.97345, y: 6.2119203, z: 0}
+  m_LocalPosition: {x: 23.38257, y: -5.547029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729872837897130}
@@ -362,6 +362,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 0}
   PlayerNum: 0
+  PounceEffectAnimator: {fileID: 95689846243776832}
+  Weapon: {fileID: 4729872837897130}
+  BlastRadiusEffectPrefab: {fileID: 4952130685710588, guid: 4cc9883c838530145adf47ac17106382,
+    type: 2}
 --- !u!212 &212664059488354518
 SpriteRenderer:
   m_ObjectHideFlags: 1
