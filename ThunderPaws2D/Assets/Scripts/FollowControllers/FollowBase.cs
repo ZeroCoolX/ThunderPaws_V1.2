@@ -58,10 +58,10 @@ public class FollowBase : MonoBehaviour {
         if (nextTimeToSearch <= Time.time) {
             GameObject searchResult = GameObject.FindGameObjectWithTag(_searchName);
             if (searchResult != null) {
-                if (!searchResult.GetComponent<BaddieActivator>().enabled) {
+               // if (!searchResult.GetComponent<BaddieActivator>().enabled) {
                     // Activate in 1 second
-                    Invoke("DelayedActivate", 1);
-                }
+               //     Invoke("DelayedActivate", 1);
+                //}
                 Target = searchResult.transform;
                 nextTimeToSearch = Time.time + searchDelay;
             }

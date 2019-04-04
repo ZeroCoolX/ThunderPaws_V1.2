@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,9 +9,7 @@ public class LighteningClaw : Ultimate {
     public bool UpdateAttackAndMovementInteraction = false;
     public bool StopBaddieOnAttack = false;
 
-    public Transform SlashEffectPrefab;
-    private Animator _slashEffectAnimator;
-    private Transform _slashEffect;
+    public Animator SlashEffectAnimator;
 
     private bool _activated = false;
     private Vector2 _pauseDamageTime = new Vector2(0, 0.1F);
@@ -37,9 +36,8 @@ public class LighteningClaw : Ultimate {
 
     public override void Activate() {
         print("LighteningClaw activated!");
-        _slashEffect = Instantiate(SlashEffectPrefab, transform.position, transform.rotation, transform) as Transform;
-        _slashEffectAnimator = _slashEffect.GetComponent<Animator>();
-        if(_slashEffectAnimator == null) {
+        GetComponent<SpriteRenderer>().sortingOrder = 200;
+        if(SlashEffectAnimator == null) {
             print("Slash effect animator was null");
         }
 
@@ -54,6 +52,13 @@ public class LighteningClaw : Ultimate {
         CalculateColliderSize();
         CollectAllBaddies();
 
+        SlashEffectAnimator.SetBool("lighteningclaw", true);
+        StartCoroutine(ChargeUp());
+    }
+
+    IEnumerator ChargeUp() {
+        yield return new WaitForSeconds(0.5f);
+        SlashEffectAnimator.SetBool("lighteningclaw_travel", true);
         _activated = true;
     }
 
@@ -111,13 +116,14 @@ public class LighteningClaw : Ultimate {
 
         if (_currentTarget == null) {
             if (_flyingBaddies.Count() == 0) {
-                _slashEffectAnimator.SetBool("slash", false);
+                SlashEffectAnimator.SetBool("lighteningclaw", false);
+                SlashEffectAnimator.SetBool("lighteningclaw_travel", false);
+                SlashEffectAnimator.SetBool("lighteningclaw_attack", false);
                 ReturnToOriginAndTurnOff();
                 return;
             }
             _currentTarget = _flyingBaddies.Pop();
         } else {
-            _slashEffect.transform.position = _currentTarget.transform.position;//
             CalculateVelocity(_currentTarget.transform.position);
             CheckForCollision();
         }
@@ -146,7 +152,7 @@ public class LighteningClaw : Ultimate {
         }
 
         if (_currentTarget == null) {
-            _slashEffectAnimator.SetBool("slash1", false);
+            SlashEffectAnimator.SetBool("slash1", false);
             _reachedTarget = false;
 
             if (_flyingBaddies.Count() == 0) {
@@ -164,7 +170,7 @@ public class LighteningClaw : Ultimate {
         if (_reachedTarget && _currentTarget != null) {
             if (Time.time > _pauseDamageTime.x && (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(_player.JoystickId + GameConstants.Input_Melee))) {
                 DamageBaddie();
-                Invoke("ResetSlashAnimation", 0.05f);
+                SlashEffectAnimator.SetBool("lighteningclaw_attack", true);
                 _pauseDamageTime.x = Time.time + _pauseDamageTime.y;
             }
             CalculateVelocity(_currentTarget.transform.position);
@@ -172,10 +178,13 @@ public class LighteningClaw : Ultimate {
         }
 
         if (_currentTarget == null) {
-            _slashEffectAnimator.SetBool("slash1", false);
+            SlashEffectAnimator.SetBool("lighteningclaw_attack", false);
+            SlashEffectAnimator.SetBool("lighteningclaw_travel", true);
             _reachedTarget = false;
 
             if (_flyingBaddies.Count() == 0) {
+                SlashEffectAnimator.SetBool("lighteningclaw_travel", false);
+                SlashEffectAnimator.SetBool("lighteningclaw_attack", false);
                 ReturnToOriginAndTurnOff();
                 return;
             }
@@ -202,14 +211,13 @@ public class LighteningClaw : Ultimate {
     }
 
     private void ResetSlashAnimation() {
-        _slashEffectAnimator.SetBool("slash1", false);
+        SlashEffectAnimator.SetBool("slash1", false);
     }
 
     private void DamageBaddie() {
         if(UpdateAttackAndMovementInteraction && _currentTarget != null) {
             // Play effect
-            _slashEffectAnimator.SetBool("slash1", true);
-            _slashEffect.transform.position = _currentTarget.transform.position;
+            SlashEffectAnimator.SetBool("slash1", true);
             _currentTargetHealth -= 2;
             if(_currentTargetHealth <= 0) {
                 _currentTarget.GetComponent<SpriteRenderer>().color = Color.red;
@@ -217,7 +225,7 @@ public class LighteningClaw : Ultimate {
         }
 
         if(UpdateAttackOnlyInteraction && _currentTarget != null) {
-            _slashEffectAnimator.SetBool("slash1", true);
+            SlashEffectAnimator.SetBool("slash1", true);
             _currentTarget.GetComponent<BaddieLifeform>().Damage(3);
         }
     }
@@ -233,6 +241,8 @@ public class LighteningClaw : Ultimate {
             }
             ResetCollections();
             DeactivateDelegate.Invoke();
+            GetComponent<SpriteRenderer>().sortingOrder = 1;
+            SlashEffectAnimator.SetBool("lighteningclaw", false);
             _activated = false;
         }
     }
@@ -259,7 +269,7 @@ public class LighteningClaw : Ultimate {
                 if (UpdateNoInteraction) {
                     _currentTarget = null;
                     _pauseDamageTime.x = Time.time + _pauseDamageTime.y;
-                    _slashEffectAnimator.SetBool("slash", true);
+                    SlashEffectAnimator.SetBool("lighteningclaw_attack", true);
                 } else if (UpdateAttackOnlyInteraction) {
                     _reachedTarget = true;
                 } else if (UpdateAttackAndMovementInteraction) {
@@ -268,6 +278,8 @@ public class LighteningClaw : Ultimate {
                 }
 
                 return;
+            }else {
+                SlashEffectAnimator.SetBool("lighteningclaw_travel", true);
             }
         }
     }
