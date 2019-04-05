@@ -108,7 +108,7 @@ MonoBehaviour:
   Damage: 50
   Ammo: 25
   MaxAmmo: 0
-  HasAmmo: 1
+  HasAmmo: 0
   BulletSpeed: 15
   MaxLifetime: 1
   BulletPrefab: {fileID: 0}

@@ -237,8 +237,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\CustomImageEffect.cs" />
-    <Compile Include="Assets\NightBehaviour.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasScreenSpaceScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\CanvasWorldScaler.cs" />
     <Compile Include="Assets\PixelPerfectCamera\Scripts\Internal\VectorSwizzleExtensions.cs" />

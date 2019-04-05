@@ -42,6 +42,8 @@ public class ProfilePool : MonoBehaviour{
         }else {
             // Create a new one
             var newProfile = new Profile { ProfileName = EncodeProfileNameFirstTime(profile) };
+            // Give an initial
+            newProfile.UpdateEmissionCache(200);
             print("New Profile: " + newProfile.ProfileName + " created!");
             newProfile.SaveProfile();
             StoreProfileInCache(newProfile);
