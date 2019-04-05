@@ -83,7 +83,7 @@ public class TriggerPawCursor : MonoBehaviour {
             return;
         }
 
-        if(Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown(Player.JoystickId + GameConstants.Input_Jump)) {
+        if(Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown(Player.JoystickId + GameConstants.Input_Jump)) {
             _renderer.sprite = ClickSprites[1];
         }else {
             _renderer.sprite = ClickSprites[0];
