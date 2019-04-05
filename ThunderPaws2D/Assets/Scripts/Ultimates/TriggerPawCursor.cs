@@ -37,13 +37,16 @@ public class TriggerPawCursor : MonoBehaviour {
 
     public void Activate() {
         _active = true;
+        enabled = true;
         _renderer.enabled = true;
 
         ResetMap();
-
-        _collider = GetComponent<SimpleCollider>();
-        _collider.Initialize(1 << 14, TagSize, true);
-        _collider.InvokeCollision += TagBaddie;
+        if(_collider == null) {
+            _collider = GetComponent<SimpleCollider>();
+            _collider.Initialize(1 << 14, TagSize, true);
+            _collider.InvokeCollision += TagBaddie;
+        }
+        _collider.enabled = true;
 
         Invoke("StopTagging", TagDurationTime);
     }

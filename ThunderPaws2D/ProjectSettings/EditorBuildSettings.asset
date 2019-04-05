@@ -6,47 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/AlphaDemo/AlphaDemoMainMenu.unity
-    guid: 97f8ce594f38ff3408e16205bc6744fb
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemo/AlphaDemoBackstory.unity
-    guid: 4dd1c8c0d6123af4cb4bb817d41fb469
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemo/AlphaDemoLevel1.unity
-    guid: 5b389f3120f16dd40854ae0b68b1617f
-  - enabled: 0
-    path: Assets/Scenes/Development/Stage1_BossTesting.unity
-    guid: 159ea0f2d1b57e74f960dbde06304838
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel1.unity
-    guid: f4558a6aa5a7d8f42950513c429c8d5d
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel2.unity
-    guid: 7f6e6e355e9a8994da03b5810690b3e8
+    path: Assets/Scenes/Demo_v1/IntroUI/MainMenu.unity
+    guid: 99ac049e2671e6142b410ed75a512ccf
   - enabled: 1
     path: Assets/Scenes/Demo_v1/IntroUI/IntroBackstory.unity
     guid: 52b447c1e14e4ea40a0b7c11f73b6497
   - enabled: 1
-    path: Assets/Scenes/Demo_v1/Stage1/S1L2.unity
-    guid: 7b25eb28ef95ccc4285f4ba1609a01bb
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel4.unity
-    guid: 459be233c604ce64d9735074540dd621
-  - enabled: 1
-    path: Assets/Scenes/Demo_v1/Stage1/S1L4.unity
-    guid: 03469bc7f4e93394d9806c63b1eca459
-  - enabled: 1
-    path: Assets/Scenes/Demo_v1/IntroUI/MainMenu.unity
-    guid: 99ac049e2671e6142b410ed75a512ccf
-  - enabled: 1
     path: Assets/Scenes/Demo_v1/Stage1/S1L1.unity
     guid: 6b8d8628c7ed6cf4aaf85cf79b13f5eb
-  - enabled: 1
-    path: Assets/Scenes/Demo_v1/Stage1/S1L3.unity
-    guid: 50268e4ab143309408862e5af6960e09
-  - enabled: 1
-    path: Assets/Scenes/AlphaDemoWithArt/AlphaArtDemoLevel3.unity
-    guid: 6acb1416a693b8e4b9e9a0f72a591866
-  - enabled: 1
-    path: Assets/Scenes/Demo_v1/Stage1Backups/S1L1_backup.unity
-    guid: fcf0dfaa406aa694d8a8546791d10315

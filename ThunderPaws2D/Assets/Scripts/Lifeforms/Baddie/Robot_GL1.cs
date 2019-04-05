@@ -48,6 +48,10 @@ public class Robot_GL1 : GroundBaddieLifeform {
     public void Update() {
         base.Update();
 
+        if (ForceHalt) {
+            return;
+        }
+
         if (!CheckTargetsExist()) {
             return;
         }

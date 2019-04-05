@@ -81,6 +81,10 @@ public class Robot_FL3 : FlyingBaddieLifeform {
     private void Update() {
         base.Update();
 
+        if (ForceHalt) {
+            return;
+        }
+
         if (!CheckTargetsExist()) {
             return;
         }
