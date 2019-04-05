@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883217469759206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.38257, y: -5.547029, z: 0}
+  m_LocalPosition: {x: 652.3958, y: 271.4967, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4729872837897130}
@@ -305,6 +305,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PlayerStats: {fileID: 0}
   PlayerNum: 0
+  ReflectBubblePrefab: {fileID: 4375921322143414, guid: 0fb2c2301512ec94b9502669555ee07c,
+    type: 2}
 --- !u!114 &114679810151637558
 MonoBehaviour:
   m_ObjectHideFlags: 1

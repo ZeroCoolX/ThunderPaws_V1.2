@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ReflectFurball : Ultimate {
+    public Transform ReflectBubblePrefab;
+    private Transform _bubbleEffect;
+
     private HashSet<int> _reflectedProjectiles;
     private bool _active = false;
 
@@ -10,6 +13,12 @@ public class ReflectFurball : Ultimate {
 
     public override void Activate() {
         print("ReflectFurball activated!");
+        InvokeRepeating("DepleteUltimate", 0, 0.1f);
+        Invoke("StopUltimateDrain", 10f);
+
+        _bubbleEffect = Instantiate(ReflectBubblePrefab, transform.position, transform.rotation, transform) as Transform;
+        _bubbleEffect.GetComponent<Animator>().SetBool("bubble_on", true);
+        _bubbleEffect.GetComponent<SpriteRenderer>().sortingOrder = 100;
         _reflectedProjectiles = new HashSet<int>();
         _active = true;
 
@@ -25,7 +34,13 @@ public class ReflectFurball : Ultimate {
     }
 
     private void Deactivate() {
+        _bubbleEffect.GetComponent<Animator>().SetBool("bubble_on", false);
+        Invoke("DestroyBubble", 0.25f);
         DeactivateDelegate.Invoke();
+    }
+
+    void DestroyBubble() {
+        Destroy(_bubbleEffect.gameObject);
     }
 
     private void Update() {
@@ -62,5 +77,16 @@ public class ReflectFurball : Ultimate {
     private void OnDrawGizmos() {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, 2f);
+    }
+
+    private void DepleteUltimate() {
+        --PlayerStats.CurrentUltimate;
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNum, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+    }
+
+    private void StopUltimateDrain() {
+        CancelInvoke("DepleteUltimate");
+        PlayerHudManager.Instance.UpdateUltimateUI(PlayerNum, PlayerStats.CurrentUltimate, PlayerStats.MaxUltimate);
+        Deactivate();
     }
 }
