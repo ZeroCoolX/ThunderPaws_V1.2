@@ -1925,7 +1925,8 @@ Prefab:
         type: 2}
       propertyPath: BaddieSpawnGroup
       value: 
-      objectReference: {fileID: 1681434211}
+      objectReference: {fileID: 4469802553830632, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e197376286c90d443b83365fe732330e, type: 2}
   m_IsPrefabParent: 0
@@ -11657,7 +11658,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1449478970319720, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1449478970319720, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
       propertyPath: m_Name
@@ -11666,11 +11667,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ae725c11b230f7f4b824b3c9a6ab06a6, type: 2}
   m_IsPrefabParent: 0
---- !u!4 &1681434211 stripped
-Transform:
-  m_PrefabParentObject: {fileID: 4469802553830632, guid: ae725c11b230f7f4b824b3c9a6ab06a6,
-    type: 2}
-  m_PrefabInternal: {fileID: 1681434210}
 --- !u!1 &1687826959
 GameObject:
   m_ObjectHideFlags: 0

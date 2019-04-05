@@ -86,6 +86,8 @@ public class GameMasterV2 : MonoBehaviour {
     /// </summary>
     private int[] _playerCoinCounts = new int[2];
     public int Score { get; set; }
+    public int EmissionDepositsFound { get; set; }
+    public int MaxEmissionDepositsForLevel { get; set; } // Hardcoded for demo
 
     /// <summary>
     /// Delegate for snotifying the horde the player died, so reset the camera and kill themselves
@@ -147,6 +149,9 @@ public class GameMasterV2 : MonoBehaviour {
         SelectMusic();
 
         SpawnPlayers();
+
+        // Hardcoded for demo
+        MaxEmissionDepositsForLevel = 3;
     }
 
     /// <summary>

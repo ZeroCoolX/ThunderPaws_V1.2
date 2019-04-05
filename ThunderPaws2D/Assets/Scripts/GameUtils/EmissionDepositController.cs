@@ -48,7 +48,12 @@ public class EmissionDepositController : MonoBehaviour {
     private void Apply(Vector3 v, Collider2D c) {
         // once the player hits this we need to stop them, flash animate, and ad to their emission cache
         var player = c.transform.GetComponent<Player>();
-        player.PickupEmissionDeposit(100);//TODO: remove hard coded
+        player.PickupEmissionDeposit(300);//TODO: remove hard coded
+        GameMasterV2.Instance.EmissionDepositsFound += 1;
+        PlayerHudManager.Instance.GetPlayerHud(player.PlayerNumber).UpdateEmissionCachesFound();
+        if(GameMasterV2.Instance.EmissionDepositsFound == GameMasterV2.Instance.MaxEmissionDepositsForLevel) {
+            player.PickupEmissionDeposit(5000);//TODO: remove hard coded
+        }
         StopGameMomentarily();
     }
 

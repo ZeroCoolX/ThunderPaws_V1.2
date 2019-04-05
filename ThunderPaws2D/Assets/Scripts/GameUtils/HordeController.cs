@@ -240,7 +240,7 @@ public class HordeController : MonoBehaviour {
 
     private void InstantiateBaddies(string baddieCachePrefix, int numBaddies, Transform baddiePrefab) {
         // We need to spawn the difference of Max and active
-        for (var i = 0; i <= numBaddies; ++i) {
+        for (var i = 0; i < numBaddies; ++i) {
             Transform baddieTransform = Instantiate(baddiePrefab, GetRandomPointInArea(), transform.rotation) as Transform;
             baddieTransform.gameObject.name = baddieCachePrefix + baddieTransform.gameObject.GetInstanceID();
             AddBaddieToHorde(baddieTransform);
@@ -252,7 +252,7 @@ public class HordeController : MonoBehaviour {
         var size = baddiePrefab.GetComponent<Renderer>().bounds.size;
         var offset = size;
             // We need to spawn the difference of Max and active
-            for (var i = 0; i <= numBaddies; ++i){
+            for (var i = 0; i < numBaddies; ++i){
                 var cleanPosition = new Vector3((!yOffset ? position.x + offset.x : position.x), (yOffset ? position.y + offset.y : position.y), position.z);
                 Transform baddieTransform = Instantiate(baddiePrefab, cleanPosition, transform.rotation) as Transform;
                 baddieTransform.gameObject.name = baddieCachePrefix+baddieTransform.gameObject.GetInstanceID();

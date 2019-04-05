@@ -57,6 +57,7 @@ public class GameConstants {
     public static string ObjectName_UltimateImage = "UltimateImage";
     public static string ObjectName_AmmoText = "AmmoText";
     public static string ObjectName_LivesText = "LivesText";
+    public static string ObjectName_EmissionCachesFoundText = "CachesFoundText";
     public static string ObjectName_BarContainer = "BarContainer";
     public static string ObjectName_UltimateBar = "UltimateBar";
     public static string ObjectName_FirePoint = "FirePoint";

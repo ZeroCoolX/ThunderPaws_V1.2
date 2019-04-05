@@ -15,6 +15,7 @@ public class PlayerStatsUIController : MonoBehaviour {
     private Image _playerHealthImage;
     private Image _weaponImage;
     private Image _ultImage;
+    private Text _emissionCachesFound;
     private Transform _ultimateIndicator;
     private Animator _ultimateBarAnimator;
 
@@ -61,6 +62,12 @@ public class PlayerStatsUIController : MonoBehaviour {
             throw new UnassignedReferenceException();
         }
 
+        _emissionCachesFound = transform.Find(GameConstants.ObjectName_EmissionCachesFoundText).GetComponent<Text>();
+        if (_emissionCachesFound == null) {
+            Debug.LogError("No EmissionCachesFoundText found");
+            throw new UnassignedReferenceException();
+        }
+
         _weaponImage = transform.Find(GameConstants.ObjectName_WeaponImage).GetComponent<Image>();
         if (_weaponImage == null) {
             Debug.LogError("No WeaponImage found");
@@ -82,6 +89,10 @@ public class PlayerStatsUIController : MonoBehaviour {
         _ultImage.sprite = GameMasterV2.Instance.GetUltimateSpriteFromMap(ultName.ToLower());
     }
 
+    public void UpdateEmissionCachesFound() {
+        _emissionCachesFound.text = GameMasterV2.Instance.EmissionDepositsFound + " / " + GameMasterV2.Instance.MaxEmissionDepositsForLevel + " Emission Caches Found";
+    }
+
     public void SetAmmo(int ammo = -1) {
         _ammo.text = " Ammo: " + (ammo > -1 ? ammo + "" : " infinity");
     }
@@ -90,7 +101,6 @@ public class PlayerStatsUIController : MonoBehaviour {
         if (_lives == null) {
             _lives = transform.Find(GameConstants.ObjectName_LivesText).GetComponent<Text>();
             if (_lives == null) {
-                Debug.LogError("No LivesText found what the FUCK");
                 throw new UnassignedReferenceException();
             }
         }
