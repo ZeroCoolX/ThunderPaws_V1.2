@@ -9,7 +9,7 @@ public class ReflectFurball : Ultimate {
     private HashSet<int> _reflectedProjectiles;
     private bool _active = false;
 
-    private float _ultDuration = 7f;
+    private float _ultDuration = 10f;
 
     public override void Activate() {
         print("ReflectFurball activated!");
