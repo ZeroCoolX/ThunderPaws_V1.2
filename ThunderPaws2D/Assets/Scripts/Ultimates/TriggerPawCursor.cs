@@ -68,6 +68,7 @@ public class TriggerPawCursor : MonoBehaviour {
                 print("Adding baddie : " + c.gameObject.GetInstanceID() + " to map");
                 _baddiesTagged.Add(c.gameObject.GetInstanceID(), c.gameObject);
                 c.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                c.gameObject.GetComponent<BaddieLifeform>().ForceHalt = true;
             }
         }
     }

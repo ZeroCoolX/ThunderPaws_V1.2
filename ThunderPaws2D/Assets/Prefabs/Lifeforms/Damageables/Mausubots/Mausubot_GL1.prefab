@@ -214,10 +214,13 @@ MonoBehaviour:
   PayloadContent: {fileID: 4690192281386644, guid: cb7fc46e80fd2e04f990b4f5d54ad0b4,
     type: 2}
   PayloadItemCount: 3
+  DeathExplosionPrefab: {fileID: 4236864386155676, guid: e2a306c9d0c21774aac37da5818acc1f,
+    type: 2}
   Animator: {fileID: 95836571108915492}
   BulletPrefab: {fileID: 4659474290433748, guid: 631cd30039209674987ea19235d47cf6,
     type: 2}
   PartOfHorde: 0
+  ForceHalt: 0
   BulletSpeed: 0
   BulletDamage: 0
   DustTrailAnimator: {fileID: 95211788404904362}

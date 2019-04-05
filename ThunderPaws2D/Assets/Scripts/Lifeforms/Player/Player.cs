@@ -61,6 +61,11 @@ public class Player : PlayerLifeform {
     }
 
     public override bool Damage(float dmg) {
+        // For now do not take damage while ulting
+        if (PlayerStats.UltEnabled) {
+            return false;
+        }
+
         PlayerStats.CurrentHealth -= (int)dmg;
         PlayerHudManager.Instance.UpdateHealthUI(PlayerNumber, PlayerStats.CurrentHealth, PlayerStats.MaxHealth);
         if (PlayerStats.CurrentHealth <= 0) {

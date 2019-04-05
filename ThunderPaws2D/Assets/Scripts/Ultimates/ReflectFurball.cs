@@ -30,12 +30,13 @@ public class ReflectFurball : Ultimate {
 
     private void ResetState() {
         _reflectedProjectiles = new HashSet<int>();
-        _active = true;
+        _active = false;
     }
 
     private void Deactivate() {
         _bubbleEffect.GetComponent<Animator>().SetBool("bubble_on", false);
         Invoke("DestroyBubble", 0.25f);
+        ResetState();
         DeactivateDelegate.Invoke();
     }
 
@@ -50,7 +51,7 @@ public class ReflectFurball : Ultimate {
     }
 
     private void CheckForMultiCircleCollisions() {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 2, 1 << 11);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 1.75f, 1 << 11);
         foreach (var collider in colliders) {
             if (collider != null &&
                 !_reflectedProjectiles.Contains(collider.gameObject.GetInstanceID())) {

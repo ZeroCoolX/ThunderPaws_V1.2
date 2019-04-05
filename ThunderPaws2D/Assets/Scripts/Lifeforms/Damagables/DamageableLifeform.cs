@@ -19,6 +19,8 @@ public class DamageableLifeform : BaseLifeform {
     public Transform PayloadContent;
     public int PayloadItemCount = 10;
 
+    public Transform DeathExplosionPrefab;
+
     /// <summary>
     /// Min and Max values for the range to which the items in the payload can explode.
     /// </summary>
@@ -85,6 +87,10 @@ public class DamageableLifeform : BaseLifeform {
     /// in the payload.
     /// </summary>
     private void Explode(List<Transform> payload) {
+        if(DeathExplosionPrefab != null) {
+            Instantiate(DeathExplosionPrefab, transform.position, transform.rotation);
+        }
+
         foreach (var pItem in payload) {
             if (pItem.GetComponent<CoinController>() != null) {
                 pItem.GetComponent<CoinController>().enabled = true;

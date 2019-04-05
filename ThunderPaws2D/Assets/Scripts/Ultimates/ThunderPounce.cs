@@ -54,13 +54,10 @@ public class ThunderPounce : Ultimate {
     }
 
     void ResetAnimation() {
-        //var bounds = transform.GetComponent<BoxCollider2D>().bounds;
-        //var blastPos = new Vector3(transform.position.x, transform.position.y - bounds.min.y, transform.position.z);
-        //var left = Instantiate(BlastRadiusEffectPrefab, blastPos, transform.rotation, transform) as Transform;
-        //var rightEffect = Instantiate(BlastRadiusEffectPrefab, blastPos, transform.rotation, transform) as Transform;
         PounceEffectAnimator.SetBool("thunderpounce_jump", false);
         PounceEffectAnimator.SetBool("thunderpounce_spin", false);
         PounceEffectAnimator.SetBool("thunderpounce_smash", false);
+        GetComponent<Player>().enabled = true;
         Weapon.gameObject.SetActive(true);
     }
 
